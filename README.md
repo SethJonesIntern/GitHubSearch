@@ -84,13 +84,22 @@ Outputs `llm_test_functions.csv` listing every test function that makes a real (
 
 OpenAI, Anthropic, Cohere, Mistral, Groq, Together, LiteLLM, Ollama, Google Generative AI, Vertex AI, HuggingFace, LangChain, LlamaIndex
 
-## Output Files
+### 4. Extract LLM test function source code
 
-| File | Description |
+```bash
+python extract_llm_tests.py
+```
+
+Fetches the full source code of every test function identified in step 3 and saves them to `extracted_llm_tests/`, one `.py` file per framework. Each file contains the raw test function bodies grouped by source file.
+
+## Output
+
+| Path | Description |
 |------|-------------|
 | `github_agent_framework_candidates.csv` | Full metadata for all qualifying repositories |
 | `agent_framework_table.csv` | Summary table sorted by star count |
 | `llm_test_functions.csv` | Test functions containing real LLM calls |
+| `extracted_llm_tests/` | Source code of each LLM test function, grouped by framework |
 
 ## License
 
