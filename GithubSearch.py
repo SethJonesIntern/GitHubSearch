@@ -1,3 +1,4 @@
+import ast
 import os
 import re
 import time
@@ -16,6 +17,8 @@ HEADERS = {
 }
 if GITHUB_TOKEN:
     HEADERS["Authorization"] = f"Bearer {GITHUB_TOKEN}"
+
+RAW_HEADERS = {"Authorization": f"Bearer {GITHUB_TOKEN}"} if GITHUB_TOKEN else {}
 
 SEARCH_QUERIES = [
     "AI agent framework stars:>999 language:Python",
@@ -88,17 +91,36 @@ def get_default_branch_commit_date(owner: str, repo: str, default_branch: str) -
         return None
 
 
-def get_test_file_count(owner: str, repo: str, default_branch: str) -> int:
+def get_test_metrics(owner: str, repo: str, default_branch: str) -> Tuple[int, int]:
     resp = github_get(
         f"{API_BASE}/repos/{owner}/{repo}/git/trees/{default_branch}",
         params={"recursive": "1"},
     )
     data = resp.json()
-    return sum(
-        1 for item in data.get("tree", [])
+
+    test_files = [
+        item["path"] for item in data.get("tree", [])
         if item["type"] == "blob"
         and re.search(r"(^|/)test_[^/]+\.py$", item["path"])
-    )
+    ]
+
+    test_function_count = 0
+    for path in test_files:
+        raw_url = f"https://raw.githubusercontent.com/{owner}/{repo}/{default_branch}/{path}"
+        try:
+            resp = requests.get(raw_url, headers=RAW_HEADERS, timeout=15)
+            if resp.status_code == 200:
+                tree = ast.parse(resp.text)
+                test_function_count += sum(
+                    1 for node in ast.walk(tree)
+                    if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))
+                    and node.name.startswith("test_")
+                )
+        except Exception:
+            pass
+        time.sleep(0.05)
+
+    return len(test_files), test_function_count
 
 
 def enrich_repo(repo_item: dict, matched_query: str) -> dict:
@@ -108,7 +130,7 @@ def enrich_repo(repo_item: dict, matched_query: str) -> dict:
 
     contributor_count = get_contributor_count(owner, repo)
     latest_commit_date = get_default_branch_commit_date(owner, repo, default_branch)
-    test_file_count = get_test_file_count(owner, repo, default_branch)
+    test_file_count, test_function_count = get_test_metrics(owner, repo, default_branch)
 
     return {
         "full_name": full_name,
@@ -131,6 +153,7 @@ def enrich_repo(repo_item: dict, matched_query: str) -> dict:
         "license": (repo_item.get("license") or {}).get("spdx_id"),
         "contributors_count": contributor_count,
         "test_file_count": test_file_count,
+        "test_function_count": test_function_count,
         "clone_url": repo_item.get("clone_url"),
     }
 
@@ -174,11 +197,11 @@ def main():
         "stars", "forks", "language", "topics", "open_issues",
         "size_kb", "default_branch", "created_at", "updated_at", "pushed_at",
         "latest_default_branch_commit_date", "archived", "disabled",
-        "license", "contributors_count", "test_file_count", "clone_url",
+        "license", "contributors_count", "test_file_count", "test_function_count", "clone_url",
     ]
 
     with open(OUTPUT_CSV, "w", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        writer = csv.DictWriter(f, fieldnames=fieldnames, quoting=csv.QUOTE_ALL)
         writer.writeheader()
         writer.writerows(sorted(filtered, key=lambda r: (r["stars"] or 0), reverse=True))
 
