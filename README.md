@@ -160,6 +160,42 @@ A test is marked **LLM-backed (non-deterministic)** when all three hold:
 
 ---
 
+## Semantic Evaluators Pipeline
+
+Identifies which candidate repos (from both pipelines above) declare a **semantic evaluation framework** as a dependency. Rather than scanning test function bodies for keyword mentions, this pipeline checks actual dependency files — a repo that doesn't declare the package in its dependencies isn't properly using it.
+
+### Checked Frameworks
+
+Giskard, DeepEval, Opik, RAGAs, Promptfoo, Arize Phoenix
+
+### How It Works
+
+1. **Root-level check** (`find_semantic_eval_tests.py`): For each repo in both candidate CSVs, downloads common root-level dependency files (`requirements.txt`, `pyproject.toml`, `setup.py`, `setup.cfg`, and dev/test variants) directly from `raw.githubusercontent.com` — no GitHub API calls needed. Repos where no root-level dep file exists are flagged.
+
+2. **Deep check** (`deep_dep_check.py`): For repos where the root-level check found no dependency files (common in monorepos), uses the GitHub API tree endpoint to locate dependency files at any depth, then downloads and checks those.
+
+### Usage
+
+```bash
+cd SemanticEvaluators
+
+# Phase 1: check root-level dependency files (no API calls)
+python find_semantic_eval_tests.py
+
+# Phase 2: deep-check repos that had no root-level dep files
+python deep_dep_check.py
+```
+
+### Outputs
+
+| Path | Description |
+|------|-------------|
+| `SemanticEvaluators/semantic_evaluator_repos.csv` | Repos that depend on a semantic eval framework (category, repo, frameworks, dep files) |
+| `SemanticEvaluators/no_deps_found.csv` | Repos where no dependency files were found at all (for manual review) |
+| `SemanticEvaluators/.dep_check_progress.json` | Resumable progress state (both phases update this) |
+
+---
+
 ## License
 
 MIT

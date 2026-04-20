@@ -1,163 +1,186 @@
-"""Scan the already-extracted LLM test files under
-Applications/extracted_llm_tests/ and Frameworks/extracted_llm_tests/
-and keep only test functions whose body references a semantic
-evaluator framework (Giskard, DeepEval, Opik, RAGAs, Phoenix,
-Promptfoo).
+"""Check which candidate repos (Applications + Frameworks) declare a
+semantic-evaluator framework in their dependency files.
+
+Downloads root-level dependency files directly from raw.githubusercontent.com
+(no API calls needed). Repos where no dependency file is found are flagged
+for manual review.
 
 Outputs:
-  SemanticEvaluators/extracted_tests/<repo>.py
-  SemanticEvaluators/semantic_evaluator_tests.csv
+  SemanticEvaluators/semantic_evaluator_repos.csv
+  SemanticEvaluators/no_deps_found.csv   (repos with no root-level dep files)
 """
-import ast
 import csv
+import json
 import re
+import time
 from pathlib import Path
-from typing import List, Tuple
+from typing import Dict, List, Optional
+
+import requests
 
 HERE = Path(__file__).parent
-SOURCE_DIRS = [
-    HERE.parent / "Applications" / "extracted_llm_tests",
-    HERE.parent / "Frameworks" / "extracted_llm_tests",
-]
-OUT_DIR = HERE / "extracted_tests"
-OUT_CSV = HERE / "semantic_evaluator_tests.csv"
 
-SEMANTIC_EVAL_FRAMEWORKS = {
-    "giskard": re.compile(r"\bgiskard\b", re.IGNORECASE),
-    "deepeval": re.compile(r"\bdeepeval\b", re.IGNORECASE),
-    "opik": re.compile(r"\bopik\b", re.IGNORECASE),
-    "ragas": re.compile(r"\bragas\b", re.IGNORECASE),
-    "promptfoo": re.compile(r"\bpromptfoo\b", re.IGNORECASE),
-    "phoenix": re.compile(r"\b(arize_phoenix|arize\.phoenix|phoenix\.evals|phoenix\.experiments)\b", re.IGNORECASE),
+CANDIDATE_CSVS = [
+    ("Applications", HERE.parent / "Applications" / "application_candidates_v2.csv"),
+    ("Frameworks", HERE.parent / "Frameworks" / "github_agent_framework_candidates.csv"),
+]
+
+OUT_CSV = HERE / "semantic_evaluator_repos.csv"
+NO_DEPS_CSV = HERE / "no_deps_found.csv"
+PROGRESS_FILE = HERE / ".dep_check_progress.json"
+
+ROOT_DEP_FILES = [
+    "requirements.txt",
+    "requirements-dev.txt",
+    "requirements-test.txt",
+    "requirements_dev.txt",
+    "requirements_test.txt",
+    "pyproject.toml",
+    "setup.py",
+    "setup.cfg",
+]
+
+SEMANTIC_EVAL_PACKAGES = {
+    "giskard": re.compile(r"(?:^|[\s,\"\'\[])giskard(?:\s|[>=<!\[,\]\"\']|$)", re.IGNORECASE | re.MULTILINE),
+    "deepeval": re.compile(r"(?:^|[\s,\"\'\[])deepeval(?:\s|[>=<!\[,\]\"\']|$)", re.IGNORECASE | re.MULTILINE),
+    "opik": re.compile(r"(?:^|[\s,\"\'\[])opik(?:\s|[>=<!\[,\]\"\']|$)", re.IGNORECASE | re.MULTILINE),
+    "ragas": re.compile(r"(?:^|[\s,\"\'\[])ragas(?:\s|[>=<!\[,\]\"\']|$)", re.IGNORECASE | re.MULTILINE),
+    "promptfoo": re.compile(r"(?:^|[\s,\"\'\[])promptfoo(?:\s|[>=<!\[,\]\"\']|$)", re.IGNORECASE | re.MULTILINE),
+    "phoenix": re.compile(r"(?:^|[\s,\"\'\[])arize-phoenix(?:\s|[>=<!\[,\]\"\']|$)", re.IGNORECASE | re.MULTILINE),
 }
 
-SECTION_RE = re.compile(r"^# --- (.+?) ---\s*$", re.MULTILINE)
+RAW_BASE = "https://raw.githubusercontent.com"
 
 
-def split_sections(text: str) -> List[Tuple[str, str]]:
-    """Split an extracted_llm_tests file into (relative_path, body) sections."""
-    matches = list(SECTION_RE.finditer(text))
-    sections: List[Tuple[str, str]] = []
-    for i, m in enumerate(matches):
-        rel_path = m.group(1).strip()
-        start = m.end()
-        end = matches[i + 1].start() if i + 1 < len(matches) else len(text)
-        sections.append((rel_path, text[start:end]))
-    return sections
-
-
-def iter_test_funcs(section_src: str):
-    """Yield (func_name, func_source) for each top-level test_ function in a section.
-
-    Sections are concatenations of individual extracted function sources, so we
-    fall back to a regex split if ast.parse chokes (e.g. async defs at module
-    top-level with surrounding blank lines parse fine, but stray snippets may
-    not)."""
+def fetch_raw_file(full_name: str, branch: str, filename: str) -> Optional[str]:
+    url = f"{RAW_BASE}/{full_name}/{branch}/{filename}"
     try:
-        tree = ast.parse(section_src)
-    except SyntaxError:
-        yield from _regex_split_funcs(section_src)
-        return
-
-    lines = section_src.splitlines()
-    found_any = False
-    for node in tree.body:
-        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)) and node.name.startswith("test_"):
-            found_any = True
-            end = getattr(node, "end_lineno", None) or node.lineno
-            yield node.name, "\n".join(lines[node.lineno - 1: end])
-
-    if not found_any:
-        yield from _regex_split_funcs(section_src)
+        resp = requests.get(url, timeout=15)
+    except requests.exceptions.RequestException:
+        return None
+    if resp.status_code == 200:
+        return resp.text
+    return None
 
 
-FUNC_HEADER_RE = re.compile(
-    r"^(?:async\s+)?def\s+(test_[A-Za-z0-9_]+)\s*\(",
-    re.MULTILINE,
-)
+def check_repo(full_name: str, branch: str) -> tuple:
+    """Returns (matches dict, list of dep files found).
+
+    matches: {framework_name: [dep_file, ...]}
+    """
+    matches: Dict[str, List[str]] = {}
+    found_files: List[str] = []
+
+    for filename in ROOT_DEP_FILES:
+        content = fetch_raw_file(full_name, branch, filename)
+        if content is None:
+            continue
+        found_files.append(filename)
+        for fw_name, pattern in SEMANTIC_EVAL_PACKAGES.items():
+            if pattern.search(content):
+                matches.setdefault(fw_name, []).append(filename)
+
+    return matches, found_files
 
 
-def _regex_split_funcs(section_src: str):
-    headers = list(FUNC_HEADER_RE.finditer(section_src))
-    for i, m in enumerate(headers):
-        name = m.group(1)
-        start = m.start()
-        end = headers[i + 1].start() if i + 1 < len(headers) else len(section_src)
-        yield name, section_src[start:end]
-
-
-def frameworks_in(text: str) -> List[str]:
-    return [name for name, rx in SEMANTIC_EVAL_FRAMEWORKS.items() if rx.search(text)]
-
-
-def scan_file(path: Path):
-    """Return (repo_slug, list of matching {file, test_function, frameworks, source})."""
-    text = path.read_text(encoding="utf-8", errors="replace")
-    repo_slug = path.stem
-    hits = []
-    for rel_path, section_src in split_sections(text):
-        for func_name, func_src in iter_test_funcs(section_src):
-            fws = frameworks_in(func_src)
-            if fws:
-                hits.append({
-                    "file": rel_path,
-                    "test_function": func_name,
-                    "frameworks": ",".join(fws),
-                    "source": func_src.rstrip() + "\n",
+def load_candidates() -> List[dict]:
+    repos = []
+    for category, csv_path in CANDIDATE_CSVS:
+        if not csv_path.exists():
+            print(f"Skipping missing CSV: {csv_path}")
+            continue
+        with open(csv_path, "r", encoding="utf-8") as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                repos.append({
+                    "category": category,
+                    "full_name": row["full_name"],
+                    "default_branch": row.get("default_branch", "main"),
                 })
-    return repo_slug, hits
+    return repos
 
 
-def write_repo_output(repo_slug: str, source_path: Path, hits: List[dict]) -> None:
-    OUT_DIR.mkdir(parents=True, exist_ok=True)
-    header_lines = [f"# {repo_slug.replace('_', '/', 1)}"]
-    header_lines.append(f"# {len(hits)} semantic-evaluator test functions")
-    header_lines.append(f"# Source extract: {source_path.as_posix()}")
-    header_lines.append("")
-    body: List[str] = []
-    last_file = None
-    for h in hits:
-        if h["file"] != last_file:
-            body.append(f"\n# --- {h['file']}  [{h['frameworks']}] ---\n\n")
-            last_file = h["file"]
-        body.append(h["source"] + "\n")
-    out_path = OUT_DIR / f"{repo_slug}.py"
-    out_path.write_text("\n".join(header_lines) + "".join(body), encoding="utf-8")
+def load_progress() -> dict:
+    if PROGRESS_FILE.exists():
+        with open(PROGRESS_FILE, "r", encoding="utf-8") as f:
+            return json.load(f)
+    return {"processed": {}}
+
+
+def save_progress(progress: dict):
+    with open(PROGRESS_FILE, "w", encoding="utf-8") as f:
+        json.dump(progress, f, indent=2)
 
 
 def main() -> None:
-    all_rows: List[dict] = []
-    per_repo_counts: List[Tuple[str, int]] = []
+    candidates = load_candidates()
+    print(f"Loaded {len(candidates)} candidate repos")
 
-    for src_dir in SOURCE_DIRS:
-        if not src_dir.exists():
-            print(f"Skipping missing source dir: {src_dir}")
-            continue
-        category = src_dir.parent.name
-        for py_file in sorted(src_dir.glob("*.py")):
-            repo_slug, hits = scan_file(py_file)
-            if not hits:
-                continue
-            write_repo_output(repo_slug, py_file, hits)
-            per_repo_counts.append((f"{category}/{repo_slug}", len(hits)))
-            for h in hits:
-                all_rows.append({
-                    "category": category,
-                    "repo": repo_slug.replace("_", "/", 1),
-                    "file": h["file"],
-                    "test_function": h["test_function"],
-                    "frameworks": h["frameworks"],
+    progress = load_progress()
+    processed = progress["processed"]
+
+    hit_rows: List[dict] = []
+    no_dep_rows: List[dict] = []
+
+    for i, cand in enumerate(candidates, 1):
+        full_name = cand["full_name"]
+        category = cand["category"]
+        branch = cand["default_branch"]
+
+        if full_name in processed:
+            cached = processed[full_name]
+            if cached.get("no_deps"):
+                no_dep_rows.append({"category": cached["category"], "full_name": full_name})
+            elif cached["frameworks"]:
+                hit_rows.append({
+                    "category": cached["category"],
+                    "full_name": full_name,
+                    "frameworks": cached["frameworks"],
+                    "dep_files": cached["dep_files"],
                 })
+            continue
 
-    fieldnames = ["category", "repo", "file", "test_function", "frameworks"]
+        print(f"[{i}/{len(candidates)}] {full_name}...", end=" ", flush=True)
+        matches, found_files = check_repo(full_name, branch)
+
+        if not found_files:
+            print("NO DEP FILES")
+            no_dep_rows.append({"category": category, "full_name": full_name})
+            processed[full_name] = {"category": category, "frameworks": "", "dep_files": "", "no_deps": True}
+        elif matches:
+            fw_list = ",".join(sorted(matches.keys()))
+            dep_list = ",".join(sorted({p for paths in matches.values() for p in paths}))
+            print(f"FOUND: {fw_list}")
+            hit_rows.append({
+                "category": category,
+                "full_name": full_name,
+                "frameworks": fw_list,
+                "dep_files": dep_list,
+            })
+            processed[full_name] = {"category": category, "frameworks": fw_list, "dep_files": dep_list}
+        else:
+            print("none")
+            processed[full_name] = {"category": category, "frameworks": "", "dep_files": ""}
+
+        save_progress(progress)
+
+    # Write hits
     with open(OUT_CSV, "w", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=fieldnames, quoting=csv.QUOTE_ALL)
+        writer = csv.DictWriter(f, fieldnames=["category", "full_name", "frameworks", "dep_files"],
+                                quoting=csv.QUOTE_ALL)
         writer.writeheader()
-        writer.writerows(sorted(all_rows, key=lambda r: (r["category"], r["repo"], r["file"], r["test_function"])))
+        writer.writerows(sorted(hit_rows, key=lambda r: (r["category"], r["full_name"])))
 
-    print(f"Wrote {len(all_rows)} tests from {len(per_repo_counts)} repos to {OUT_CSV}")
-    for name, n in sorted(per_repo_counts, key=lambda x: -x[1]):
-        print(f"  {n:4d}  {name}")
+    # Write no-deps-found for manual review
+    with open(NO_DEPS_CSV, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=["category", "full_name"], quoting=csv.QUOTE_ALL)
+        writer.writeheader()
+        writer.writerows(sorted(no_dep_rows, key=lambda r: (r["category"], r["full_name"])))
+
+    print(f"\n{len(hit_rows)} repos with semantic eval deps -> {OUT_CSV}")
+    print(f"{len(no_dep_rows)} repos with no dep files found -> {NO_DEPS_CSV}")
+    for r in sorted(hit_rows, key=lambda r: r["full_name"]):
+        print(f"  {r['full_name']}: {r['frameworks']}")
 
 
 if __name__ == "__main__":
