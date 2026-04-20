@@ -15,7 +15,7 @@ from pathlib import Path
 from typing import List, Optional, Tuple
 
 HERE = Path(__file__).parent
-INPUT_CSV = HERE / "application_candidates.csv"
+INPUT_CSV = HERE / "application_candidates_v2.csv"
 OUTPUT_CSV = HERE / "application_tests.csv"
 LLM_TESTS_CSV = HERE / "llm_test_functions.csv"
 CACHE_DIR = HERE / "repo_cache"
@@ -222,7 +222,12 @@ def load_done_full_names() -> set:
 def write_repo_output(rows: List[dict]) -> None:
     if not rows:
         return
-    fieldnames = list(rows[0].keys())
+    seen = dict()
+    for row in rows:
+        for k in row:
+            if k not in seen:
+                seen[k] = None
+    fieldnames = list(seen)
     with open(OUTPUT_CSV, "w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames, quoting=csv.QUOTE_ALL)
         writer.writeheader()

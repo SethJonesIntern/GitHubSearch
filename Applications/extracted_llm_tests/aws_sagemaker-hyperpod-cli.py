@@ -1,5 +1,5 @@
 # aws/sagemaker-hyperpod-cli
-# 62 LLM-backed test functions across 80 test files
+# 62 LLM-backed test functions across 85 test files
 # Source: https://github.com/aws/sagemaker-hyperpod-cli
 
 # --- test/integration_tests/cluster_management/test_cli_cluster_stack_deletion.py ---

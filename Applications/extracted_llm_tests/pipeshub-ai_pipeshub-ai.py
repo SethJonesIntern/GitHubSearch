@@ -1,5 +1,5 @@
 # pipeshub-ai/pipeshub-ai
-# 23 LLM-backed test functions across 477 test files
+# 23 LLM-backed test functions across 482 test files
 # Source: https://github.com/pipeshub-ai/pipeshub-ai
 
 # --- backend/python/tests/unit/utils/test_streaming.py ---

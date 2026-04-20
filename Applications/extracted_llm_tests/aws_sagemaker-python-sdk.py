@@ -1,5 +1,5 @@
 # aws/sagemaker-python-sdk
-# 45 LLM-backed test functions across 387 test files
+# 45 LLM-backed test functions across 389 test files
 # Source: https://github.com/aws/sagemaker-python-sdk
 
 # --- sagemaker-mlops/tests/integ/test_clarify.py ---

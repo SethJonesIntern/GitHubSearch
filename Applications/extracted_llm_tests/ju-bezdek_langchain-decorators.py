@@ -209,7 +209,7 @@
                 user_message="Hi, I'm Sarah and I love hiking in the mountains",
                 user_name="Sarah",
                 functions=[remember_user_info, get_time],
-                function_call="none"
+                function_call="none",
             )
 
         # Verify streaming worked
@@ -223,8 +223,8 @@
         # Test time function
         result2 = await streaming_chat_agent(
             user_message="What time is it?",
-            user_name="Sarah", 
-            functions=[remember_user_info, get_time]
+            user_name="Sarah",
+            functions=[remember_user_info, get_time],
         )
 
         if result2.is_function_call and result2.function_name == "get_time":
@@ -237,24 +237,30 @@
         student_progress = {
             "topics_covered": [],
             "quiz_scores": {},
-            "current_level": "beginner"
+            "current_level": "beginner",
         }
 
         quiz_questions = {
             "python_basics": [
-                {"question": "What keyword is used to define a function in Python?", "answer": "def"},
+                {
+                    "question": "What keyword is used to define a function in Python?",
+                    "answer": "def",
+                },
                 {"question": "How do you create a list in Python?", "answer": "[]"},
             ],
             "data_types": [
-                {"question": "What data type represents whole numbers?", "answer": "int"},
+                {
+                    "question": "What data type represents whole numbers?",
+                    "answer": "int",
+                },
                 {"question": "What data type represents text?", "answer": "str"},
-            ]
+            ],
         }
 
         @llm_function
         def create_quiz(topic: str, difficulty: str = "beginner") -> str:
             """Create a quiz for a specific topic
-            
+
             Args:
                 topic (str): Topic for the quiz
                 difficulty (str): Difficulty level (beginner, intermediate, advanced)
@@ -271,7 +277,7 @@
         @llm_function
         def record_progress(topic: str, score: float) -> str:
             """Record student progress
-            
+
             Args:
                 topic (str): Topic studied
                 score (float): Quiz score (0-100)
@@ -280,7 +286,9 @@
             student_progress["quiz_scores"][topic] = score
 
             # Update level based on average score
-            avg_score = sum(student_progress["quiz_scores"].values()) / len(student_progress["quiz_scores"])
+            avg_score = sum(student_progress["quiz_scores"].values()) / len(
+                student_progress["quiz_scores"]
+            )
             if avg_score >= 80:
                 student_progress["current_level"] = "advanced"
             elif avg_score >= 60:
@@ -291,37 +299,38 @@
         @llm_function
         def get_learning_path(current_topic: str) -> str:
             """Get suggested learning path
-            
+
             Args:
                 current_topic (str): Current topic being studied
             """
             learning_paths = {
                 "python_basics": ["data_types", "control_structures", "functions"],
                 "data_types": ["variables", "strings", "lists"],
-                "control_structures": ["loops", "conditionals", "error_handling"]
+                "control_structures": ["loops", "conditionals", "error_handling"],
             }
 
-            next_topics = learning_paths.get(current_topic.lower().replace(" ", "_"), ["advanced_topics"])
+            next_topics = learning_paths.get(
+                current_topic.lower().replace(" ", "_"), ["advanced_topics"]
+            )
             return f"After {current_topic}, consider studying: {', '.join(next_topics)}"
 
         @llm_prompt
         def educational_tutor(
-            student_request: str,
-            functions: List[Callable]
+            student_request: str, functions: List[Callable]
         ) -> OutputWithFunctionCall:
             """
             ```<prompt:system>
             You are an educational tutor specializing in programming.
             Help students learn by providing quizzes, tracking progress, and suggesting learning paths.
-            
+
             Be encouraging and adapt your teaching style to the student's level.
             Use available functions to create interactive learning experiences.
             ```
-            
+
             ```<prompt:user>
             Student request: {student_request}
             ```
-            
+
             Available functions: {functions}
             """
             pass
@@ -329,7 +338,7 @@
         # Test quiz creation
         result1 = educational_tutor(
             student_request="I want to practice Python basics with a quiz",
-            functions=[create_quiz, record_progress, get_learning_path]
+            functions=[create_quiz, record_progress, get_learning_path],
         )
 
         if result1.is_function_call and result1.function_name == "create_quiz":
@@ -340,7 +349,7 @@
         # Test progress recording
         result2 = educational_tutor(
             student_request="I completed the Python basics quiz and got 85%",
-            functions=[create_quiz, record_progress, get_learning_path]
+            functions=[create_quiz, record_progress, get_learning_path],
         )
 
         if result2.is_function_call and result2.function_name == "record_progress":
@@ -351,7 +360,7 @@
         # Test learning path suggestion
         result3 = educational_tutor(
             student_request="What should I study next after Python basics?",
-            functions=[create_quiz, record_progress, get_learning_path]
+            functions=[create_quiz, record_progress, get_learning_path],
         )
 
         if result3.is_function_call and result3.function_name == "get_learning_path":
