@@ -50,21 +50,25 @@ Mines agent *frameworks* (e.g. LangChain, AutoGen, CrewAI).
 
 ### Search Queries
 
+Five queries are issued, each with a `stars:>999 language:Python` qualifier baked into the query string:
+
 ```
-"AI AND agent AND framework"
-"LLM-based AND agent AND framework"
-"LLM AND agent AND library"
-"multi-agent orchestration framework"
-"LLM powered agents AND framework"
+AI agent framework stars:>999 language:Python
+LLM-based agent framework stars:>999 language:Python
+LLM agent library stars:>999 language:Python
+multi-agent orchestration framework stars:>999 language:Python
+LLM powered agents framework stars:>999 language:Python
 ```
+
+Up to 3 pages of 100 results per query (~1500 hits before dedup).
 
 ### Filter Criteria
 
 | Filter Condition     | Threshold |
 |----------------------|-----------|
-| Star count           | >= 1000   |
-| Language             | Python    |
-| Contributor count    | >= 2      |
+| Star count           | > 999 (in query) |
+| Language             | Python (in query) |
+| Contributor count    | >= 2 (or unknown) |
 | Number of test files | >= 1      |
 | Archived/Disabled    | Excluded  |
 
@@ -105,10 +109,11 @@ Mines *applications* built with the frameworks above. Uses the framework list as
 
 ```bash
 cd Applications
-python search_candidates.py
+python search_candidates.py           # fresh run (wipes CSV + progress)
+python search_candidates.py --resume  # continue from prior progress
 ```
 
-Searches GitHub once per framework keyword, dedupes, and applies every filter that can be decided from the search response alone.
+Searches GitHub once per framework keyword, dedupes, and applies every filter via cheap API calls (contributor count, commit total via `Link` header, tree listing for test files). Progress is checkpointed per-repo in `.search_progress.json` so the run is fully resumable.
 
 ### Phase 2 — Local clone + analysis (no per-file API calls)
 
@@ -127,17 +132,21 @@ For each of 48 framework keywords:
 "<keyword>" language:Python stars:>10 pushed:>2025-04-14
 ```
 
+Up to 3 pages of 100 results per keyword.
+
 ### Filter Criteria
 
 | Filter Condition                            | Threshold / Rule                                       |
 |---------------------------------------------|--------------------------------------------------------|
-| Language                                    | Python                                                 |
-| Star count                                  | >= 10                                                  |
-| Pushed since                                | 2025-04-14 (last year)                                 |
+| Language                                    | Python (in query)                                      |
+| Star count                                  | > 10 (in query)                                        |
+| Pushed since                                | 2025-04-14 (in query, last year)                       |
+| Fork / Archived / Disabled                  | Excluded (search-time)                                 |
+| Appears in framework candidates list        | Excluded (search-time)                                 |
 | Lifetime (`pushed_at` − `created_at`)       | >= 30 days                                             |
-| Fork / Archived / Disabled                  | Excluded                                               |
-| Appears in framework candidates list        | Excluded                                               |
-| Contains at least one `test_*.py` file      | Required for the repo to yield any phase-2 output      |
+| Contributor count                           | >= 2                                                   |
+| Commits per month (total / lifetime)        | > 2 (strictly greater than)                            |
+| Contains at least one `test_*.py` file      | Required                                               |
 
 ### LLM-Call Detection (AST)
 
@@ -151,12 +160,13 @@ A test is marked **LLM-backed (non-deterministic)** when all three hold:
 
 ### Outputs
 
-| Path                                        | Description                                                   |
-|---------------------------------------------|---------------------------------------------------------------|
-| `Applications/application_candidates.csv`   | Phase-1 candidate list (one row per repo)                     |
-| `Applications/application_tests.csv`        | Phase-2 per-repo summary including `test_file_count`, `test_function_count`, `llm_test_count`, `clone_status` |
-| `Applications/llm_test_functions.csv`       | One row per LLM-backed test: `repo, file, test_function`      |
-| `Applications/extracted_llm_tests/`         | Source code of each LLM test function, one file per repo      |
+| Path                                           | Description                                                   |
+|------------------------------------------------|---------------------------------------------------------------|
+| `Applications/application_candidates_v2.csv`   | Phase-1 candidate list (one row per repo)                     |
+| `Applications/.search_progress.json`           | Resumable progress state for phase 1                          |
+| `Applications/application_tests.csv`           | Phase-2 per-repo summary including `test_file_count`, `test_function_count`, `llm_test_count`, `clone_status` |
+| `Applications/llm_test_functions.csv`          | One row per LLM-backed test: `repo, file, test_function`      |
+| `Applications/extracted_llm_tests/`            | Source code of each LLM test function, one file per repo      |
 
 ---
 
