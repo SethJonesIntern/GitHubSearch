@@ -10,8 +10,8 @@ SKIP_DIRS = {".git", ".venv", "venv", "env", "__pycache__", "node_modules", "dis
 class Match:
     file: str   # path relative to the repo root
     line: int   # 0 for file-level imports, else the call site line
-    kind: str   # "import" or "call"
-    text: str   # matched package name or unparsed call expression
+    kind: str   # "import", "call", or "class"
+    text: str   # matched package name, unparsed call expression, or class base
 
 
 def file_imports(tree: ast.Module) -> set[str]:
@@ -50,6 +50,14 @@ def scan_source(
                 continue
             if any(pat in text for pat in target_calls):
                 hits.append((node.lineno, "call", text))
+        elif isinstance(node, ast.ClassDef):
+            for base in node.bases:
+                try:
+                    text = ast.unparse(base)
+                except Exception:
+                    continue
+                if any(pat in text for pat in target_calls):
+                    hits.append((node.lineno, "class", text))
 
     return hits
 
