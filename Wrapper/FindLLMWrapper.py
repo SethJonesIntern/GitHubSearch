@@ -9,89 +9,329 @@ from pathlib import Path
 
 from astWrappers import Match, scan_repo
 
-LLM_IMPORTS = {
-    # LLM SDKs
-    "openai",
-    "anthropic",
-    # Agent frameworks (from Frameworks/agent_framework_table.csv)
-    "langchain",
-    "langchain_openai",
-    "langchain_anthropic",
-    "langchain_community",
-    "langchain_core",
-    "langgraph",
-    "metagpt",
-    "autogen",
-    "autogen_core",
-    "autogen_agentchat",
-    "crewai",
-    "swarm",
-    "agents",                  # openai-agents-python
-    "parlant",
-    "superagi",
-    "camel",
-    "ragaai_catalyst",
-    "pydantic_ai",
-    "ten",
-    "livekit",
-    "agent_framework",
-    "agent_squad",
-    "praisonai",
-    "lavague",
-    "swarms",
-    "agentops",
-    "superduper",
-    "giskard",
-    "agency_swarm",
-    "adalflow",
-    "ii_agent",
-    "beeai_framework",
-    "cheshire_cat",
-    "solace_agent_mesh",
-    "griptape",
-    "openlit",
-    "nextpy",
-    "llmstack",
-    "lagent",
-    "agentuniverse",
-    "notte",
-    "redamon",
-    "honcho",
-    "uagents",
-    "patchwork",
-    "agent_protocol",
-    "npcpy",
-    "infiagent",
-    "any_agent",
-    "sage",
-    "dynamiq",
+# Maps each framework's top-level import name to the call patterns specific to
+# that framework.  When a file imports a framework, the scanner searches only
+# for that framework's patterns — reducing noise from generic names like .run.
+FRAMEWORK_CALLS: dict[str, list[str]] = {
+    # ── Direct LLM SDKs ────────────────────────────────────────────────────────
+    "openai": [
+        "chat.completions.create",
+        "responses.create",
+        "completions.create",
+        "embeddings.create",
+    ],
+    "anthropic": [
+        "messages.create",
+        "messages.stream",
+        "messages.count_tokens",
+    ],
+
+    # ── LangChain family ───────────────────────────────────────────────────────
+    "langchain": [
+        ".invoke",
+        ".ainvoke",
+        ".stream",
+        ".astream",
+        ".batch",
+        ".abatch",
+        "LLMChain",
+        "ConversationChain",
+        "AgentExecutor",
+    ],
+    "langchain_openai": [
+        ".invoke",
+        ".ainvoke",
+        ".stream",
+        ".astream",
+        "ChatOpenAI",
+        "OpenAI",
+        "AzureChatOpenAI",
+    ],
+    "langchain_anthropic": [
+        ".invoke",
+        ".ainvoke",
+        ".stream",
+        ".astream",
+        "ChatAnthropic",
+    ],
+    "langchain_community": [
+        ".invoke",
+        ".ainvoke",
+        ".stream",
+        ".astream",
+    ],
+    "langchain_core": [
+        ".invoke",
+        ".ainvoke",
+        ".stream",
+        ".astream",
+    ],
+    "langgraph": [
+        ".invoke",
+        ".ainvoke",
+        ".stream",
+        ".astream",
+        "StateGraph",
+        "CompiledGraph",
+        "MessageGraph",
+    ],
+
+    # ── AutoGen family ─────────────────────────────────────────────────────────
+    "autogen": [
+        ".initiate_chat",
+        ".generate_reply",
+        ".a_initiate_chat",
+    ],
+    "autogen_core": [
+        ".send_message",
+        ".publish_message",
+        ".register",
+    ],
+    "autogen_agentchat": [
+        ".initiate_chat",
+        ".generate_reply",
+        "RoundRobinGroupChat",
+        "SelectorGroupChat",
+    ],
+
+    # ── CrewAI ─────────────────────────────────────────────────────────────────
+    "crewai": [
+        ".kickoff",
+        ".kickoff_async",
+        ".kickoff_for_each",
+        "Crew",
+        "Agent",
+        "Task",
+    ],
+
+    # ── OpenAI Swarm ───────────────────────────────────────────────────────────
+    "swarm": [
+        ".run",
+        "Swarm",
+    ],
+
+    # ── OpenAI Agents SDK ──────────────────────────────────────────────────────
+    "agents": [
+        "Runner.run",
+        "Runner.run_sync",
+        "Runner.stream",
+        "Agent",
+        "handoff",
+    ],
+
+    # ── PydanticAI ─────────────────────────────────────────────────────────────
+    "pydantic_ai": [
+        ".run",
+        ".run_sync",
+        ".run_stream",
+        "Agent",
+    ],
+
+    # ── MetaGPT ────────────────────────────────────────────────────────────────
+    "metagpt": [
+        ".run",
+        ".arun",
+        "Team",
+        "Role",
+        "Message",
+    ],
+
+    # ── CAMEL ──────────────────────────────────────────────────────────────────
+    "camel": [
+        ".step",
+        ".chat",
+        ".achat",
+        "ChatAgent",
+        "RolePlaying",
+    ],
+
+    # ── Griptape ───────────────────────────────────────────────────────────────
+    "griptape": [
+        ".run",
+        "Pipeline",
+        "Workflow",
+        "Agent",
+        "PromptTask",
+    ],
+
+    # ── AdalFlow ───────────────────────────────────────────────────────────────
+    "adalflow": [
+        ".call",
+        ".acall",
+        ".forward",
+        "Generator",
+        "Runner",
+    ],
+
+    # ── Agency Swarm ───────────────────────────────────────────────────────────
+    "agency_swarm": [
+        ".run_demo",
+        ".initiate_chat",
+        "Agency",
+        "Agent",
+    ],
+
+    # ── Swarms ─────────────────────────────────────────────────────────────────
+    "swarms": [
+        ".run",
+        ".arun",
+        "Swarm",
+        "Agent",
+        "SequentialWorkflow",
+    ],
+
+    # ── Parlant ────────────────────────────────────────────────────────────────
+    "parlant": [
+        ".run",
+        ".arun",
+        "Agent",
+        "Session",
+    ],
+
+    # ── Dynamiq ────────────────────────────────────────────────────────────────
+    "dynamiq": [
+        ".run",
+        ".arun",
+        "Workflow",
+        "Agent",
+    ],
+
+    # ── LiveKit Agents ─────────────────────────────────────────────────────────
+    "livekit": [
+        ".run",
+        ".arun",
+        "WorkerOptions",
+        "JobProcess",
+    ],
+
+    # ── TEN Framework ──────────────────────────────────────────────────────────
+    "ten": [
+        ".run",
+        ".start",
+        "TenEnv",
+        "Extension",
+    ],
+
+    # ── BeeAI Framework ────────────────────────────────────────────────────────
+    "beeai_framework": [
+        ".run",
+        ".stream",
+        "BeeAgent",
+        "ReActAgent",
+    ],
+
+    # ── PraisonAI ──────────────────────────────────────────────────────────────
+    "praisonai": [
+        ".start",
+        ".run",
+        "PraisonAI",
+        "Agent",
+    ],
+
+    # ── SuperAGI ───────────────────────────────────────────────────────────────
+    "superagi": [
+        ".run",
+        ".execute_next_action",
+        "SuperAgi",
+    ],
+
+    # ── RagaAI Catalyst ────────────────────────────────────────────────────────
+    "ragaai_catalyst": [
+        ".run",
+        ".evaluate",
+        "RagaAICatalyst",
+        "Tracer",
+    ],
+
+    # ── AgentUniverse ──────────────────────────────────────────────────────────
+    "agentuniverse": [
+        ".run",
+        ".arun",
+        "AgentManager",
+    ],
+
+    # ── Agent Squad (AWS) ──────────────────────────────────────────────────────
+    "agent_squad": [
+        ".route_request",
+        ".process_request",
+        "Orchestrator",
+    ],
+
+    # ── AgentOps ───────────────────────────────────────────────────────────────
+    "agentops": [
+        ".init",
+        ".start_session",
+        ".end_session",
+        ".record",
+    ],
+
+    # ── OpenLIT ────────────────────────────────────────────────────────────────
+    "openlit": [
+        ".init",
+        ".trace",
+    ],
+
+    # ── Giskard ────────────────────────────────────────────────────────────────
+    "giskard": [
+        ".scan",
+        ".evaluate",
+        "Model",
+        "Dataset",
+    ],
+
+    # ── SuperDuper ─────────────────────────────────────────────────────────────
+    "superduper": [
+        ".predict",
+        ".fit",
+        ".apply",
+    ],
+
+    # ── ii-agent ───────────────────────────────────────────────────────────────
+    "ii_agent": [
+        ".run",
+        ".execute",
+        "IIAgent",
+    ],
+
+    # ── LaVague ────────────────────────────────────────────────────────────────
+    "lavague": [
+        ".run",
+        ".execute",
+        "WebAgent",
+        "ActionEngine",
+    ],
+
+    # ── Cheshire Cat ───────────────────────────────────────────────────────────
+    "cheshire_cat": [
+        ".run",
+        ".send",
+        "CatClient",
+    ],
+
+    # ── Solace Agent Mesh ──────────────────────────────────────────────────────
+    "solace_agent_mesh": [
+        ".run",
+        ".publish",
+        "SolaceAgentMesh",
+    ],
+
+    # ── Misc remaining frameworks ──────────────────────────────────────────────
+    "lagent": [".run", ".step", "ActionExecutor"],
+    "patchwork": [".run", "PatchFlow"],
+    "npcpy": [".run", ".chat", "NPC"],
+    "any_agent": [".run", "AnyAgent"],
+    "sage": [".run", ".query", "Sage"],
+    "honcho": [".create", ".get", "Honcho"],
+    "uagents": [".run", ".send", "Agent", "Bureau"],
+    "agent_protocol": [".run", ".step", "Agent"],
+    "infiagent": [".run", "InfiAgent"],
+    "notte": [".run", "Notte"],
+    "redamon": [".run"],
+    "agent_framework": [".run", ".execute"],
+    "llmstack": [".run", "LLMStack"],
+    "nextpy": [".run", "App"],
 }
 
-LLM_CALLS = [
-    # Direct SDK calls
-    "chat.completions.create",
-    "messages.create",
-    # Agent framework entrypoints (generic — noisy until paired with import filter)
-    ".invoke",
-    ".ainvoke",
-    ".stream",
-    ".astream",
-    ".batch",
-    ".abatch",
-    ".run",
-    ".arun",
-    ".predict",
-    ".apredict",
-    ".kickoff",
-    ".kickoff_async",
-    ".initiate_chat",
-    ".generate_reply",
-    ".step",
-    ".chat",
-    ".achat",
-    "BaseToolOutput",
-    "LLMChain"
-]
 
 CLONE_TIMEOUT_SEC = 300
 HITS_DIR = Path(__file__).parent / "hits"
@@ -163,13 +403,13 @@ def report(matches: list[Match]) -> None:
         print(f"\n{file}")
         for m in hits:
             loc = f"L{m.line}" if m.line else "  -"
-            print(f"  {loc}  {m.kind:6}  {m.text}")
+            print(f"  {loc}  {m.kind:6}  [{m.framework}]  {m.text}")
 
     print(f"\n{len(matches)} matches across {len(by_file)} files")
 
 
 def scan_and_save(repo: Path, target: str) -> None:
-    matches = scan_repo(repo, LLM_IMPORTS, LLM_CALLS)
+    matches = scan_repo(repo, FRAMEWORK_CALLS)
     report(matches)
     dest = HITS_DIR / repo_slug(target)
     saved = save_hits(repo, matches, dest, MAX_HIT_FILE_BYTES)
