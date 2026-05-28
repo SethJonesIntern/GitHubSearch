@@ -1,17 +1,22 @@
-"""AST-based scanning of a local repo for target imports and call expressions."""
+"""AST utilities used by the transitive-invoker scanner."""
 import ast
-from dataclasses import dataclass
-from pathlib import Path
+import re
 
 SKIP_DIRS = {".git", ".venv", "venv", "env", "__pycache__", "node_modules", "dist", "build"}
 
 
-@dataclass
-class Match:
-    file: str   # path relative to the repo root
-    line: int   # 0 for file-level imports, else the call site line
-    kind: str   # "import", "call", or "class"
-    text: str   # matched package name, unparsed call expression, or class base
+def matcher(pat: str):
+    """Return a callable(text) -> bool for matching this pattern.
+
+    Method-style patterns starting with "." use substring matching so that
+    ".invoke" catches "chain.invoke", "self.runnable.invoke", etc.
+    Identifier patterns use word-boundary matching so that "BaseTool" matches
+    "BaseTool(...)" but not "BaseToolOutput" or "_parse_tool".
+    """
+    if pat.startswith("."):
+        return lambda text: pat in text
+    rx = re.compile(rf"\b{re.escape(pat)}\b")
+    return lambda text: rx.search(text) is not None
 
 
 def file_imports(tree: ast.Module) -> set[str]:
@@ -24,60 +29,3 @@ def file_imports(tree: ast.Module) -> set[str]:
         elif isinstance(node, ast.ImportFrom) and node.module:
             names.add(node.module.split(".")[0])
     return names
-
-
-def scan_source(
-    source: str,
-    target_imports: set[str],
-    target_calls: list[str],
-) -> list[tuple[int, str, str]]:
-    """Scan one source string. Returns (line, kind, text) tuples."""
-    try:
-        tree = ast.parse(source)
-    except SyntaxError:
-        return []
-
-    hits: list[tuple[int, str, str]] = []
-
-    for name in file_imports(tree) & target_imports:
-        hits.append((0, "import", name))
-
-    for node in ast.walk(tree):
-        if isinstance(node, ast.Call):
-            try:
-                text = ast.unparse(node.func)
-            except Exception:
-                continue
-            if any(pat in text for pat in target_calls):
-                hits.append((node.lineno, "call", text))
-        elif isinstance(node, ast.ClassDef):
-            for base in node.bases:
-                try:
-                    text = ast.unparse(base)
-                except Exception:
-                    continue
-                if any(pat in text for pat in target_calls):
-                    hits.append((node.lineno, "class", text))
-
-    return hits
-
-
-def scan_repo(
-    repo: Path,
-    target_imports: set[str],
-    target_calls: list[str],
-) -> list[Match]:
-    """Walk every .py file in `repo` and return all matches."""
-    repo = Path(repo)
-    matches: list[Match] = []
-    for path in repo.rglob("*.py"):
-        if any(part in SKIP_DIRS for part in path.parts):
-            continue
-        try:
-            source = path.read_text(encoding="utf-8", errors="replace")
-        except OSError:
-            continue
-        rel = path.relative_to(repo).as_posix()
-        for line, kind, text in scan_source(source, target_imports, target_calls):
-            matches.append(Match(file=rel, line=line, kind=kind, text=text))
-    return matches
