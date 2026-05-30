@@ -1,0 +1,37 @@
+{
+  "chatchat-space_Langchain-Chatchat.libs.chatchat-server.tests.api.test_openai_wrap.test_chat": {
+    "file": "chatchat-space_Langchain-Chatchat/libs/chatchat-server/tests/api/test_openai_wrap.py",
+    "line": 18,
+    "reason": "matches 'chat.completions.create' from openai"
+  },
+  "chatchat-space_Langchain-Chatchat.libs.chatchat-server.tests.integration_tests.platform_tools.test_platform_tools.test_openai_functions_tools": {
+    "file": "chatchat-space_Langchain-Chatchat/libs/chatchat-server/tests/integration_tests/platform_tools/test_platform_tools.py",
+    "line": 41,
+    "reason": "matches '.invoke' from langchain"
+  },
+  "chatchat-space_Langchain-Chatchat.libs.chatchat-server.tests.integration_tests.platform_tools.test_platform_tools.test_platform_tools": {
+    "file": "chatchat-space_Langchain-Chatchat/libs/chatchat-server/tests/integration_tests/platform_tools/test_platform_tools.py",
+    "line": 76,
+    "reason": "matches '.invoke' from langchain"
+  },
+  "chatchat-space_Langchain-Chatchat.libs.chatchat-server.tests.integration_tests.platform_tools.test_platform_tools.test_chatglm3_chat_agent_tools": {
+    "file": "chatchat-space_Langchain-Chatchat/libs/chatchat-server/tests/integration_tests/platform_tools/test_platform_tools.py",
+    "line": 112,
+    "reason": "matches '.invoke' from langchain"
+  },
+  "chatchat-space_Langchain-Chatchat.libs.chatchat-server.tests.integration_tests.platform_tools.test_platform_tools.test_qwen_chat_agent_tools": {
+    "file": "chatchat-space_Langchain-Chatchat/libs/chatchat-server/tests/integration_tests/platform_tools/test_platform_tools.py",
+    "line": 147,
+    "reason": "matches '.invoke' from langchain"
+  },
+  "chatchat-space_Langchain-Chatchat.libs.chatchat-server.tests.integration_tests.platform_tools.test_platform_tools.test_qwen_structured_chat_agent_tools": {
+    "file": "chatchat-space_Langchain-Chatchat/libs/chatchat-server/tests/integration_tests/platform_tools/test_platform_tools.py",
+    "line": 182,
+    "reason": "matches '.invoke' from langchain"
+  },
+  "chatchat-space_Langchain-Chatchat.libs.chatchat-server.tests.integration_tests.platform_tools.test_platform_tools.test_human_platform_tools": {
+    "file": "chatchat-space_Langchain-Chatchat/libs/chatchat-server/tests/integration_tests/platform_tools/test_platform_tools.py",
+    "line": 217,
+    "reason": "matches '.invoke' from langchain"
+  }
+}
