@@ -14,7 +14,7 @@ import pytest
 WRAPPER = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(WRAPPER))
 
-from transitive_invokers import index_repo, seed_invokers, iterate_once  # noqa: E402
+from transitive_invokers import index_repo, seed_invokers, build_call_graph, transitive_closure  # noqa: E402
 
 
 @pytest.fixture(scope="session")
@@ -22,7 +22,6 @@ def invokers():
     test_repo = WRAPPER / "repos" / "test_repo"
     repo_root = WRAPPER / "repos"
     functions, contexts = index_repo(test_repo, repo_root)
-    inv = seed_invokers(functions, contexts)
-    while iterate_once(functions, contexts, inv):
-        pass
-    return inv
+    seeds = seed_invokers(functions, contexts)
+    call_graph = build_call_graph(test_repo, repo_root)
+    return transitive_closure(seeds, call_graph)

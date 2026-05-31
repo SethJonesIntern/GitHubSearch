@@ -48,7 +48,7 @@ import shutil
 import stat
 import subprocess
 import sys
-from collections import defaultdict
+from collections import defaultdict, deque
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Optional
@@ -450,84 +450,85 @@ def seed_invokers(
     return invokers
 
 
-def _resolve_call(call: CallSite, ctx: FileContext, fi: FunctionInfo) -> Optional[str]:
-    """Figure out which fully-qualified function a call site is targeting.
+def build_call_graph(repo: Path, repo_root: Optional[Path] = None) -> dict[str, set[str]]:
+    """Build a static call graph for the repo using pyan3.
 
-    Four shapes we know how to handle:
-      - self.X(...) or cls.X(...) inside a method  -> enclosing_class.X
-      - ClassName.X(...)                            -> ClassName_qname.X
-      - bare_name(...)                              -> name map lookup
-      - anything longer or weirder                  -> None (we don't try)
+    pyan3 handles the edge cases our hand-rolled resolver couldn't: aliased
+    imports, inheritance, closures, decorators, relative imports, etc.
 
-    Name lookups consult fi.local_names first (function-local imports), then
-    fall back to ctx.name_map (the file's top-level bindings).  That order
-    matches Python's actual scoping rules — an inner import shadows an outer
-    binding.
+    Returns {caller_qname: {callee_qname, ...}}.  pyan3 names nodes as
+    namespace.name (e.g. "collisions.wrapper_a.wrapper"), which matches the
+    dotted qname convention that index_repo produces, so seed invoker names
+    resolve directly into the graph.
 
-    Returning None doesn't mean the call is invisible to the analysis; it
-    just means the iteration pass can't link this call to a known invoker.
-    The seed pass might still flag it via pattern matching.
+    Edges where either endpoint is unresolved (namespace is None or name
+    contains a wildcard) are dropped — they can't participate in the BFS.
     """
-    if call.root is None:
-        return None
-    parts = call.text.split(".")
-    if fi.is_method and call.root in ("self", "cls"):
-        if len(parts) == 2:
-            return f"{fi.enclosing_class}.{parts[1]}"
-        return None
-    if len(parts) == 2:
-        cls_qname = fi.local_names.get(parts[0]) or ctx.name_map.get(parts[0])
-        if cls_qname:
-            return f"{cls_qname}.{parts[1]}"
-        return None
-    if len(parts) == 1:
-        return fi.local_names.get(call.root) or ctx.name_map.get(call.root)
-    return None
+    try:
+        from pyan.analyzer import CallGraphVisitor
+    except ImportError:
+        sys.exit("pyan3 is required for the transitive pass: py -m pip install pyan3")
 
+    entry_points = [
+        str(p) for p in repo.rglob("*.py")
+        if not any(part in SKIP_DIRS for part in p.parts)
+    ]
+    if not entry_points:
+        return {}
 
-def iterate_once(
-    functions: dict[str, FunctionInfo],
-    contexts: dict[str, FileContext],
-    invokers: dict[str, str],
-) -> int:
-    """Run one pass of the transitive closure.
+    root = repo_root if repo_root is not None else repo
+    try:
+        v = CallGraphVisitor(entry_points, root=str(root))
+    except Exception as e:
+        print(f"# Warning: pyan3 analysis failed: {e}", file=sys.stderr)
+        return {}
 
-    For each function that isn't an invoker yet, look at its body's calls.
-    If any of them resolves to a known invoker, this function becomes a
-    transitive invoker too.
+    def node_qname(node) -> Optional[str]:
+        if node.namespace is None or "*" in node.name:
+            return None
+        ns = node.namespace.lstrip(".")
+        return f"{ns}.{node.name}" if ns else node.name
 
-    The crucial subtlety: we compare against `invokers` as it was at the
-    start of this pass, not as it grows during it.  Additions are buffered
-    in `new_invokers` and merged only at the end.  That's why each pass
-    walks the call graph exactly one hop further — multi-hop chains require
-    multiple passes, and the iteration count tells you how deep the wrapper
-    layers go.
-
-    Returns how many new invokers were added.  The outer caller loops until
-    this returns 0 (fixed-point reached).
-    """
-    new_invokers: dict[str, str] = {}
-    for qname, fi in functions.items():
-        if qname in invokers:
+    graph: dict[str, set[str]] = defaultdict(set)
+    for src, dsts in v.uses_edges.items():
+        src_q = node_qname(src)
+        if src_q is None:
             continue
-        # Same module-key derivation as seed_invokers: methods strip class+method,
-        # top-level functions strip just the function name.
-        if fi.is_method:
-            module = fi.enclosing_class.rsplit(".", 1)[0]
-        else:
-            module = qname.rsplit(".", 1)[0]
-        ctx = contexts.get(module)
-        if not ctx:
-            continue
-        for call in fi.calls:
-            resolved = _resolve_call(call, ctx, fi)
-            if not resolved:
+        for dst in dsts:
+            dst_q = node_qname(dst)
+            if dst_q is None:
                 continue
-            if resolved in invokers:
-                new_invokers[qname] = f"calls {resolved}"
-                break
-    invokers.update(new_invokers)
-    return len(new_invokers)
+            graph[src_q].add(dst_q)
+
+    return dict(graph)
+
+
+def transitive_closure(
+    seeds: dict[str, str],
+    call_graph: dict[str, set[str]],
+) -> dict[str, str]:
+    """BFS over the call graph from the seed invokers.
+
+    We walk the *reverse* graph (callee → callers) so that each time we
+    confirm a function is an invoker we immediately enqueue everything that
+    calls it, rather than scanning all functions repeatedly.
+    """
+    callers_of: dict[str, set[str]] = defaultdict(set)
+    for caller, callees in call_graph.items():
+        for callee in callees:
+            callers_of[callee].add(caller)
+
+    invokers = dict(seeds)
+    queue: deque[str] = deque(seeds)
+
+    while queue:
+        qname = queue.popleft()
+        for caller in callers_of.get(qname, ()):
+            if caller not in invokers:
+                invokers[caller] = f"calls {qname}"
+                queue.append(caller)
+
+    return invokers
 
 
 # ── reporting & CLI ───────────────────────────────────────────────────────────
@@ -545,7 +546,9 @@ def report(
     """
     by_file: dict[str, list[tuple[str, str, int]]] = defaultdict(list)
     for qname, reason in invokers.items():
-        fi = functions[qname]
+        fi = functions.get(qname)
+        if fi is None:
+            continue  # pyan3 resolved a module-level node we didn't index
         by_file[fi.file_path].append((qname.rsplit(".", 1)[-1], reason, fi.line))
 
     for file_path in sorted(by_file):
@@ -585,17 +588,11 @@ def main() -> None:
     seed_count = len(invokers)
     print(f"# Seed: {seed_count} direct invokers")
 
-    # Run the fixed-point loop.  Each iteration's count is one wrapper layer's
-    # worth of new transitive invokers — that distribution is itself a useful
-    # measure of how abstracted the repo's LLM use is.
-    iteration = 0
-    while True:
-        iteration += 1
-        added = iterate_once(functions, contexts, invokers)
-        if added == 0:
-            break
-        print(f"# Iteration {iteration}: +{added} (total {len(invokers)})")
+    print("# Building call graph with pyan3...")
+    call_graph = build_call_graph(target, repo_root)
+    print(f"# Call graph: {len(call_graph)} nodes")
 
+    invokers = transitive_closure(invokers, call_graph)
     transitive = len(invokers) - seed_count
     print(f"\n# Result: {len(invokers)} invokers ({seed_count} direct, {transitive} transitive)")
 

@@ -20,10 +20,11 @@ from collections import defaultdict
 from pathlib import Path
 
 from transitive_invokers import (
+    build_call_graph,
     ensure_clone,
     index_repo,
-    iterate_once,
     seed_invokers,
+    transitive_closure,
 )
 
 
@@ -93,9 +94,9 @@ def main() -> None:
     # the resulting `invokers` dict; the analysis already indexed test files
     # alongside everything else.
     functions, contexts = index_repo(target, repo_root)
-    invokers = seed_invokers(functions, contexts)
-    while iterate_once(functions, contexts, invokers):
-        pass
+    seeds = seed_invokers(functions, contexts)
+    call_graph = build_call_graph(target, repo_root)
+    invokers = transitive_closure(seeds, call_graph)
 
     # Filter down to pytest tests.  By default require BOTH conventions:
     # the file name must look like a test file, and the function name must
@@ -104,7 +105,9 @@ def main() -> None:
     for qname, reason in invokers.items():
         if not is_test_function(qname):
             continue
-        fi = functions[qname]
+        fi = functions.get(qname)
+        if fi is None:
+            continue
         if not args.include_non_test_files and not is_test_file(fi.file_path):
             continue
         test_invokers[qname] = (fi.file_path, fi.line, reason)
