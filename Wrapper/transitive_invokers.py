@@ -450,16 +450,16 @@ def seed_invokers(
     return invokers
 
 
-def build_call_graph(repo: Path, repo_root: Optional[Path] = None) -> dict[str, set[str]]:
+def build_call_graph(repo: Path) -> dict[str, set[str]]:
     """Build a static call graph for the repo using pyan3.
 
     pyan3 handles the edge cases our hand-rolled resolver couldn't: aliased
     imports, inheritance, closures, decorators, relative imports, etc.
 
     Returns {caller_qname: {callee_qname, ...}}.  pyan3 names nodes as
-    namespace.name (e.g. "collisions.wrapper_a.wrapper"), which matches the
-    dotted qname convention that index_repo produces, so seed invoker names
-    resolve directly into the graph.
+    namespace.name (e.g. "test_repo.collisions.wrapper_a.wrapper"), which
+    matches the dotted qname convention that index_repo produces, so seed
+    invoker names resolve directly into the graph.
 
     Edges where either endpoint is unresolved (namespace is None or name
     contains a wildcard) are dropped — they can't participate in the BFS.
@@ -467,7 +467,7 @@ def build_call_graph(repo: Path, repo_root: Optional[Path] = None) -> dict[str, 
     try:
         from pyan.analyzer import CallGraphVisitor
     except ImportError:
-        sys.exit("pyan3 is required for the transitive pass: py -m pip install pyan3")
+        sys.exit("pyan3 is required for the transitive pass: py -m pip install pyan3==1.2.0")
 
     entry_points = [
         str(p) for p in repo.rglob("*.py")
@@ -476,9 +476,16 @@ def build_call_graph(repo: Path, repo_root: Optional[Path] = None) -> dict[str, 
     if not entry_points:
         return {}
 
-    root = repo_root if repo_root is not None else repo
+    # pyan must name modules the same way index_repo does — e.g.
+    # "test_repo.collisions.wrapper_a".  pyan3 1.2.0's get_module_name() prepends
+    # the root directory's own basename to every module name, so we root pyan at
+    # the repo (top-level package) itself: its basename then becomes the first
+    # emitted segment, matching index_repo's names and the repo's own absolute
+    # imports.  (The `repo_root` argument is kept for the index_repo side; pyan
+    # derives the same convention from `repo` directly.)  Pinned to pyan3 1.2.0 —
+    # other releases differ in whether the root basename is included.
     try:
-        v = CallGraphVisitor(entry_points, root=str(root))
+        v = CallGraphVisitor(entry_points, root=str(repo))
     except Exception as e:
         print(f"# Warning: pyan3 analysis failed: {e}", file=sys.stderr)
         return {}
@@ -589,7 +596,7 @@ def main() -> None:
     print(f"# Seed: {seed_count} direct invokers")
 
     print("# Building call graph with pyan3...")
-    call_graph = build_call_graph(target, repo_root)
+    call_graph = build_call_graph(target)
     print(f"# Call graph: {len(call_graph)} nodes")
 
     invokers = transitive_closure(invokers, call_graph)

@@ -1,0 +1,5 @@
+# Pinned: pyan3's get_module_name() changed its module-naming convention across
+# releases, and build_call_graph relies on 1.2.0's behavior (root basename is
+# included in module names) to line up with index_repo's qnames.
+pyan3==1.2.0
+pytest

@@ -95,7 +95,7 @@ def main() -> None:
     # alongside everything else.
     functions, contexts = index_repo(target, repo_root)
     seeds = seed_invokers(functions, contexts)
-    call_graph = build_call_graph(target, repo_root)
+    call_graph = build_call_graph(target)
     invokers = transitive_closure(seeds, call_graph)
 
     # Filter down to pytest tests.  By default require BOTH conventions:
