@@ -1,42 +1,18 @@
 """Find every function in a repo that ever invokes an LLM.
 
-This answers the question: "if a test calls this function, will an LLM call
-happen?" — even when the call is buried under several wrapper layers.
+Two passes:
+  1. Seed pass. Scan each function body for calls matching a pattern in
+     FRAMEWORK_CALLS (".invoke", "chat.completions.create", "messages.create",
+     and so on). A match means the LLM call is right there in the body.
 
-The approach is two passes over the codebase:
+  2. Transitive pass. Walk the call graph backwards from the seeds: anything
+     that calls a known invoker is itself an invoker. Keep going until nothing
+     new turns up.
 
-  1. Direct (seed) pass.  Look at every function's body for call expressions
-     that match a pattern in FRAMEWORK_CALLS (".invoke", "chat.completions.create",
-     "messages.create", etc.).  Anything that matches is a direct invoker — the
-     LLM call is right there in its body.
+The transitive pass relies on a static call graph (built by pyan3) to figure
+out which function a given call actually refers to. We also keep a per-file
+name map and per-function local imports around for the seed pass and reporting.
 
-  2. Transitive pass.  Iterate: any function whose body calls something we've
-     already flagged as an invoker is itself an invoker.  Repeat until a pass
-     adds nothing new.  After N rounds, we've reached every function that's
-     within N wrapper hops of a real LLM call.
-
-The transitive pass needs to answer "this call to wrapper() — which fully
-qualified function is that, exactly?"  We answer it with a per-file name map
-(every name used in the file mapped to whatever absolute module path it
-points to), built from the file's imports and top-level definitions.  Each
-function also carries its own overlay of names imported inside its body, so
-wrappers that lazy-import their dependency aren't invisible.
-
-What's handled:
-
-  - Top-level functions and methods on top-level classes are both indexed.
-  - self.X(...) and cls.X(...) inside a method resolve to enclosing_class.X.
-  - ClassName.X(...) resolves through the file's name map.
-  - Function-local imports are tracked per-function (fi.local_names) and
-    take precedence over file-level bindings during resolution.
-
-What we can't see (Python's static-analysis ceiling):
-
-  - obj.method() where obj is an instance variable assigned from a factory —
-    resolving it would need type inference.  The seed pass still catches the
-    call if .method matches a framework pattern; just the iteration link
-    through obj is missing.
-  - Calls dispatched through registries, callbacks, or dynamic getattr.
 """
 from __future__ import annotations
 
@@ -65,18 +41,15 @@ CLONE_TIMEOUT_SEC = 300
 
 
 def _on_rm_error(func, path, _):
-    """Windows quirk: files inside .git/objects/ are marked read-only, so
-    shutil.rmtree can't delete them by default.  Flip the write bit and retry."""
+    """On Windows, files under .git/objects/ are read-only and rmtree chokes
+    on them. Make the file writable and retry the delete."""
     os.chmod(path, stat.S_IWRITE)
     func(path)
 
 
 def shallow_clone(url: str, dest: Path) -> bool:
-    """Run `git clone --depth 1` into dest.  Returns True on success.
-
-    On timeout or git failure, prints the error to stderr and returns False
-    so the caller can clean up and exit.
-    """
+    """git clone --depth 1 into dest. Returns True on success, or prints the
+    error and returns False on timeout/failure."""
     try:
         subprocess.run(
             ["git", "clone", "--depth", "1", "--quiet", url, str(dest)],
@@ -94,12 +67,8 @@ def shallow_clone(url: str, dest: Path) -> bool:
 
 
 def repo_slug(url: str) -> str:
-    """Turn a git URL into a filesystem-safe folder name.
-
-    'https://github.com/foo/bar.git' becomes 'foo_bar'.  Strips the scheme,
-    host, and .git suffix; replaces slashes with underscores so the result
-    is usable as a single directory name.
-    """
+    """Turn a git URL into a safe folder name, e.g.
+    'https://github.com/foo/bar.git' -> 'foo_bar'."""
     name = url.rstrip("/")
     if name.endswith(".git"):
         name = name[:-4]
@@ -110,12 +79,8 @@ def repo_slug(url: str) -> str:
 
 
 def ensure_clone(url: str) -> Path:
-    """Make sure the repo at `url` lives in repos/<slug>/, then return that path.
-
-    Reruns are cheap: if the directory already exists we re-use it.  If a
-    fresh clone fails partway through, we tear down the partial directory
-    before bailing.
-    """
+    """Clone url into repos/<slug>/ if it isn't there already, and return that
+    path. Reuses an existing clone; cleans up a half-finished one on failure."""
     REPOS_DIR.mkdir(exist_ok=True)
     dest = REPOS_DIR / repo_slug(url)
     if dest.exists():
@@ -134,13 +99,9 @@ def ensure_clone(url: str) -> Path:
 
 @dataclass
 class CallSite:
-    """One call expression found inside a function body.
-
-    We keep two views of the same call because the seed and iteration passes
-    ask different questions about it.  `text` is the source-form of the
-    callable (used for pattern matching against FRAMEWORK_CALLS).  `root` is
-    just the leftmost identifier (used for name-map lookups during iteration).
-    """
+    """A single call expression in a function body. We keep two views of it:
+    `text` is the unparsed callable (matched against FRAMEWORK_CALLS), and
+    `root` is just the leftmost identifier (used for name-map lookups)."""
     line: int
     text: str
     root: Optional[str]
@@ -148,14 +109,11 @@ class CallSite:
 
 @dataclass
 class FunctionInfo:
-    """One indexed function or method.
+    """An indexed function or method.
 
-    `qname` is the fully qualified name: 'chatchat.server.llm.wrapper' for a
-    top-level function, 'chatchat.server.llm.AgentClient.chat' for a method.
-
-    `local_names` is the per-function name-map overlay — names bound by
-    Import or ImportFrom statements inside this function's body.  Lets a
-    wrapper that lazy-imports its dependency still resolve correctly.
+    `qname` is the fully qualified name, e.g. 'chatchat.server.llm.wrapper' or
+    'chatchat.server.llm.AgentClient.chat'. `local_names` holds imports made
+    inside the function body, so wrappers that lazy-import still resolve.
     """
     qname: str
     file_path: str
@@ -168,13 +126,9 @@ class FunctionInfo:
 
 @dataclass
 class FileContext:
-    """Everything the analysis needs to know about a single .py file.
-
-    Lives in the `contexts` dict keyed by `current_module` (e.g.
-    'chatchat.server.llm').  `name_map` is what lets us answer "in this
-    file, what does `wrapper` actually point to?" — without it, transitive
-    resolution across files would be impossible.
-    """
+    """Per-file state, stored in `contexts` keyed by module name (e.g.
+    'chatchat.server.llm'). `name_map` resolves a bare name used in the file
+    to the fully qualified thing it points to."""
     rel_path: str
     current_pkg: str
     current_module: str
@@ -186,13 +140,9 @@ class FileContext:
 
 
 def resolve_import(level: int, module: Optional[str], current_pkg: str) -> str:
-    """Turn a relative or absolute ImportFrom into an absolute module path.
-
-    Mirrors Python's own relative-import resolution rules:
-      - level=0 is absolute (`from x import y`) — return module unchanged.
-      - level=1 is `from .y import z` — append y to current_pkg.
-      - level=2 is `from ..y import z` — strip one segment off current_pkg first.
-    """
+    """Resolve an ImportFrom to an absolute module path, following Python's own
+    rules: level 0 is absolute, level 1 is relative to current_pkg, and each
+    extra level strips another segment off current_pkg."""
     if level == 0:
         return module or ""
     pkg_parts = current_pkg.split(".") if current_pkg else []
@@ -205,12 +155,9 @@ def resolve_import(level: int, module: Optional[str], current_pkg: str) -> str:
 
 
 def root_name(node: ast.AST) -> Optional[str]:
-    """The leftmost identifier in an attribute/subscript/call chain.
-
-    For `chain.invoke(...)` returns 'chain'.  For `foo[0].bar()` returns 'foo'.
-    Returns None for expressions that don't reduce to a name — like an
-    immediately-invoked lambda or a call on a literal.
-    """
+    """The leftmost identifier in an attribute/subscript/call chain:
+    'chain' for `chain.invoke(...)`, 'foo' for `foo[0].bar()`. Returns None
+    when the expression doesn't bottom out in a plain name."""
     while True:
         if isinstance(node, ast.Name):
             return node.id
@@ -225,17 +172,12 @@ def root_name(node: ast.AST) -> Optional[str]:
 
 
 def build_name_map(tree: ast.Module, current_pkg: str, current_module: str) -> dict[str, str]:
-    """For each top-level statement in the file, record what name it binds
-    and what fully-qualified thing that name refers to.
+    """Map every top-level binding in the file to its fully qualified target:
 
-    Three import shapes plus local definitions:
-      `import foo`               -> {'foo': 'foo'}
-      `import foo.bar as fb`     -> {'fb':  'foo.bar'}
-      `from x.y import z`        -> {'z':   'x.y.z'}
-      `def my_func(): ...`       -> {'my_func': '<current_module>.my_func'}
-
-    The returned dict is what later lets the iteration step ask "in this
-    file, the call to `wrapper()` — which exact function is that?"
+      `import foo`            -> {'foo': 'foo'}
+      `import foo.bar as fb`  -> {'fb':  'foo.bar'}
+      `from x.y import z`     -> {'z':   'x.y.z'}
+      `def my_func(): ...`    -> {'my_func': '<current_module>.my_func'}
     """
     names: dict[str, str] = {}
     for node in tree.body:
@@ -259,11 +201,9 @@ def build_name_map(tree: ast.Module, current_pkg: str, current_module: str) -> d
 
 
 def derive_module(file_path: Path, repo_root: Path) -> tuple[str, str]:
-    """Translate a file's filesystem path into Python module notation.
-
-    'chatchat/server/llm.py' relative to the repo root becomes
-    ('chatchat.server', 'chatchat.server.llm').  An __init__.py file IS
-    the package, so 'chatchat/__init__.py' becomes ('', 'chatchat').
+    """Convert a file path to (package, module) in dotted notation.
+    'chatchat/server/llm.py' -> ('chatchat.server', 'chatchat.server.llm').
+    An __init__.py is its package, so 'chatchat/__init__.py' -> ('', 'chatchat').
     """
     rel = file_path.resolve().relative_to(repo_root.resolve())
     parts = list(rel.with_suffix("").parts)
@@ -281,16 +221,8 @@ def _make_function_info(
     node: ast.AST, qname: str, rel_path: str, current_pkg: str,
     is_method: bool = False, enclosing_class: Optional[str] = None,
 ) -> FunctionInfo:
-    """Index one function or method.
-
-    Walks the body once and pulls out two kinds of nodes:
-      - Call expressions, which become CallSite entries.  The seed pass
-        will pattern-match against them; the iteration pass will try to
-        resolve them.
-      - Import / ImportFrom statements, which become fi.local_names entries.
-        Without these, a function that lazy-imports its dependency would
-        look like it's calling a name that doesn't exist anywhere.
-    """
+    """Index one function or method by walking its body once and collecting
+    every call (as a CallSite) and every local import (into fi.local_names)."""
     fi = FunctionInfo(
         qname=qname,
         file_path=rel_path,
@@ -326,11 +258,8 @@ def collect_functions(
     tree: ast.Module, current_module: str, current_pkg: str, rel_path: str,
 ) -> list[FunctionInfo]:
     """Index every top-level function and every method on a top-level class.
-
-    Nested functions and methods on inner (non-top-level) classes are
-    intentionally skipped.  They're rare in practice and tracking them adds
-    scope-handling complexity that doesn't pay off in measured recall.
-    """
+    We skip nested functions and methods on inner classes: rare enough that
+    the extra scope handling isn't worth it for the recall it buys."""
     out: list[FunctionInfo] = []
     for node in tree.body:
         if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
@@ -350,17 +279,10 @@ def collect_functions(
 def index_repo(
     target: Path, repo_root: Path
 ) -> tuple[dict[str, FunctionInfo], dict[str, FileContext]]:
-    """Read every .py file in `target` and return the two dicts that drive
-    the rest of the pipeline.
-
-    `functions` is keyed by qualified name and holds one FunctionInfo per
-    indexed function/method.  `contexts` is keyed by module qualified name
-    and holds one FileContext per file (its name map, which frameworks it
-    imports, etc.).
-
-    Files that don't parse cleanly are silently skipped — we don't want one
-    syntax error in a giant repo to abort the analysis.
-    """
+    """Parse every .py file under `target` and return the two dicts the rest
+    of the pipeline runs on: `functions` (qname -> FunctionInfo) and
+    `contexts` (module -> FileContext). Files that fail to parse are skipped,
+    so one syntax error doesn't sink the whole run."""
     functions: dict[str, FunctionInfo] = {}
     contexts: dict[str, FileContext] = {}
     framework_keys = set(FRAMEWORK_CALLS.keys())
@@ -399,30 +321,26 @@ def seed_invokers(
     functions: dict[str, FunctionInfo],
     contexts: dict[str, FileContext],
 ) -> dict[str, str]:
-    """Find every function whose body literally contains an LLM call.
+    """Find every function whose body directly contains an LLM call.
 
-    For each function, check its call expressions against the patterns of
-    whichever frameworks its file imports.  The file's imported_frameworks
-    set restricts the search so a file that only uses langchain doesn't get
-    its calls tested against openai's patterns (and vice versa).
+    Each function's calls are only tested against the patterns for the
+    frameworks its file actually imports, so a langchain file never gets
+    checked against openai patterns and vice versa.
 
     Returns {qname -> "matches 'X' from <framework>"} for every direct hit.
     """
-    # Pre-compile every pattern's matcher once, grouped by framework.  In a
-    # large repo we'll evaluate these matchers many times per function.
+    # Compile each pattern's matcher once up front; we run them a lot.
     matchers_by_fw: dict[str, list[tuple[str, callable]]] = {
         fw: [(pat, matcher(pat)) for pat in pats]
         for fw, pats in FRAMEWORK_CALLS.items()
     }
     invokers: dict[str, str] = {}
 
-    # Group functions by their containing module so we can look up the
-    # file's imported_frameworks once per module instead of per function.
+    # Group by module so we look up imported_frameworks once per file.
     funcs_by_module: dict[str, list[FunctionInfo]] = defaultdict(list)
     for qname, fi in functions.items():
-        # For a method 'pkg.mod.Cls.method' the *module* is 'pkg.mod' — we
-        # need to strip both the class and method off.  For a top-level
-        # function 'pkg.mod.fn' we only strip the function name.
+        # Strip down to the module: for a method 'pkg.mod.Cls.method' that
+        # means dropping both class and method; for 'pkg.mod.fn' just the name.
         if fi.is_method:
             module = fi.enclosing_class.rsplit(".", 1)[0]
         else:
@@ -450,24 +368,23 @@ def seed_invokers(
     return invokers
 
 
-def build_call_graph(repo: Path) -> dict[str, set[str]]:
-    """Build a static call graph for the repo using pyan3.
+def build_call_graph(repo: Path, repo_root: Optional[Path] = None) -> dict[str, set[str]]:
+    """Build a static call graph for the repo with pyan3.
 
-    pyan3 handles the edge cases our hand-rolled resolver couldn't: aliased
-    imports, inheritance, closures, decorators, relative imports, etc.
+    pyan3 handles the cases our own resolver couldn't: aliased imports,
+    inheritance, closures, decorators, relative imports, and so on.
 
-    Returns {caller_qname: {callee_qname, ...}}.  pyan3 names nodes as
-    namespace.name (e.g. "test_repo.collisions.wrapper_a.wrapper"), which
-    matches the dotted qname convention that index_repo produces, so seed
-    invoker names resolve directly into the graph.
+    Returns {caller_qname: {callee_qname, ...}}. pyan3 names nodes as
+    namespace.name relative to `root` (e.g. "test_repo.collisions.wrapper_a.wrapper"),
+    which matches index_repo's dotted qnames, so seed names line up directly.
 
-    Edges where either endpoint is unresolved (namespace is None or name
-    contains a wildcard) are dropped — they can't participate in the BFS.
+    Edges with an unresolved endpoint (no namespace, or a wildcard name) are
+    dropped since they can't take part in the BFS.
     """
     try:
         from pyan.analyzer import CallGraphVisitor
     except ImportError:
-        sys.exit("pyan3 is required for the transitive pass: py -m pip install pyan3==1.2.0")
+        sys.exit("pyan3 is required for the transitive pass: py -m pip install pyan3==2.6.0")
 
     entry_points = [
         str(p) for p in repo.rglob("*.py")
@@ -476,16 +393,10 @@ def build_call_graph(repo: Path) -> dict[str, set[str]]:
     if not entry_points:
         return {}
 
-    # pyan must name modules the same way index_repo does — e.g.
-    # "test_repo.collisions.wrapper_a".  pyan3 1.2.0's get_module_name() prepends
-    # the root directory's own basename to every module name, so we root pyan at
-    # the repo (top-level package) itself: its basename then becomes the first
-    # emitted segment, matching index_repo's names and the repo's own absolute
-    # imports.  (The `repo_root` argument is kept for the index_repo side; pyan
-    # derives the same convention from `repo` directly.)  Pinned to pyan3 1.2.0 —
-    # other releases differ in whether the root basename is included.
+    # Root pyan at the same base index_repo uses so module names match.
+    root = repo_root if repo_root is not None else repo
     try:
-        v = CallGraphVisitor(entry_points, root=str(repo))
+        v = CallGraphVisitor(entry_points, root=str(root))
     except Exception as e:
         print(f"# Warning: pyan3 analysis failed: {e}", file=sys.stderr)
         return {}
@@ -514,12 +425,9 @@ def transitive_closure(
     seeds: dict[str, str],
     call_graph: dict[str, set[str]],
 ) -> dict[str, str]:
-    """BFS over the call graph from the seed invokers.
-
-    We walk the *reverse* graph (callee → callers) so that each time we
-    confirm a function is an invoker we immediately enqueue everything that
-    calls it, rather than scanning all functions repeatedly.
-    """
+    """BFS out from the seed invokers over the reversed call graph
+    (callee -> callers). Each confirmed invoker enqueues its callers, so we
+    never rescan the whole function set."""
     callers_of: dict[str, set[str]] = defaultdict(set)
     for caller, callees in call_graph.items():
         for callee in callees:
@@ -546,16 +454,14 @@ def report(
     functions: dict[str, FunctionInfo],
     contexts: dict[str, FileContext],
 ) -> None:
-    """Print the invoker set grouped by file, sorted by line within each file.
-
-    The reason string makes direct ("matches '.invoke' from langchain") and
-    transitive ("calls some.qname") cases distinguishable at a glance.
-    """
+    """Print the invokers grouped by file and sorted by line. The reason
+    string tells direct hits ("matches '.invoke' from langchain") apart from
+    transitive ones ("calls some.qname") at a glance."""
     by_file: dict[str, list[tuple[str, str, int]]] = defaultdict(list)
     for qname, reason in invokers.items():
         fi = functions.get(qname)
         if fi is None:
-            continue  # pyan3 resolved a module-level node we didn't index
+            continue  # a module-level node pyan3 resolved but we didn't index
         by_file[fi.file_path].append((qname.rsplit(".", 1)[-1], reason, fi.line))
 
     for file_path in sorted(by_file):
@@ -577,7 +483,7 @@ def main() -> None:
                         help="Also write the invoker map to this JSON file")
     args = parser.parse_args()
 
-    # URL targets get cloned; everything else has to be an existing directory.
+    # URLs get cloned; anything else must be an existing directory.
     if args.target.startswith(("http://", "https://", "git@")):
         target = ensure_clone(args.target).resolve()
     else:
@@ -596,7 +502,7 @@ def main() -> None:
     print(f"# Seed: {seed_count} direct invokers")
 
     print("# Building call graph with pyan3...")
-    call_graph = build_call_graph(target)
+    call_graph = build_call_graph(target, repo_root)
     print(f"# Call graph: {len(call_graph)} nodes")
 
     invokers = transitive_closure(invokers, call_graph)

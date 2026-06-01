@@ -23,5 +23,5 @@ def invokers():
     repo_root = WRAPPER / "repos"
     functions, contexts = index_repo(test_repo, repo_root)
     seeds = seed_invokers(functions, contexts)
-    call_graph = build_call_graph(test_repo)
+    call_graph = build_call_graph(test_repo, repo_root)
     return transitive_closure(seeds, call_graph)

@@ -1,8 +1,9 @@
-# Full pinned environment from the base machine (Python 3.9.0).
-# Reproduce on the laptop with:  py -3.9 -m pip install -r requirements.txt
-#
-# NOTE: pyan3 is pinned to 1.2.0 deliberately — build_call_graph in
-# Wrapper/transitive_invokers.py depends on 1.2.0's module-naming behavior.
+# WARNING: this is a freeze of the Python 3.9 environment, which uses the OLD
+# pyan3 1.2.0 that under-resolves imports and crashes on large repos (~8 vs ~43
+# transitive invokers on chatchat).  The working setup is Python 3.14 + pyan3
+# 2.6.0 (see Wrapper/requirements.txt).  Prefer running the analysis under 3.14;
+# this file is kept only as a record of the 3.9 box and is NOT the target env.
+# The pyan3 line below is bumped to 2.6.0 so installing this doesn't pull 1.2.0.
 annotated-types==0.7.0
 anyio==4.12.1
 astor==0.8.1
@@ -37,7 +38,7 @@ pandas==2.2.1
 pipenv==2025.0.4
 platformdirs==4.4.0
 pluggy==1.6.0
-pyan3==1.2.0
+pyan3==2.6.0
 PyCG==0.0.8
 pydantic==2.13.3
 pydantic_core==2.46.3

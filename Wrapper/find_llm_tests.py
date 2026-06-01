@@ -1,15 +1,13 @@
 """Find every pytest test in a repo that ever invokes an LLM.
 
-This is the natural next step after transitive_invokers.py.  That script
-flags every function (top-level or method) that transitively triggers an
-LLM call.  This script filters that result down to *pytest tests* — files
-named like `test_*.py` or `*_test.py`, and functions whose name starts
-with `test_`.
+Picks up where transitive_invokers.py leaves off. That script flags every
+function or method that triggers an LLM call (directly or transitively); this
+one keeps just the pytest tests among them: files named test_*.py or *_test.py
+with functions whose names start with 'test_'.
 
-The output answers: "which tests in this repo are non-deterministic
-because they exercise LLM-invoking code?"  Each row pairs a test function
-with the reason it's flagged — either a direct pattern hit ("matches
-'.invoke' from langchain") or a transitive link ("calls some.qname").
+The result tells you which tests are non-deterministic because they exercise
+LLM-invoking code. Each row carries the reason it was flagged, either a direct
+hit ("matches '.invoke' from langchain") or a transitive link ("calls some.qname").
 """
 from __future__ import annotations
 
@@ -38,9 +36,8 @@ def is_test_file(rel_path: str) -> bool:
 
 
 def is_test_function(qname: str) -> bool:
-    """A function/method is a pytest test if the last segment of its qname
-    starts with 'test_'.  This covers both bare `def test_foo(...)` and
-    methods like `TestX.test_y`."""
+    """True if the last segment of the qname starts with 'test_'. Covers both
+    plain `def test_foo(...)` and methods like `TestX.test_y`."""
     return qname.rsplit(".", 1)[-1].startswith("test_")
 
 
@@ -90,17 +87,16 @@ def main() -> None:
             sys.exit(f"not a URL and not a directory: {args.target}")
     repo_root = (args.repo_root or target.parent).resolve()
 
-    # Run the full transitive_invokers pipeline.  Everything we need is in
-    # the resulting `invokers` dict; the analysis already indexed test files
-    # alongside everything else.
+    # Run the full transitive_invokers pipeline; test files were indexed
+    # along with everything else, so the result already has what we need.
     functions, contexts = index_repo(target, repo_root)
     seeds = seed_invokers(functions, contexts)
-    call_graph = build_call_graph(target)
+    call_graph = build_call_graph(target, repo_root)
     invokers = transitive_closure(seeds, call_graph)
 
-    # Filter down to pytest tests.  By default require BOTH conventions:
-    # the file name must look like a test file, and the function name must
-    # start with 'test_'.  --include-non-test-files relaxes the file check.
+    # Keep only pytest tests. By default both conventions must hold: the file
+    # name looks like a test file and the function name starts with 'test_'.
+    # --include-non-test-files drops the file-name requirement.
     test_invokers: dict[str, tuple[str, int, str]] = {}
     for qname, reason in invokers.items():
         if not is_test_function(qname):
@@ -122,7 +118,7 @@ def main() -> None:
     report(test_invokers)
 
     if args.json:
-        # Serialize in a stable shape: {qname: {file, line, reason}}.
+        # Stable shape: {qname: {file, line, reason}}.
         out = {
             qname: {"file": fp, "line": ln, "reason": reason}
             for qname, (fp, ln, reason) in test_invokers.items()
