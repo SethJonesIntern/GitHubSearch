@@ -1,7 +1,9 @@
 """Phase 1: search GitHub for candidate application repos and write a list.
 
-No expensive enrichment — only the search API + cheap filters we can do from
-the search response alone. Output feeds analyze_tests.py.
+Uses GitHub code search to find repos that actually contain the framework's
+import statement (not just a keyword mention somewhere in the repo), then
+fetches repo metadata to apply cheap search-time filters (stars, last-push
+date). Output feeds analyze_tests.py.
 """
 import argparse
 import csv
@@ -42,10 +44,71 @@ FRAMEWORK_SEARCH_TERMS = [
     "patchwork", "agent-protocol", "npcpy", "infiagent", "any-agent", "sage",
 ]
 
+# Import-statement substring to search for in source code, per framework.
+# Where the framework appears in the Hasan et al. table, we reuse their exact
+# pattern; the rest are best-effort guesses at the importable module name and
+# may need correction (PyPI/repo names don't always match import names).
+FRAMEWORK_IMPORT_PATTERNS: Dict[str, List[str]] = {
+    "langchain": ["from langchain import", "from langchain."],
+    "langgraph": ["from langgraph."],
+    "autogen": ["from autogen_ext.", "from autogen_agentchat."],
+    "crewai": ["from crewai"],
+    "pydantic-ai": ["from pydantic_ai import"],
+    "metagpt": ["from metagpt."],
+    "camel-ai": ["from camel."],
+    "agency-swarm": ["from agency_swarm import"],
+    "griptape": ["from griptape."],
+    "agentops": ["from agentops"],
+    "openai-agents": ["from agents import"],
+    "adalflow": ["from adalflow."],
+    "swarms": ["from swarms import"],
+    "parlant": ["from parlant import"],
+    "praisonai": ["from praisonaiagents import"],
+    "dynamiq": ["from dynamiq import"],
+    "openai-swarm": ["from swarm import"],
+    "superagi": ["from superagi import"],
+    "agent-zero": ["from agent_zero import"],
+    "ragaai-catalyst": ["from ragaai_catalyst"],
+    "pentestgpt": ["from pentestgpt import"],
+    "ten-framework": ["from ten_framework import"],
+    "livekit-agents": ["from livekit.agents"],
+    "agent-squad": ["from agent_squad."],
+    "lavague": ["from lavague."],
+    "superduper": ["from superduper import"],
+    "giskard": ["from giskard import"],
+    "ii-agent": ["from ii_agent import"],
+    "beeai-framework": ["from beeai_framework import"],
+    "cheshire-cat": ["from cat."],
+    "solace-agent-mesh": ["from solace_agent_mesh import"],
+    "openlit": ["import openlit"],
+    "nextpy": ["from nextpy import"],
+    "llmstack": ["from llmstack import"],
+    "lagent": ["from lagent."],
+    "agentuniverse": ["from agentuniverse."],
+    "notte": ["from notte import"],
+    "demogpt": ["from demogpt_agenthub"],
+    "pentestagent": ["from pentestagent import"],
+    "redamon": ["from redamon import"],
+    "honcho": ["from honcho import"],
+    "uagents": ["from uagents import"],
+    "openakita": ["from openakita import"],
+    "patchwork": ["from patchwork import"],
+    "agent-protocol": ["from agent_protocol import"],
+    "npcpy": ["from npcpy import"],
+    "infiagent": ["from infiagent import"],
+    "any-agent": ["from any_agent import"],
+    "sage": ["from sage import"],
+}
+
 OUTPUT_CSV = os.path.join(os.path.dirname(os.path.abspath(__file__)), "application_candidates_v2.csv")
 PROGRESS_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".search_progress.json")
 PER_PAGE = 100
 MAX_PAGES_PER_QUERY = 3
+# GitHub code search caps results at 1000 (10 pages of 100) and is rate
+# limited to ~30 req/min for authenticated users — much stricter than the
+# normal REST limit, hence the extra sleep between pages/patterns.
+CODE_SEARCH_MAX_PAGES = 10
+CODE_SEARCH_SLEEP_SECONDS = 2.5
 MIN_STARS = 10
 PUSHED_AFTER = "2025-04-14"
 MIN_LIFETIME_DAYS = 30
@@ -152,19 +215,33 @@ def has_test_file(owner: str, repo: str, branch: str) -> bool:
     )
 
 
-def search_repositories(query: str, max_pages: int = MAX_PAGES_PER_QUERY) -> List[dict]:
+def search_code(query: str, max_pages: int = CODE_SEARCH_MAX_PAGES) -> List[dict]:
+    """Search code content for an exact import-statement substring. Returns
+    raw code-search items — one per matching file, so the same repo can
+    appear many times and must be deduped by the caller."""
     results = []
     for page in range(1, max_pages + 1):
         params = {"q": query, "per_page": PER_PAGE, "page": page}
-        resp = github_get(f"{API_BASE}/search/repositories", params=params)
+        resp = github_get(f"{API_BASE}/search/code", params=params)
         items = resp.json().get("items", [])
         if not items:
             break
         results.extend(items)
-        print(f"  Page {page}: got {len(items)} repos")
+        print(f"  Page {page}: got {len(items)} code matches")
         if len(items) < PER_PAGE:
             break
+        time.sleep(CODE_SEARCH_SLEEP_SECONDS)
     return results
+
+
+def get_repo_details(owner: str, repo: str) -> Optional[dict]:
+    """Fetch full repo metadata. Code search results only embed a minimal
+    repo stub (no stars/pushed_at/etc.), so this is needed to apply the
+    search-time filters that used to be expressed as query qualifiers."""
+    resp = github_get(f"{API_BASE}/repos/{owner}/{repo}", allow_404=True)
+    if resp is None:
+        return None
+    return resp.json()
 
 
 def compute_lifetime_days(created_at: Optional[str], pushed_at: Optional[str]) -> Optional[int]:
@@ -256,22 +333,57 @@ def main():
     for full_name, saved in progress["candidates"].items():
         candidates[full_name] = (saved["item"], saved["frameworks"])
 
+    pushed_after_dt = datetime.fromisoformat(f"{PUSHED_AFTER}T00:00:00+00:00")
+
     for term in FRAMEWORK_SEARCH_TERMS:
         if term in completed_terms:
             continue
-        query = f'"{term}" language:Python stars:>{MIN_STARS} pushed:>{PUSHED_AFTER}'
-        print(f"Searching: {query}")
-        repos = search_repositories(query)
-        for item in repos:
-            full_name = item["full_name"]
-            if full_name.lower() in framework_repos:
-                continue
-            if item.get("fork") or item.get("archived") or item.get("disabled"):
-                continue
-            if full_name not in candidates:
-                candidates[full_name] = (item, [term])
-            else:
-                candidates[full_name][1].append(term)
+        patterns = FRAMEWORK_IMPORT_PATTERNS.get(term, [])
+        if not patterns:
+            print(f"  No import pattern configured for '{term}', skipping")
+            progress["completed_search_terms"].append(term)
+            save_progress(progress)
+            continue
+
+        for pattern in patterns:
+            query = f'"{pattern}" language:Python'
+            print(f"Searching code: {query}")
+            code_items = search_code(query)
+            print(f"  {len(code_items)} matching files")
+
+            for code_item in code_items:
+                repo_stub = code_item.get("repository") or {}
+                full_name = repo_stub.get("full_name")
+                if not full_name:
+                    continue
+                if full_name.lower() in framework_repos:
+                    continue
+                if full_name in candidates:
+                    if term not in candidates[full_name][1]:
+                        candidates[full_name][1].append(term)
+                    continue
+
+                # New candidate — fetch full repo metadata (code search results
+                # only carry a minimal stub) and apply search-time filters.
+                owner, repo = full_name.split("/", 1)
+                details = get_repo_details(owner, repo)
+                if details is None:
+                    continue
+                if details.get("fork") or details.get("archived") or details.get("disabled"):
+                    continue
+                if (details.get("stargazers_count") or 0) < MIN_STARS:
+                    continue
+                pushed_at = details.get("pushed_at")
+                try:
+                    pushed_dt = datetime.fromisoformat(pushed_at.replace("Z", "+00:00")) if pushed_at else None
+                except Exception:
+                    pushed_dt = None
+                if pushed_dt is None or pushed_dt <= pushed_after_dt:
+                    continue
+
+                candidates[full_name] = (details, [term])
+
+            time.sleep(CODE_SEARCH_SLEEP_SECONDS)
 
         # Mark this search term as done and persist candidates so far
         progress["completed_search_terms"].append(term)
@@ -281,7 +393,6 @@ def main():
         }
         save_progress(progress)
         print(f"  Progress saved ({len(progress['completed_search_terms'])}/{len(FRAMEWORK_SEARCH_TERMS)} terms)")
-        time.sleep(1)
 
     print(f"\nUnique non-framework candidates: {len(candidates)}")
 
