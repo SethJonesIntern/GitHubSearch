@@ -263,6 +263,12 @@ def load_progress() -> dict:
         "completed_search_terms": [],
         "processed_repos": [],
         "candidates": {},
+        # Per-framework popularity signal captured at search time: how many
+        # distinct repos contained the framework's import pattern (before the
+        # stars/push-date quality filters). Lost unless recorded here, so we
+        # can report an import-frequency distribution after the run.
+        "framework_repo_counts": {},
+        "framework_file_matches": {},
         "stats": {"kept": 0, "dropped_lifetime": 0, "dropped_contributors": 0,
                   "dropped_commit_freq": 0, "dropped_no_tests": 0},
     }
@@ -345,17 +351,25 @@ def main():
             save_progress(progress)
             continue
 
+        term_repos: set = set()
+        term_file_matches = 0
         for pattern in patterns:
             query = f'"{pattern}" language:Python'
             print(f"Searching code: {query}")
             code_items = search_code(query)
             print(f"  {len(code_items)} matching files")
+            term_file_matches += len(code_items)
 
             for code_item in code_items:
                 repo_stub = code_item.get("repository") or {}
                 full_name = repo_stub.get("full_name")
                 if not full_name:
                     continue
+                # Count distinct repos importing this framework (popularity
+                # signal), before applying any quality filter. Exclude the
+                # framework's own repos so self-imports don't inflate it.
+                if full_name.lower() not in framework_repos:
+                    term_repos.add(full_name)
                 if full_name.lower() in framework_repos:
                     continue
                 if full_name in candidates:
@@ -384,6 +398,10 @@ def main():
                 candidates[full_name] = (details, [term])
 
             time.sleep(CODE_SEARCH_SLEEP_SECONDS)
+
+        # Record this framework's import-popularity counts before moving on.
+        progress.setdefault("framework_repo_counts", {})[term] = len(term_repos)
+        progress.setdefault("framework_file_matches", {})[term] = term_file_matches
 
         # Mark this search term as done and persist candidates so far
         progress["completed_search_terms"].append(term)

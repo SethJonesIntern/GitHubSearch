@@ -7,23 +7,19 @@ FRAMEWORK_CALLS: dict[str, list[str]] = {
     # ── Direct LLM SDKs ────────────────────────────────────────────────────────
     "openai": [
         "chat.completions.create", "completions.create", "responses.create",
-               "images.generate"
+        "images.generate", "chat.completions.parse", "responses.parse",
+        "responses.stream", "embeddings.create", "moderations.create",
+        "audio.transcriptions.create", "audio.translations.create",
+        "audio.speech.create",
     ],
     "anthropic": [
         "messages.create",
         "messages.stream",
         "messages.count_tokens",
+        "completions.create",
+        "messages.batches.create",
+        "beta.messages.create",
     ],
-
-    #  # ── chatchat ───────────────────────────────────────────────────────────
-    # "chatchat": [
-    #     "get_ChatOpenAI",
-    #     "query_prometheus",
-    #     "create_platform_knowledge_agent",
-    #     "create_platform_tools_agent",
-    #     "create_qwen_chat_agent",
-    #     "create_chat_agent"
-    # ],
 
 
     # ── LangChain family ───────────────────────────────────────────────────────
@@ -34,34 +30,41 @@ FRAMEWORK_CALLS: dict[str, list[str]] = {
         ".invoke", ".ainvoke", ".stream", ".astream", ".batch", ".abatch",
         ".predict", ".apredict", ".predict_messages", ".apredict_messages",
         ".generate", ".agenerate", ".run", ".arun", ".call", ".acall",
+        ".astream_events", ".stream_events", ".transform", ".atransform",
     ],
     "langchain_openai": [
         ".invoke", ".ainvoke", ".stream", ".astream", ".batch", ".abatch",
         ".predict", ".apredict", ".predict_messages", ".apredict_messages",
         ".generate", ".agenerate", ".run", ".arun", ".call", ".acall",
+        ".astream_events", ".stream_events", ".transform", ".atransform",
     ],
     "langchain_anthropic": [
         ".invoke", ".ainvoke", ".stream", ".astream", ".batch", ".abatch",
         ".predict", ".apredict", ".predict_messages", ".apredict_messages",
         ".generate", ".agenerate", ".run", ".arun", ".call", ".acall",
+        ".astream_events", ".stream_events", ".transform", ".atransform",
     ],
     "langchain_community": [
         ".invoke", ".ainvoke", ".stream", ".astream", ".batch", ".abatch",
         ".predict", ".apredict", ".predict_messages", ".apredict_messages",
         ".generate", ".agenerate", ".run", ".arun", ".call", ".acall",
+        ".astream_events", ".stream_events", ".transform", ".atransform",
     ],
     "langchain_core": [
         ".invoke", ".ainvoke", ".stream", ".astream", ".batch", ".abatch",
         ".predict", ".apredict", ".predict_messages", ".apredict_messages",
         ".generate", ".agenerate", ".run", ".arun", ".call", ".acall",
+        ".astream_events", ".stream_events", ".transform", ".atransform",
     ],
     "langchain_experimental": [
         ".invoke", ".ainvoke", ".stream", ".astream", ".batch", ".abatch",
         ".predict", ".apredict", ".predict_messages", ".apredict_messages",
         ".generate", ".agenerate", ".run", ".arun", ".call", ".acall",
+        ".astream_events", ".stream_events", ".transform", ".atransform",
     ],
     "langgraph": [
         ".invoke", ".ainvoke", ".stream", ".astream", ".batch", ".abatch",
+        ".astream_events", ".stream_events",
     ],
 
     # ── AutoGen family ─────────────────────────────────────────────────────────
@@ -69,6 +72,9 @@ FRAMEWORK_CALLS: dict[str, list[str]] = {
         ".initiate_chat",
         ".generate_reply",
         ".a_initiate_chat",
+        ".a_generate_reply",
+        ".send",
+        ".a_send",
     ],
     "autogen_core": [
         ".send_message",
@@ -77,6 +83,10 @@ FRAMEWORK_CALLS: dict[str, list[str]] = {
     "autogen_agentchat": [
         ".initiate_chat",
         ".generate_reply",
+        ".run",
+        ".run_stream",
+        ".on_messages",
+        ".on_messages_stream",
     ],
 
     # ── CrewAI ─────────────────────────────────────────────────────────────────
@@ -84,6 +94,7 @@ FRAMEWORK_CALLS: dict[str, list[str]] = {
         ".kickoff",
         ".kickoff_async",
         ".kickoff_for_each",
+        ".kickoff_for_each_async",
     ],
 
     # ── OpenAI Swarm ───────────────────────────────────────────────────────────
@@ -96,6 +107,7 @@ FRAMEWORK_CALLS: dict[str, list[str]] = {
         "Runner.run",
         "Runner.run_sync",
         "Runner.stream",
+        "Runner.run_streamed",
     ],
 
     # ── PydanticAI ─────────────────────────────────────────────────────────────
@@ -109,6 +121,7 @@ FRAMEWORK_CALLS: dict[str, list[str]] = {
     "metagpt": [
         ".run",
         ".arun",
+        ".run_project",
         "Team",
         "Role",
         "Message",
@@ -117,6 +130,7 @@ FRAMEWORK_CALLS: dict[str, list[str]] = {
     # ── CAMEL ──────────────────────────────────────────────────────────────────
     "camel": [
         ".step",
+        ".astep",
         ".chat",
         ".achat",
         "ChatAgent",
@@ -145,6 +159,8 @@ FRAMEWORK_CALLS: dict[str, list[str]] = {
     "agency_swarm": [
         ".run_demo",
         ".initiate_chat",
+        ".get_completion",
+        ".get_completion_stream",
         "Agency",
         "Agent",
     ],
@@ -178,6 +194,8 @@ FRAMEWORK_CALLS: dict[str, list[str]] = {
     "livekit": [
         ".run",
         ".arun",
+        ".generate_reply",
+        ".say",
         "WorkerOptions",
         "JobProcess",
     ],
@@ -193,6 +211,7 @@ FRAMEWORK_CALLS: dict[str, list[str]] = {
     # ── BeeAI Framework ────────────────────────────────────────────────────────
     "beeai_framework": [
         ".run",
+        ".arun",
         ".stream",
         "BeeAgent",
         "ReActAgent",
@@ -202,6 +221,7 @@ FRAMEWORK_CALLS: dict[str, list[str]] = {
     "praisonai": [
         ".start",
         ".run",
+        ".chat",
         "PraisonAI",
         "Agent",
     ],
@@ -265,11 +285,12 @@ FRAMEWORK_CALLS: dict[str, list[str]] = {
     ],
 
     # ── ii-agent ───────────────────────────────────────────────────────────────
-    "ii_agent": [
-        ".run",
-        ".execute",
-        "IIAgent",
-    ],
+    # Commented out — run-as-app; no confirmable LLM invoker surfaced in the repo.
+    # "ii_agent": [
+    #     ".run",
+    #     ".execute",
+    #     "IIAgent",
+    # ],
 
     # ── LaVague ────────────────────────────────────────────────────────────────
     "lavague": [
@@ -294,18 +315,19 @@ FRAMEWORK_CALLS: dict[str, list[str]] = {
     ],
 
     # ── Misc remaining frameworks ──────────────────────────────────────────────
-    "lagent": [".run", ".step", "ActionExecutor"],
+    "lagent": [".run", ".step", ".chat", ".stream_chat", ".forward", "ActionExecutor"],
     "patchwork": [".run", "PatchFlow"],
-    "npcpy": [".run", ".chat", "NPC"],
-    "any_agent": [".run", "AnyAgent"],
+    "npcpy": [".run", ".chat", "get_llm_response", "NPC"],
+    "any_agent": [".run", ".run_async", "AnyAgent"],
     "sage": [".run", ".query", "Sage"],
-    "honcho": [".create", ".get", "Honcho"],
+    "honcho": [".create", ".get", ".chat", "Honcho"],
     "uagents": [".run", ".send", "Agent", "Bureau"],
     "agent_protocol": [".run", ".step", "Agent"],
     "infiagent": [".run", "InfiAgent"],
     "notte": [".run", "Notte"],
     "redamon": [".run"],
-    "agent_framework": [".run", ".execute"],
+    "agent_framework": [".run", ".execute", ".run_stream"],
     "llmstack": [".run", "LLMStack"],
-    "nextpy": [".run", "App"],
+    # Commented out — web framework (Reflex fork); no user-called LLM invoker found.
+    # "nextpy": [".run", "App"],
 }
