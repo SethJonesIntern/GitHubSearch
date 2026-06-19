@@ -1,23 +1,46 @@
-"""Phase 1: search GitHub for candidate application repos and write a list.
+"""Stage 2 — Application search.
 
-Uses GitHub code search to find repos that actually contain the framework's
-import statement (not just a keyword mention somewhere in the repo), then
-fetches repo metadata to apply cheap search-time filters (stars, last-push
-date). Output feeds analyze_tests.py.
+Same GitHub-search method as the prior work by Mehedi Hasan: for each agent
+framework we know an import-statement pattern; we search GitHub *code* for that
+exact substring so a repo only matches if it genuinely imports the framework,
+dedupe matches to repos, then apply quality filters.
+
+Filter conditions (per spec):
+  * Language: Python
+  * Not forked / archived / disabled
+  * Stars >= 10
+  * Pushed after 2025-04-14 (recent activity)
+  * Contributor count >= 2 (well-maintained)
+  * Lifetime > ~1 month (created->pushed >= 30 days; not a one-off)
+  * Commit frequency >= 2 commits/month
+  * Test files >= 1
+
+Outputs (under pipeline/artifacts/):
+  applications.csv               kept candidates (the downstream work list)
+  application_metadata.csv       rich metadata for every enriched repo + is_candidate
+  applications_filter_stats.json the filter funnel (per-step drop counts)
+  .search_progress.json          resumable progress
 """
 import argparse
 import csv
 import json
 import os
 import re
+import sys
 import time
 from datetime import datetime
+from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 
 import requests
 from dotenv import load_dotenv
 
-load_dotenv()
+# Make the repo-root `pipeline` package importable regardless of CWD.
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from pipeline import paths  # noqa: E402
+
+load_dotenv()  # repo-root / CWD .env
+load_dotenv(paths.REPO_ROOT / "Frameworks" / ".env")  # token lives here
 GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
 
 API_BASE = "https://api.github.com"
@@ -28,105 +51,74 @@ HEADERS = {
 if GITHUB_TOKEN:
     HEADERS["Authorization"] = f"Bearer {GITHUB_TOKEN}"
 
-FRAMEWORKS_CSV = os.path.join(
-    os.path.dirname(os.path.abspath(__file__)), "..", "Frameworks", "github_agent_framework_candidates.csv"
-)
+OUTPUT_CSV = paths.APPLICATIONS_CSV
+METADATA_CSV = paths.APPLICATION_METADATA_CSV
+STATS_JSON = paths.APPLICATIONS_FILTER_STATS_JSON
+PROGRESS_FILE = paths.SEARCH_PROGRESS_JSON
+FRAMEWORKS_CSV = paths.FRAMEWORKS_CSV
 
-FRAMEWORK_SEARCH_TERMS = [
-    "langchain", "langgraph", "autogen", "crewai", "pydantic-ai", "metagpt",
-    "camel-ai", "agency-swarm", "griptape", "agentops", "openai-agents",
-    "adalflow", "swarms", "parlant", "praisonai", "dynamiq", "openai-swarm",
-    "superagi", "agent-zero", "ragaai-catalyst", "pentestgpt", "ten-framework",
-    "livekit-agents", "agent-squad", "lavague", "superduper", "giskard",
-    "ii-agent", "beeai-framework", "cheshire-cat", "solace-agent-mesh",
-    "openlit", "nextpy", "llmstack", "lagent", "agentuniverse", "notte",
-    "demogpt", "pentestagent", "redamon", "honcho", "uagents", "openakita",
-    "patchwork", "agent-protocol", "npcpy", "infiagent", "any-agent", "sage",
-]
-
-# Import-statement substring to search for in source code, per framework.
-# Where the framework appears in the Hasan et al. table, we reuse their exact
-# pattern; the rest are best-effort guesses at the importable module name and
-# may need correction (PyPI/repo names don't always match import names).
-FRAMEWORK_IMPORT_PATTERNS: Dict[str, List[str]] = {
-    "langchain": ["from langchain import", "from langchain."],
-    "langgraph": ["from langgraph."],
-    "autogen": ["from autogen_ext.", "from autogen_agentchat."],
-    "crewai": ["from crewai"],
-    "pydantic-ai": ["from pydantic_ai import"],
-    "metagpt": ["from metagpt."],
-    "camel-ai": ["from camel."],
-    "agency-swarm": ["from agency_swarm import"],
-    "griptape": ["from griptape."],
-    "agentops": ["from agentops"],
-    "openai-agents": ["from agents import"],
-    "adalflow": ["from adalflow."],
-    "swarms": ["from swarms import"],
-    "parlant": ["from parlant import"],
-    "praisonai": ["from praisonaiagents import"],
-    "dynamiq": ["from dynamiq import"],
-    "openai-swarm": ["from swarm import"],
-    "superagi": ["from superagi import"],
-    "agent-zero": ["from agent_zero import"],
-    "ragaai-catalyst": ["from ragaai_catalyst"],
-    "pentestgpt": ["from pentestgpt import"],
-    "ten-framework": ["from ten_framework import"],
-    "livekit-agents": ["from livekit.agents"],
-    "agent-squad": ["from agent_squad."],
-    "lavague": ["from lavague."],
-    "superduper": ["from superduper import"],
-    "giskard": ["from giskard import"],
-    "ii-agent": ["from ii_agent import"],
-    "beeai-framework": ["from beeai_framework import"],
-    "cheshire-cat": ["from cat."],
-    "solace-agent-mesh": ["from solace_agent_mesh import"],
-    "openlit": ["import openlit"],
-    "nextpy": ["from nextpy import"],
-    "llmstack": ["from llmstack import"],
-    "lagent": ["from lagent."],
-    "agentuniverse": ["from agentuniverse."],
-    "notte": ["from notte import"],
-    "demogpt": ["from demogpt_agenthub"],
-    "pentestagent": ["from pentestagent import"],
-    "redamon": ["from redamon import"],
-    "honcho": ["from honcho import"],
-    "uagents": ["from uagents import"],
-    "openakita": ["from openakita import"],
-    "patchwork": ["from patchwork import"],
-    "agent-protocol": ["from agent_protocol import"],
-    "npcpy": ["from npcpy import"],
-    "infiagent": ["from infiagent import"],
-    "any-agent": ["from any_agent import"],
-    "sage": ["from sage import"],
-}
-
-OUTPUT_CSV = os.path.join(os.path.dirname(os.path.abspath(__file__)), "application_candidates_v2.csv")
-PROGRESS_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".search_progress.json")
 PER_PAGE = 100
-MAX_PAGES_PER_QUERY = 3
-# GitHub code search caps results at 1000 (10 pages of 100) and is rate
-# limited to ~30 req/min for authenticated users — much stricter than the
-# normal REST limit, hence the extra sleep between pages/patterns.
+# GitHub code search caps at 1000 results and is rate limited to ~30 req/min,
+# much stricter than the normal REST limit — hence the extra sleeps.
 CODE_SEARCH_MAX_PAGES = 10
 CODE_SEARCH_SLEEP_SECONDS = 2.5
+
+# ── filter thresholds (per spec) ──────────────────────────────────────────────
 MIN_STARS = 10
 PUSHED_AFTER = "2025-04-14"
 MIN_LIFETIME_DAYS = 30
 MIN_CONTRIBUTORS = 2
-MIN_COMMITS_PER_MONTH = 2  # strictly greater than this
+MIN_COMMITS_PER_MONTH = 2   # "at least 2 commits a month" -> >= 2
+MIN_TEST_FILES = 1
 
 TEST_FILE_RE = re.compile(r"(^|/)test_[^/]+\.py$")
 LAST_PAGE_RE = re.compile(r'[?&]page=(\d+)>;\s*rel="last"')
 
 
-def load_framework_repos() -> set:
-    exclusions = set()
-    if os.path.exists(FRAMEWORKS_CSV):
-        with open(FRAMEWORKS_CSV, "r", encoding="utf-8") as f:
-            reader = csv.DictReader(f)
-            for row in reader:
-                exclusions.add(row["full_name"].lower())
-    return exclusions
+# ── framework list (Stage 1) loading + import-pattern derivation ──────────────
+#
+# Stage 2 derives what to search from Stage 1's output: each framework repo in
+# frameworks.csv carries an `import_names` column (the importable top-level
+# package names, read from the repo's __init__.py structure — see Stage 1
+# derive_import_names). We turn each import name into code-search patterns, so
+# there's no separate hand-maintained import-pattern list to drift.
+
+
+def load_frameworks() -> List[dict]:
+    """Stage 1 frameworks as [{full_name, import_names: [...]}, ...].
+    Errors if the frameworks CSV is missing — Stage 1 must run first."""
+    if not FRAMEWORKS_CSV.exists():
+        raise FileNotFoundError(
+            f"{FRAMEWORKS_CSV} not found — run Stage 1 (Frameworks/GithubSearch.py) first.")
+    out = []
+    with open(FRAMEWORKS_CSV, "r", encoding="utf-8") as f:
+        for row in csv.DictReader(f):
+            full_name = row.get("full_name")
+            if not full_name:
+                continue
+            names = [n.strip() for n in (row.get("import_names") or "").split(";") if n.strip()]
+            out.append({"full_name": full_name, "import_names": names})
+    return out
+
+
+def import_patterns(name: str) -> List[str]:
+    """Code-search substrings for a single importable package name. Covers the
+    `from X import ...`, `from X.sub import ...`, and `import X` usages."""
+    return [f"from {name} import", f"from {name}.", f"import {name}"]
+
+
+def build_import_index(frameworks: List[dict]) -> Dict[str, List[str]]:
+    """Map each importable name -> the framework repo(s) that ship it. The name
+    is Stage 2's search unit; the value records which Stage 1 framework(s) it
+    belongs to (usually one, but a collision could map to several)."""
+    index: Dict[str, set] = {}
+    for fw in frameworks:
+        for name in fw["import_names"]:
+            index.setdefault(name, set()).add(fw["full_name"])
+    return {name: sorted(fws) for name, fws in index.items()}
+
+
+# ── HTTP ──────────────────────────────────────────────────────────────────────
 
 
 def github_get(url: str, params: Optional[dict] = None, allow_404: bool = False,
@@ -166,7 +158,6 @@ def _last_page_from_link(link_header: str) -> Optional[int]:
 
 
 def count_contributors(owner: str, repo: str) -> int:
-    """Return the number of contributors (anonymous included). Cheap: one call."""
     resp = github_get(
         f"{API_BASE}/repos/{owner}/{repo}/contributors",
         params={"per_page": 1, "anon": "true"},
@@ -182,15 +173,10 @@ def count_contributors(owner: str, repo: str) -> int:
 
 
 def count_commits(owner: str, repo: str, branch: Optional[str] = None) -> int:
-    """Return the total commit count on the default branch."""
     params = {"per_page": 1}
     if branch:
         params["sha"] = branch
-    resp = github_get(
-        f"{API_BASE}/repos/{owner}/{repo}/commits",
-        params=params,
-        allow_404=True,
-    )
+    resp = github_get(f"{API_BASE}/repos/{owner}/{repo}/commits", params=params, allow_404=True)
     if resp is None:
         return 0
     last = _last_page_from_link(resp.headers.get("Link", ""))
@@ -200,25 +186,26 @@ def count_commits(owner: str, repo: str, branch: Optional[str] = None) -> int:
     return len(items) if isinstance(items, list) else 0
 
 
-def has_test_file(owner: str, repo: str, branch: str) -> bool:
+def tree_metrics(owner: str, repo: str, branch: str) -> Tuple[int, bool]:
+    """From one tree fetch: number of test_*.py files and whether CI exists
+    (a .github/workflows/ entry). (0, False) on failure."""
     resp = github_get(
         f"{API_BASE}/repos/{owner}/{repo}/git/trees/{branch}",
         params={"recursive": "1"},
         allow_404=True,
     )
     if resp is None:
-        return False
+        return 0, False
     tree = resp.json().get("tree", [])
-    return any(
-        item.get("type") == "blob" and TEST_FILE_RE.search(item.get("path", ""))
-        for item in tree
+    test_file_count = sum(
+        1 for item in tree
+        if item.get("type") == "blob" and TEST_FILE_RE.search(item.get("path", ""))
     )
+    has_ci = any(item.get("path", "").startswith(".github/workflows/") for item in tree)
+    return test_file_count, has_ci
 
 
 def search_code(query: str, max_pages: int = CODE_SEARCH_MAX_PAGES) -> List[dict]:
-    """Search code content for an exact import-statement substring. Returns
-    raw code-search items — one per matching file, so the same repo can
-    appear many times and must be deduped by the caller."""
     results = []
     for page in range(1, max_pages + 1):
         params = {"q": query, "per_page": PER_PAGE, "page": page}
@@ -235,13 +222,8 @@ def search_code(query: str, max_pages: int = CODE_SEARCH_MAX_PAGES) -> List[dict
 
 
 def get_repo_details(owner: str, repo: str) -> Optional[dict]:
-    """Fetch full repo metadata. Code search results only embed a minimal
-    repo stub (no stars/pushed_at/etc.), so this is needed to apply the
-    search-time filters that used to be expressed as query qualifiers."""
     resp = github_get(f"{API_BASE}/repos/{owner}/{repo}", allow_404=True)
-    if resp is None:
-        return None
-    return resp.json()
+    return resp.json() if resp is not None else None
 
 
 def compute_lifetime_days(created_at: Optional[str], pushed_at: Optional[str]) -> Optional[int]:
@@ -255,22 +237,73 @@ def compute_lifetime_days(created_at: Optional[str], pushed_at: Optional[str]) -
         return None
 
 
+# ── candidate decision (pure, testable) ───────────────────────────────────────
+
+
+def passes_search_filters(details: dict, pushed_after_dt: datetime) -> Tuple[bool, Optional[str]]:
+    """Search-time filters applied to the full repo payload, before the costlier
+    enrichment. Per spec: Python primary language, not fork/archived/disabled,
+    stars >= MIN_STARS, pushed after the cutoff. Returns (ok, reason_if_dropped).
+
+    Note: code search matched a Python *file*; this additionally requires the
+    repo's *primary* language to be Python, which the code-search qualifier alone
+    does not guarantee.
+    """
+    if details.get("fork") or details.get("archived") or details.get("disabled"):
+        return False, "fork_archived_disabled"
+    if (details.get("language") or "") != "Python":
+        return False, "not_python"
+    if (details.get("stargazers_count") or 0) < MIN_STARS:
+        return False, "stars"
+    pushed_at = details.get("pushed_at")
+    try:
+        pushed_dt = datetime.fromisoformat(pushed_at.replace("Z", "+00:00")) if pushed_at else None
+    except Exception:
+        pushed_dt = None
+    if pushed_dt is None or pushed_dt <= pushed_after_dt:
+        return False, "stale"
+    return True, None
+
+
+def evaluate_candidate(lifetime_days: Optional[int], contributors: Optional[int],
+                       commits_per_month: Optional[float],
+                       test_file_count: Optional[int]) -> Tuple[bool, Optional[str]]:
+    """Apply the spec quality filters to computed signals. Sequential
+    attribution (lifetime -> contributors -> commit_freq -> tests): returns the
+    first condition that fails, or (True, None) when all pass."""
+    if (lifetime_days or 0) < MIN_LIFETIME_DAYS:
+        return False, "lifetime"
+    if (contributors or 0) < MIN_CONTRIBUTORS:
+        return False, "contributors"
+    if (commits_per_month or 0) < MIN_COMMITS_PER_MONTH:
+        return False, "commit_freq"
+    if (test_file_count or 0) < MIN_TEST_FILES:
+        return False, "no_tests"
+    return True, None
+
+
+def commits_per_month_of(total_commits: int, lifetime_days: Optional[int]) -> Optional[float]:
+    if not lifetime_days:
+        return None
+    months = max(lifetime_days / 30.0, 1.0)
+    return round(total_commits / months, 2)
+
+
+# ── progress / IO ─────────────────────────────────────────────────────────────
+
+
 def load_progress() -> dict:
-    if os.path.exists(PROGRESS_FILE):
+    if PROGRESS_FILE.exists():
         with open(PROGRESS_FILE, "r", encoding="utf-8") as f:
             return json.load(f)
     return {
         "completed_search_terms": [],
         "processed_repos": [],
         "candidates": {},
-        # Per-framework popularity signal captured at search time: how many
-        # distinct repos contained the framework's import pattern (before the
-        # stars/push-date quality filters). Lost unless recorded here, so we
-        # can report an import-frequency distribution after the run.
         "framework_repo_counts": {},
         "framework_file_matches": {},
         "stats": {"kept": 0, "dropped_lifetime": 0, "dropped_contributors": 0,
-                  "dropped_commit_freq": 0, "dropped_no_tests": 0},
+                  "dropped_commit_freq": 0, "dropped_no_tests": 0, "enriched": 0},
     }
 
 
@@ -279,231 +312,315 @@ def save_progress(progress: dict):
         json.dump(progress, f, indent=2)
 
 
-def load_existing_rows() -> List[dict]:
-    if not os.path.exists(OUTPUT_CSV):
+def load_existing_rows(path: Path) -> List[dict]:
+    if not path.exists():
         return []
-    with open(OUTPUT_CSV, "r", encoding="utf-8") as f:
+    with open(path, "r", encoding="utf-8") as f:
         return list(csv.DictReader(f))
 
 
-FIELDNAMES = [
+CANDIDATE_FIELDS = [
     "full_name", "html_url", "clone_url", "default_branch", "description",
     "matched_frameworks", "stars", "forks", "language", "topics", "open_issues",
     "size_kb", "created_at", "updated_at", "pushed_at", "license", "lifetime_days",
     "contributors", "total_commits", "commits_per_month",
 ]
 
+METADATA_FIELDS = [
+    "full_name", "html_url", "clone_url", "default_branch", "description", "homepage",
+    "owner_login", "owner_type", "matched_frameworks",
+    "stars", "forks", "watchers", "subscribers_count", "network_count",
+    "open_issues", "size_kb", "language", "topics", "license",
+    "visibility", "is_template", "allow_forking",
+    "has_issues", "has_projects", "has_wiki", "has_pages", "has_discussions",
+    "has_downloads", "has_ci",
+    "fork", "archived", "disabled", "created_at", "updated_at", "pushed_at",
+    "lifetime_days", "contributors", "total_commits", "commits_per_month",
+    "test_file_count", "is_candidate", "drop_reason",
+]
 
-def append_row_to_csv(row: dict):
-    write_header = not os.path.exists(OUTPUT_CSV) or os.path.getsize(OUTPUT_CSV) == 0
-    with open(OUTPUT_CSV, "a", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=FIELDNAMES, quoting=csv.QUOTE_ALL)
+
+def append_row(path: Path, fieldnames: List[str], row: dict):
+    write_header = not path.exists() or path.stat().st_size == 0
+    with open(path, "a", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=fieldnames, quoting=csv.QUOTE_ALL)
         if write_header:
             writer.writeheader()
         writer.writerow(row)
 
 
+def ensure_csv_header(path: Path, fieldnames: List[str]):
+    """Create the CSV with just its header if it doesn't exist yet, so the file
+    always exists for downstream stages even when zero rows are written."""
+    if not path.exists() or path.stat().st_size == 0:
+        with open(path, "w", newline="", encoding="utf-8") as f:
+            csv.DictWriter(f, fieldnames=fieldnames, quoting=csv.QUOTE_ALL).writeheader()
+
+
+def build_candidate_row(item: dict, frameworks: List[str], lifetime_days, contributors,
+                        total_commits, commits_per_month) -> dict:
+    return {
+        "full_name": item.get("full_name"),
+        "html_url": item.get("html_url"),
+        "clone_url": item.get("clone_url"),
+        "default_branch": item.get("default_branch") or "main",
+        "description": item.get("description"),
+        "matched_frameworks": ", ".join(sorted(set(frameworks))),
+        "stars": item.get("stargazers_count"),
+        "forks": item.get("forks_count"),
+        "language": item.get("language"),
+        "topics": ",".join(item.get("topics", [])) if item.get("topics") else "",
+        "open_issues": item.get("open_issues_count"),
+        "size_kb": item.get("size"),
+        "created_at": item.get("created_at"),
+        "updated_at": item.get("updated_at"),
+        "pushed_at": item.get("pushed_at"),
+        "license": (item.get("license") or {}).get("spdx_id"),
+        "lifetime_days": lifetime_days,
+        "contributors": contributors,
+        "total_commits": total_commits,
+        "commits_per_month": commits_per_month,
+    }
+
+
+def build_metadata_row(item: dict, frameworks: List[str], lifetime_days, contributors,
+                       total_commits, commits_per_month, test_file_count, has_ci,
+                       is_candidate: bool, drop_reason: Optional[str]) -> dict:
+    owner = item.get("owner") or {}
+    return {
+        "full_name": item.get("full_name"),
+        "html_url": item.get("html_url"),
+        "clone_url": item.get("clone_url"),
+        "default_branch": item.get("default_branch") or "main",
+        "description": item.get("description"),
+        "homepage": item.get("homepage"),
+        "owner_login": owner.get("login"),
+        "owner_type": owner.get("type"),
+        "matched_frameworks": ", ".join(sorted(set(frameworks))),
+        "stars": item.get("stargazers_count"),
+        "forks": item.get("forks_count"),
+        "watchers": item.get("watchers_count"),
+        "subscribers_count": item.get("subscribers_count"),
+        "network_count": item.get("network_count"),
+        "open_issues": item.get("open_issues_count"),
+        "size_kb": item.get("size"),
+        "language": item.get("language"),
+        "topics": ",".join(item.get("topics", [])) if item.get("topics") else "",
+        "license": (item.get("license") or {}).get("spdx_id"),
+        "visibility": item.get("visibility"),
+        "is_template": item.get("is_template"),
+        "allow_forking": item.get("allow_forking"),
+        "has_issues": item.get("has_issues"),
+        "has_projects": item.get("has_projects"),
+        "has_wiki": item.get("has_wiki"),
+        "has_pages": item.get("has_pages"),
+        "has_discussions": item.get("has_discussions"),
+        "has_downloads": item.get("has_downloads"),
+        "has_ci": has_ci,
+        "fork": item.get("fork"),
+        "archived": item.get("archived"),
+        "disabled": item.get("disabled"),
+        "created_at": item.get("created_at"),
+        "updated_at": item.get("updated_at"),
+        "pushed_at": item.get("pushed_at"),
+        "lifetime_days": lifetime_days,
+        "contributors": contributors,
+        "total_commits": total_commits,
+        "commits_per_month": commits_per_month,
+        "test_file_count": test_file_count,
+        "is_candidate": is_candidate,
+        "drop_reason": drop_reason or "",
+    }
+
+
+def write_filter_stats(progress: dict, n_candidates: int):
+    stats = progress["stats"]
+    funnel = {
+        "candidates_after_search_filters": n_candidates,
+        "enriched": stats.get("enriched", 0),
+        "dropped_lifetime": stats.get("dropped_lifetime", 0),
+        "dropped_contributors": stats.get("dropped_contributors", 0),
+        "dropped_commit_freq": stats.get("dropped_commit_freq", 0),
+        "dropped_no_tests": stats.get("dropped_no_tests", 0),
+        "kept": stats.get("kept", 0),
+    }
+    with open(STATS_JSON, "w", encoding="utf-8") as f:
+        json.dump(funnel, f, indent=2)
+    return funnel
+
+
+# ── main ──────────────────────────────────────────────────────────────────────
+
+
 def main():
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(description=__doc__,
+                                     formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--resume", action="store_true",
                         help="Resume from previous progress instead of starting fresh")
+    parser.add_argument("--max-terms", type=int, default=None,
+                        help="Search only the first N import names (smoke runs)")
+    parser.add_argument("--code-pages", type=int, default=None,
+                        help="Cap code-search pages per pattern (smoke runs)")
+    parser.add_argument("--max-repos", type=int, default=None,
+                        help="Enrich at most N candidates this run (smoke runs)")
     args = parser.parse_args()
 
-    framework_repos = load_framework_repos()
-    print(f"Loaded {len(framework_repos)} framework repos to exclude")
+    code_pages = args.code_pages or CODE_SEARCH_MAX_PAGES
+
+    paths.ensure_dirs()
+
+    # Derive what to search from Stage 1's output: each framework's importable
+    # package name(s) become the search units; their repos are also excluded.
+    frameworks = load_frameworks()
+    framework_repos = {fw["full_name"].lower() for fw in frameworks}
+    import_index = build_import_index(frameworks)   # import name -> [framework full_names]
+    search_names = sorted(import_index)
+    if args.max_terms:
+        search_names = search_names[:args.max_terms]
+    print(f"Loaded {len(frameworks)} Stage 1 frameworks -> "
+          f"{len(import_index)} importable names to search "
+          f"(searching {len(search_names)})")
 
     if args.resume:
         progress = load_progress()
         completed_terms = set(progress["completed_search_terms"])
         processed_repos = set(progress["processed_repos"])
-        existing_rows = load_existing_rows()
-        processed_repos |= {row["full_name"] for row in existing_rows}
+        processed_repos |= {row["full_name"] for row in load_existing_rows(METADATA_CSV)}
         if processed_repos:
-            print(f"Resuming: {len(processed_repos)} repos already processed, skipping them")
+            print(f"Resuming: {len(processed_repos)} repos already processed")
         if completed_terms:
-            print(f"Resuming: {len(completed_terms)}/{len(FRAMEWORK_SEARCH_TERMS)} search terms already completed")
+            print(f"Resuming: {len(completed_terms)} import names already searched")
     else:
-        # Fresh start — wipe old progress and CSV
-        for f in (PROGRESS_FILE, OUTPUT_CSV):
-            if os.path.exists(f):
-                os.remove(f)
+        for f in (PROGRESS_FILE, OUTPUT_CSV, METADATA_CSV, STATS_JSON):
+            if f.exists():
+                f.unlink()
         progress = load_progress()
         completed_terms = set()
         processed_repos = set()
         print("Starting fresh run")
 
-    # --- Phase 1: Search (resumable per search term) ---
-    candidates: Dict[str, Tuple[dict, List[str]]] = {}
+    # Always create the output CSVs (header-only) up front, so downstream stages
+    # find applications.csv even if zero candidates are kept this run.
+    ensure_csv_header(OUTPUT_CSV, CANDIDATE_FIELDS)
+    ensure_csv_header(METADATA_CSV, METADATA_FIELDS)
 
-    # Reload candidates saved from prior runs (only relevant with --resume)
+    # --- Phase 1: code search (resumable per search term) ---
+    candidates: Dict[str, Tuple[dict, List[str]]] = {}
     for full_name, saved in progress["candidates"].items():
         candidates[full_name] = (saved["item"], saved["frameworks"])
 
     pushed_after_dt = datetime.fromisoformat(f"{PUSHED_AFTER}T00:00:00+00:00")
 
-    for term in FRAMEWORK_SEARCH_TERMS:
-        if term in completed_terms:
-            continue
-        patterns = FRAMEWORK_IMPORT_PATTERNS.get(term, [])
-        if not patterns:
-            print(f"  No import pattern configured for '{term}', skipping")
-            progress["completed_search_terms"].append(term)
-            save_progress(progress)
+    for name in search_names:
+        if name in completed_terms:
             continue
 
-        term_repos: set = set()
-        term_file_matches = 0
-        for pattern in patterns:
+        name_repos: set = set()
+        name_file_matches = 0
+        for pattern in import_patterns(name):
             query = f'"{pattern}" language:Python'
             print(f"Searching code: {query}")
-            code_items = search_code(query)
+            code_items = search_code(query, max_pages=code_pages)
             print(f"  {len(code_items)} matching files")
-            term_file_matches += len(code_items)
+            name_file_matches += len(code_items)
 
             for code_item in code_items:
                 repo_stub = code_item.get("repository") or {}
                 full_name = repo_stub.get("full_name")
                 if not full_name:
                     continue
-                # Count distinct repos importing this framework (popularity
-                # signal), before applying any quality filter. Exclude the
-                # framework's own repos so self-imports don't inflate it.
                 if full_name.lower() not in framework_repos:
-                    term_repos.add(full_name)
+                    name_repos.add(full_name)
                 if full_name.lower() in framework_repos:
                     continue
                 if full_name in candidates:
-                    if term not in candidates[full_name][1]:
-                        candidates[full_name][1].append(term)
+                    if name not in candidates[full_name][1]:
+                        candidates[full_name][1].append(name)
                     continue
 
-                # New candidate — fetch full repo metadata (code search results
-                # only carry a minimal stub) and apply search-time filters.
                 owner, repo = full_name.split("/", 1)
                 details = get_repo_details(owner, repo)
                 if details is None:
                     continue
-                if details.get("fork") or details.get("archived") or details.get("disabled"):
-                    continue
-                if (details.get("stargazers_count") or 0) < MIN_STARS:
-                    continue
-                pushed_at = details.get("pushed_at")
-                try:
-                    pushed_dt = datetime.fromisoformat(pushed_at.replace("Z", "+00:00")) if pushed_at else None
-                except Exception:
-                    pushed_dt = None
-                if pushed_dt is None or pushed_dt <= pushed_after_dt:
+                ok, _reason = passes_search_filters(details, pushed_after_dt)
+                if not ok:
                     continue
 
-                candidates[full_name] = (details, [term])
-
+                candidates[full_name] = (details, [name])
             time.sleep(CODE_SEARCH_SLEEP_SECONDS)
 
-        # Record this framework's import-popularity counts before moving on.
-        progress.setdefault("framework_repo_counts", {})[term] = len(term_repos)
-        progress.setdefault("framework_file_matches", {})[term] = term_file_matches
-
-        # Mark this search term as done and persist candidates so far
-        progress["completed_search_terms"].append(term)
+        # Popularity signal per import name: distinct non-framework repos importing it.
+        progress.setdefault("framework_repo_counts", {})[name] = len(name_repos)
+        progress.setdefault("framework_file_matches", {})[name] = name_file_matches
+        progress["completed_search_terms"].append(name)
         progress["candidates"] = {
-            fn: {"item": item, "frameworks": fws}
-            for fn, (item, fws) in candidates.items()
+            fn: {"item": item, "frameworks": fws} for fn, (item, fws) in candidates.items()
         }
         save_progress(progress)
-        print(f"  Progress saved ({len(progress['completed_search_terms'])}/{len(FRAMEWORK_SEARCH_TERMS)} terms)")
+        print(f"  Progress saved ({len(progress['completed_search_terms'])}/{len(search_names)} names)")
 
     print(f"\nUnique non-framework candidates: {len(candidates)}")
 
-    # --- Phase 2: Enrichment (resumable per repo) ---
-    new_rows = 0
-    dropped = {"lifetime": 0, "contributors": 0, "commit_freq": 0, "no_tests": 0, "skipped": 0}
+    # --- Phase 2: enrichment (resumable per repo) ---
+    # Compute all signals for every enriched repo (no short-circuit) so the
+    # metadata file is complete; the candidate decision is then a pure call.
+    reason_to_stat = {
+        "lifetime": "dropped_lifetime",
+        "contributors": "dropped_contributors",
+        "commit_freq": "dropped_commit_freq",
+        "no_tests": "dropped_no_tests",
+    }
+    new_candidates = 0
+    enriched_this_run = 0
     total = len(candidates)
 
     for idx, (full_name, (item, frameworks)) in enumerate(candidates.items(), 1):
         if full_name in processed_repos:
-            dropped["skipped"] += 1
             continue
-
+        if args.max_repos is not None and enriched_this_run >= args.max_repos:
+            print(f"  --max-repos {args.max_repos} reached; stopping enrichment")
+            break
+        enriched_this_run += 1
         owner, repo = full_name.split("/", 1)
         branch = item.get("default_branch") or "main"
 
         lifetime_days = compute_lifetime_days(item.get("created_at"), item.get("pushed_at"))
-        if (lifetime_days or 0) < MIN_LIFETIME_DAYS:
-            dropped["lifetime"] += 1
-            progress["processed_repos"].append(full_name)
-            progress["stats"]["dropped_lifetime"] += 1
-            save_progress(progress)
-            continue
-
         contributors = count_contributors(owner, repo)
-        if contributors < MIN_CONTRIBUTORS:
-            dropped["contributors"] += 1
-            print(f"  [{idx}/{total}] {full_name}: drop (contributors={contributors})")
-            progress["processed_repos"].append(full_name)
-            progress["stats"]["dropped_contributors"] += 1
-            save_progress(progress)
-            continue
-
         total_commits = count_commits(owner, repo, branch)
-        months = max(lifetime_days / 30.0, 1.0)
-        commits_per_month = total_commits / months
-        if commits_per_month <= MIN_COMMITS_PER_MONTH:
-            dropped["commit_freq"] += 1
-            print(f"  [{idx}/{total}] {full_name}: drop (commits/mo={commits_per_month:.2f})")
-            progress["processed_repos"].append(full_name)
-            progress["stats"]["dropped_commit_freq"] += 1
-            save_progress(progress)
-            continue
+        commits_per_month = commits_per_month_of(total_commits, lifetime_days)
+        test_file_count, has_ci = tree_metrics(owner, repo, branch)
 
-        if not has_test_file(owner, repo, branch):
-            dropped["no_tests"] += 1
-            print(f"  [{idx}/{total}] {full_name}: drop (no test files)")
-            progress["processed_repos"].append(full_name)
-            progress["stats"]["dropped_no_tests"] += 1
-            save_progress(progress)
-            continue
+        is_candidate, drop_reason = evaluate_candidate(
+            lifetime_days, contributors, commits_per_month, test_file_count)
 
-        print(f"  [{idx}/{total}] {full_name}: KEEP (contribs={contributors}, "
-              f"commits/mo={commits_per_month:.2f})")
-        row = {
-            "full_name": full_name,
-            "html_url": item.get("html_url"),
-            "clone_url": item.get("clone_url"),
-            "default_branch": branch,
-            "description": item.get("description"),
-            "matched_frameworks": ", ".join(sorted(set(frameworks))),
-            "stars": item.get("stargazers_count"),
-            "forks": item.get("forks_count"),
-            "language": item.get("language"),
-            "topics": ",".join(item.get("topics", [])) if item.get("topics") else "",
-            "open_issues": item.get("open_issues_count"),
-            "size_kb": item.get("size"),
-            "created_at": item.get("created_at"),
-            "updated_at": item.get("updated_at"),
-            "pushed_at": item.get("pushed_at"),
-            "license": (item.get("license") or {}).get("spdx_id"),
-            "lifetime_days": lifetime_days,
-            "contributors": contributors,
-            "total_commits": total_commits,
-            "commits_per_month": round(commits_per_month, 2),
-        }
-        append_row_to_csv(row)
+        # Always write the rich metadata row.
+        append_row(METADATA_CSV, METADATA_FIELDS, build_metadata_row(
+            item, frameworks, lifetime_days, contributors, total_commits,
+            commits_per_month, test_file_count, has_ci, is_candidate, drop_reason))
+
+        progress["stats"]["enriched"] += 1
+        if is_candidate:
+            append_row(OUTPUT_CSV, CANDIDATE_FIELDS, build_candidate_row(
+                item, frameworks, lifetime_days, contributors, total_commits, commits_per_month))
+            progress["stats"]["kept"] += 1
+            new_candidates += 1
+            print(f"  [{idx}/{total}] {full_name}: KEEP "
+                  f"(contribs={contributors}, commits/mo={commits_per_month})")
+        else:
+            progress["stats"][reason_to_stat[drop_reason]] += 1
+            print(f"  [{idx}/{total}] {full_name}: drop ({drop_reason})")
+
         progress["processed_repos"].append(full_name)
-        progress["stats"]["kept"] += 1
         save_progress(progress)
-        new_rows += 1
 
-    existing_count = len(load_existing_rows())
-    print(f"\nNew rows added: {new_rows}. Total in CSV: {existing_count}.")
-    print(f"Skipped (already processed): {dropped['skipped']}")
-    print(f"Dropped this run: "
-          f"lifetime={dropped['lifetime']}, "
-          f"contributors={dropped['contributors']}, "
-          f"commit_freq={dropped['commit_freq']}, "
-          f"no_tests={dropped['no_tests']}")
-    print(f"\nCumulative stats from progress file: {json.dumps(progress['stats'])}")
-    print(f"\nResults in {OUTPUT_CSV}")
-    print(f"To start fresh, delete {PROGRESS_FILE} and {OUTPUT_CSV}")
+    funnel = write_filter_stats(progress, len(candidates))
+    kept_total = len(load_existing_rows(OUTPUT_CSV))
+    print("\nFilter funnel:")
+    for k, v in funnel.items():
+        print(f"  {k:<32}: {v}")
+    print(f"\nNew candidates this run: {new_candidates}. Total in {OUTPUT_CSV.name}: {kept_total}.")
+    print(f"Metadata rows in {METADATA_CSV.name}: {len(load_existing_rows(METADATA_CSV))}")
+    print(f"Wrote filter stats to {STATS_JSON}")
 
 
 if __name__ == "__main__":

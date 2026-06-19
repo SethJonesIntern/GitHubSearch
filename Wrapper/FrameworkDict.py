@@ -270,12 +270,9 @@ FRAMEWORK_CALLS: dict[str, list[str]] = {
     ],
 
     # ── Giskard ────────────────────────────────────────────────────────────────
-    "giskard": [
-        ".scan",
-        ".evaluate",
-        "Model",
-        "Dataset",
-    ],
+    # Moved to pipeline/eval_calls.py EVAL_CALLS — giskard is a semantic-evaluation
+    # / testing tool, not an LLM-invoking agent framework, so it belongs to the
+    # eval pass only (Stage 7), not the LLM invoker pass (Stage 5).
 
     # ── SuperDuper ─────────────────────────────────────────────────────────────
     "superduper": [

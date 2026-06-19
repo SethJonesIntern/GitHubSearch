@@ -277,15 +277,19 @@ def collect_functions(
 
 
 def index_repo(
-    target: Path, repo_root: Path
+    target: Path, repo_root: Path, framework_calls: dict = FRAMEWORK_CALLS,
 ) -> tuple[dict[str, FunctionInfo], dict[str, FileContext]]:
     """Parse every .py file under `target` and return the two dicts the rest
     of the pipeline runs on: `functions` (qname -> FunctionInfo) and
     `contexts` (module -> FileContext). Files that fail to parse are skipped,
-    so one syntax error doesn't sink the whole run."""
+    so one syntax error doesn't sink the whole run.
+
+    `framework_calls` supplies the keys used to decide which imports count as
+    "framework imports" per file. Pass a union of dicts (e.g. LLM + eval) to
+    capture both in a single parse, then run the matching passes per dict."""
     functions: dict[str, FunctionInfo] = {}
     contexts: dict[str, FileContext] = {}
-    framework_keys = set(FRAMEWORK_CALLS.keys())
+    framework_keys = set(framework_calls.keys())
 
     for path in target.rglob("*.py"):
         if any(part in SKIP_DIRS for part in path.parts):
@@ -320,6 +324,7 @@ def index_repo(
 def seed_invokers(
     functions: dict[str, FunctionInfo],
     contexts: dict[str, FileContext],
+    framework_calls: dict = FRAMEWORK_CALLS,
 ) -> dict[str, str]:
     """Find every function whose body directly contains an LLM call.
 
@@ -327,12 +332,17 @@ def seed_invokers(
     frameworks its file actually imports, so a langchain file never gets
     checked against openai patterns and vice versa.
 
+    `framework_calls` selects which pattern set to match (e.g. FRAMEWORK_CALLS
+    for LLM calls, EVAL_CALLS for eval calls). A file's imported_frameworks may
+    include keys outside this dict (when indexed against a union); those are
+    skipped here.
+
     Returns {qname -> "matches 'X' from <framework>"} for every direct hit.
     """
     # Compile each pattern's matcher once up front; we run them a lot.
     matchers_by_fw: dict[str, list[tuple[str, callable]]] = {
         fw: [(pat, matcher(pat)) for pat in pats]
-        for fw, pats in FRAMEWORK_CALLS.items()
+        for fw, pats in framework_calls.items()
     }
     invokers: dict[str, str] = {}
 
@@ -354,6 +364,7 @@ def seed_invokers(
         active = [
             (pat, m, fw)
             for fw in ctx.imported_frameworks
+            if fw in matchers_by_fw
             for (pat, m) in matchers_by_fw[fw]
         ]
         if not active:

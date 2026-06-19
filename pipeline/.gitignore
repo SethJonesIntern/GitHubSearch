@@ -1,0 +1,11 @@
+# Python caches
+__pycache__/
+*.pyc
+
+# Generated artifacts and cloned repos — large/regenerable, not tracked.
+# Use dir/* (not dir/) so the .gitkeep negation below can re-include the marker
+# and keep the empty directory in the tree.
+artifacts/*
+repos/*
+!artifacts/.gitkeep
+!repos/.gitkeep

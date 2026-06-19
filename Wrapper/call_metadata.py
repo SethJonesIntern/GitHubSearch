@@ -106,16 +106,19 @@ class AstIndex:
 # ── call-site discovery ───────────────────────────────────────────────────────
 
 
-def active_matchers(module: str, contexts) -> list[tuple[str, object, str]]:
+def active_matchers(module: str, contexts,
+                    framework_calls: dict = FRAMEWORK_CALLS) -> list[tuple[str, object, str]]:
     """(pattern, matcher_fn, framework) for every pattern whose framework this
     module actually imports — exactly the seed_invokers gating, rebuilt here so
-    we can attribute each hit to its pattern."""
+    we can attribute each hit to its pattern. `framework_calls` selects the
+    pattern set (LLM vs eval); imported frameworks outside it are skipped."""
     ctx = contexts.get(module)
     if not ctx or not ctx.imported_frameworks:
         return []
     return [(pat, matcher(pat), fw)
             for fw in ctx.imported_frameworks
-            for pat in FRAMEWORK_CALLS[fw]]
+            if fw in framework_calls
+            for pat in framework_calls[fw]]
 
 
 def module_of(fi: FunctionInfo, qname: str) -> str:
@@ -216,14 +219,15 @@ def rows_for_call(qname: str, fi: FunctionInfo, call: ast.Call,
     return rows
 
 
-def collect_rows(seeds, index: AstIndex, contexts) -> list[dict]:
+def collect_rows(seeds, index: AstIndex, contexts,
+                 framework_calls: dict = FRAMEWORK_CALLS) -> list[dict]:
     rows: list[dict] = []
     for qname in sorted(seeds):
         fi = index.functions.get(qname)
         node = index.node(qname)
         if fi is None or node is None:
             continue
-        active = active_matchers(module_of(fi, qname), contexts)
+        active = active_matchers(module_of(fi, qname), contexts, framework_calls)
         if not active:
             continue
         for call, fw, pat, is_await in llm_calls_in(node, active):

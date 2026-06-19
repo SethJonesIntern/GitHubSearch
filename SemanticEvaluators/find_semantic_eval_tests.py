@@ -1,33 +1,49 @@
-"""Check which candidate repos (Applications + Frameworks) declare a
-semantic-evaluator framework in their dependency files.
+"""Semantic-evaluation dependency check (STANDALONE / OPTIONAL — not in the
+pipeline orchestrator).
 
-Downloads root-level dependency files directly from raw.githubusercontent.com
-(no API calls needed). Repos where no dependency file is found are flagged
-for manual review.
+The pipeline's eval signal is the "called" view from the invoker-search
+piggyback (EVAL_CALLS -> eval_calls_all.csv -> eval_frequency.csv). This script
+is the coarser "declared" view: which Stage 2 application repos *list* a
+semantic-evaluator (giskard / deepeval / opik / ragas / promptfoo / arize-phoenix)
+in their root dependency files. Keep it around only as a cross-check (e.g.
+"declares deepeval but no call detected" -> possible EVAL_CALLS pattern gap);
+run it by hand when needed.
 
-Outputs:
-  SemanticEvaluators/semantic_evaluator_repos.csv
-  SemanticEvaluators/no_deps_found.csv   (repos with no root-level dep files)
+Downloads root-level dependency files directly from raw.githubusercontent.com.
+Repos where no dependency file is found are flagged for manual review.
+
+Outputs (under pipeline/artifacts/):
+  semantic_evaluator_repos.csv
+  no_deps_found.csv   (repos with no root-level dep files)
 """
+import argparse
 import csv
 import json
+import os
 import re
+import sys
 import time
 from pathlib import Path
 from typing import Dict, List, Optional
 
 import requests
+from dotenv import load_dotenv
 
-HERE = Path(__file__).parent
+# Make the repo-root `pipeline` package importable regardless of CWD.
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from pipeline import paths  # noqa: E402
 
-CANDIDATE_CSVS = [
-    ("Applications", HERE.parent / "Applications" / "application_candidates_v2.csv"),
-    ("Frameworks", HERE.parent / "Frameworks" / "github_agent_framework_candidates.csv"),
-]
+load_dotenv()
+load_dotenv(paths.REPO_ROOT / "Frameworks" / ".env")  # token (raises raw rate limit)
+GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
+RAW_HEADERS = {"Authorization": f"Bearer {GITHUB_TOKEN}"} if GITHUB_TOKEN else {}
 
-OUT_CSV = HERE / "semantic_evaluator_repos.csv"
-NO_DEPS_CSV = HERE / "no_deps_found.csv"
-PROGRESS_FILE = HERE / ".dep_check_progress.json"
+# Stage 2 applications are the subject of the eval check.
+CANDIDATE_CSVS = [("Applications", paths.APPLICATIONS_CSV)]
+
+OUT_CSV = paths.SEMANTIC_EVALUATOR_REPOS_CSV
+NO_DEPS_CSV = paths.NO_DEPS_CSV
+PROGRESS_FILE = paths.DEP_CHECK_PROGRESS_JSON
 
 ROOT_DEP_FILES = [
     "requirements.txt",
@@ -55,7 +71,7 @@ RAW_BASE = "https://raw.githubusercontent.com"
 def fetch_raw_file(full_name: str, branch: str, filename: str) -> Optional[str]:
     url = f"{RAW_BASE}/{full_name}/{branch}/{filename}"
     try:
-        resp = requests.get(url, timeout=15)
+        resp = requests.get(url, headers=RAW_HEADERS, timeout=15)
     except requests.exceptions.RequestException:
         return None
     if resp.status_code == 200:
@@ -113,7 +129,16 @@ def save_progress(progress: dict):
 
 
 def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__,
+                                     formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument("--limit", type=int, default=None,
+                        help="Check at most N repos (smoke runs)")
+    args = parser.parse_args()
+
+    paths.ensure_dirs()
     candidates = load_candidates()
+    if args.limit is not None:
+        candidates = candidates[:args.limit]
     print(f"Loaded {len(candidates)} candidate repos")
 
     progress = load_progress()
