@@ -1,9 +1,9 @@
 # GitHubSearch Pipeline
 
 End-to-end plan for going from *"which agent frameworks exist on GitHub"* to
-*"per-argument metadata for every LLM call site across applications that use
-those frameworks"* — the input JOERN consumes to produce forward and backward
-slices.
+*"per-variable program slices for every function that reaches an LLM call across
+applications that use those frameworks"* — built on a Joern CPG per repo. (Stage 5
+also emits per-argument metadata for every LLM call site as a by-product.)
 
 The pipeline is seven stages (Stage 5 LLM-call extraction and Stage 7 semantic
 evaluation are parallel branches off the same application list). It is **built
@@ -13,7 +13,7 @@ it describe each stage as-built.
 
 ---
 
-## ⏩ CURRENT STATE — resume here (updated 2026-06-19)
+## ⏩ CURRENT STATE — resume here (updated 2026-06-25)
 
 **Single entry point (orchestrator):** [pipeline/run.py](pipeline/run.py) via
 [pipeline/__main__.py](pipeline/__main__.py). Runs each stage as a subprocess in
@@ -25,6 +25,7 @@ python -m pipeline run --smoke    # cheap end-to-end (small --limit/--max flags 
 python -m pipeline run --list     # list stages
 python -m pipeline run --from applications   # this stage onward
 python -m pipeline run --dry-run  # print commands only
+python -m pipeline run --slice    # also run Stage 6 slicing inside analysis (needs Joern)
 ```
 
 **Interpreter:** use **Python 3.14** for real runs — the transitive test closure
@@ -74,8 +75,22 @@ GitHub token is read from [Frameworks/.env](Frameworks/.env).
   evaluator, `repos_with_calls`, `total_call_sites`, `pct_of_apps` →
   `eval_frequency.csv`. No dependency-declaration check needed — the AST "called"
   view *is* the signal. Wired as the `eval_frequency` orchestrator stage.
-- **Orchestrator** [pipeline/run.py](pipeline/run.py) — 5 stages now:
+- **Stage 6 per-variable slicing** [pipeline/slice_repo.py](pipeline/slice_repo.py) +
+  [pipeline/per_variable_pdg_slicer.py](pipeline/per_variable_pdg_slicer.py) +
+  [pipeline/create_project_codenet_cpgs.py](pipeline/create_project_codenet_cpgs.py)
+  — builds a Joern CPG per repo (`joern-parse`) and emits a per-variable backward
+  SubPDG (DDG+CDG) for **every variable in every function that reaches an LLM
+  call** (the transitive `llm_invokers_all` closure). **Folded into the analysis
+  loop** (opt-in `--slice`): per repo `clone → analyze → slice → delete`, so the
+  clone survives until after JOERN and only one checkout is on disk. The slicer
+  gets the repo's invoker rows **in memory** (`function_filter_from_rows`, no CSV
+  round-trip); slice runs in its own try so a Joern failure never loses the
+  already-written metadata. Output: `pipeline/artifacts/slices/<repo_slug>/`.
+  Tested ([pipeline/test_slice_repo_filter.py](pipeline/test_slice_repo_filter.py), 10 pass).
+- **Orchestrator** [pipeline/run.py](pipeline/run.py) — 5 stages:
   `frameworks → applications → framework_frequency → analysis → eval_frequency`.
+  Run-level `--slice` (+ `--joern-parse`/`--joern`/`--slice-workers`/`--keep-cpg`)
+  injects the Stage-6 flags onto the `analysis` stage only; other stages untouched.
 - **Decision: dropped the dependency-file check from the pipeline.** The eval
   analysis already piggybacks on the invoker search (`EVAL_CALLS` →
   eval_calls/invokers/metadata in the `analysis` stage), which is the precise
@@ -111,6 +126,10 @@ cd Wrapper && python -m pytest tests/ -q   # 20 pass, 9 transitive fail on 3.9 (
 **NOT yet done (next-session backlog):**
 1. **No full runs executed** — only smokes. Real artifacts don't exist until the
    stages run for real (needs Python 3.14 for the transitive invoker pass).
+   **Stage 6 has never run end-to-end** either — it needs Joern on PATH and live
+   clones; first real `--slice` run also validates the graph↔function matching on
+   a real multi-file repo (matching is still basename+name based, mitigated by the
+   def-line filter).
 2. **Nothing committed** to git yet.
 3. Legacy/duplicate scripts not retired: [Applications/GithubSearch.py](Applications/GithubSearch.py)
    (superseded by search_candidates), test-extraction scripts (see Appendix).
@@ -141,20 +160,20 @@ cd Wrapper && python -m pytest tests/ -q   # 20 pass, 9 transitive fail on 3.9 (
         │
         ├──► applications.csv         ──► (5) Batch invoker + LLM-call extraction
         │                                 │
-        │                                 ├──► llm_invokers_all.csv        (invoker search: all direct+transitive)
+        │                                 ├──► llm_invokers_all.csv ──────────┐  (invoker closure: all direct+transitive)
         │                                 ├──► llm_calls_all.csv           (list of LLM calls)
-        │                                 ├──► call_metadata_all.csv ───────┐  (LLM call arg metadata)
+        │                                 ├──► call_metadata_all.csv       (LLM call arg metadata)
         │                                 └──► llm_tests_all.csv           (pytest subset of invokers)
-        │                                                                  │
+        │                                 (+ live repo checkout)           │
         │                                                                  ▼
-        │                                                            (6) JOERN ──► forward slices
-        │                                                                  ▲        backward slices
-        │                                                                  │
-        └──► applications.csv         ──► (7) Semantic evaluation          │
-                                          │                                │
+        │                                            (6) Per-variable slicing ──► slices/<repo>/
+        │                                                (folded into analysis)   programs.jsonl (SubPDGs)
+        │
+        └──► applications.csv         ──► (7) Semantic evaluation
+                                          │
                                           ├──► eval_invokers_all.csv       (eval invoker search)
                                           ├──► eval_calls_all.csv          (list of Eval calls)
-                                          ├──► eval_call_metadata_all.csv ─┘  (eval call arg metadata)
+                                          ├──► eval_call_metadata_all.csv  (eval call arg metadata)
                                           └──► eval_frequency.csv          (Eval frequency table)
 ```
 
@@ -167,11 +186,15 @@ pipeline/
   run.py                        # orchestrator: runs each stage as a subprocess in order
   paths.py                      # every artifact path in one place (single source of truth)
   engines.py                    # shim re-exporting Wrapper engines (+ inlined test helpers)
-  batch_call_metadata.py        # Stage 5+7 driver (LLM + eval seed dicts, one parse)
+  batch_call_metadata.py        # Stage 5+7 driver (LLM + eval seed dicts, one parse); --slice folds in Stage 6
   eval_calls.py                 # EVAL_CALLS seed pattern dict
   eval_frequency.py             # Stage 7 eval_frequency.csv reporter
+  per_variable_pdg_slicer.py    # Stage 6 engine: per-variable SubPDGs from a Joern CPG (+invoker filter)
+  create_project_codenet_cpgs.py# Stage 6 CPG builder: joern-parse wrapper (StackOverflow retry ladder)
+  slice_repo.py                 # Stage 6 per-repo glue: joern-parse <repo> -> slice invoker closure
   test_batch_call_metadata.py   # driver tests
   test_eval_frequency.py        # eval-frequency tests
+  test_slice_repo_filter.py     # Stage 6 filter/recursive-discovery tests
   repos/                        # cloned application checkouts (gitignored)
   artifacts/                    # all generated CSV/metadata (gitignored)
     frameworks.csv              # Stage 1 (was Frameworks/github_agent_framework_candidates.csv)
@@ -190,6 +213,7 @@ pipeline/
     eval_calls_all.csv          # Stage 7
     eval_call_metadata_all.csv  # Stage 7  → JOERN
     eval_frequency.csv          # Stage 7
+    slices/<repo_slug>/         # Stage 6 (--slice): programs.jsonl + overall_summary.json per repo
 ```
 
 Notes:
@@ -346,31 +370,47 @@ Direct/seed path validated; transitive path needs 3.14 to exercise.
 
 ---
 
-## Stage 6 — JOERN slicing
+## Stage 6 — JOERN per-variable slicing
 
-**Inputs (both per-argument metadata CSVs, same schema):**
-- `pipeline/artifacts/call_metadata_all.csv` — LLM call sites (Stage 5).
-- `pipeline/artifacts/eval_call_metadata_all.csv` — eval call sites (Stage 7).
+**Scope (decided):** slice **every variable in every function that reaches an LLM
+call** — the *transitive* invoker closure from `llm_invokers_all.csv` (all
+`kind`s). This is a per-variable backward slice (DDG+CDG) per invoker function,
+**not** LLM-argument contract slicing (the earlier `Wrapper/param_slicing.py`
+idea is superseded and that file is gone).
 
-**Outputs:** **forward slices** and **backward slices** for both call kinds.
+**Driver:** [pipeline/slice_repo.py](pipeline/slice_repo.py), folded into the
+`analysis` per-repo loop ([batch_call_metadata.py](pipeline/batch_call_metadata.py))
+behind `--slice`. Per repo: `clone → analyze → slice → delete`, so the clone is
+on disk for JOERN and only one checkout exists at a time. Two engines do the work:
 
-JOERN keys off `(file, line)` or `(file, line, variable)` — both CSVs carry
-`call_line`, `call_col`, `call_arg_vars`, and per-arg `arg_names`, so both seed
-shapes are present. Because the two files share the identical column contract
-(LLM vs. eval differs only by the `framework`/`pattern` values), JOERN runs the
-same way over each — slice the LLM seeds, the eval seeds, or both.
+1. **CPG build** [create_project_codenet_cpgs.py](pipeline/create_project_codenet_cpgs.py)
+   `run_joern_parse` — `joern-parse <repo> --language PYTHONSRC -o repo.cpg`, with
+   a JVM StackOverflow retry ladder. Joern's Python frontend is static, so the
+   repo's own deps need **not** be installed.
+2. **Slice** [per_variable_pdg_slicer.py](pipeline/per_variable_pdg_slicer.py)
+   `process_cpg(recursive=True, function_filter=…)` — queries the CPG's DDG/CDG,
+   builds a per-variable SubPDG, renders standalone subprograms (dedup, JSONL).
+   `--recursive` discovers nested package files; the **function filter** keeps
+   only functions whose `(file, def-line)` is in the invoker closure.
 
-**Status:** External (JOERN). Our responsibility ends at producing clean,
-complete `call_metadata_all.csv` **and** `eval_call_metadata_all.csv`.
-See [memory: param slicing direction] —
-`Wrapper/param_slicing.py` is the interprocedural backward-slice follow-up.
+**Filter join:** the driver hands the slicer the repo's invoker rows **in memory**
+(`function_filter_from_rows`, no CSV); the key is path **suffix** match + exact
+def-line (the CSV `file` carries the clone-slug prefix, the slicer path is
+repo-relative, so suffix match bridges them). Standalone use also accepts
+`--invokers-csv` / `--invokers-repo`.
 
-**⚠️ Open: clones are deleted.** The `analysis` stage removes each checkout after
-extracting metadata (disk hygiene), so the source `(repo, file)` JOERN needs is
-**not on disk** by the time it runs. Resolve one of: run JOERN per repo *before*
-deletion (fold it into the driver), pass `--keep-clones` for the JOERN run, or
-re-clone from the metadata's `repo` on demand. Decide with the JOERN owner, plus
-confirm the `(repo + file) → on-disk path` contract.
+**Outputs:** `pipeline/artifacts/slices/<repo_slug>/programs.jsonl` +
+`overall_summary.json` per repo (the SubPDG subprograms and slice metadata).
+
+**Run:** `python -m pipeline run --slice` (or `--from analysis --slice`); needs
+Joern on PATH (`--joern-parse` / `--joern` to point at it). Real transitive
+closure needs **Python 3.14 + pyan3**, else the invoker set degrades to direct
+invokers only.
+
+**Status:** ✅ Built + unit-tested
+([pipeline/test_slice_repo_filter.py](pipeline/test_slice_repo_filter.py), 10 pass).
+⏳ Not yet run end-to-end — needs Joern + live clones. Residual: graph↔function
+matching is basename+name based (def-line filter mitigates same-basename collisions).
 
 ---
 
@@ -419,9 +459,9 @@ provisional and want a usage double-check.
 | 3 Framework frequency | [Applications/framework_distribution.py](Applications/framework_distribution.py) | ✅ built + tested |
 | 4 Application list | (the kept rows of `applications.csv`) | ✅ implicit |
 | 5 Invoker search + LLM calls | [pipeline/batch_call_metadata.py](pipeline/batch_call_metadata.py) | ✅ built + tested (transitive needs 3.14) |
-| 6 JOERN slicing | external | inputs ready |
+| 6 Per-variable slicing | [pipeline/slice_repo.py](pipeline/slice_repo.py) (folded into analysis via `--slice`) | ✅ built + unit-tested; no end-to-end run yet (needs Joern) |
 | 7 Eval calls + frequency | driver + [pipeline/eval_frequency.py](pipeline/eval_frequency.py) | ✅ built + tested |
-| — Orchestrator | [pipeline/run.py](pipeline/run.py) | ✅ `frameworks → applications → framework_frequency → analysis → eval_frequency` |
+| — Orchestrator | [pipeline/run.py](pipeline/run.py) | ✅ `frameworks → applications → framework_frequency → analysis → eval_frequency`; `--slice` adds Stage 6 |
 
 Remaining: a real full run on **Python 3.14**, a git commit, and (optional)
 retiring the legacy/duplicate scripts below. See **CURRENT STATE → backlog**.

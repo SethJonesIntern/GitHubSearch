@@ -39,6 +39,9 @@ CALL_METADATA_CSV = ARTIFACTS_DIR / "call_metadata_all.csv"
 LLM_TESTS_CSV = ARTIFACTS_DIR / "llm_tests_all.csv"
 BATCH_PROGRESS_JSON = ARTIFACTS_DIR / ".batch_progress.json"
 
+# ── Stage 6: JOERN per-variable slicing ─────────────────────────────────────────
+SLICES_DIR = ARTIFACTS_DIR / "slices"   # one subdir per repo: programs.jsonl + summary
+
 # ── Stage 7: semantic evaluation ────────────────────────────────────────────────
 EVAL_INVOKERS_CSV = ARTIFACTS_DIR / "eval_invokers_all.csv"   # all direct+transitive eval invokers
 EVAL_CALLS_CSV = ARTIFACTS_DIR / "eval_calls_all.csv"
@@ -53,3 +56,4 @@ def ensure_dirs() -> None:
     """Create artifacts/ and repos/ if they don't exist. Safe to call repeatedly."""
     ARTIFACTS_DIR.mkdir(parents=True, exist_ok=True)
     REPOS_DIR.mkdir(parents=True, exist_ok=True)
+    SLICES_DIR.mkdir(parents=True, exist_ok=True)

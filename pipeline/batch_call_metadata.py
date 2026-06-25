@@ -223,9 +223,31 @@ def main() -> None:
                     help="Process at most N applications (smoke runs)")
     ap.add_argument("--keep-clones", action="store_true",
                     help="Do not delete each repo after analysis (debugging)")
+    ap.add_argument("--slice", action="store_true",
+                    help="Stage 6: build a CPG and emit per-variable SubPDGs for each "
+                         "repo's LLM-invoker functions, before the clone is deleted (needs Joern)")
+    ap.add_argument("--joern-parse", default="joern-parse",
+                    help="joern-parse binary, joern-cli dir, or install root (with --slice)")
+    ap.add_argument("--joern", default="joern",
+                    help="joern binary used for the CPG query (with --slice)")
+    ap.add_argument("--slice-workers", type=int, default=1,
+                    help="Per-file workers inside each repo's slice (with --slice)")
+    ap.add_argument("--keep-cpg", action="store_true",
+                    help="Persist each repo's CPG under its slice dir instead of a temp dir")
     args = ap.parse_args()
 
     paths.ensure_dirs()
+
+    # Stage-6 slicing is opt-in and needs Joern. Resolve the binary once up front
+    # so a missing install fails fast instead of marking every repo failed after
+    # its metadata was already written.
+    slice_repo = filter_from_rows = slice_joern_parse = None
+    if args.slice:
+        from pipeline.slice_repo import slice_repo
+        from pipeline.per_variable_pdg_slicer import function_filter_from_rows as filter_from_rows
+        from pipeline.create_project_codenet_cpgs import resolve_joern_parse_executable
+        slice_joern_parse = str(resolve_joern_parse_executable(args.joern_parse))
+        print(f"Slicing enabled; joern-parse = {slice_joern_parse}")
 
     if not args.resume:
         for path, _ in OUTPUTS.values():
@@ -272,6 +294,35 @@ def main() -> None:
                   f"({len(results['llm_calls'])} calls, {len(results['llm_tests'])} tests), "
                   f"{len(results['eval_invokers'])} eval invokers "
                   f"({len(results['eval_calls'])} calls)")
+
+            # Stage 6: slice this repo before the clone is deleted. Isolated in its
+            # own try so a Joern hiccup never undoes the (already-written) metadata
+            # or forces a reprocess on --resume.
+            if args.slice:
+                invoker_filter = filter_from_rows(results["llm_invokers"])
+                if not invoker_filter:
+                    print("    no LLM invokers; skipping slice")
+                else:
+                    try:
+                        overall = slice_repo(
+                            repo_dir=clone_dir,
+                            output_dir=paths.SLICES_DIR / clone_dir.name,
+                            function_filter=invoker_filter,
+                            joern_parse=slice_joern_parse,
+                            joern=args.joern,
+                            workers=args.slice_workers,
+                            cpg_out=(paths.SLICES_DIR / clone_dir.name / "repo.cpg")
+                                    if args.keep_cpg else None,
+                        )
+                        print(f"    sliced {overall['program_count']} files -> "
+                              f"{overall['total_subprograms']} subprograms "
+                              f"({overall['total_deduplicated']} deduplicated)")
+                        totals["sliced_subprograms"] += overall["total_subprograms"]
+                    except Exception as e:  # noqa: BLE001 - slice failure must not lose metadata
+                        print(f"    slice failed: {e}", file=sys.stderr)
+                        progress.setdefault("slice_failed", []).append(
+                            {"repo": full_name, "error": str(e)})
+
             progress["processed"].append(full_name)
         except Exception as e:  # noqa: BLE001 - isolate per-repo failures
             print(f"    analysis failed: {e}", file=sys.stderr)
@@ -284,6 +335,11 @@ def main() -> None:
     print("\nDone. Totals:")
     for key, (path, _) in OUTPUTS.items():
         print(f"  {path.name:<28}: {totals[key]} rows")
+    if args.slice:
+        print(f"  {'sliced subprograms':<28}: {totals['sliced_subprograms']}")
+        slice_failures = progress.get("slice_failed", [])
+        if slice_failures:
+            print(f"  slice failures: {len(slice_failures)}")
     if progress["failed"]:
         print(f"  failed repos: {len(progress['failed'])}")
 

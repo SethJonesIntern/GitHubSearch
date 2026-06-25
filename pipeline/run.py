@@ -20,6 +20,10 @@ Stages (in order):
                               extraction, emitting: llm_invokers_all, llm_calls_all,
                               call_metadata_all, llm_tests_all, eval_invokers_all,
                               eval_calls_all, eval_call_metadata_all (then JOERN)
+
+Stage 6 (per-variable slicing) is opt-in via --slice: it folds into the analysis
+stage's per-repo loop (clone -> analyze -> slice -> delete), so it needs Joern on
+PATH. Without --slice the analysis stage behaves exactly as before.
 """
 from __future__ import annotations
 
@@ -67,6 +71,19 @@ STAGES = {
 ORDER = list(STAGES)
 
 
+def _stage_extra_args(key: str, args) -> list[str]:
+    """Per-stage args injected from run-level flags (currently: --slice onto analysis)."""
+    if key == "analysis" and args.slice:
+        extra = ["--slice",
+                 "--joern-parse", args.joern_parse,
+                 "--joern", args.joern,
+                 "--slice-workers", str(args.slice_workers)]
+        if args.keep_cpg:
+            extra.append("--keep-cpg")
+        return extra
+    return []
+
+
 def _select(args) -> list[str]:
     if args.stages:
         unknown = [s for s in args.stages if s not in STAGES]
@@ -91,6 +108,17 @@ def main() -> None:
                     help="append small-limit flags to each stage for a cheap end-to-end run")
     ap.add_argument("--list", action="store_true", help="list stages and exit")
     ap.add_argument("--dry-run", action="store_true", help="print commands without running")
+    ap.add_argument("--slice", action="store_true",
+                    help="Stage 6: also slice each repo's LLM-invoker functions during the "
+                         "analysis stage, before the clone is deleted (needs Joern on PATH)")
+    ap.add_argument("--joern-parse", default="joern-parse",
+                    help="joern-parse binary, joern-cli dir, or install root (with --slice)")
+    ap.add_argument("--joern", default="joern",
+                    help="joern binary used for the CPG query (with --slice)")
+    ap.add_argument("--slice-workers", type=int, default=1,
+                    help="per-file workers inside each repo's slice (with --slice)")
+    ap.add_argument("--keep-cpg", action="store_true",
+                    help="persist each repo's CPG under its slice dir instead of a temp dir (with --slice)")
     args = ap.parse_args()
 
     if args.list:
@@ -104,7 +132,7 @@ def main() -> None:
 
     for key in selected:
         title, base, smoke_args = STAGES[key]
-        cmd = base + (smoke_args if args.smoke else [])
+        cmd = base + (smoke_args if args.smoke else []) + _stage_extra_args(key, args)
         print(f"{'='*70}\n# {title}\n# $ {' '.join(cmd)}\n{'='*70}")
         if args.dry_run:
             continue
