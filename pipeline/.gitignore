@@ -4,7 +4,7 @@ __pycache__/
 
 # Cloned repos — large and regenerable, not tracked.
 repos/*
-!repos/.gitkeep
+
 
 # artifacts/ IS tracked so the analysis data (CSVs, plots, reports) travels with
 # the repo and can be worked on from another machine. The only exclusion is the
