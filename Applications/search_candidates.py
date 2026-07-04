@@ -122,7 +122,7 @@ def build_import_index(frameworks: List[dict]) -> Dict[str, List[str]]:
 
 
 def github_get(url: str, params: Optional[dict] = None, allow_404: bool = False,
-               max_retries: int = 3) -> Optional[requests.Response]:
+               max_retries: int = 5) -> Optional[requests.Response]:
     for attempt in range(max_retries + 1):
         try:
             resp = requests.get(url, headers=HEADERS, params=params, timeout=30)
@@ -145,6 +145,17 @@ def github_get(url: str, params: Optional[dict] = None, allow_404: bool = False,
         if resp.status_code >= 500 and attempt < max_retries:
             wait = 2 ** attempt * 5
             print(f"Server error {resp.status_code}. Retrying in {wait}s... ({attempt+1}/{max_retries})")
+            time.sleep(wait)
+            continue
+        # GitHub intermittently returns transient errors on long, heavy runs even
+        # with a valid, unexpired token: spurious 401/403, 408 Request Timeout, or
+        # 429 Too Many Requests. Retry with backoff (honoring Retry-After when the
+        # server sends it) rather than letting a single blip kill a multi-hour run.
+        if resp.status_code in (401, 403, 408, 429) and attempt < max_retries:
+            retry_after = resp.headers.get("Retry-After")
+            wait = int(retry_after) if (retry_after or "").isdigit() else 2 ** attempt * 5
+            print(f"Transient {resp.status_code} ({resp.reason}). "
+                  f"Retrying in {wait}s... ({attempt+1}/{max_retries})")
             time.sleep(wait)
             continue
         resp.raise_for_status()
@@ -300,6 +311,7 @@ def load_progress() -> dict:
         "completed_search_terms": [],
         "processed_repos": [],
         "candidates": {},
+        "rejected_repos": [],
         "framework_repo_counts": {},
         "framework_file_matches": {},
         "stats": {"kept": 0, "dropped_lifetime": 0, "dropped_contributors": 0,
@@ -508,6 +520,9 @@ def main():
     candidates: Dict[str, Tuple[dict, List[str]]] = {}
     for full_name, saved in progress["candidates"].items():
         candidates[full_name] = (saved["item"], saved["frameworks"])
+    # Repos already fetched and rejected (see negative cache below). .get() keeps
+    # older progress files (without this key) loadable.
+    rejected_repos: set = set(progress.get("rejected_repos", []))
 
     pushed_after_dt = datetime.fromisoformat(f"{PUSHED_AFTER}T00:00:00+00:00")
 
@@ -537,13 +552,21 @@ def main():
                     if name not in candidates[full_name][1]:
                         candidates[full_name][1].append(name)
                     continue
+                # Negative cache: a repo matched by a generic import name recurs
+                # across many search terms. Without this, every recurrence re-fetches
+                # repo details, exhausting the 5000/hr core limit repeatedly. Skip
+                # repos we already fetched and rejected (missing or filtered out).
+                if full_name in rejected_repos:
+                    continue
 
                 owner, repo = full_name.split("/", 1)
                 details = get_repo_details(owner, repo)
                 if details is None:
+                    rejected_repos.add(full_name)
                     continue
                 ok, _reason = passes_search_filters(details, pushed_after_dt)
                 if not ok:
+                    rejected_repos.add(full_name)
                     continue
 
                 candidates[full_name] = (details, [name])
@@ -556,6 +579,7 @@ def main():
         progress["candidates"] = {
             fn: {"item": item, "frameworks": fws} for fn, (item, fws) in candidates.items()
         }
+        progress["rejected_repos"] = sorted(rejected_repos)
         save_progress(progress)
         print(f"  Progress saved ({len(progress['completed_search_terms'])}/{len(search_names)} names)")
 
