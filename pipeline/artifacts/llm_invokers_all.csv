@@ -1,0 +1,2 @@
+"repo","qname","file","line","reason","kind"
+"smoke/myrepo","myrepo.app.chat.run_chat","myrepo/app/chat.py","13","matches 'chat.completions.create' from openai","direct"

@@ -2,10 +2,11 @@
 __pycache__/
 *.pyc
 
-# Generated artifacts and cloned repos — large/regenerable, not tracked.
-# Use dir/* (not dir/) so the .gitkeep negation below can re-include the marker
-# and keep the empty directory in the tree.
-artifacts/*
+# Cloned repos — large and regenerable, not tracked.
 repos/*
-!artifacts/.gitkeep
 !repos/.gitkeep
+
+# artifacts/ IS tracked so the analysis data (CSVs, plots, reports) travels with
+# the repo and can be worked on from another machine. The only exclusion is the
+# resumable search-progress cache (.search_progress.json, ~100MB) which exceeds
+# GitHub's file-size limit — it stays ignored via the root .gitignore.

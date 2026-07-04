@@ -1,0 +1,96 @@
+{
+  "keep_names": 178,
+  "applications": {
+    "before": 6446,
+    "after": 1357
+  },
+  "metadata": {
+    "before": 13506,
+    "after": 2836
+  },
+  "blind_spot_frameworks": 7,
+  "blind_spot": [
+    {
+      "framework": "openai/openai-agents-python",
+      "import_names": [
+        "agents"
+      ]
+    },
+    {
+      "framework": "agent0ai/agent-zero",
+      "import_names": [
+        "_skills",
+        "api",
+        "helpers",
+        "tools"
+      ]
+    },
+    {
+      "framework": "lavague-ai/LaVague",
+      "import_names": [
+        "_bundle",
+        "anthropic",
+        "cache",
+        "cohere",
+        "contexts",
+        "core",
+        "fireworks",
+        "gemini",
+        "gradio",
+        "openai",
+        "playwright",
+        "qa",
+        "selenium",
+        "server"
+      ]
+    },
+    {
+      "framework": "Giskard-AI/giskard-oss",
+      "import_names": [
+        "agents",
+        "checks",
+        "core",
+        "giskard_pypi_shim",
+        "llm",
+        "scan"
+      ]
+    },
+    {
+      "framework": "SolaceLabs/solace-agent-mesh",
+      "import_names": [
+        "cli",
+        "config_portal",
+        "evaluation",
+        "sam_rest_client",
+        "src",
+        "web_search"
+      ]
+    },
+    {
+      "framework": "samugit83/redamon",
+      "import_names": [
+        "ai_attack_surface_scan",
+        "cypherfix_codefix",
+        "cypherfix_triage",
+        "github_secret_hunt",
+        "graph_db",
+        "graphql_scan",
+        "gvm_scan",
+        "helpers",
+        "knowledge_base",
+        "main_recon_modules",
+        "orchestrator_helpers",
+        "partial_recon_modules",
+        "prompts",
+        "servers",
+        "trufflehog_scan"
+      ]
+    },
+    {
+      "framework": "IBM/AssetOpsBench",
+      "import_names": [
+        "src"
+      ]
+    }
+  ]
+}

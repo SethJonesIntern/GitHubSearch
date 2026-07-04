@@ -1,0 +1,2 @@
+"repo","call_id","file","enclosing_qname","framework","pattern","callable","call_source","call_line","call_col","is_await","arg_count"
+"smoke/myrepo","myrepo/app/chat.py::16::15","myrepo/app/chat.py","myrepo.app.chat.run_chat","openai","chat.completions.create","client.chat.completions.create","client.chat.completions.create(model='gpt-4', messages=[{'role': 'user', 'content': prompt}], temperature=temperature)","16","15","False","3"

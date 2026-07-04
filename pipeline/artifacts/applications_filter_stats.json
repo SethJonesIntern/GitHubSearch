@@ -1,0 +1,9 @@
+{
+  "candidates_after_search_filters": 13505,
+  "enriched": 13505,
+  "dropped_lifetime": 1494,
+  "dropped_contributors": 2436,
+  "dropped_commit_freq": 1087,
+  "dropped_no_tests": 2043,
+  "kept": 6445
+}
