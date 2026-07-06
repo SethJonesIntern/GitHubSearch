@@ -134,6 +134,11 @@ class FileContext:
     current_module: str
     name_map: dict[str, str]
     imported_frameworks: set[str]
+    # Every top-level package imported anywhere in the file (incl. lazy imports
+    # inside function bodies). `imported_frameworks` is just this set narrowed to
+    # FRAMEWORK_CALLS; the full set is kept so other passes (e.g. the semantic-
+    # evaluator scan) can detect their own packages without re-parsing the file.
+    imports: set[str] = field(default_factory=set)
 
 
 # ── path & name plumbing ──────────────────────────────────────────────────────
@@ -302,12 +307,14 @@ def index_repo(
         current_pkg, current_module = derive_module(path, repo_root)
         rel = path.resolve().relative_to(repo_root.resolve()).as_posix()
 
+        all_imports = file_imports(tree)
         contexts[current_module] = FileContext(
             rel_path=rel,
             current_pkg=current_pkg,
             current_module=current_module,
             name_map=build_name_map(tree, current_pkg, current_module),
-            imported_frameworks=file_imports(tree) & framework_keys,
+            imported_frameworks=all_imports & framework_keys,
+            imports=all_imports,
         )
         for fi in collect_functions(tree, current_module, current_pkg, rel):
             functions[fi.qname] = fi
