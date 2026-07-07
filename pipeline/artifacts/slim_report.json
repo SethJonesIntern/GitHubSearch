@@ -1,12 +1,12 @@
 {
-  "keep_names": 178,
+  "keep_names": 177,
   "applications": {
     "before": 6446,
-    "after": 1357
+    "after": 1142
   },
   "metadata": {
     "before": 13506,
-    "after": 2836
+    "after": 2460
   },
   "blind_spot_frameworks": 7,
   "blind_spot": [

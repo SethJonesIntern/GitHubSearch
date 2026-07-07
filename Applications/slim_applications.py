@@ -44,7 +44,10 @@ EXPLICIT_KEEP = {
 # (`agent` isn't any framework's real import; `agents` is the OpenAI Agents SDK but is
 # dominated by repos with their own local `agents/` package), so they carry heavy
 # false positives.
-EXPLICIT_DROP = {"agent", "agents"}
+# `mcp` is the Model Context Protocol SDK — cross-cutting protocol infrastructure that
+# many frameworks import, not a framework itself (same category as the dropped provider
+# SDKs), so it inflates the table without identifying a framework.
+EXPLICIT_DROP = {"agent", "agents", "mcp"}
 
 
 def load_keep_set() -> set:
