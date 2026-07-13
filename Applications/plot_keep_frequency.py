@@ -1,21 +1,15 @@
-"""Horizontal bar chart of framework frequency over the slimmed applications.
+"""Horizontal bar chart of the grouped framework-frequency table.
 
-Counts DISTINCT applications per framework category, reading applications_slim.csv
-directly so that grouped categories (e.g. the whole langchain_* ecosystem) de-dupe
-repos that import several packages from the same family instead of double-counting.
+Renders keep_frequency.csv (already grouped into ecosystem categories and counted
+as distinct applications by keep_frequency.py), so the chart and the table can
+never disagree. Single-series magnitude chart: one hue, recessive chrome, direct
+value labels, no legend.
 
-Two views:
-  (default)  every import name is its own bar     -> keep_frequency.png
-  --group    multi-package ecosystems collapsed   -> keep_frequency_grouped.png
-             into one framework bar (langchain,
-             agent_framework, autogen)
-
-Writes pipeline/artifacts/keep_frequency[_grouped].png.
+Writes pipeline/artifacts/keep_frequency.png.
 """
 import argparse
 import csv
 import sys
-from collections import Counter
 from pathlib import Path
 
 import matplotlib
@@ -25,93 +19,61 @@ import matplotlib.pyplot as plt  # noqa: E402
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from pipeline import paths  # noqa: E402
 
+FREQ_CSV = paths.ARTIFACTS_DIR / "keep_frequency.csv"
 SLIM_CSV = paths.ARTIFACTS_DIR / "applications_slim.csv"
+OUT_PNG = paths.ARTIFACTS_DIR / "keep_frequency.png"
 
-# Ecosystems that ship as many separately-named packages but are one framework.
-# prefix -> display label: matches `prefix` exactly or `prefix_*`.
-ECOSYSTEM_PREFIXES = {
-    "langchain": "langchain (ecosystem)",
-    "agent_framework": "agent_framework (MS)",
-    "autogen": "autogen (ecosystem)",
-}
-# Same-framework packages whose names don't share the prefix (caught explicitly).
-ECOSYSTEM_ALIASES = {
-    "pyautogen": "autogen (ecosystem)",
-    "autogenstudio": "autogen (ecosystem)",
-}
-GROUP_LABELS = set(ECOSYSTEM_PREFIXES.values()) | set(ECOSYSTEM_ALIASES.values())
-
-
-def category(name: str, group: bool) -> str:
-    """Display category for an import name. With group=False every name is its own
-    category; with group=True the ecosystem families collapse to one label."""
-    if not group:
-        return name
-    if name in ECOSYSTEM_ALIASES:
-        return ECOSYSTEM_ALIASES[name]
-    for prefix, label in ECOSYSTEM_PREFIXES.items():
-        if name == prefix or name.startswith(prefix + "_"):
-            return label
-    return name
+# dataviz palette (light mode): single sequential/categorical hue + recessive ink.
+BAR = "#2a78d6"
+INK = "#0b0b0b"
+MUTED = "#898781"
+GRID = "#e1e0d9"
+SURFACE = "#fcfcfb"
 
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--top", type=int, default=25, help="show the top N categories")
-    ap.add_argument("--group", action="store_true",
-                    help="collapse multi-package ecosystems (langchain, agent_framework, "
-                         "autogen) into one framework bar each")
+    ap.add_argument("--top", type=int, default=25, help="show the top N frameworks")
     args = ap.parse_args()
 
-    out_png = paths.ARTIFACTS_DIR / (
-        "keep_frequency_grouped.png" if args.group else "keep_frequency.png")
+    if not FREQ_CSV.exists():
+        sys.exit(f"{FREQ_CSV} not found — run Applications/keep_frequency.py first.")
+    rows = list(csv.DictReader(open(FREQ_CSV, encoding="utf-8")))[:args.top]
+    names = [r["framework"] for r in rows]
+    vals = [int(r["applications"]) for r in rows]
+    total = (sum(1 for _ in open(SLIM_CSV, encoding="utf-8")) - 1) if SLIM_CSV.exists() else None
 
-    if not SLIM_CSV.exists():
-        sys.exit(f"{SLIM_CSV} not found — run Applications/slim_applications.py first.")
-    rows = list(csv.DictReader(open(SLIM_CSV, encoding="utf-8")))
-    total = len(rows)
+    fig, ax = plt.subplots(figsize=(10, max(4, 0.44 * len(names))))
+    fig.patch.set_facecolor(SURFACE)
+    ax.set_facecolor(SURFACE)
 
-    counts = Counter()                  # distinct apps per display category
-    members: dict[str, set] = {}        # distinct import names folded into each label
-    for r in rows:
-        cats = set()
-        for n in (r.get("matched_frameworks") or "").split(","):
-            n = n.strip()
-            if not n:
-                continue
-            c = category(n, args.group)
-            cats.add(c)
-            if c != n:
-                members.setdefault(c, set()).add(n)
-        for c in cats:          # each app counts once per category
-            counts[c] += 1
-
-    top = counts.most_common(args.top)
-    names = [c for c, _ in top]
-    vals = [v for _, v in top]
-
-    fig, ax = plt.subplots(figsize=(10, max(4, 0.42 * len(names))))
     y = range(len(names))
-    colors = ["#E45756" if n in GROUP_LABELS else "#4C78A8" for n in names]
-    ax.barh(y, vals, color=colors)
+    ax.barh(y, vals, height=0.72, color=BAR, zorder=3)   # gap between bars
     ax.set_yticks(list(y))
-    ax.set_yticklabels(names)
-    ax.invert_yaxis()
-    ax.set_xlabel("distinct applications importing this framework")
-    unit = "frameworks" if args.group else "import names"
-    subtitle = f"{total} slimmed applications"
-    if args.group:
-        subtitle += "  ·  langchain / agent_framework / autogen grouped"
-    ax.set_title(f"Framework frequency (top {len(names)} {unit})\n{subtitle}")
+    ax.set_yticklabels(names, color=INK)
+    ax.invert_yaxis()                                    # largest on top
+
+    # direct value labels at bar ends, in ink (not the bar color)
     for i, v in zip(y, vals):
-        ax.text(v + max(vals) * 0.01, i, str(v), va="center", fontsize=8)
+        ax.text(v + max(vals) * 0.01, i, str(v), va="center", fontsize=8, color=INK)
+
+    # recessive chrome: no box, hairline x-grid only, muted axis
+    for side in ("top", "right", "left"):
+        ax.spines[side].set_visible(False)
+    ax.spines["bottom"].set_color(MUTED)
+    ax.tick_params(colors=MUTED, length=0)
+    ax.xaxis.grid(True, color=GRID, linewidth=0.8, zorder=0)
+    ax.set_axisbelow(True)
+    ax.set_xlabel("distinct applications importing this framework", color=MUTED)
+
+    title = f"Framework frequency — top {len(names)} (ecosystems grouped)"
+    if total:
+        title += f"\n{total} slimmed applications"
+    ax.set_title(title, color=INK)
     ax.margins(x=0.08)
     fig.tight_layout()
-    fig.savefig(out_png, dpi=150)
-
-    print(f"wrote {out_png}")
-    for label in sorted(members, key=lambda l: -counts[l]):
-        print(f"  {label}: {counts[label]} distinct apps across {len(members[label])} packages")
+    fig.savefig(OUT_PNG, dpi=150, facecolor=SURFACE)
+    print(f"wrote {OUT_PNG}")
 
 
 if __name__ == "__main__":

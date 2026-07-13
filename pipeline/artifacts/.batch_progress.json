@@ -1,6 +1,25 @@
 {
   "processed": [
-    "smoke/myrepo"
+    "langflow-ai/langflow",
+    "bytedance/deer-flow",
+    "vectorize-io/hindsight",
+    "xtekky/gpt4free",
+    "NousResearch/hermes-agent",
+    "agno-agi/agno",
+    "topoteretes/cognee",
+    "potpie-ai/potpie",
+    "mlflow/mlflow",
+    "comet-ml/opik",
+    "Arindam200/awesome-ai-apps",
+    "JetAstra/SDAR",
+    "Shubhamsaboo/awesome-llm-apps",
+    "InternScience/InternAgent",
+    "langchain-ai/deepagents",
+    "run-llama/llama_index",
+    "NickCharlie/astrbot_plugin_self_learning",
+    "arc53/DocsGPT",
+    "kungfuai/CVlization",
+    "BerriAI/litellm"
   ],
   "failed": []
 }

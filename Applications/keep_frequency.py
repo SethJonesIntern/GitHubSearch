@@ -1,11 +1,15 @@
 """Framework-frequency table over the trustworthy (KEEP) import names.
 
-For each KEEP import name, count how many slimmed applications matched it (a repo
-matching N names contributes to N rows). Built from applications_slim.csv, so it
-reflects the post-slim, de-polluted candidate set.
+Counts DISTINCT slimmed applications per framework. Many frameworks ship as a
+fragmented family of packages (langchain + langchain_*, Microsoft's Agent
+Framework as ~28 agent_framework_* packages, autogen_* + pyautogen, ...). Those
+are ONE framework, so we group them into an ecosystem category and count distinct
+apps (a repo importing several packages of one family counts once).
 
-Writes pipeline/artifacts/keep_frequency.csv (import_name, applications, pct_of_apps),
-sorted by application count.
+Reads : applications_slim.csv
+Writes:
+  keep_frequency.csv             grouped by ecosystem category (the headline table)
+  keep_frequency_by_package.csv  raw per import_name (detail, ungrouped)
 """
 import csv
 import sys
@@ -17,31 +21,68 @@ from pipeline import paths  # noqa: E402
 
 SLIM_CSV = paths.ARTIFACTS_DIR / "applications_slim.csv"
 OUT_CSV = paths.ARTIFACTS_DIR / "keep_frequency.csv"
+OUT_BY_PKG = paths.ARTIFACTS_DIR / "keep_frequency_by_package.csv"
+
+# Ecosystem grouping: a package name folds into its family's category when it
+# equals the prefix or starts with "<prefix>_". langgraph is kept separate from
+# langchain (distinct product, same org) per the project decision.
+PREFIX_GROUPS = {
+    "langchain": "langchain",
+    "langgraph": "langgraph",
+    "agent_framework": "agent_framework (MS)",
+    "autogen": "autogen",
+    "crewai": "crewai",
+    "uagents": "uagents",
+    "notte": "notte",
+}
+# Family members that don't share the prefix pattern.
+EXTRA_MEMBERS = {"pyautogen": "autogen", "autogenstudio": "autogen"}
+
+
+def category(name: str) -> str:
+    if name in EXTRA_MEMBERS:
+        return EXTRA_MEMBERS[name]
+    for prefix, label in PREFIX_GROUPS.items():
+        if name == prefix or name.startswith(prefix + "_"):
+            return label
+    return name
+
+
+def _write(path, header, rows_iter):
+    with open(path, "w", newline="", encoding="utf-8") as f:
+        w = csv.writer(f)
+        w.writerow(header)
+        w.writerows(rows_iter)
 
 
 def main():
     if not SLIM_CSV.exists():
         sys.exit(f"{SLIM_CSV} not found — run Applications/slim_applications.py first.")
     rows = list(csv.DictReader(open(SLIM_CSV, encoding="utf-8")))
-    total_apps = len(rows)
-    counts = Counter()
+    total = len(rows)
+
+    grouped = Counter()   # distinct apps per ecosystem category
+    by_pkg = Counter()    # distinct apps per raw import name
     for r in rows:
-        for n in (r.get("matched_frameworks") or "").split(","):
-            n = n.strip()
-            if n:
-                counts[n] += 1
+        names = {n.strip() for n in (r.get("matched_frameworks") or "").split(",") if n.strip()}
+        for n in names:
+            by_pkg[n] += 1
+        for c in {category(n) for n in names}:   # dedupe within a family
+            grouped[c] += 1
 
-    with open(OUT_CSV, "w", newline="", encoding="utf-8") as f:
-        w = csv.writer(f)
-        w.writerow(["import_name", "applications", "pct_of_apps"])
-        for name, c in counts.most_common():
-            w.writerow([name, c, f"{100 * c / total_apps:.1f}" if total_apps else "0"])
+    def pct(c):
+        return f"{100 * c / total:.1f}" if total else "0"
 
-    print(f"total slimmed applications: {total_apps}")
-    print(f"distinct KEEP names with >=1 app: {len(counts)}")
-    print(f"wrote {OUT_CSV}\n")
-    print(f"{'applications':>12}  import_name")
-    for name, c in counts.most_common(30):
+    _write(OUT_CSV, ["framework", "applications", "pct_of_apps"],
+           ([name, c, pct(c)] for name, c in grouped.most_common()))
+    _write(OUT_BY_PKG, ["import_name", "applications", "pct_of_apps"],
+           ([name, c, pct(c)] for name, c in by_pkg.most_common()))
+
+    print(f"total slimmed applications: {total}")
+    print(f"ecosystem categories: {len(grouped)}  (from {len(by_pkg)} import names)")
+    print(f"wrote {OUT_CSV.name} + {OUT_BY_PKG.name}\n")
+    print(f"{'applications':>12}  framework")
+    for name, c in grouped.most_common(20):
         print(f"{c:>12}  {name}")
 
 

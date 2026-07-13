@@ -114,12 +114,22 @@ def completed_cpg_for_chunk(cpg_path: Path, chunk_dir: Path, chunk_manifest: dic
     )
 
 
+def _executable_variants(p: Path):
+    """On Windows, prefer the .bat/.cmd/.exe wrapper over the extension-less Unix
+    launcher script — running the latter via subprocess raises
+    'WinError 193: %1 is not a valid Win32 application'."""
+    if os.name == "nt" and not p.suffix:
+        for ext in (".bat", ".cmd", ".exe"):
+            yield p.with_suffix(ext)
+    yield p
+
+
 def resolve_joern_parse_executable(value: str) -> Path:
     """Resolve joern-parse from a binary name, binary path, joern-cli dir, or install root."""
     raw = Path(value).expanduser()
     candidates = []
 
-    if raw.name == "joern-parse" or raw.suffix:
+    if raw.stem == "joern-parse" or raw.suffix:
         candidates.append(raw)
     if raw.is_dir():
         candidates.extend([raw / "joern-parse", raw / "joern-cli" / "joern-parse"])
@@ -135,12 +145,13 @@ def resolve_joern_parse_executable(value: str) -> Path:
 
     seen = set()
     for candidate in candidates:
-        candidate = candidate.resolve() if candidate.exists() else candidate
-        if candidate in seen:
-            continue
-        seen.add(candidate)
-        if candidate.is_file():
-            return candidate
+        for cand in _executable_variants(candidate):
+            cand = cand.resolve() if cand.exists() else cand
+            if cand in seen:
+                continue
+            seen.add(cand)
+            if cand.is_file():
+                return cand
 
     checked = ", ".join(str(path) for path in candidates)
     raise FileNotFoundError(
@@ -154,12 +165,21 @@ def _format_joern_failure(detail: str, max_chars: int = 4000) -> str:
     detail = detail.strip()
     if len(detail) <= max_chars:
         return detail
-    return detail[:max_chars] + "\n... <truncated>"
+    # Keep BOTH ends: the head has the startup context, but the fatal exception
+    # (OutOfMemoryError / StackOverflowError / stack trace) is at the TAIL — which
+    # a head-only truncation would discard, leaving failures undiagnosable.
+    head = max_chars // 3
+    tail = max_chars - head
+    return (f"{detail[:head]}\n... <truncated {len(detail) - max_chars} chars> ...\n"
+            f"{detail[-tail:]}")
 
 
-def _java_env(stack_size: str | None, extra_java_opts: str) -> dict[str, str]:
+def _java_env(stack_size: str | None, heap_size: str | None,
+              extra_java_opts: str) -> dict[str, str]:
     env = os.environ.copy()
     opts = []
+    if heap_size:
+        opts.append(f"-Xmx{heap_size}")
     if stack_size:
         opts.append(f"-Xss{stack_size}")
     if extra_java_opts.strip():
@@ -182,6 +202,7 @@ def run_joern_parse_once(
     timeout: int,
     java_stack_size: str | None,
     java_opts: str,
+    java_heap_size: str | None = None,
 ) -> float:
     if cpg_path.exists():
         cpg_path.unlink()
@@ -202,7 +223,7 @@ def run_joern_parse_once(
             text=True,
             timeout=timeout,
             check=False,
-            env=_java_env(java_stack_size, java_opts),
+            env=_java_env(java_stack_size, java_heap_size, java_opts),
         )
     except subprocess.TimeoutExpired as exc:
         elapsed = time.monotonic() - start
@@ -245,13 +266,24 @@ def run_joern_parse(
     timeout: int,
     java_stack_sizes: list[str | None],
     java_opts: str,
+    java_heap_sizes: list[str | None] | None = None,
 ) -> tuple[float, str | None, int]:
+    """Parse a repo into a CPG, escalating JVM memory only as failures demand it:
+    a larger HEAP (-Xmx) on OutOfMemoryError and a larger STACK (-Xss) on
+    StackOverflowError. Most repos succeed on the first (smallest) settings; only
+    the pathologically large ones ever climb the ladders — and each joern process
+    is short-lived, so the bigger memory is transient, never held across the run."""
+    heaps = list(java_heap_sizes) if java_heap_sizes else [None]
+    stacks = list(java_stack_sizes) if java_stack_sizes else [None]
     last_error: Exception | None = None
-    for attempt, stack_size in enumerate(java_stack_sizes, start=1):
-        stack_label = stack_size or "default"
+    hi = si = 0
+    attempt = 0
+    while True:
+        attempt += 1
+        heap, stack = heaps[hi], stacks[si]
         print(
-            f"  joern-parse attempt {attempt}/{len(java_stack_sizes)} "
-            f"(java stack {stack_label})",
+            f"  joern-parse attempt {attempt} "
+            f"(heap {heap or 'default'}, stack {stack or 'default'})",
             flush=True,
         )
         try:
@@ -260,19 +292,25 @@ def run_joern_parse(
                 chunk_dir=chunk_dir,
                 cpg_path=cpg_path,
                 timeout=timeout,
-                java_stack_size=stack_size,
+                java_stack_size=stack,
                 java_opts=java_opts,
+                java_heap_size=heap,
             )
-            return elapsed, stack_size, attempt
+            return elapsed, stack, attempt
         except RuntimeError as exc:
             last_error = exc
             message = str(exc)
-            if "StackOverflowError" not in message or attempt == len(java_stack_sizes):
-                break
-            print(
-                f"  StackOverflowError with stack {stack_label}; retrying with a larger stack",
-                flush=True,
-            )
+            if "OutOfMemoryError" in message and hi < len(heaps) - 1:
+                hi += 1
+                print(f"  OutOfMemoryError; retrying with a larger heap ({heaps[hi]})",
+                      flush=True)
+                continue
+            if "StackOverflowError" in message and si < len(stacks) - 1:
+                si += 1
+                print(f"  StackOverflowError; retrying with a larger stack ({stacks[si]})",
+                      flush=True)
+                continue
+            break
 
     if cpg_path.exists():
         cpg_path.unlink()
@@ -328,6 +366,15 @@ def parse_java_stack_sizes(value: str) -> list[str | None]:
         for item in value.split(",")
     ]
     return java_stack_sizes or [None]
+
+
+def parse_java_heap_sizes(value: str) -> list[str | None]:
+    """Parse a comma list like '8g,12g,16g' into the -Xmx escalation ladder."""
+    heaps = [
+        None if item.strip().lower() in {"", "default", "none"} else item.strip()
+        for item in value.split(",")
+    ]
+    return heaps or [None]
 
 
 def shard_chunk_dirs(chunk_dirs: list[Path], shard_id: int, num_shards: int) -> list[Path]:

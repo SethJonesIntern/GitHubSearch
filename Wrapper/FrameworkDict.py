@@ -297,8 +297,8 @@ FRAMEWORK_CALLS: dict[str, list[str]] = {
         "ActionEngine",
     ],
 
-    # ── Cheshire Cat ───────────────────────────────────────────────────────────
-    "cheshire_cat": [
+    # ── Cheshire Cat (distributed package imports as `cat`, not `cheshire_cat`) ──
+    "cat": [
         ".run",
         ".send",
         "CatClient",
@@ -327,4 +327,57 @@ FRAMEWORK_CALLS: dict[str, list[str]] = {
     "llmstack": [".run", "LLMStack"],
     # Commented out — web framework (Reflex fork); no user-called LLM invoker found.
     # "nextpy": [".run", "App"],
+
+    # ── Added: top-20 frameworks that were missing from the invoker detector ─────
+    # mem0: the Memory client's add/search/get_all invoke an LLM internally
+    # (extraction / query), so they count as LLM invokers per project definition.
+    # (No class name — a Memory(...) constructor is not itself an invocation.)
+    "mem0": [".add", ".search", ".get_all", ".update"],
+    # haystack: pipelines and generators are invoked via .run / .run_async.
+    "haystack": [".run", ".run_async"],
+    # smolagents: agents are invoked via .run.
+    "smolagents": [".run"],
+    # agno: agents are invoked via .run / .print_response (+ async variants).
+    # Deliberately NOT matching the bare `Agent` name — that hits every Agent(...)
+    # constructor, which builds an agent but invokes no LLM (see the agno over-count).
+    "agno": [".run", ".arun", ".print_response", ".aprint_response"],
+    # dspy: LLM calls go through module objects invoked as bare callables
+    # (`pred = dspy.Predict(sig); pred(...)`), which a .method list can't see. Match
+    # the module CLASS names instead — dspy cannot be used without instantiating or
+    # subclassing one — plus explicit .forward. Import-scoped, so no false positives.
+    "dspy": [".forward", ".aforward", "Predict", "ChainOfThought", "ReAct",
+             "ProgramOfThought", "MultiChainComparison", "TypedPredictor",
+             "Retrieve", "Module"],
+    # graphrag: query API is module-level functions, not methods. Match the search
+    # entry points (every Python query goes through one of these) + engine .search.
+    "graphrag": ["global_search", "local_search", "drift_search", "basic_search",
+                 ".search", ".asearch"],
+    # semantic_kernel: Microsoft's SK — kernel/agent invocation + chat completion.
+    # (No `Kernel` class name — Kernel(...) construction is not an invocation.)
+    "semantic_kernel": [".invoke", ".invoke_async", ".invoke_prompt",
+                        ".invoke_prompt_async", ".invoke_stream",
+                        ".get_chat_message_content", ".get_chat_message_contents",
+                        ".get_streaming_chat_message_content", ".get_response"],
+    # astrbot: multi-platform LLM chatbot framework; plugins invoke the LLM through
+    # the provider API. Patterns derived from AstrBotDevs/AstrBot source.
+    "astrbot": [".text_chat", ".text_chat_stream", ".request_llm",
+                ".get_using_provider", ".chat"],
+    # headroom: built on the LangChain Runnable interface — LLM calls go through
+    # .invoke/.run/.chat/.completion. Patterns derived from headroomlabs-ai/headroom.
+    "headroom": [".invoke", ".ainvoke", ".run", ".arun", ".chat",
+                 ".completion", ".acompletion", ".get_response"],
 }
+
+# LangChain integration packages (chat-model providers) all expose the standard
+# Runnable interface, so they share langchain's invoke/stream/batch patterns. A repo
+# that imports only e.g. langchain_mistralai still calls .invoke — cover them all so
+# provider-only imports aren't missed. setdefault leaves existing keys untouched.
+_LANGCHAIN_INTEGRATIONS = [
+    "langchain_mistralai", "langchain_ollama", "langchain_deepseek", "langchain_groq",
+    "langchain_huggingface", "langchain_xai", "langchain_fireworks",
+    "langchain_perplexity", "langchain_openrouter", "langchain_google_genai",
+    "langchain_google_vertexai", "langchain_aws", "langchain_cohere",
+    "langchain_together", "langchain_nvidia_ai_endpoints",
+]
+for _pkg in _LANGCHAIN_INTEGRATIONS:
+    FRAMEWORK_CALLS.setdefault(_pkg, FRAMEWORK_CALLS["langchain"])

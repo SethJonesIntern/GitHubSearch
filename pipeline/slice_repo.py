@@ -23,6 +23,7 @@ from pathlib import Path
 from typing import Any, Dict, Optional
 
 from pipeline.create_project_codenet_cpgs import (
+    parse_java_heap_sizes,
     parse_java_stack_sizes,
     resolve_joern_parse_executable,
     run_joern_parse,
@@ -35,6 +36,10 @@ from pipeline.per_variable_pdg_slicer import (
 )
 
 DEFAULT_JAVA_STACK_SIZES = "default,32m,64m,128m,256m,512m"
+# Heap (-Xmx) escalation ladder: start at 8g, bump to 12g then 16g only when a repo
+# hits OutOfMemoryError. Each joern process is short-lived and most repos finish at
+# 8g using far less, so the larger heap is transient and only for the few big repos.
+DEFAULT_JAVA_HEAP_SIZES = "8g,12g,16g"
 
 
 def slice_repo(
@@ -54,6 +59,7 @@ def slice_repo(
     workers: int = 1,
     joern_timeout: int = 7200,
     java_stack_sizes: str = DEFAULT_JAVA_STACK_SIZES,
+    java_heap_sizes: str = DEFAULT_JAVA_HEAP_SIZES,
     java_opts: str = "",
     progress_interval: int = 100,
     cpg_out: Optional[Path] = None,
@@ -85,6 +91,7 @@ def slice_repo(
             cpg_path=cpg_path,
             timeout=joern_timeout,
             java_stack_sizes=parse_java_stack_sizes(java_stack_sizes),
+            java_heap_sizes=parse_java_heap_sizes(java_heap_sizes),
             java_opts=java_opts,
         )
         print(
@@ -141,6 +148,9 @@ def main() -> None:
     parser.add_argument("--workers", type=int, default=1)
     parser.add_argument("--joern-timeout", type=int, default=7200)
     parser.add_argument("--java-stack-sizes", default=DEFAULT_JAVA_STACK_SIZES)
+    parser.add_argument("--java-heap-sizes", default=DEFAULT_JAVA_HEAP_SIZES,
+                        help="-Xmx escalation ladder, tried in order only when a repo "
+                             "OOMs (default: 8g,12g,16g).")
     parser.add_argument("--java-opts", default="")
     parser.add_argument("--progress-interval", type=int, default=100)
     parser.add_argument("--cpg-out", type=Path, default=None,
@@ -162,6 +172,7 @@ def main() -> None:
         workers=args.workers,
         joern_timeout=args.joern_timeout,
         java_stack_sizes=args.java_stack_sizes,
+        java_heap_sizes=args.java_heap_sizes,
         java_opts=args.java_opts,
         progress_interval=args.progress_interval,
         cpg_out=args.cpg_out,

@@ -168,11 +168,12 @@ def process_repo(repo_full_name: str, clone_dir: Path) -> dict:
 # ── IO ────────────────────────────────────────────────────────────────────────
 
 
-def load_applications() -> list[dict]:
-    if not paths.APPLICATIONS_CSV.exists():
+def load_applications(path: Path | None = None) -> list[dict]:
+    path = path or paths.APPLICATIONS_CSV
+    if not path.exists():
         raise FileNotFoundError(
-            f"{paths.APPLICATIONS_CSV} not found — run Stage 2 (search_candidates.py) first.")
-    with paths.APPLICATIONS_CSV.open(encoding="utf-8") as f:
+            f"{path} not found — run Stage 2 (search_candidates.py) first.")
+    with path.open(encoding="utf-8") as f:
         return list(csv.DictReader(f))
 
 
@@ -219,6 +220,9 @@ def main() -> None:
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--resume", action="store_true",
                     help="Skip repos already in the progress file instead of starting fresh")
+    ap.add_argument("--input", type=Path, default=None,
+                    help="Applications CSV to analyze (default: Stage 2 applications.csv). "
+                         "Use to run a curated subset, e.g. a pilot set.")
     ap.add_argument("--limit", type=int, default=None,
                     help="Process at most N applications (smoke runs)")
     ap.add_argument("--keep-clones", action="store_true",
@@ -259,7 +263,7 @@ def main() -> None:
     progress = load_progress()
     done = set(progress["processed"])
 
-    apps = load_applications()
+    apps = load_applications(args.input)
     if args.limit is not None:
         apps = apps[:args.limit]
     print(f"Processing {len(apps)} applications "

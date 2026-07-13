@@ -38,6 +38,8 @@ from dotenv import load_dotenv
 # Make the repo-root `pipeline` package importable regardless of CWD.
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from pipeline import paths  # noqa: E402
+sys.path.insert(0, str(Path(__file__).resolve().parent))  # for sibling git_metrics
+from git_metrics import measure_repo  # noqa: E402
 
 load_dotenv()  # repo-root / CWD .env
 load_dotenv(paths.REPO_ROOT / "Frameworks" / ".env")  # token lives here
@@ -475,6 +477,11 @@ def main():
                         help="Cap code-search pages per pattern (smoke runs)")
     parser.add_argument("--max-repos", type=int, default=None,
                         help="Enrich at most N candidates this run (smoke runs)")
+    parser.add_argument("--rest-metrics", action="store_true",
+                        help="Compute enrichment metrics via the GitHub REST API "
+                             "(contributors/commits/tree). Default is a local blobless "
+                             "clone (git_metrics.measure_repo), which avoids the core "
+                             "API rate limit.")
     args = parser.parse_args()
 
     code_pages = args.code_pages or CODE_SEARCH_MAX_PAGES
@@ -609,10 +616,18 @@ def main():
         branch = item.get("default_branch") or "main"
 
         lifetime_days = compute_lifetime_days(item.get("created_at"), item.get("pushed_at"))
-        contributors = count_contributors(owner, repo)
-        total_commits = count_commits(owner, repo, branch)
+        if args.rest_metrics:
+            contributors = count_contributors(owner, repo)
+            total_commits = count_commits(owner, repo, branch)
+            test_file_count, has_ci = tree_metrics(owner, repo, branch)
+        else:
+            # Local blobless clone — no REST calls, no core-API rate limit.
+            m = measure_repo(item.get("clone_url")) or {}
+            contributors = m.get("contributors", 0)
+            total_commits = m.get("total_commits", 0)
+            test_file_count = m.get("test_file_count", 0)
+            has_ci = m.get("has_ci", False)
         commits_per_month = commits_per_month_of(total_commits, lifetime_days)
-        test_file_count, has_ci = tree_metrics(owner, repo, branch)
 
         is_candidate, drop_reason = evaluate_candidate(
             lifetime_days, contributors, commits_per_month, test_file_count)
