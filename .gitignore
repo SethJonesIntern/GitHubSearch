@@ -1,2 +1,14 @@
 .search_progress.json
 .dep_check_progress.json
+
+# generated pipeline artifacts / build junk — regenerable, too big for git
+workspace/
+pipeline/repos/
+Wrapper/repos/
+*.cpg/
+pipeline/artifacts/slices/
+.batch_progress.json
+
+# python bytecode
+__pycache__/
+*.pyc

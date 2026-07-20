@@ -73,6 +73,8 @@ def is_credible(row: dict, fw: str) -> bool:
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--top", type=int, default=20, help="number of top frameworks to sample")
+    ap.add_argument("--per-framework", type=int, default=1,
+                    help="how many top repos to take per framework (distinct across all)")
     args = ap.parse_args()
 
     if not (FREQ_CSV.exists() and SLIM_CSV.exists()):
@@ -96,12 +98,13 @@ def main():
                         and not is_own_repo(r, fw, framework_repos)
                         and is_credible(r, fw)),
                        key=stars, reverse=True)
-        if not cands:
+        picks = cands[:args.per_framework]
+        if not picks:
             missing.append(fw)
             continue
-        pick = cands[0]
-        chosen.append((fw, pick))
-        chosen_names.add(pick["full_name"])
+        for pick in picks:
+            chosen.append((fw, pick))
+            chosen_names.add(pick["full_name"])
 
     with open(OUT_CSV, "w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=fields, quoting=csv.QUOTE_ALL)
@@ -109,10 +112,14 @@ def main():
         for _, pick in chosen:
             w.writerow(pick)
 
-    print(f"selected {len(chosen)} repos (1 per framework) -> {OUT_CSV.name}\n")
-    print(f"{'framework':<22}{'stars':>7}  repo")
+    print(f"selected {len(chosen)} repos (up to {args.per_framework} per framework) "
+          f"-> {OUT_CSV.name}\n")
+    print(f"{'framework':<22}{'stars':>8}  repo")
+    last = None
     for fw, pick in chosen:
-        print(f"{fw:<22}{stars(pick):>7}  {pick['full_name']}")
+        label = fw if fw != last else ""
+        print(f"{label:<22}{stars(pick):>8}  {pick['full_name']}")
+        last = fw
     if missing:
         print(f"\nno distinct repo available for: {', '.join(missing)}")
 

@@ -18,9 +18,12 @@ def matcher(pat: str):
 
     Two pattern shapes need different matching strategies:
 
-    Method-style patterns starting with "." use plain substring matching so
-    that ".invoke" catches the .invoke in any "something.invoke" expression
-    — `chain.invoke`, `self.runnable.invoke`, `client.batch.invoke`, etc.
+    Method-style patterns starting with "." match the method as a COMPLETE token:
+    ".run" catches `chain.run`, `self.runnable.run`, `agent.run(...)` — but NOT
+    `.run_tool`, `.runs`, `.run_in_executor`, `.run_coroutine_threadsafe`. A trailing
+    negative-lookahead for an identifier char is what bounds it; without it the old
+    substring match counted ~19% of calls as false positives (a `.run` inside
+    `run_tool`, `.get` inside `get_or_create`, `.generate` inside `nanoid.generate`).
 
     Identifier patterns use word-boundary regex matching.  This is the fix
     for collisions like "BaseTool" matching inside "BaseToolOutput" or
@@ -29,7 +32,8 @@ def matcher(pat: str):
     aligned to identifier edges.
     """
     if pat.startswith("."):
-        return lambda text: pat in text
+        rx = re.compile(re.escape(pat) + r"(?![A-Za-z0-9_])")
+        return lambda text: rx.search(text) is not None
     rx = re.compile(rf"\b{re.escape(pat)}\b")
     return lambda text: rx.search(text) is not None
 

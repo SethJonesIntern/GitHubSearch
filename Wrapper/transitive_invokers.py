@@ -20,6 +20,9 @@ import argparse
 import ast
 import json
 import os
+import re
+import time
+import warnings
 import shutil
 import stat
 import subprocess
@@ -49,10 +52,15 @@ def _on_rm_error(func, path, _):
 
 def shallow_clone(url: str, dest: Path) -> bool:
     """git clone --depth 1 into dest. Returns True on success, or prints the
-    error and returns False on timeout/failure."""
+    error and returns False on timeout/failure.
+
+    core.longpaths=true is required on Windows: many repos have paths over the
+    260-char MAX_PATH limit, which otherwise fetch fine but fail at checkout
+    ("Clone succeeded, but checkout failed") and leave no working tree to analyze."""
     try:
         subprocess.run(
-            ["git", "clone", "--depth", "1", "--quiet", url, str(dest)],
+            ["git", "-c", "core.longpaths=true", "clone", "--depth", "1", "--quiet",
+             url, str(dest)],
             check=True,
             timeout=CLONE_TIMEOUT_SEC,
             capture_output=True,
@@ -379,7 +387,53 @@ def seed_invokers(
     return invokers
 
 
-def build_call_graph(repo: Path, repo_root: Optional[Path] = None) -> dict[str, set[str]]:
+# pyan3 is all-or-nothing: a single file it can't parse (or its own scope bug on
+# nested lambdas/comprehensions) throws and kills the graph for the WHOLE repo. We
+# recover by dropping the offending file and retrying — this keeps pyan's (superior)
+# resolution on everything else. Most repos need 0; the failing ones need 1-2.
+_MAX_CG_EXCLUSIONS = int(os.environ.get("PYAN_MAX_EXCLUSIONS", "40"))
+# Each exclusion re-parses the WHOLE repo, so a huge repo with many bad files (e.g.
+# litellm: 55k functions + many nested-lambda test files) could churn for an hour.
+# Bound the total resilient-retry time; a repo that blows the budget gives up (empty
+# graph, later covered by the Joern fallback) rather than stalling the whole run.
+# Both overridable via env for targeted "no-limit" reruns: PYAN_MAX_EXCLUSIONS,
+# PYAN_TIME_BUDGET_SEC (set to 0 to disable the time-box entirely).
+_CG_TIME_BUDGET_SEC = int(os.environ.get("PYAN_TIME_BUDGET_SEC", "480"))
+
+
+def _module_name(path: str, root: Path) -> Optional[str]:
+    try:
+        return ".".join(Path(path).relative_to(root).with_suffix("").parts)
+    except ValueError:
+        return None
+
+
+def _find_offending_file(err: str, entry_points: list[str], root: Path) -> Optional[str]:
+    """From a pyan failure message, identify which entry-point file to drop:
+    a parse error names it as '(file.py, line N)'; the scope bug names a qname
+    ('Unknown scope 'pkg.mod.func...') we map back to its module file."""
+    # Filename must not contain spaces/parens: pyan messages can carry an extra '('
+    # (e.g. "'(' was never closed (test_x.py, line 488)"), and a greedy [^)]+ would
+    # latch onto the wrong paren and capture garbage instead of the real file.
+    m = re.search(r"\(([^()\s]+\.py), line", err)
+    if m:
+        want = Path(m.group(1)).name
+        for ep in entry_points:
+            if Path(ep).name == want:
+                return ep
+    m = re.search(r"Unknown scope '([^']+)'", err)
+    if m:
+        qn, best, best_len = m.group(1), None, -1
+        for ep in entry_points:
+            mn = _module_name(ep, root)
+            if mn and (qn == mn or qn.startswith(mn + ".")) and len(mn) > best_len:
+                best, best_len = ep, len(mn)
+        return best
+    return None
+
+
+def build_call_graph(repo: Path, repo_root: Optional[Path] = None,
+                     stats: Optional[dict] = None) -> dict[str, set[str]]:
     """Build a static call graph for the repo with pyan3.
 
     pyan3 handles the cases our own resolver couldn't: aliased imports,
@@ -389,8 +443,9 @@ def build_call_graph(repo: Path, repo_root: Optional[Path] = None) -> dict[str, 
     namespace.name relative to `root` (e.g. "test_repo.collisions.wrapper_a.wrapper"),
     which matches index_repo's dotted qnames, so seed names line up directly.
 
-    Edges with an unresolved endpoint (no namespace, or a wildcard name) are
-    dropped since they can't take part in the BFS.
+    Resilient: if pyan chokes on a file, that file is excluded and the analysis is
+    retried (up to _MAX_CG_EXCLUSIONS files) so one bad file doesn't zero the graph.
+    Pass `stats` to receive {'excluded_files': N, 'cg_source': 'pyan'|'pyan_resilient'|'none'}.
     """
     try:
         from pyan.analyzer import CallGraphVisitor
@@ -401,16 +456,57 @@ def build_call_graph(repo: Path, repo_root: Optional[Path] = None) -> dict[str, 
         str(p) for p in repo.rglob("*.py")
         if not any(part in SKIP_DIRS for part in p.parts)
     ]
+    root = repo_root if repo_root is not None else repo  # match index_repo's base
+
+    def _record(source: str, excluded: list) -> None:
+        if stats is not None:
+            stats["excluded_files"] = len(excluded)
+            stats["cg_source"] = source
+
     if not entry_points:
+        _record("none", [])
         return {}
 
-    # Root pyan at the same base index_repo uses so module names match.
-    root = repo_root if repo_root is not None else repo
-    try:
-        v = CallGraphVisitor(entry_points, root=str(root))
-    except Exception as e:
-        print(f"# Warning: pyan3 analysis failed: {e}", file=sys.stderr)
+    excluded: list[str] = []
+    v = None
+    started = time.monotonic()
+    while entry_points and len(excluded) <= _MAX_CG_EXCLUSIONS:
+        if excluded and _CG_TIME_BUDGET_SEC and time.monotonic() - started > _CG_TIME_BUDGET_SEC:
+            print(f"# pyan resilient retries exceeded {_CG_TIME_BUDGET_SEC}s after "
+                  f"{len(excluded)} exclusions; giving up on {repo.name}", file=sys.stderr)
+            _record("none", excluded)
+            return {}
+        try:
+            # pyan re-parses every file each pass; suppress the SyntaxWarning flood
+            # from analyzed repos' own code (e.g. unescaped regex strings).
+            with warnings.catch_warnings():
+                warnings.simplefilter("ignore")
+                v = CallGraphVisitor(entry_points, root=str(root))
+            break
+        except Exception as e:  # noqa: BLE001 - pyan raises many parse/scope errors
+            bad = _find_offending_file(str(e), entry_points, root)
+            if bad is None:
+                print(f"# Warning: pyan3 analysis failed (unrecoverable): {e}", file=sys.stderr)
+                _record("none", excluded)
+                return {}
+            entry_points.remove(bad)
+            excluded.append(Path(bad).name)
+            if os.environ.get("PYAN_VERBOSE"):
+                # emit each exclusion so a long resilient run is observable (count,
+                # elapsed, which file, and the error class that triggered it).
+                kind = "scope-bug" if "Unknown scope" in str(e) else type(e).__name__
+                print(f"# [{repo.name}] exclusion {len(excluded):>3} "
+                      f"({time.monotonic() - started:6.0f}s): dropped {Path(bad).name} "
+                      f"[{kind}]", file=sys.stderr, flush=True)
+    if v is None:
+        print(f"# Warning: pyan3 still failing after {len(excluded)} exclusions",
+              file=sys.stderr)
+        _record("none", excluded)
         return {}
+    if excluded:
+        print(f"# pyan recovered after excluding {len(excluded)} file(s): "
+              f"{', '.join(excluded[:5])}{' ...' if len(excluded) > 5 else ''}",
+              file=sys.stderr)
 
     def node_qname(node) -> Optional[str]:
         if node.namespace is None or "*" in node.name:
@@ -429,6 +525,7 @@ def build_call_graph(repo: Path, repo_root: Optional[Path] = None) -> dict[str, 
                 continue
             graph[src_q].add(dst_q)
 
+    _record("pyan_resilient" if excluded else "pyan", excluded)
     return dict(graph)
 
 

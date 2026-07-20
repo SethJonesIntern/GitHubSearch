@@ -56,6 +56,11 @@ METADATA_FIELDS = ["repo"] + list(E.CALL_METADATA_FIELDS)
 # Invokers and tests share a shape: a function that (transitively) reaches a call.
 INVOKER_FIELDS = ["repo", "qname", "file", "line", "reason", "kind"]
 TEST_FIELDS = INVOKER_FIELDS
+CALL_GRAPH_HEALTH_FIELDS = [
+    "repo", "cg_source", "excluded_files", "graph_usable", "total_functions",
+    "graph_nodes", "graph_edges", "graph_coverage_pct", "llm_direct_invokers",
+    "llm_transitive_invokers", "eval_direct_invokers", "eval_transitive_invokers",
+]
 
 
 def _calls_from_metadata(repo: str, meta_rows: list[dict]) -> list[dict]:
@@ -113,16 +118,20 @@ def _tests_among(invoker_rows: list[dict]) -> list[dict]:
 # ── per-repo analysis ─────────────────────────────────────────────────────────
 
 
-def safe_call_graph(clone_dir: Path, repo_root: Path) -> dict:
-    """build_call_graph, but never fatal: returns {} if pyan3 is missing or
-    errors (e.g. wrong Python version), so the run degrades to direct seeds."""
+def safe_call_graph(clone_dir: Path, repo_root: Path) -> tuple[dict, str, int]:
+    """build_call_graph, but never fatal. Returns (graph, cg_source, excluded_files).
+    cg_source is 'pyan' (clean), 'pyan_resilient' (recovered by dropping N bad files),
+    'none' (unrecoverable), 'pyan_missing', or 'error' — so we can tell an empty graph
+    apart from a recovered one, and see how much resilience each repo needed."""
+    stats: dict = {}
     try:
-        return E.build_call_graph(clone_dir, repo_root)
+        graph = E.build_call_graph(clone_dir, repo_root, stats=stats)
+        return graph, stats.get("cg_source", "pyan"), stats.get("excluded_files", 0)
     except SystemExit:        # build_call_graph sys.exit()s when pyan3 is absent
-        return {}
+        return {}, "pyan_missing", 0
     except Exception as e:    # noqa: BLE001 - any pyan failure is non-fatal here
         print(f"  call graph failed ({e}); falling back to direct seeds", file=sys.stderr)
-        return {}
+        return {}, "error", 0
 
 
 def process_repo(repo_full_name: str, clone_dir: Path) -> dict:
@@ -131,7 +140,7 @@ def process_repo(repo_full_name: str, clone_dir: Path) -> dict:
     repo_root = clone_dir.parent  # mirrors the single-repo CLI convention
 
     functions, contexts = E.index_repo(clone_dir, repo_root, COMBINED_CALLS)
-    call_graph = safe_call_graph(clone_dir, repo_root)
+    call_graph, cg_source, excluded_files = safe_call_graph(clone_dir, repo_root)
     index = E.AstIndex(functions, repo_root)
 
     def run_pass(calls_dict):
@@ -162,6 +171,41 @@ def process_repo(repo_full_name: str, clone_dir: Path) -> dict:
         "eval_invokers": eval_invoker_rows,
         "eval_calls": _calls_from_metadata(repo_full_name, eval_meta),
         "eval_call_metadata": eval_meta,
+        "call_graph_health": [_call_graph_health_row(
+            repo_full_name, cg_source, excluded_files, call_graph, functions,
+            llm_invoker_rows, eval_invoker_rows)],
+    }
+
+
+def _call_graph_health_row(repo: str, cg_source: str, excluded_files: int,
+                           call_graph: dict, functions,
+                           llm_rows: list[dict], eval_rows: list[dict]) -> dict:
+    """One row describing whether this repo's transitive numbers are trustworthy.
+    An empty graph (0 edges) over many functions means pyan gave us nothing to
+    walk, so any '0 transitive' for that repo is an artifact. `graph_usable` is the
+    flag to segment on; `cg_source`/`excluded_files` record how the graph was built
+    (clean pyan, resilient pyan after dropping N files, or none)."""
+    total_functions = len(functions)
+    nodes = len(call_graph)                                  # callers with ≥1 edge
+    edges = sum(len(v) for v in call_graph.values())
+    def kinds(rows):
+        d = sum(1 for r in rows if r.get("kind") == "direct")
+        return d, len(rows) - d
+    llm_direct, llm_trans = kinds(llm_rows)
+    eval_direct, eval_trans = kinds(eval_rows)
+    return {
+        "repo": repo,
+        "cg_source": cg_source,
+        "excluded_files": excluded_files,
+        "graph_usable": edges > 0,
+        "total_functions": total_functions,
+        "graph_nodes": nodes,
+        "graph_edges": edges,
+        "graph_coverage_pct": round(100 * nodes / total_functions, 1) if total_functions else 0.0,
+        "llm_direct_invokers": llm_direct,
+        "llm_transitive_invokers": llm_trans,
+        "eval_direct_invokers": eval_direct,
+        "eval_transitive_invokers": eval_trans,
     }
 
 
@@ -197,6 +241,7 @@ OUTPUTS = {
     "eval_invokers": (paths.EVAL_INVOKERS_CSV, INVOKER_FIELDS),
     "eval_calls": (paths.EVAL_CALLS_CSV, CALL_FIELDS),
     "eval_call_metadata": (paths.EVAL_CALL_METADATA_CSV, METADATA_FIELDS),
+    "call_graph_health": (paths.CALL_GRAPH_HEALTH_CSV, CALL_GRAPH_HEALTH_FIELDS),
 }
 
 

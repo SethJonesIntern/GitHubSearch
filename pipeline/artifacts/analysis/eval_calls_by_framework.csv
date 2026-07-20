@@ -1,4 +1,5 @@
-framework,eval_calls
-opik,478
-ragas,31
-deepeval,5
+framework,eval_calls,pct_of_eval_calls
+opik,361,43.9
+ragas,309,37.5
+phoenix,131,15.9
+deepeval,22,2.7

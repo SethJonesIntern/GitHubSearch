@@ -35,6 +35,27 @@ VALID = {(fw, p) for fw, pats in E.FRAMEWORK_CALLS.items() for p in pats}
 KNOBS = ["temperature", "top_p", "top_k", "seed", "max_tokens",
          "frequency_penalty", "presence_penalty", "model"]
 
+# Repos dropped from the study population as a code-quality filter: too many source
+# files fail to parse (real Python SyntaxErrors, per the scope-vs-syntax audit) for the
+# codebase to count as a maintained application. Criterion: >=10 unparseable files —
+# which cleanly isolates these two outliers (next-worst repo has 9). Counts: atom 31,
+# Hands-On-AI-Engineering 56. Filtered here (not deleted from the CSVs) so the criterion
+# stays on the record and the raw data is preserved.
+QUALITY_EXCLUDED = {
+    "rush86999/atom": "31 unparseable files",
+    "Sumanth077/Hands-On-AI-Engineering": "56 unparseable files",
+}
+
+# Not an LLM application: Stage-2 pulled these in by an import-name collision, but Stage
+# 5 found 0 LLM invokers / 0 LLM calls in a healthy (or, for sunnypilot, unreadable)
+# graph — the matched framework token doesn't reflect real usage. Dropped from the
+# population as false positives, separate from the code-quality filter above.
+NOT_LLM_APP = {
+    "sunnypilot/sunnypilot": "0 invokers; agno name-collision (driver-assistance app)",
+}
+
+EXCLUDED = {**QUALITY_EXCLUDED, **NOT_LLM_APP}
+
 
 def load(name: str) -> pd.DataFrame:
     p = A / name
@@ -92,10 +113,27 @@ def main():
     ev_calls = load("eval_calls_all.csv")
     ev_inv = load("eval_invokers_all.csv")
 
+    # Drop code-quality-excluded repos from every frame before any counting.
+    def _drop_excluded(df, col):
+        if df.empty or col not in df.columns:
+            return df
+        return df[~df[col].isin(EXCLUDED)]
+    apps = _drop_excluded(apps, "full_name")
+    invokers, tests = _drop_excluded(invokers, "repo"), _drop_excluded(tests, "repo")
+    calls, meta = _drop_excluded(calls, "repo"), _drop_excluded(meta, "repo")
+    ev_calls, ev_inv = _drop_excluded(ev_calls, "repo"), _drop_excluded(ev_inv, "repo")
+
     prog = json.loads(paths.BATCH_PROGRESS_JSON.read_text()) \
         if paths.BATCH_PROGRESS_JSON.exists() else {}
-    analyzed = set(prog.get("processed", []))
+    analyzed = set(prog.get("processed", [])) - set(EXCLUDED)
     n_analyzed = len(analyzed) or (invokers["repo"].nunique() if not invokers.empty else 0)
+    if QUALITY_EXCLUDED:
+        print(f"[code-quality filter, >=10 unparseable files] dropped "
+              f"{len(QUALITY_EXCLUDED)}: " +
+              ", ".join(f"{r} ({why})" for r, why in QUALITY_EXCLUDED.items()))
+    if NOT_LLM_APP:
+        print(f"[false positive, not an LLM app] dropped {len(NOT_LLM_APP)}: " +
+              ", ".join(f"{r} ({why})" for r, why in NOT_LLM_APP.items()))
 
     # ── population + prevalence ───────────────────────────────────────────────
     section("POPULATION & LLM-USAGE PREVALENCE")
@@ -108,6 +146,32 @@ def main():
                           (">=1 LLM test", tests), (">=1 eval call", ev_calls)]:
             r = repos_with(df)
             print(f"  repos with {label:<18}: {r:>5}  ({100 * r / n_analyzed:.0f}% of analyzed)")
+
+    # ── call-graph health (can we trust the transitive numbers?) ──────────────
+    section("CALL-GRAPH HEALTH  (is low transitive real, or a pyan artifact?)")
+    health = _drop_excluded(load("call_graph_health.csv"), "repo")
+    if health.empty:
+        print("no call_graph_health.csv yet — populates on the next Stage-5 run.")
+    else:
+        n = len(health)
+        usable = truthy(health["graph_usable"])
+        print(f"repos with a usable (non-empty) call graph: {int(usable.sum())}/{n} "
+              f"({100 * usable.mean():.0f}%)")
+        print("cg_source:", {k: int(v) for k, v in health["cg_source"].value_counts().items()})
+        if "excluded_files" in health.columns:
+            resilient = health[health["cg_source"] == "pyan_resilient"]
+            if not resilient.empty:
+                print(f"pyan_resilient repos: {len(resilient)} "
+                      f"(recovered by dropping {int(resilient['excluded_files'].sum())} "
+                      f"bad files total; median {resilient['excluded_files'].median():.0f}/repo)")
+        print(f"median graph coverage (nodes/functions): "
+              f"{health['graph_coverage_pct'].median():.0f}%")
+        print("\nLLM invokers split by graph health — transitive on empty graphs is an artifact:")
+        for label, sub in [("usable-graph repos", health[usable]),
+                           ("empty-graph repos ", health[~usable])]:
+            d = int(sub["llm_direct_invokers"].sum())
+            t = int(sub["llm_transitive_invokers"].sum())
+            print(f"   {label}: {d} direct / {t} transitive")
 
     # ── non-deterministic tests (headline) ────────────────────────────────────
     section("NON-DETERMINISTIC TESTS  (tests that invoke a real LLM)")
@@ -176,9 +240,30 @@ def main():
             r = ev_calls["repo"].nunique()
             print(f"repos calling an evaluator: {r} ({100 * r / n_analyzed:.0f}% of analyzed)")
         if not ev_calls.empty:
+            # (1) application prevalence: what % of analyzed apps import each eval
+            #     framework, plus an ANY row for apps using any evaluator at all.
+            prev = (ev_calls.groupby("framework")["repo"].nunique()
+                    .sort_values(ascending=False).rename("apps_using").reset_index())
+            prev["pct_of_analyzed_apps"] = (100 * prev["apps_using"] / n_analyzed).round(1) \
+                if n_analyzed else 0
+            any_apps = ev_calls["repo"].nunique()
+            prev = pd.concat([prev, pd.DataFrame([{
+                "framework": "ANY", "apps_using": any_apps,
+                "pct_of_analyzed_apps": round(100 * any_apps / n_analyzed, 1) if n_analyzed else 0,
+            }])], ignore_index=True)
+            save(prev, "eval_app_prevalence.csv")
+            print("\napplication prevalence (of "
+                  f"{n_analyzed} analyzed apps, % importing each evaluator):")
+            print(prev.to_string(index=False))
+
+            # (2) call composition: of all eval calls, what % is each eval framework.
             by_fw = (ev_calls.groupby("framework")["call_id"].nunique()
                      .sort_values(ascending=False).rename("eval_calls").reset_index())
+            total = by_fw["eval_calls"].sum()
+            by_fw["pct_of_eval_calls"] = (100 * by_fw["eval_calls"] / total).round(1) \
+                if total else 0
             save(by_fw, "eval_calls_by_framework.csv")
+            print("\neval-call composition (share of all eval calls):")
             print(by_fw.head(12).to_string(index=False))
 
     print(f"\nCross-tab CSVs written to {OUT}")

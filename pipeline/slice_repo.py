@@ -41,6 +41,40 @@ DEFAULT_JAVA_STACK_SIZES = "default,32m,64m,128m,256m,512m"
 # 8g using far less, so the larger heap is transient and only for the few big repos.
 DEFAULT_JAVA_HEAP_SIZES = "8g,12g,16g"
 
+# A single multi-MB .py — almost always generated data embedded as a literal (e.g.
+# a giant lookup dict) — explodes Joern's CPG and OOMs it at any heap, while never
+# containing an LLM invoker. Hide any .py above this size from the CPG build, then
+# restore it afterward so a --keep-clones checkout stays intact.
+MAX_SLICE_FILE_BYTES = 1_500_000
+
+
+def _hide_oversized(repo_dir: Path) -> list:
+    """Rename oversized .py files aside so joern-parse skips them. Returns the
+    (original, renamed) pairs to restore."""
+    hidden = []
+    for p in repo_dir.rglob("*.py"):
+        try:
+            if p.stat().st_size > MAX_SLICE_FILE_BYTES:
+                tgt = p.with_name(p.name + ".slice_skipped")
+                p.rename(tgt)
+                hidden.append((p, tgt))
+        except OSError:
+            pass
+    if hidden:
+        shown = ", ".join(str(o.relative_to(repo_dir)) for o, _ in hidden[:3])
+        print(f"  slicing: excluded {len(hidden)} oversized file(s) from the CPG "
+              f"(> {MAX_SLICE_FILE_BYTES // 1000} kB, generated data): {shown}"
+              f"{' ...' if len(hidden) > 3 else ''}", flush=True)
+    return hidden
+
+
+def _restore_hidden(hidden: list):
+    for orig, tgt in hidden:
+        try:
+            tgt.rename(orig)
+        except OSError:
+            pass
+
 
 def slice_repo(
     *,
@@ -85,15 +119,19 @@ def slice_repo(
         cpg_path.parent.mkdir(parents=True, exist_ok=True)
 
     try:
-        elapsed, java_stack_size, attempts = run_joern_parse(
-            joern_parse=joern_parse_bin,
-            chunk_dir=repo_dir,
-            cpg_path=cpg_path,
-            timeout=joern_timeout,
-            java_stack_sizes=parse_java_stack_sizes(java_stack_sizes),
-            java_heap_sizes=parse_java_heap_sizes(java_heap_sizes),
-            java_opts=java_opts,
-        )
+        hidden = _hide_oversized(repo_dir)
+        try:
+            elapsed, java_stack_size, attempts = run_joern_parse(
+                joern_parse=joern_parse_bin,
+                chunk_dir=repo_dir,
+                cpg_path=cpg_path,
+                timeout=joern_timeout,
+                java_stack_sizes=parse_java_stack_sizes(java_stack_sizes),
+                java_heap_sizes=parse_java_heap_sizes(java_heap_sizes),
+                java_opts=java_opts,
+            )
+        finally:
+            _restore_hidden(hidden)
         print(
             f"Built CPG for {repo_dir.name} in {elapsed / 60:.2f} min "
             f"(java stack {java_stack_size or 'default'}, attempt {attempts}) -> {cpg_path}",

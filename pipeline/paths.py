@@ -37,6 +37,9 @@ LLM_INVOKERS_CSV = ARTIFACTS_DIR / "llm_invokers_all.csv"   # all direct+transit
 LLM_CALLS_CSV = ARTIFACTS_DIR / "llm_calls_all.csv"
 CALL_METADATA_CSV = ARTIFACTS_DIR / "call_metadata_all.csv"
 LLM_TESTS_CSV = ARTIFACTS_DIR / "llm_tests_all.csv"
+# Per-repo call-graph health: lets us tell "0 transitive because pyan found none"
+# apart from "0 transitive because pyan failed/produced an empty graph". One row/repo.
+CALL_GRAPH_HEALTH_CSV = ARTIFACTS_DIR / "call_graph_health.csv"
 BATCH_PROGRESS_JSON = ARTIFACTS_DIR / ".batch_progress.json"
 
 # ── Stage 6: JOERN per-variable slicing ─────────────────────────────────────────

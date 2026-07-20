@@ -317,7 +317,7 @@ FRAMEWORK_CALLS: dict[str, list[str]] = {
     "npcpy": [".run", ".chat", "get_llm_response", "NPC"],
     "any_agent": [".run", ".run_async", "AnyAgent"],
     "sage": [".run", ".query", "Sage"],
-    "honcho": [".create", ".get", ".chat", "Honcho"],
+    "honcho": [".create", ".chat", "Honcho"],  # .get dropped — it matches dict/config .get, not an LLM call
     "uagents": [".run", ".send", "Agent", "Bureau"],
     "agent_protocol": [".run", ".step", "Agent"],
     "infiagent": [".run", "InfiAgent"],
@@ -381,3 +381,20 @@ _LANGCHAIN_INTEGRATIONS = [
 ]
 for _pkg in _LANGCHAIN_INTEGRATIONS:
     FRAMEWORK_CALLS.setdefault(_pkg, FRAMEWORK_CALLS["langchain"])
+
+# Strip bare CapWords class-name tokens (e.g. "Agent", "Team", "CatClient") from any
+# framework that already has a ".method" invocation pattern — a bare class name counts
+# CONSTRUCTION (`Agent(...)`), not an invocation, and inflated agno ~2x before we caught
+# it. Kept deliberately: (1) dspy/graphrag, whose bare names ARE the only invocation
+# signal (bare-callable modules / module-level functions); (2) `Class.method` tokens
+# like `Runner.run`, which are real invocation calls; (3) lowercase function names like
+# `get_llm_response`. A framework whose ONLY signal is a class name is left untouched
+# (has_method is False), so nothing gets zeroed out.
+_KEEP_BARE_NAMES = {"dspy", "graphrag"}
+for _fw, _pats in list(FRAMEWORK_CALLS.items()):
+    if _fw in _KEEP_BARE_NAMES or not any(p.startswith(".") for p in _pats):
+        continue
+    FRAMEWORK_CALLS[_fw] = [
+        p for p in _pats
+        if p.startswith(".") or "." in p or (p[:1].islower())
+    ]

@@ -1,0 +1,9 @@
+repo,clone_found,cg_source,excluded_files,nodes,edges,direct_seeds,transitive_invokers,seconds
+NousResearch/hermes-agent,True,pyan_resilient,50,63940,3059753,34,32189,59938
+rush86999/atom,True,none,33,0,0,13,0,1434
+BerriAI/litellm,True,pyan_resilient,3,66933,4468470,70,51122,28397
+kungfuai/CVlization,True,none,1,0,0,16,0,163
+mlflow/mlflow,True,none,4,0,0,253,0,1805
+langflow-ai/langflow,True,pyan_resilient,3,29976,527760,128,16403,36743
+marimo-team/marimo,True,pyan_resilient,24,23044,645086,11,18981,8612
+Arize-ai/phoenix,True,pyan_resilient,12,14891,449983,155,8494,2324
