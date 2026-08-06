@@ -42,8 +42,11 @@ from pipeline.eval_calls import EVAL_CALLS
 from pipeline import engines as E
 
 # Union of keys so a single parse captures both LLM and eval framework imports;
-# each matching pass then uses its own dict (handles keys present in both).
-COMBINED_CALLS = {**E.FRAMEWORK_CALLS, **EVAL_CALLS}
+# each matching pass then uses its own dict (handles keys present in both). The LLM
+# side is SCOPED to the in-scope frameworks (top-20 + SDKs) — out-of-scope frameworks
+# stay in FrameworkDict as the discovery record but aren't matched (see FrameworkDict
+# IN_SCOPE_FRAMEWORKS).
+COMBINED_CALLS = {**E.SCOPED_FRAMEWORK_CALLS, **EVAL_CALLS}
 
 
 # ── output schemas ────────────────────────────────────────────────────────────
@@ -152,7 +155,7 @@ def process_repo(repo_full_name: str, clone_dir: Path) -> dict:
             r.update(r_repo)
         return seeds, meta
 
-    llm_seeds, llm_meta = run_pass(E.FRAMEWORK_CALLS)
+    llm_seeds, llm_meta = run_pass(E.SCOPED_FRAMEWORK_CALLS)
     eval_seeds, eval_meta = run_pass(EVAL_CALLS)
 
     # Invoker search: walk the call graph backwards from the seeds so every

@@ -28,7 +28,7 @@ from transitive_invokers import (  # noqa: E402
     repo_slug,
     _on_rm_error,
 )
-from FrameworkDict import FRAMEWORK_CALLS  # noqa: E402
+from FrameworkDict import FRAMEWORK_CALLS, SCOPED_FRAMEWORK_CALLS, IN_SCOPE_FRAMEWORKS  # noqa: E402
 from call_metadata import AstIndex, collect_rows  # noqa: E402
 from call_metadata import FIELDS as CALL_METADATA_FIELDS  # noqa: E402
 
@@ -59,6 +59,8 @@ __all__ = [
     "repo_slug",
     "_on_rm_error",
     "FRAMEWORK_CALLS",
+    "SCOPED_FRAMEWORK_CALLS",
+    "IN_SCOPE_FRAMEWORKS",
     "AstIndex",
     "collect_rows",
     "CALL_METADATA_FIELDS",

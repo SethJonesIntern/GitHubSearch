@@ -1,14 +1,14 @@
 {
-  "keep_names": 177,
+  "keep_names": 174,
   "applications": {
     "before": 6446,
-    "after": 1142
+    "after": 1064
   },
   "metadata": {
     "before": 13506,
-    "after": 2460
+    "after": 2326
   },
-  "blind_spot_frameworks": 7,
+  "blind_spot_frameworks": 8,
   "blind_spot": [
     {
       "framework": "openai/openai-agents-python",
@@ -64,6 +64,14 @@
         "sam_rest_client",
         "src",
         "web_search"
+      ]
+    },
+    {
+      "framework": "cheshire-cat-ai/core",
+      "import_names": [
+        "agui",
+        "cat",
+        "decorators"
       ]
     },
     {

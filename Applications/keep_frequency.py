@@ -35,8 +35,15 @@ PREFIX_GROUPS = {
     "uagents": "uagents",
     "notte": "notte",
 }
-# Family members that don't share the prefix pattern.
-EXTRA_MEMBERS = {"pyautogen": "autogen", "autogenstudio": "autogen"}
+# Family members that don't share the prefix pattern. `pyautogen`/`autogenstudio`
+# fold into autogen; `clai` is pydantic-ai's CLI module (its apps really import
+# pydantic_ai). NOTE: cheshire-cat (`cat`/`agui`) and connectonion (`subagents`) were
+# cut — collision-prone junk tokens that matched only apps' OWN submodules (e.g.
+# deepagents.middleware.subagents), never the real package. See slim_applications.
+EXTRA_MEMBERS = {
+    "pyautogen": "autogen", "autogenstudio": "autogen",
+    "clai": "pydantic_ai",
+}
 
 
 def category(name: str) -> str:

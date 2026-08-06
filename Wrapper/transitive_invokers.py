@@ -33,7 +33,7 @@ from pathlib import Path
 from typing import Optional
 
 from astWrappers import SKIP_DIRS, matcher, file_imports
-from FrameworkDict import FRAMEWORK_CALLS
+from FrameworkDict import FRAMEWORK_CALLS, DSPY_MODULE_CLASSES
 
 
 REPOS_DIR = Path(__file__).parent / "repos"
@@ -130,6 +130,10 @@ class FunctionInfo:
     is_method: bool = False
     enclosing_class: Optional[str] = None
     local_names: dict[str, str] = field(default_factory=dict)
+    # Names bound to a dspy module instance here (`pred = dspy.Predict(...)` -> "pred";
+    # `self.prog = dspy.ChainOfThought(...)` -> "self.prog"). A later bare call on one
+    # of these names is the dspy __call__ invocation; see seed_invokers.
+    dspy_binds: set[str] = field(default_factory=set)
 
 
 @dataclass
@@ -177,6 +181,41 @@ def root_name(node: ast.AST) -> Optional[str]:
             node = node.func
         else:
             return None
+
+
+def _dspy_ctor_class(value: ast.AST) -> Optional[str]:
+    """If `value` is a call to a dspy module constructor, return the class name.
+    Handles both `dspy.Predict(...)` (Attribute) and imported `Predict(...)` (Name).
+    Returns None otherwise (including for non-call values)."""
+    if not isinstance(value, ast.Call):
+        return None
+    func = value.func
+    if isinstance(func, ast.Attribute):
+        cls = func.attr
+    elif isinstance(func, ast.Name):
+        cls = func.id
+    else:
+        return None
+    return cls if cls in DSPY_MODULE_CLASSES else None
+
+
+def _bind_target_names(target: ast.AST) -> list[str]:
+    """Assignment-target names we can key a dspy binding on: a plain `pred` (Name)
+    or an attribute chain `self.prog` (Attribute, unparsed). Tuple/list targets are
+    unpacked; anything else is ignored."""
+    if isinstance(target, ast.Name):
+        return [target.id]
+    if isinstance(target, ast.Attribute):
+        try:
+            return [ast.unparse(target)]
+        except Exception:
+            return []
+    if isinstance(target, (ast.Tuple, ast.List)):
+        out: list[str] = []
+        for elt in target.elts:
+            out.extend(_bind_target_names(elt))
+        return out
+    return []
 
 
 def build_name_map(tree: ast.Module, current_pkg: str, current_module: str) -> dict[str, str]:
@@ -245,6 +284,13 @@ def _make_function_info(
             except Exception:
                 continue
             fi.calls.append(CallSite(line=sub.lineno, text=text, root=root_name(sub.func)))
+        elif isinstance(sub, (ast.Assign, ast.AnnAssign)):
+            # Bind names assigned from a dspy module constructor so a later bare call
+            # on the name resolves to the dspy __call__ invocation (see seed_invokers).
+            if _dspy_ctor_class(sub.value) is not None:
+                targets = sub.targets if isinstance(sub, ast.Assign) else [sub.target]
+                for tgt in targets:
+                    fi.dspy_binds.update(_bind_target_names(tgt))
         elif isinstance(sub, ast.Import):
             for alias in sub.names:
                 if alias.asname:
@@ -377,8 +423,28 @@ def seed_invokers(
         ]
         if not active:
             continue
+        # dspy is invoked by calling a bound module instance (`pred(...)`), so its
+        # invocation site can't be a text pattern — it's a bare local/attr call whose
+        # name was bound from a dspy constructor. Gather the self.<attr> bindings at
+        # CLASS scope so a module built in __init__ but called in forward still resolves
+        # (local bare-name bindings apply within their own function only).
+        dspy_active = "dspy" in ctx.imported_frameworks
+        class_self_binds: dict[str, set[str]] = defaultdict(set)
+        if dspy_active:
+            for fi in fns:
+                if fi.enclosing_class:
+                    class_self_binds[fi.enclosing_class] |= {
+                        b for b in fi.dspy_binds if b.startswith("self.")
+                    }
         for fi in fns:
+            binds = (
+                fi.dspy_binds | class_self_binds.get(fi.enclosing_class, set())
+                if dspy_active else set()
+            )
             for call in fi.calls:
+                if binds and call.text in binds:
+                    invokers[fi.qname] = "matches '__call__' from dspy"
+                    break
                 hit = next(((pat, fw) for pat, m, fw in active if m(call.text)), None)
                 if hit:
                     pat, fw = hit

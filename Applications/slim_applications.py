@@ -29,7 +29,7 @@ CLASSIFICATION_CSV = paths.ARTIFACTS_DIR / "name_classification.csv"
 # REVIEW-bucket names promoted to KEEP: real frameworks that were misattributed to a
 # vendoring framework and so didn't match their own source repo name.
 EXPLICIT_KEEP = {
-    "smolagents", "graphrag", "agui", "subagents", "cat", "clai",
+    "smolagents", "graphrag", "clai",
     # rescued: real framework imports dropped by over-aggressive auto rules
     "sia", "ten_runtime",
     # blind-spot frameworks recovered via targeted re-search (correct import names
