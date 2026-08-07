@@ -81,6 +81,16 @@ def drop_removed_patterns_calls(df: pd.DataFrame) -> pd.DataFrame:
     return df[mask]
 
 
+def drop_fp(df: pd.DataFrame) -> pd.DataFrame:
+    """Drop calls flagged as false positives (fp_tier non-empty) — the receiver/syntax
+    collisions from false_positives.classify_fp (EXCLUSIONS.md §6). Centralized here so
+    every count is on clean data by default; the raw rows remain in the CSV for audit.
+    No-op on data that predates the fp_tier column."""
+    if df.empty or "fp_tier" not in df.columns:
+        return df
+    return df[df["fp_tier"].fillna("").astype(str).str.strip() == ""]
+
+
 def drop_removed_patterns_invokers(df: pd.DataFrame) -> pd.DataFrame:
     """Same, for invoker/test rows whose pattern lives in the `reason` string
     ('matches '<pattern>' from <framework>'). Only DIRECT rows carry a pattern;
@@ -108,8 +118,8 @@ def main():
     apps = load("applications_slim.csv")
     invokers = drop_removed_patterns_invokers(load("llm_invokers_all.csv"))
     tests = drop_removed_patterns_invokers(load("llm_tests_all.csv"))
-    calls = drop_removed_patterns_calls(load("llm_calls_all.csv"))
-    meta = drop_removed_patterns_calls(load("call_metadata_all.csv"))
+    calls = drop_fp(drop_removed_patterns_calls(load("llm_calls_all.csv")))
+    meta = drop_fp(drop_removed_patterns_calls(load("call_metadata_all.csv")))
     ev_calls = load("eval_calls_all.csv")
     ev_inv = load("eval_invokers_all.csv")
 

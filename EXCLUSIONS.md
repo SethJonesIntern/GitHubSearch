@@ -73,7 +73,16 @@ knobs (temperature/seed/model) apply. Non-generative / non-text-modality calls a
 | `openai` | `moderations.create` | Text *safety classifier*, not generative, no knobs. |
 | `anthropic` | `messages.count_tokens` | Tokenizer utility, not a model generation. |
 
-## 6. Pending (decided, NOT yet enforced) — Phase 2 false-positive cleanup
+## 6. Framework-agnostic false-positive rules — Phase 2 cleanup
+
+**Status (2026-08-06): ALL FIVE TIERS IMPLEMENTED** in `Wrapper/false_positives.py`
+(`classify_fp`), wired into `seed_invokers` (skips FP matches), `call_metadata.py` (tags each
+call with an `fp_tier` column), and `analyze.py` (`drop_fp` filters at load by default; raw
+rows kept for audit). Validated on the pilot: **1,212 flagged (12.2%)**, 0 legit-call
+casualties (56/56 unit tests — carve-outs `model_with_tools`/`prompt_model`/`rag_chain`/
+`model_client.create`/`mock_client.chat…create` all pass; per-tier: t1 517, t2 227, t3 392,
+t4 64, t5 12). **The effect materializes on the next Stage-5 re-run** (current CSVs predate
+the column).
 
 Measured on the cleaned pilot (88 repos) via the holistic receiver audit
 (`Applications/audit_fp.py`): **~13% of all LLM calls are false positives**
@@ -90,9 +99,14 @@ enforcing commit.
 | Non-model Runnable receiver filter: root `*template*`, `retriever`, `parser`/`*_parser`, `passthrough`, `splitter`, `embedder`, bare `prompt`/`*_prompt` — on `.invoke`/`.ainvoke`. | ~57 calls | The LangChain Runnable interface is implemented by every LCEL component; `PromptTemplate.invoke(vars)` *formats* (arg is a var dict), `OutputParser.invoke(AIMessage)` *parses the model's existing output*, `retriever.invoke(query)` *vector-searches* — none call a model. **Recall-safe:** the real model call is always a *separate* `model`/`chain` call site, which is kept. **Carve-out: KEEP `chain`/`model`/`llm`/`*_with_tools`.** |
 | Non-model infrastructure receiver filter: `.create` on `zep`/`cache_client`/`*_cache`/`Resource`; `.batch`/`.abatch` on `store`/`collection`; `.run_sync` on `conn`. | ~17 calls | Storage / cache / DB-connection objects on generic verbs — `zep.create`/`cache_client.create` write a memory/cache record, `store.batch` is a langgraph state-store op, `conn.run_sync(fn)` is a SQLAlchemy async-connection call. Not model calls. **Carve-out: KEEP model clients** `client`/`model_client`/`openai_client`/`openai_model_client`. |
 
-**Tail candidates (<0.1%) — still pending Seth's re-examination:**
-- `<expr>` non-identifier receivers (~14, mostly langchain_core `.ainvoke`) — subscripts /
-  call-results (`get_llm().ainvoke`), unclassifiable by receiver root; needs case reading.
+**`<expr>` non-identifier receivers — RESOLVED (2026-08-06), 0 new FPs.** The ~14 broke
+into: 13 × `(await *_template.ainvoke(...)).x` chains (already double-covered — `*_template`
+= tier 4, and `.ainvoke` is non-terminal in the outer chained call = tier 2), and 1 ×
+`(agent or self.default_rationale_agent()).step(...)` — a REAL camel invocation (receiver
+is an agent via an `or`-expression), kept. **Implementation guardrail:** when a receiver
+can't be resolved to a root (`<expr>`), the receiver-based rules (tiers 3–5) must
+DEFAULT-KEEP — else the real `(agent or …).step` case is mishandled; the template chains
+are caught by the terminal-segment rule (tier 2) regardless.
 
 **Convergence note:** a broad sweep of ~18 previously-unexamined patterns (kickoff,
 initiate_chat, Runner.run, messages.create, run_sync/run_stream, text_chat, step, graphrag

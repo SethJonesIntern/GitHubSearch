@@ -26,6 +26,7 @@ from pathlib import Path
 from typing import Iterator, Optional
 
 from astWrappers import matcher
+from false_positives import classify_fp
 from FrameworkDict import FRAMEWORK_CALLS
 from transitive_invokers import (
     derive_module,
@@ -128,9 +129,12 @@ def module_of(fi: FunctionInfo, qname: str) -> str:
     return qname.rsplit(".", 1)[0]
 
 
-def llm_calls_in(node: ast.AST, active) -> Iterator[tuple[ast.Call, str, str, bool]]:
-    """Yield (call_node, framework, pattern, is_await) for each LLM call in the
-    function body. First matching pattern wins per call; each call yielded once."""
+def llm_calls_in(node: ast.AST, active) -> Iterator[tuple[ast.Call, str, str, bool, str]]:
+    """Yield (call_node, framework, pattern, is_await, fp_tier) for each LLM call in
+    the function body; each call yielded once. Prefer the first NON-false-positive
+    matching pattern; if every match is a collision, the call is still yielded, tagged
+    with its FP tier (fp_tier != "") so it's kept in the dump but excludable from counts
+    (see false_positives.classify_fp / EXCLUSIONS.md §6)."""
     await_ids = {id(n.value) for n in ast.walk(node)
                  if isinstance(n, ast.Await) and isinstance(n.value, ast.Call)}
     for call in (n for n in ast.walk(node) if isinstance(n, ast.Call)):
@@ -138,10 +142,20 @@ def llm_calls_in(node: ast.AST, active) -> Iterator[tuple[ast.Call, str, str, bo
             text = ast.unparse(call.func)
         except Exception:
             continue
+        chosen = fp_first = None
         for pat, m, fw in active:
-            if m(text):
-                yield call, fw, pat, id(call) in await_ids
+            if not m(text):
+                continue
+            tier = classify_fp(text, pat)
+            if tier is None:                       # a genuine match — take it
+                chosen = (fw, pat, "")
                 break
+            if fp_first is None:                   # remember first collision as fallback
+                fp_first = (fw, pat, tier)
+        chosen = chosen or fp_first
+        if chosen:
+            fw, pat, tier = chosen
+            yield call, fw, pat, id(call) in await_ids, tier
 
 
 # ── argument flattening ───────────────────────────────────────────────────────
@@ -173,13 +187,15 @@ FIELDS = [
     "call_id", "file", "enclosing_qname", "framework", "pattern",
     "callable", "call_source", "call_line", "call_col",
     "call_end_line", "call_end_col", "is_await", "arg_count", "call_arg_vars",
+    "fp_tier",
     "arg_position", "arg_keyword", "arg_kind", "arg_source",
     "arg_names", "arg_is_literal",
 ]
 
 
 def rows_for_call(qname: str, fi: FunctionInfo, call: ast.Call,
-                  framework: str, pattern: str, is_await: bool) -> list[dict]:
+                  framework: str, pattern: str, is_await: bool,
+                  fp_tier: str = "") -> list[dict]:
     args = list(iter_arguments(call))
     call_id = f"{fi.file_path}::{call.lineno}::{call.col_offset}"
     call_arg_vars = sorted({v for _, _, e in args for v in loaded_names(e)})
@@ -199,6 +215,7 @@ def rows_for_call(qname: str, fi: FunctionInfo, call: ast.Call,
         "is_await": is_await,
         "arg_count": len(args),
         "call_arg_vars": ";".join(call_arg_vars),
+        "fp_tier": fp_tier,
     }
 
     if not args:                      # keep argless call sites in the dump
@@ -230,8 +247,8 @@ def collect_rows(seeds, index: AstIndex, contexts,
         active = active_matchers(module_of(fi, qname), contexts, framework_calls)
         if not active:
             continue
-        for call, fw, pat, is_await in llm_calls_in(node, active):
-            rows.extend(rows_for_call(qname, fi, call, fw, pat, is_await))
+        for call, fw, pat, is_await, fp_tier in llm_calls_in(node, active):
+            rows.extend(rows_for_call(qname, fi, call, fw, pat, is_await, fp_tier))
     return rows
 
 

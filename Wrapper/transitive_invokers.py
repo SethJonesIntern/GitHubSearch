@@ -33,6 +33,7 @@ from pathlib import Path
 from typing import Optional
 
 from astWrappers import SKIP_DIRS, matcher, file_imports
+from false_positives import classify_fp
 from FrameworkDict import FRAMEWORK_CALLS, DSPY_MODULE_CLASSES
 
 
@@ -445,7 +446,11 @@ def seed_invokers(
                 if binds and call.text in binds:
                     invokers[fi.qname] = "matches '__call__' from dspy"
                     break
-                hit = next(((pat, fw) for pat, m, fw in active if m(call.text)), None)
+                # Seed only via a genuine match — skip false-positive collisions
+                # (asyncio.run, tool.invoke, Mock assertions; see false_positives /
+                # EXCLUSIONS.md §6) so a function isn't an invoker off a collision.
+                hit = next(((pat, fw) for pat, m, fw in active
+                            if m(call.text) and classify_fp(call.text, pat) is None), None)
                 if hit:
                     pat, fw = hit
                     invokers[fi.qname] = f"matches '{pat}' from {fw}"

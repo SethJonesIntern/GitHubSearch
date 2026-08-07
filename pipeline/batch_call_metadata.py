@@ -54,6 +54,7 @@ COMBINED_CALLS = {**E.SCOPED_FRAMEWORK_CALLS, **EVAL_CALLS}
 CALL_FIELDS = [
     "repo", "call_id", "file", "enclosing_qname", "framework", "pattern",
     "callable", "call_source", "call_line", "call_col", "is_await", "arg_count",
+    "fp_tier",
 ]
 METADATA_FIELDS = ["repo"] + list(E.CALL_METADATA_FIELDS)
 # Invokers and tests share a shape: a function that (transitively) reaches a call.
@@ -85,6 +86,7 @@ def _calls_from_metadata(repo: str, meta_rows: list[dict]) -> list[dict]:
                 "call_col": r["call_col"],
                 "is_await": r["is_await"],
                 "arg_count": r["arg_count"],
+                "fp_tier": r.get("fp_tier", ""),
             }
     return list(seen.values())
 
