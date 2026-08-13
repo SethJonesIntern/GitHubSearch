@@ -2,11 +2,14 @@
   "keep_names": 174,
   "applications": {
     "before": 6446,
-    "after": 1064
+    "after": 1055,
+    "real_ai_apps": 918,
+    "analyzed": 827
   },
+  "coverage_pct": 90.1,
   "metadata": {
     "before": 13506,
-    "after": 2326
+    "after": 2317
   },
   "blind_spot_frameworks": 8,
   "blind_spot": [

@@ -1,0 +1,5 @@
+"repo","cg_source","excluded_files","graph_usable","total_functions","graph_nodes","graph_edges","graph_coverage_pct","llm_direct_invokers","llm_transitive_invokers","eval_direct_invokers","eval_transitive_invokers"
+"agno-agi/agno","pyan_resilient","1","True","30771","38986","938206","126.7","3039","19090","0","0"
+"comet-ml/opik","pyan_resilient","1","True","14031","18410","510399","131.2","141","3","360","9798"
+"vibrantlabsai/ragas","pyan","0","True","2523","3423","39311","135.7","66","1463","224","47"
+"Arize-ai/phoenix","pyan_resilient","13","True","12972","17007","507559","131.1","157","7329","131","76"

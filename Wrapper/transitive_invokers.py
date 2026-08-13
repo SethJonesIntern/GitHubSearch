@@ -34,7 +34,11 @@ from typing import Optional
 
 from astWrappers import SKIP_DIRS, matcher, file_imports
 from false_positives import classify_fp
-from FrameworkDict import FRAMEWORK_CALLS, DSPY_MODULE_CLASSES
+from FrameworkDict import (
+    FRAMEWORK_CALLS,
+    DSPY_MODULE_CLASSES,
+    resolve_framework_imports,
+)
 
 
 REPOS_DIR = Path(__file__).parent / "repos"
@@ -366,7 +370,8 @@ def index_repo(
             current_pkg=current_pkg,
             current_module=current_module,
             name_map=build_name_map(tree, current_pkg, current_module),
-            imported_frameworks=file_imports(tree) & framework_keys,
+            imported_frameworks=resolve_framework_imports(file_imports(tree),
+                                                          framework_keys),
         )
         for fi in collect_functions(tree, current_module, current_pkg, rel):
             functions[fi.qname] = fi

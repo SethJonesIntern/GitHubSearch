@@ -72,6 +72,7 @@ knobs (temperature/seed/model) apply. Non-generative / non-text-modality calls a
 | `openai` | `images.generate`, `audio.transcriptions.create`, `audio.translations.create`, `audio.speech.create` | Non-text modalities. |
 | `openai` | `moderations.create` | Text *safety classifier*, not generative, no knobs. |
 | `anthropic` | `messages.count_tokens` | Tokenizer utility, not a model generation. |
+| `openai` | **v0 API**: `ChatCompletion.create`/`.acreate`, `Completion.create`/`.acreate` (2026-08-13) | The pre-1.0 module-level API, deprecated Nov 2023 and absent from the v1 client. The study measures **current** state of practice: a call surface three years out of date is out of scope. Unlike the rows above this is *not* a collision — these are real model calls, deliberately outside the measured surface. **Consequence:** a repo still on v0 reports 0 openai calls (confirmed: `liangliangyy/DjangoBlog`, `openai.ChatCompletion.create`), so its zero is a scoping result, not a detection miss. Unmeasured: how many repos this affects — a grep of the clones would size it if the paper needs a footnote. |
 
 ## 6. Framework-agnostic false-positive rules — Phase 2 cleanup
 
@@ -122,4 +123,99 @@ Tier sizes shrink each discovery pass (538 → ~450 → ~57), i.e. the big ones 
 
 ---
 
-*Last updated: 2026-08-06. Add new exclusions as rows above, dated, with the enforcing code location.*
+## 7. Framework / eval self-repositories (2026-08-11) — enforced in `Applications/slim_applications.py`
+
+A framework's or eval tool's OWN source repository is **not an application built on it** —
+its self-imports, tests, and examples inflate every metric (agno's own test suite alone =
+>12k "ND tests"; opik/phoenix eval "usage" was 100% their own repos). The study measures
+**state of practice in APPLICATIONS**, so the canonical repo of every framework/eval tool
+**we analyze** is dropped from the population.
+
+- **Rule:** exclude only frameworks/eval-tools in our dicts. `langflow`/`litellm`/`marimo`
+  etc. are NOT discovered frameworks (not in FRAMEWORK_CALLS/EVAL_CALLS), so they STAY as apps.
+- **Enforced in** `slim_applications.py` → `framework_self_repos()` / `SELF_REPOS`, filtered
+  in `slim_csv` by `full_name`. Base = `frameworks.csv` `full_name` column (59 repos) +
+  a supplement for the top-20/eval added after that snapshot (agno, mem0, dspy, haystack,
+  smolagents, graphrag, semantic_kernel, deepeval, ragas [×2 orgs], giskard, opik, phoenix).
+- **Scale:** 72-repo set; **9** present in the 1,055-app population, **4** in the pilot
+  (`agno-agi/agno`, `Arize-ai/phoenix`, `comet-ml/opik`, `vibrantlabsai/ragas`). Removed
+  from the pilot CSVs (backup in `artifacts/_framework_repos_removed/`); auto-excluded for
+  the full run via the regenerated `applications_slim.csv` (1064 → 1055).
+- **Impact (app-only vs framework-inflated):** LLM calls 8,854→4,701; eval calls 828→30;
+  determinism knobs rose (temperature 2.9%→5.3%, model 13%→22.5%, seed still ~0.1%);
+  agno 3,963→254 calls. The "non-determinism by omission" finding holds and is cleaner.
+
+**RESOLVED (2026-08-11) → see §9.** The open item here was the ~237 apps matched ONLY to
+non-analyzed framework names. It is now settled as a three-way partition (junk / known
+uncovered / analyzed) enforced in `slim_applications.py`. **Correction:** this section
+previously claimed `clai`→pydantic_ai was a rollup gap — it is **not**. `clai` is a junk
+collision token and its apps leave the population entirely (§9). Only `crewai_tools` and
+the `agent_framework_*` names are genuine rollups.
+
+## 8. Eval-framework dict (EVAL_CALLS) — reviewed & completed (2026-08-11)
+
+All 5 eval frameworks reviewed against pilot receivers + docs, marked `# DONE` in
+`pipeline/eval_calls.py`: **deepeval** (unchanged), **ragas** (+single/multi_turn_score/
+ascore — version drift, pilot-confirmed), **giskard** (rewritten to v2/v3 run surfaces:
+scan/vulnerability_scan/quality_scan/evaluate/.run; docs-only, unsampled), **opik**
+(+evaluate_prompt/evaluate_experiment/.ascore), **phoenix** (+run_experiment/
+async_run_experiment/evaluate_dataframe/async_evaluate_dataframe/llm_generate). Caveat noted
+in-code: pilot eval counts included the eval frameworks' own repos (now excluded, §7).
+
+---
+
+## 9. Analysis scope — real-AI denominator vs. analyzed run set (2026-08-11) — enforced in `Applications/slim_applications.py`
+
+A trustworthy KEEP name means the token identifies *something*; it does **not** mean the
+repo is an AI application, nor one we measure. The 1,055 slimmed candidates partition
+three ways (full derivation + the reproduce snippet: `COVERAGE_ANALYSIS.md`):
+
+| Bucket | Count | In denominator? | Analyzed? | What it is |
+|--------|------:|:---:|:---:|------------|
+| **Analyzed** | **827** | yes | yes | imports an in-scope (top-20 / langchain / autogen / SDK) framework or an eval tool |
+| **Known uncovered** | **91** | yes | no | real AI apps on out-of-scope long-tail frameworks (`metagpt`, `lagent`, `honcho`, `beeai_framework`, `agent_protocol`, `headroom`, `patchwork`, `adalflow`, `agency_swarm`, `superagi`, `dynamiq`…) plus `agentops` (exempt observability). Below the top-20 cut, so 0 invocations is the *intended* answer — they are not run. |
+| **Not an AI app** | **137** | **no** | no | removed from the population: junk collision tokens, non-LLM langchain utilities, the `omnigent` phantom |
+
+**Headline:** analyzed frameworks cover **827 / 918 = 90.1%** of real AI applications.
+
+**Definitions (both derived from the dicts, not hand-listed):**
+- *Real AI app* = matched name (after aliasing) is a key in `FrameworkDict.FRAMEWORK_CALLS`
+  or `eval_calls.EVAL_CALLS` → `real_ai_app=1`.
+- *Analyzed* = matched name is in `FrameworkDict.IN_SCOPE_FRAMEWORKS` or `EVAL_CALLS`
+  → `analyzed=1`.
+
+| Population exclusion | Count | Reason |
+|---|---:|---|
+| `clai`-only apps | 42 | **Junk collision token, NOT pydantic-ai's CLI.** As a GitHub search token it matched `binance-connector-python`, `py-stellar-base`, `huaweicloud-sdk`, `python-cwt` etc. — not AI apps. Supersedes the earlier `clai`→pydantic_ai rollup assumption in §7 and in `keep_frequency.EXTRA_MEMBERS`. |
+| `langchain_text_splitters` / `_chroma` / `_qdrant` / `_tests` / `_exa` / `_classic`-only apps | ~48 | langchain **non-LLM utility** packages (text splitting, vector stores, test helpers). Importing one is not evidence of an LLM call, and they are not `FRAMEWORK_CALLS` keys. |
+| `omnigent`-only apps | 24 | The exempt out-of-process phantom (§2); its token also collides with the diffusion class `OmniGe(nt)ransformer` — orphans included `huggingface/diffusers` and `bytedance/Video-As-Prompt`, plainly not LLM apps. |
+
+**Aliases (rollups, NOT exclusions)** — companion/submodule packages of an analyzed
+framework, rolled up so their apps aren't lost: `agent_framework_foundry`,
+`agent_framework_openai`, `agent_framework_foundry_hosting` → `agent_framework`;
+`crewai_tools` → `crewai`. (`slim_applications.ALIASES`.)
+
+**Enforced in** `slim_applications.slim_csv`: nothing is deleted — all 1,055 rows stay in
+`applications_slim.csv` carrying `real_ai_app` / `analyzed` flag columns, so every
+denominator is recoverable from one file. The analyzed subset is *additionally* written to
+**`applications_analyzed.csv` (827 rows) — this is the batch run input**, so we never clone
+a repo we cannot measure. Pre-change backup: `artifacts/_pre_scope_filter/`.
+
+**Caveat for existing artifacts:** 3 of the 87 already-processed repos are `analyzed=0`
+(`ustc-ai4science/Science-Star`, `lupantech/AgentFlow` — agentops; `JetAstra/SDAR` —
+lagent). Their rows are still in the Stage-5 CSVs and must be filtered out of analyzed
+stats or they contribute false zeros.
+
+**Stage-5 detector rollup — DONE (2026-08-11).** The aliases above decide *which repos we
+run*; the matcher needs them too. `transitive_invokers.index_repo` previously intersected a
+file's raw import names with `FRAMEWORK_CALLS` keys, so `from agent_framework_foundry
+import ...` activated no patterns and its calls were never tested (a false 0 on a repo we
+did clone and parse; ~10 of the 827 exposed). Now goes through
+`FrameworkDict.resolve_framework_imports`, which mirrors `slim_applications.ALIASES` —
+**keep the two tables in sync.** An alias resolves only when its parent is in the *active*
+pattern dict, so EVAL_CALLS passes are unaffected. Regression tests:
+`Wrapper/tests/test_import_aliases.py` (verified failing before the change).
+
+---
+
+*Last updated: 2026-08-13. Add new exclusions as rows above, dated, with the enforcing code location.*

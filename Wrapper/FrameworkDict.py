@@ -10,6 +10,11 @@ FRAMEWORK_CALLS: dict[str, list[str]] = {
     # embeddings.create, and moderations.create (a text safety-classifier, not
     # generative): different modality / near-deterministic / no determinism knobs, out
     # of scope for the non-determinism analysis.
+    # v1 client surface ONLY — the pre-1.0 module-level API (openai.ChatCompletion.create
+    # /.acreate, openai.Completion.create/.acreate) is deliberately absent: deprecated
+    # Nov 2023, gone from the v1 client, three years out of date by this study's window.
+    # These ARE real model calls, so a repo still on v0 scores 0 openai calls by design
+    # (not a detection gap). See EXCLUSIONS.md §5.
     "openai": [
         "chat.completions.create", "completions.create", "responses.create",
         "chat.completions.parse", "responses.parse", "responses.stream",
@@ -435,7 +440,7 @@ FRAMEWORK_CALLS: dict[str, list[str]] = {
     # DONE — astrbot: multi-platform LLM chatbot framework. Current (v4.5.7+) plugin
     # API on self.context: .llm_generate (primary model call) and .tool_loop_agent
     # (agent + tools). Legacy but still common in pilot plugins: provider.text_chat /
-    # .text_chat_stream after context.get_using_provider() (pilot: .text_chat 9). Cut
+     # .text_chat_stream after context.get_using_provider() (pilot: .text_chat 9). Cut
     # .get_using_provider (a provider getter, not a call — its fn is caught by
     # .text_chat, cf. mem0 .get_all), .chat (not AstrBot's API; collides with
     # client.chat.*), and .request_llm (unconfirmed in current docs, 0 hits).
@@ -531,3 +536,40 @@ IN_SCOPE_FRAMEWORKS = _IN_SCOPE_EXPLICIT | {
 SCOPED_FRAMEWORK_CALLS = {
     _k: _v for _k, _v in FRAMEWORK_CALLS.items() if _k in IN_SCOPE_FRAMEWORKS
 }
+
+
+# ── import-name aliases ────────────────────────────────────────────────────────
+# Companion / submodule packages that ARE a framework we analyze but don't carry
+# its package name. Detection gates each file on `file_imports(tree) & keys`, so a
+# file doing `from agent_framework_foundry import ...` — the Microsoft Agent
+# Framework — misses every key, activates NO patterns, and its real invocations are
+# never tested: a false 0 on a repo we cloned and parsed. These names resolve to
+# their parent so the parent's patterns run.
+#
+# Mirrors Applications/slim_applications.ALIASES, which decides which repos we RUN;
+# this one decides which patterns FIRE. Keep the two tables in sync.
+#
+# `clai` is deliberately absent: it is a junk collision token (binance-connector,
+# py-stellar-base, huaweicloud-sdk), NOT pydantic-ai's CLI — see EXCLUSIONS.md §9.
+# langchain's non-LLM utilities (`langchain_text_splitters`/`_chroma`/`_qdrant`)
+# are absent for the same reason: importing a text splitter is not evidence of a
+# model call, and aliasing them to langchain would manufacture invocations.
+IMPORT_ALIASES = {
+    "agent_framework_foundry": "agent_framework",
+    "agent_framework_openai": "agent_framework",
+    "agent_framework_foundry_hosting": "agent_framework",
+    "crewai_tools": "crewai",
+}
+
+
+def resolve_framework_imports(names, framework_keys: set) -> set:
+    """The framework keys a file's raw import names activate.
+
+    An alias resolves only when its parent is itself in `framework_keys`, so a pass
+    driven by a different pattern dict (EVAL_CALLS) is unaffected, and an alias
+    whose parent falls out of scope silently stops resolving instead of KeyError-ing.
+    """
+    hits = {n for n in names if n in framework_keys}
+    hits |= {parent for n in names
+             if (parent := IMPORT_ALIASES.get(n)) is not None and parent in framework_keys}
+    return hits
