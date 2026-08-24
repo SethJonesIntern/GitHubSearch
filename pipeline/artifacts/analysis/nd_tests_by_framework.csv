@@ -1,25 +1,18 @@
-framework,nd_tests
-openai,350
-langchain_openai,272
-langchain_core,219
-langgraph,198
-crewai,146
-pydantic_ai,125
-anthropic,111
-agno,74
-langchain,54
-langchain_aws,38
-langchain_anthropic,31
-haystack,28
-agents,26
-autogen_agentchat,18
-dspy,15
-agent_framework,15
-autogen,10
-smolagents,10
-langchain_nvidia_ai_endpoints,9
-autogen_core,8
-semantic_kernel,8
-mem0,7
-autogen_ext,6
-langchain_cohere,3
+framework,nd_tests,kind
+langchain,4834,framework
+langgraph,2447,framework
+haystack,2218,framework
+openai,1693,raw SDK
+pydantic_ai,913,framework
+agent_framework (MS),620,framework
+autogen,510,framework
+anthropic,443,raw SDK
+swarm,319,framework
+crewai,256,framework
+smolagents,148,framework
+agents,136,framework
+agno,119,framework
+mem0,83,framework
+dspy,79,framework
+semantic_kernel,28,framework
+camel,1,framework

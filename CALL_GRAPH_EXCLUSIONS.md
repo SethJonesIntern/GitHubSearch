@@ -1,8 +1,20 @@
 # Why the call graph is empty for some repos (pyan exclusions & the time-box)
 
-Context: in the 92-repo pilot, ~22% of repos (9/41 at mid-run) came back with an
-**empty call graph** (`cg_source = none` in `call_graph_health.csv`). This note explains
-exactly why, so the transitive-invoker gap can be defended (or fixed) before presenting.
+Context: some repos come back with an **empty call graph** (`cg_source = none` in
+`call_graph_health.csv`). This note explains exactly why, so the transitive-invoker gap
+can be defended (or fixed) before presenting.
+
+**Final numbers, full run (2026-08-17), 1,035 repos:**
+
+| `cg_source` | repos | share |
+|---|---:|---:|
+| `pyan` (clean) | 601 | 58.1% |
+| `pyan_resilient` (recovered by dropping files) | 336 | 32.5% |
+| **`none` (empty)** | **98** | **9.5%** |
+
+So 90.5% of repos have a usable graph, up from ~78% in the 92-repo pilot. Only the
+**transitive** closure is lost on the other 9.5% — direct invokers are AST-based and
+were captured for every repo.
 
 ## TL;DR
 
@@ -12,9 +24,24 @@ exactly why, so the transitive-invoker gap can be defended (or fixed) before pre
 - To survive that, we run an **exclude-and-retry loop**: catch the error, find the file
   it named, drop it, rebuild. Each retry **re-analyzes the whole repo from scratch**
   (pyan has no incremental API), so big repos get expensive fast.
-- A **480 s time-box** stops the loop so one repo can't stall the run. Large repos
-  (litellm 56k funcs, hermes-agent 62k, mlflow 29k, langflow 25k, …) blow the time-box
-  after a few exclusions → empty graph.
+- A **480 s time-box** (`PYAN_TIME_BUDGET_SEC`) is meant to stop the loop so one repo
+  can't stall the run. Large repos (litellm 56k funcs, hermes-agent 62k, mlflow 29k,
+  langflow 25k, …) blow it after a few exclusions → empty graph.
+- **The time-box has two holes** (`transitive_invokers.py:549`, found 2026-08-12):
+
+  ```python
+  if excluded and _CG_TIME_BUDGET_SEC and time.monotonic() - started > _CG_TIME_BUDGET_SEC:
+  ```
+
+  1. `if excluded and …` — the budget is only checked once at least one file has
+     already been excluded. A repo whose **first** pass never returns is never checked.
+  2. The check sits **between** retries. `CallGraphVisitor(...)` is one blocking call
+     with no timeout, so a single pass can run for hours uninterrupted.
+
+  Observed cost: `googleapis/python-aiplatform` (5,049 files) ran ~6 hours on one pass.
+  The zero-exclusion failures below (`FaaSLight` 553k functions, `aragora` 324k) are
+  this case. A real fix needs pyan in a subprocess with a timeout, or a size guard
+  before the call — the `ast.parse` pre-filter alone does not address it.
 - The empty-graph repos still keep their **direct** invokers (AST-based, no graph
   needed). Only the **transitive** closure is lost on those repos.
 

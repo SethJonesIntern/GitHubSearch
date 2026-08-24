@@ -18,6 +18,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from pipeline import paths  # noqa: E402
+from pipeline import cuts  # noqa: E402
 
 SLIM_CSV = paths.ARTIFACTS_DIR / "applications_slim.csv"
 OUT_CSV = paths.ARTIFACTS_DIR / "keep_frequency.csv"
@@ -66,6 +67,10 @@ def main():
     if not SLIM_CSV.exists():
         sys.exit(f"{SLIM_CSV} not found — run Applications/slim_applications.py first.")
     rows = list(csv.DictReader(open(SLIM_CSV, encoding="utf-8")))
+    before = len(rows)
+    rows = cuts.drop_cut(rows)          # a cut repo must not inflate any framework
+    if before != len(rows):
+        print(f"[audit cuts] dropped {before - len(rows)} repos marked in_scope=0")
     total = len(rows)
 
     grouped = Counter()   # distinct apps per ecosystem category

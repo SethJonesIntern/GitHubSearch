@@ -12,6 +12,7 @@ Run: py -3.14 Applications/analyze.py
 """
 import json
 import re
+from collections import Counter
 import sys
 from pathlib import Path
 
@@ -19,7 +20,10 @@ import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "Wrapper"))
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import keep_frequency as kf  # noqa: E402  (category() — the one grouping table)
 from pipeline import paths  # noqa: E402
+from pipeline import cuts  # noqa: E402
 from pipeline import engines as E  # noqa: E402  (FRAMEWORK_CALLS)
 
 A = paths.ARTIFACTS_DIR
@@ -54,7 +58,13 @@ NOT_LLM_APP = {
     "sunnypilot/sunnypilot": "0 invokers; agno name-collision (driver-assistance app)",
 }
 
-EXCLUDED = {**QUALITY_EXCLUDED, **NOT_LLM_APP}
+
+# From the audit sheet. Both dispositions leave every number in THIS report — it must
+# be in scale with what is actually analyzed — but they differ downstream: `uncovered`
+# repos remain in the coverage denominator (see pipeline/cuts.py), cut repos do not.
+AUDIT_CUT = cuts.cut_repos()
+AUDIT_UNCOVERED = cuts.uncovered_repos()
+EXCLUDED = {**QUALITY_EXCLUDED, **NOT_LLM_APP, **AUDIT_CUT, **AUDIT_UNCOVERED}
 
 
 def load(name: str) -> pd.DataFrame:
@@ -105,6 +115,35 @@ def drop_removed_patterns_invokers(df: pd.DataFrame) -> pd.DataFrame:
     return df[(~is_direct) | valid]
 
 
+# Raw SDK packages: real LLM calls, but not a framework. Split out so a framework
+# ranking isn't topped by "people call the OpenAI SDK directly" (SPRINT_HANDOFF §7.3).
+RAW_SDKS = {"openai", "anthropic"}
+
+
+def group_of(name):
+    """Fold a fragmented package family into its one framework — `langchain_core`,
+    `langchain_openai`, `langchain_anthropic` ... are all langchain. Same table the
+    app ranking and the coverage figure use, so all three agree.
+
+    Missing stays missing: transitive invoker rows carry no pattern, so their
+    framework is NaN and groupby must keep dropping them rather than collecting them
+    under a literal "nan"."""
+    if pd.isna(name):
+        return name
+    return kf.category(str(name))
+
+
+def kind_of(name: str) -> str:
+    return "raw SDK" if name in RAW_SDKS else "framework"
+
+
+def by_import_name(df: pd.DataFrame, keys: list, label: str) -> pd.DataFrame:
+    """The ungrouped per-package view, kept alongside every grouped table so the
+    family breakdown is never lost."""
+    return (df.drop_duplicates(keys + ["framework"]).groupby("framework").size()
+            .sort_values(ascending=False).rename(label).reset_index())
+
+
 def section(title):
     print(f"\n{'=' * 70}\n{title}\n{'=' * 70}")
 
@@ -144,6 +183,22 @@ def main():
     if NOT_LLM_APP:
         print(f"[false positive, not an LLM app] dropped {len(NOT_LLM_APP)}: " +
               ", ".join(f"{r} ({why})" for r, why in NOT_LLM_APP.items()))
+    if AUDIT_CUT:
+        by_reason = {}
+        for repo, why in AUDIT_CUT.items():
+            by_reason.setdefault(why, []).append(repo)
+        print(f"[audit sheet, in_scope=0, not an LLM app] dropped {len(AUDIT_CUT)}:")
+        for why, repos in sorted(by_reason.items()):
+            print(f"    {len(repos):>3}  {why}")
+    if AUDIT_UNCOVERED:
+        # One line per distinct framework COMBINATION would be dozens of rows; the
+        # useful summary is which unmeasured frameworks the tail actually runs on.
+        tail = re.compile(r"imports only ([^—]+?) —")
+        names = Counter(n.strip() for why in AUDIT_UNCOVERED.values()
+                        for m in tail.findall(why) for n in m.split(","))
+        print(f"[audit sheet, in_scope=uncovered] dropped {len(AUDIT_UNCOVERED)} real LLM "
+              f"apps built only on frameworks/SDKs outside the top-20:")
+        print("    " + ", ".join(f"{n} {c}" for n, c in names.most_common(10)))
 
     # ── population + prevalence ───────────────────────────────────────────────
     section("POPULATION & LLM-USAGE PREVALENCE")
@@ -200,12 +255,19 @@ def main():
         print("\ntop repos by non-deterministic tests:")
         print(by_repo.head(10).to_string(index=False))
         tests = tests.assign(framework=tests["reason"].map(fw_from_reason))
+        save(by_import_name(tests, ["repo", "qname"], "nd_tests"),
+             "nd_tests_by_import_name.csv")
+        # Grouped: a test reaching langchain_core AND langchain_openai is ONE langchain
+        # test, so the dedupe key uses the group, not the package.
+        tests = tests.assign(framework=tests["framework"].map(group_of))
         by_fw = (tests.drop_duplicates(["repo", "qname", "framework"])
                  .groupby("framework").size().sort_values(ascending=False)
                  .rename("nd_tests").reset_index())
+        by_fw["kind"] = by_fw["framework"].map(kind_of)
         save(by_fw, "nd_tests_by_framework.csv")
-        print("\nnon-deterministic tests by framework (a test can count for >1):")
-        print(by_fw.head(12).to_string(index=False))
+        print("\nnon-deterministic tests by framework, grouped "
+              "(a test can count for >1 framework):")
+        print(by_fw.head(15).to_string(index=False))
 
     # ── determinism knobs ─────────────────────────────────────────────────────
     section("DETERMINISM KNOBS  (are calls pinned to deterministic settings?)")
@@ -232,10 +294,17 @@ def main():
     if calls.empty:
         print("no llm_calls rows yet.")
     else:
-        by_fw = (calls.groupby("framework")["call_id"].nunique()
+        raw = (calls.groupby("framework")["call_id"].nunique()
+               .sort_values(ascending=False).rename("calls").reset_index())
+        save(raw, "calls_by_import_name.csv")
+        by_fw = (calls.assign(framework=calls["framework"].map(group_of))
+                 .groupby("framework")["call_id"].nunique()
                  .sort_values(ascending=False).rename("calls").reset_index())
+        by_fw["kind"] = by_fw["framework"].map(kind_of)
+        by_fw["pct_of_calls"] = (100 * by_fw["calls"] / by_fw["calls"].sum()).round(1)
         save(by_fw, "calls_by_framework.csv")
-        print("LLM calls by framework:")
+        print("LLM calls by framework, grouped "
+              f"({len(raw)} import names -> {len(by_fw)} frameworks):")
         print(by_fw.head(15).to_string(index=False))
         if "is_await" in calls.columns:
             aw = truthy(calls["is_await"]).sum()

@@ -19,6 +19,7 @@ import matplotlib.pyplot as plt  # noqa: E402
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from pipeline import paths  # noqa: E402
+from pipeline import cuts  # noqa: E402
 import importlib.util
 _spec = importlib.util.spec_from_file_location("kf", Path(__file__).with_name("keep_frequency.py"))
 kf = importlib.util.module_from_spec(_spec); _spec.loader.exec_module(kf)
@@ -42,7 +43,7 @@ def main():
     ap.add_argument("--show", type=int, default=30, help="how many top frameworks to plot")
     args = ap.parse_args()
 
-    rows = list(csv.DictReader(open(SLIM_CSV, encoding="utf-8")))
+    rows = cuts.drop_cut(list(csv.DictReader(open(SLIM_CSV, encoding="utf-8"))))
     total = len(rows)
     app_cats = [{kf.category(n.strip()) for n in (r.get("matched_frameworks") or "").split(",") if n.strip()}
                 for r in rows]

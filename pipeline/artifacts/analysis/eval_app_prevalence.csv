@@ -1,4 +1,6 @@
 framework,apps_using,pct_of_analyzed_apps
-ragas,5,6.0
-deepeval,4,4.8
-ANY,8,9.5
+ragas,25,2.7
+deepeval,17,1.9
+opik,2,0.2
+phoenix,1,0.1
+ANY,42,4.6

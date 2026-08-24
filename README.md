@@ -1,210 +1,116 @@
 # GitHubSearch
 
-A mining tool for identifying and analyzing AI agent frameworks and their downstream applications on GitHub. Discovers repositories matching domain-specific queries, filters them by metadata criteria, and analyzes their test suites for non-deterministic LLM calls.
+Mining study of **non-determinism in LLM-based applications**: which agent frameworks
+real applications are built on, where those applications invoke a model, whether they
+pin the parameters that make a call reproducible, and whether their tests exercise that
+code.
 
-## Overview
-
-This project supports a research study on testing practices for LLM-based agents. It runs two parallel mining pipelines:
-
-- **`Frameworks/`** — discovers agent *frameworks* (libraries people build agents with)
-- **`Applications/`** — discovers *applications built on* those frameworks
-
-Both pipelines share the same core steps:
-
-1. **Repository discovery** via the GitHub Search API
-2. **Metadata filtering** (stars, activity, fork/archive status, etc.)
-3. **Test function extraction** using AST parsing
-4. **LLM call detection** — identifying test functions that make real (non-mocked) calls to LLM providers or are orchestrated by LLM evaluation frameworks
-
-The applications pipeline additionally clones each candidate locally and analyzes its filesystem directly, avoiding GitHub's per-file API rate limits.
-
-## Setup
-
-### Requirements
-
-- Python 3.8+
-- GitHub Personal Access Token
-- `git` on PATH (applications pipeline only)
-
-### Installation
-
-```bash
-pip install requests python-dotenv
-```
-
-### Configuration
-
-Create a `.env` file in the project root:
-
-```
-GITHUB_TOKEN=<your_github_personal_access_token>
-```
-
-Generate a token at **GitHub > Settings > Developer settings > Personal access tokens** with `public_repo` scope.
+The population is mined from GitHub, cloned, and analyzed statically — AST pattern
+matching for call sites, a pyan3 call graph for transitive reach, and Joern CPGs for
+per-variable program slices.
 
 ---
 
-## Frameworks Pipeline
+## Status (2026-08-18)
 
-Mines agent *frameworks* (e.g. LangChain, AutoGen, CrewAI).
+The full-population run is **complete**.
 
-### Search Queries
+| | |
+|---|---:|
+| population (`applications_slim.csv`) | 1,055 |
+| processed | 1,035 |
+| clone failures (repos deleted/made private mid-run) | 20 |
+| analyzed, after 3 name-based exclusions in `analyze.py` | **1,032** |
+| LLM call sites with argument metadata | 36,370 |
+| repos with a usable call graph | 90.5% |
 
-Five queries are issued, each with a `stars:>999 language:Python` qualifier baked into the query string:
-
-```
-AI agent framework stars:>999 language:Python
-LLM-based agent framework stars:>999 language:Python
-LLM agent library stars:>999 language:Python
-multi-agent orchestration framework stars:>999 language:Python
-LLM powered agents framework stars:>999 language:Python
-```
-
-Up to 3 pages of 100 results per query (~1500 hits before dedup).
-
-### Filter Criteria
-
-| Filter Condition     | Threshold |
-|----------------------|-----------|
-| Star count           | > 999 (in query) |
-| Language             | Python (in query) |
-| Contributor count    | >= 2 (or unknown) |
-| Number of test files | >= 1      |
-| Archived/Disabled    | Excluded  |
-
-### Usage
-
-```bash
-cd Frameworks
-
-# 1. Mine and enrich repositories (API-based enrichment)
-python GithubSearch.py
-
-# 2. Generate a condensed summary table
-python reformat_csv.py
-
-# 3. Detect real LLM calls in test functions
-python find_llm_tests.py
-
-# 4. Extract the source code of those tests
-python extract_llm_tests.py
-```
-
-### Outputs
-
-| Path                                        | Description                                                 |
-|---------------------------------------------|-------------------------------------------------------------|
-| `Frameworks/github_agent_framework_candidates.csv` | Full metadata for all qualifying framework repos     |
-| `Frameworks/agent_framework_table.csv`      | Summary table sorted by star count                          |
-| `Frameworks/llm_test_functions.csv`         | Test functions containing real LLM calls                    |
-| `Frameworks/extracted_llm_tests/`           | Source code of each LLM test function, grouped by framework |
+Headline result: **83.9% of LLM call sites set none of the eight determinism-relevant
+parameters.** Temperature is set on 5.6% of calls, seed on 0.13%.
 
 ---
 
-## Applications Pipeline
+## Where the documentation lives
 
-Mines *applications* built with the frameworks above. Uses the framework list as an exclusion set so the same repo never shows up in both.
+Read these before trusting any number in the artifacts.
 
-### Phase 1 — Search (API-only)
-
-```bash
-cd Applications
-python search_candidates.py           # fresh run (wipes CSV + progress)
-python search_candidates.py --resume  # continue from prior progress
-```
-
-Searches GitHub once per framework keyword, dedupes, and applies every filter via cheap API calls (contributor count, commit total via `Link` header, tree listing for test files). Progress is checkpointed per-repo in `.search_progress.json` so the run is fully resumable.
-
-### Phase 2 — Local clone + analysis (no per-file API calls)
-
-```bash
-cd Applications
-python analyze_tests.py
-```
-
-For each candidate: shallow-clones the repo, walks the filesystem for test files, AST-parses each, runs the LLM-call detector, extracts matching sources, then deletes the clone. Resumable — skips repos already present in the output CSV.
-
-### Search Query
-
-For each of 48 framework keywords:
-
-```
-"<keyword>" language:Python stars:>10 pushed:>2025-04-14
-```
-
-Up to 3 pages of 100 results per keyword.
-
-### Filter Criteria
-
-| Filter Condition                            | Threshold / Rule                                       |
-|---------------------------------------------|--------------------------------------------------------|
-| Language                                    | Python (in query)                                      |
-| Star count                                  | > 10 (in query)                                        |
-| Pushed since                                | 2025-04-14 (in query, last year)                       |
-| Fork / Archived / Disabled                  | Excluded (search-time)                                 |
-| Appears in framework candidates list        | Excluded (search-time)                                 |
-| Lifetime (`pushed_at` − `created_at`)       | >= 30 days                                             |
-| Contributor count                           | >= 2                                                   |
-| Commits per month (total / lifetime)        | > 2 (strictly greater than)                            |
-| Contains at least one `test_*.py` file      | Required                                               |
-
-### LLM-Call Detection (AST)
-
-A test is marked **LLM-backed (non-deterministic)** when all three hold:
-
-1. The enclosing file imports at least one of the tracked packages:
-   - **SDKs / clients**: OpenAI, Anthropic, LiteLLM, Cohere, Mistral, Google Generative AI, Vertex AI, Boto3, LangChain (+ partner packages), LlamaIndex, Ollama, Groq, Together, HuggingFace Hub, Transformers
-   - **LLM evaluation frameworks**: Opik, DeepEval, Giskard, Promptfoo, Phoenix (Arize), RAGAs
-2. The function body does not match any mock pattern (`mock`, `patch`, `fake`, `stub`, `fixture`, `monkeypatch`, `MagicMock`, `AsyncMock`).
-3. The function body contains a call whose unparsed form matches an LLM-invocation pattern: `chat.completions.create`, `messages.create`, `generate`, `invoke`, `complete`, `completion`, `predict`, `run`, `stream`, and their async variants (`a*`).
-
-### Outputs
-
-| Path                                           | Description                                                   |
-|------------------------------------------------|---------------------------------------------------------------|
-| `Applications/application_candidates_v2.csv`   | Phase-1 candidate list (one row per repo)                     |
-| `Applications/.search_progress.json`           | Resumable progress state for phase 1                          |
-| `Applications/application_tests.csv`           | Phase-2 per-repo summary including `test_file_count`, `test_function_count`, `llm_test_count`, `clone_status` |
-| `Applications/llm_test_functions.csv`          | One row per LLM-backed test: `repo, file, test_function`      |
-| `Applications/extracted_llm_tests/`            | Source code of each LLM test function, one file per repo      |
+| Document | What it is |
+|---|---|
+| **`EXCLUSIONS.md`** | **The ledger — single source of truth.** Every repo dropped, framework exempted, pattern cut, and scope decision, each with its reason and the code that enforces it. Start here. |
+| `PIPELINE.md` | Stage-by-stage design of the whole system (Stages 1–7). |
+| `RUNBOOK.md` | How to run Stage 5 + Stage 6: the command, every flag, the Windows/Joern gotchas, and how to stop and resume without duplicating rows. |
+| `COVERAGE_ANALYSIS.md` | How much of the population the analyzed frameworks cover, and the units that number is in. |
+| `CALL_GRAPH_EXCLUSIONS.md` | Why 9.5% of repos have an empty call graph, and the two holes in the pyan time-box. |
 
 ---
 
-## Semantic Evaluators Pipeline
+## Layout
 
-Identifies which candidate repos (from both pipelines above) declare a **semantic evaluation framework** as a dependency. Rather than scanning test function bodies for keyword mentions, this pipeline checks actual dependency files — a repo that doesn't declare the package in its dependencies isn't properly using it.
+| Path | Role |
+|---|---|
+| `pipeline/` | The current system. Stage drivers (`batch_call_metadata.py`, `slice_repo.py`, `run.py`), paths, and the eval-framework dict. |
+| `Wrapper/` | The analysis engine. `FrameworkDict.py` (per-framework invocation patterns), `transitive_invokers.py` (AST index, seed matching, pyan call graph, closure), `false_positives.py` (the five FP tiers), `call_metadata.py` (per-argument extraction). |
+| `Applications/` | Discovery (`search_candidates.py`), population shaping (`slim_applications.py`, `keep_frequency.py`), and reporting (`analyze.py`, `plot_*.py`). |
+| `Frameworks/` | Stage-1 framework discovery. |
+| `pipeline/artifacts/` | All outputs. Gitignored clones live in `pipeline/repos/`. |
 
-### Checked Frameworks
+## The stages
 
-Giskard, DeepEval, Opik, RAGAs, Promptfoo, Arize Phoenix
-
-### How It Works
-
-1. **Root-level check** (`find_semantic_eval_tests.py`): For each repo in both candidate CSVs, downloads common root-level dependency files (`requirements.txt`, `pyproject.toml`, `setup.py`, `setup.cfg`, and dev/test variants) directly from `raw.githubusercontent.com` — no GitHub API calls needed. Repos where no root-level dep file exists are flagged.
-
-2. **Deep check** (`deep_dep_check.py`): For repos where the root-level check found no dependency files (common in monorepos), uses the GitHub API tree endpoint to locate dependency files at any depth, then downloads and checks those.
-
-### Usage
-
-```bash
-cd SemanticEvaluators
-
-# Phase 1: check root-level dependency files (no API calls)
-python find_semantic_eval_tests.py
-
-# Phase 2: deep-check repos that had no root-level dep files
-python deep_dep_check.py
-```
-
-### Outputs
-
-| Path | Description |
-|------|-------------|
-| `SemanticEvaluators/semantic_evaluator_repos.csv` | Repos that depend on a semantic eval framework (category, repo, frameworks, dep files) |
-| `SemanticEvaluators/no_deps_found.csv` | Repos where no dependency files were found at all (for manual review) |
-| `SemanticEvaluators/.dep_check_progress.json` | Resumable progress state (both phases update this) |
+1. **Framework search** — find agent frameworks, derive their import names.
+2. **Application search** — find repos importing those names.
+3. **Frequency table** — apps per framework ecosystem.
+4. **Application list** — slim the candidates to trustworthy names; flag scope.
+5. **Invoker + call extraction** — clone each app, match invocation patterns, build the call graph, extract per-argument metadata.
+6. **Joern slicing** — per-variable SubPDGs for each LLM-invoker function.
+7. **Semantic evaluation** — eval-framework usage, piggybacked on the invoker search.
 
 ---
+
+## Requirements
+
+- **Python 3.14** — required; pyan3 2.6.0 (the call graph) does not work on older versions.
+- `py -3.14 -m pip install -r requirements.txt`, plus `pyan3==2.6.0`.
+- **Joern** — Stage 6 only. On Windows pass the `.bat`; the extension-less script fails with `WinError 193`.
+- **`GITHUB_TOKEN`** in `.env` — discovery stages only. Analysis runs on local clones and needs no token.
+
+## Common commands
+
+```bash
+# the standard report (population, tests, determinism knobs, graph health)
+py -3.14 Applications/analyze.py
+
+# regenerate the population + scope flags
+py -3.14 Applications/slim_applications.py
+
+# the analysis run — see RUNBOOK.md for flags and the resume hazard
+py -3.14 -m pipeline.batch_call_metadata --input pipeline/artifacts/applications_slim.csv --resume --keep-clones
+```
+
+---
+
+## Reading the outputs
+
+Three things are easy to misread, and all three have bitten:
+
+- **`llm_tests_all.csv` is a subset of `llm_invokers_all.csv`**, not a parallel measure.
+  Every row in it is also an invoker row. The two counts cannot be divided.
+- **It measures static reachability, not non-determinism.** A `transitive` row means a
+  path exists in the call graph, not that the test executes it; a `direct` row may be
+  mocked. The defensible claim is "a test whose own body calls an LLM API," which is the
+  direct subset, minus mocks (not yet measured).
+- **Transitive counts scale with repo size.** Among repos with a usable graph, invoker
+  count correlates with function count at r ≈ 0.57. Report direct counts; treat
+  transitive separately.
+
+Counts are also concentrated in repos that are not applications — framework orgs,
+integration packages, and observability vendors. The top 50 repos hold 80% of all direct
+LLM-invoking tests. `EXCLUSIONS.md` §7 covers framework self-repos; the vendor and
+integration layer is not yet filtered.
+
+## Method note
+
+Exclusions are **documented filters, never deletions**. Raw CSVs and the full
+`FrameworkDict` are preserved; every cut is a row in `EXCLUSIONS.md` naming the code that
+enforces it. Keep it that way — the ledger is what makes the numbers reproducible.
 
 ## License
 

@@ -174,7 +174,7 @@ three ways (full derivation + the reproduce snippet: `COVERAGE_ANALYSIS.md`):
 |--------|------:|:---:|:---:|------------|
 | **Analyzed** | **827** | yes | yes | imports an in-scope (top-20 / langchain / autogen / SDK) framework or an eval tool |
 | **Known uncovered** | **91** | yes | no | real AI apps on out-of-scope long-tail frameworks (`metagpt`, `lagent`, `honcho`, `beeai_framework`, `agent_protocol`, `headroom`, `patchwork`, `adalflow`, `agency_swarm`, `superagi`, `dynamiq`…) plus `agentops` (exempt observability). Below the top-20 cut, so 0 invocations is the *intended* answer — they are not run. |
-| **Not an AI app** | **137** | **no** | no | removed from the population: junk collision tokens, non-LLM langchain utilities, the `omnigent` phantom |
+| **Excluded** | **137** | **no** | no | the matched name identifies no framework: collision tokens, non-LLM langchain utilities, the `omnigent` phantom |
 
 **Headline:** analyzed frameworks cover **827 / 918 = 90.1%** of real AI applications.
 
@@ -197,14 +197,21 @@ framework, rolled up so their apps aren't lost: `agent_framework_foundry`,
 
 **Enforced in** `slim_applications.slim_csv`: nothing is deleted — all 1,055 rows stay in
 `applications_slim.csv` carrying `real_ai_app` / `analyzed` flag columns, so every
-denominator is recoverable from one file. The analyzed subset is *additionally* written to
-**`applications_analyzed.csv` (827 rows) — this is the batch run input**, so we never clone
-a repo we cannot measure. Pre-change backup: `artifacts/_pre_scope_filter/`.
+denominator is recoverable from one file. Pre-change backup: `artifacts/_pre_scope_filter/`.
 
-**Caveat for existing artifacts:** 3 of the 87 already-processed repos are `analyzed=0`
-(`ustc-ai4science/Science-Star`, `lupantech/AgentFlow` — agentops; `JetAstra/SDAR` —
-lagent). Their rows are still in the Stage-5 CSVs and must be filtered out of analyzed
-stats or they contribute false zeros.
+**These flags are NOT a run-set filter — that was tried and rejected (2026-08-13).** An
+earlier revision emitted `applications_analyzed.csv` (827 rows) as the batch input so we
+"never clone a repo we cannot measure." That reasoning is wrong: `analyzed` is computed
+from the *search token* that found the repo, and a repo matched only to an out-of-scope
+token still makes in-scope raw-SDK calls — `JetAstra/SDAR` (matched on `lagent`) contains
+18 `openai` + 4 `anthropic` calls, and `lupantech/AgentFlow` (`agentops`) contains 161.
+Filtering pre-run would have silently discarded them. **The full 1,055 were analyzed**;
+`applications_analyzed.csv` was deleted. Decide scope after analysis, not before.
+
+**These flags are a hypothesis, not ground truth.** They are derived from
+`matched_frameworks` (search metadata). On the completed run, **83% of analyzed repos
+import a framework their matched token never mentions.** Coverage should be recomputed
+from frameworks actually *detected in code* before publication.
 
 **Stage-5 detector rollup — DONE (2026-08-11).** The aliases above decide *which repos we
 run*; the matcher needs them too. `transitive_invokers.index_repo` previously intersected a
@@ -216,6 +223,31 @@ did clone and parse; ~10 of the 827 exposed). Now goes through
 pattern dict, so EVAL_CALLS passes are unaffected. Regression tests:
 `Wrapper/tests/test_import_aliases.py` (verified failing before the change).
 
+## 10. Import-name collisions found by the audit sheet (2026-08-20) — enforced in `pipeline/audit_apps.py` (`CUT`)
+
+`pipeline/artifacts/application_audit.csv` (built by `pipeline/audit_apps.py`, one row per
+population repo, plus `audit_framework_check.py` / `audit_zero_invokers.py` for the
+judgement columns) exists to explain every repo that produced no invokers. Its first
+finding: the token **`haystack` names three unrelated projects**, and only one is ours.
+
+| Cut | Count | Reason |
+|---|---:|---|
+| django-haystack apps | 16 | Django **search indexing**, not deepset Haystack. Confirmed by reading imports: `from haystack import indexes`, `haystack.forms.SearchForm`, `haystack.views.SearchView` — never `haystack.components`. `tendenci`, `gcd-django`, `daisy`, `DjangoBlog`, `drf-haystack`, `linkedevents`, `cosinnus-core`, `aries-vcr`, `sith`, `nablaweb`, `ajapaik-web`, `macports-webapp`, `Telemeta`, `widelands-website`, `reviewboard`, `django-page-cms` |
+| Project Haystack apps | 4 | The **building-automation / IoT** data standard. `pyhaystack`, `haystackfs`, `py-brickschema`, `phable` |
+
+All 20 matched the token `haystack` **and nothing else**, produced 0 invokers and 0 LLM
+calls. Rows stay in the sheet carrying `in_scope=0` + the reason in `notes`; nothing is
+deleted.
+
+**Consequence for the ranking:** of 49 repos matched on `haystack`, only **24** call
+deepset Haystack; 5 are LLM apps built on something else; 20 are these collisions. So
+`keep_frequency.csv`'s "haystack: 51 apps (4.8%)" — and therefore the top-20 table and
+`framework_coverage.png` — is inflated by roughly 40% for this framework. This is the
+token-vs-code problem §9 flags; the audit sheet now measures it per repo.
+
+**Not yet checked:** whether `dspy` and `honcho` (next largest contributors to the
+`imports_fw_no_call_site` bucket, 5 repos each) have the same collision.
+
 ---
 
-*Last updated: 2026-08-13. Add new exclusions as rows above, dated, with the enforcing code location.*
+*Last updated: 2026-08-20. Add new exclusions as rows above, dated, with the enforcing code location.*
