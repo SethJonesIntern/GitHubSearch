@@ -77,7 +77,7 @@ FIELDS = [
 # ── population cuts ───────────────────────────────────────────────────────────
 # Repos removed from the study, each with the evidence that settled it. They stay in
 # the sheet carrying in_scope=0 so every denominator remains recoverable — this
-# project filters, it never deletes (SPRINT_HANDOFF §10). Log each cut in
+# project filters, it never deletes (see CLAUDE.md, "Conventions"). Log each cut in
 # EXCLUSIONS.md with the same reason string.
 #
 # `haystack` collides three ways: deepset Haystack (the LLM framework we study),

@@ -116,7 +116,7 @@ def drop_removed_patterns_invokers(df: pd.DataFrame) -> pd.DataFrame:
 
 
 # Raw SDK packages: real LLM calls, but not a framework. Split out so a framework
-# ranking isn't topped by "people call the OpenAI SDK directly" (SPRINT_HANDOFF §7.3).
+# ranking isn't topped by "people call the OpenAI SDK directly".
 RAW_SDKS = {"openai", "anthropic"}
 
 
