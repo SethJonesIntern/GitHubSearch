@@ -250,4 +250,48 @@ token-vs-code problem §9 flags; the audit sheet now measures it per repo.
 
 ---
 
-*Last updated: 2026-08-20. Add new exclusions as rows above, dated, with the enforcing code location.*
+## 11. The langchain-named repos: integration packages, not applications (2026-08-25) — enforced via `in_scope=0` in `application_audit.csv`
+
+The population contains 26 repos with `langchain` in the name. Reviewed one by one
+(tree layout + README, per the evidence-before-cutting rule): **22 are framework-side
+code, 4 are genuine applications.** The langchain ecosystem's own naming convention —
+`langchain-<vendor>` — marks an *integration package* (a pip-installable
+`libs/*` monorepo other projects import), and the convention held with exactly the
+exceptions you would predict: an app named after its stack, a docs tool, a course, and
+a first-party app.
+
+The `imported_by` signal (audit_framework_check / imported_by.csv) under-detected this
+group: the `langchain-ai/*` monorepos keep their `pyproject.toml` in `libs/*/`, below
+the root-level metadata scan, so most showed `imported_by=0` despite being the clearest
+libraries in the corpus. Name convention + layout was the decisive evidence here.
+
+| Cut (22) | Category | Evidence |
+|---|---|---|
+| `langchain-ai/langchain-{postgres, litellm, google, cohere, aws, ibm, datastax, upstage, meta, mongodb, snowflake}`, `langchain-ai/langgraph-swarm-py` | first-party integration packages | `libs/*/pyproject.toml` monorepos; postgres/litellm are imported by 17/15 other corpus repos |
+| `oracle/langchain-oracle`, `googleapis/langchain-google-alloydb-pg-python`, `googleapis/langchain-google-cloud-sql-pg-python`, `oceanbase/langchain-oceanbase`, `tavily-ai/langchain-tavily`, `derf974/copilot-langchain` | vendor-owned integration packages | same layout; READMEs: "LangChain integration for …" |
+| `UiPath/uipath-langchain-python` | SDK | README first line: "A Python SDK …" |
+| `langchain-ai/deepagents` | first-party agent harness (library) | pip-installable; held 7,801 ND tests — largest single item in this cut |
+| `ksachdeva/langchain-graphrag` | library | declares `langchain_graphrag`, readthedocs docs site |
+| `xt765/LangChain-Chinese-Comment` | **framework source copy** | langchain's own source annotated with Chinese comments; its 1,989 "calls" are framework internals. Same logic as the §7 self-repo rule — a copy of a framework's source is framework code |
+
+| Kept (4) | Why |
+|---|---|
+| `chatchat-space/Langchain-Chatchat` | README: deployable RAG/agent **application project** (ships docker/); built ON langchain, nobody imports it |
+| `lucebert/langchain-doc-graph` | RAG backend application (subject matter happens to be langchain docs) |
+| `microsoft/langchain-for-beginners` | tutorial course. Tutorials are not a cut class (precedent: Hands-On-AI-Engineering was cut on *quality*, not for being a tutorial); excluding tutorials would need a systematic criterion applied corpus-wide |
+| `langchain-ai/open-swe` | a coding-agent **application** — first-party to the LangChain org, but an app, not a library. Decided 2026-08-25 |
+
+**Impact:** 3,686 LLM calls, 11,287 ND tests, 2,644 direct invokers leave the counted
+set. `in_scope=0` set by hand in `application_audit.csv` with a per-repo `notes` reason;
+the 4 keeps carry a dated review note so later audits do not re-flag them. Takes effect
+via `pipeline/cuts.py` on the next `analyze.py` run.
+
+**Generalization not yet applied:** the same reasoning likely extends to other
+ecosystems' integration packages in the population (e.g. `llama-index-*`-style naming,
+provider SDKs). See `pipeline/artifacts/framework_triage.csv` /
+`imported_by.csv` for the ranked queue; the ~36 remaining strong/likely candidates
+(weave, NeMo Guardrails, cognee, marimo, pydantic-ai-harness, …) are still undecided.
+
+---
+
+*Last updated: 2026-08-25. Add new exclusions as rows above, dated, with the enforcing code location.*
