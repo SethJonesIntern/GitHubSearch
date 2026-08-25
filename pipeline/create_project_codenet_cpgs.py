@@ -269,8 +269,10 @@ def run_joern_parse(
     java_heap_sizes: list[str | None] | None = None,
 ) -> tuple[float, str | None, int]:
     """Parse a repo into a CPG, escalating JVM memory only as failures demand it:
-    a larger HEAP (-Xmx) on OutOfMemoryError and a larger STACK (-Xss) on
-    StackOverflowError. Most repos succeed on the first (smallest) settings; only
+    a larger STACK (-Xss) on StackOverflowError, and a larger HEAP (-Xmx) on any
+    other failure (the CPG generator is a child process, so its death by memory
+    pressure often reaches us without an "OutOfMemoryError" string at all).
+    Most repos succeed on the first (smallest) settings; only
     the pathologically large ones ever climb the ladders — and each joern process
     is short-lived, so the bigger memory is transient, never held across the run."""
     heaps = list(java_heap_sizes) if java_heap_sizes else [None]
@@ -300,15 +302,29 @@ def run_joern_parse(
         except RuntimeError as exc:
             last_error = exc
             message = str(exc)
-            if "OutOfMemoryError" in message and hi < len(heaps) - 1:
-                hi += 1
-                print(f"  OutOfMemoryError; retrying with a larger heap ({heaps[hi]})",
-                      flush=True)
-                continue
+            # Stack first: a StackOverflowError is specifically a -Xss problem and
+            # more heap will not fix it, so it must be tested before the general
+            # heap escalation below.
             if "StackOverflowError" in message and si < len(stacks) - 1:
                 si += 1
                 print(f"  StackOverflowError; retrying with a larger stack ({stacks[si]})",
                       flush=True)
+                continue
+            # Escalate the heap on ANY joern-parse failure, not just one whose message
+            # literally contains "OutOfMemoryError". Joern runs the CPG generator in a
+            # SEPARATE process (it says so in its own output); when that child dies of
+            # memory pressure the parent reports only `Process exited with code 1`, or
+            # nothing at all past its banner. Measured on the 2026-08-17 run: of the 12
+            # slice failures, 5 died at 8g or 12g and were NEVER retried at 16g because
+            # of the substring test -- PostHog/posthog and endomorphosis/ipfs_datasets_py
+            # at 12g, cctbx/cctbx_project, jiangxxxue/KOCO-bench and
+            # modbender/skill-library-mcp at 8g. The cost of being wrong is a few extra
+            # attempts on a repo that was going to fail anyway; the cost of the old test
+            # was silently leaving 8g of configured headroom unused.
+            if hi < len(heaps) - 1:
+                hi += 1
+                print(f"  joern-parse failed ({'OutOfMemoryError' if 'OutOfMemoryError' in message else 'no OOM marker'});"
+                      f" retrying with a larger heap ({heaps[hi]})", flush=True)
                 continue
             break
 

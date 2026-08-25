@@ -519,9 +519,12 @@ def build_call_graph(repo: Path, repo_root: Optional[Path] = None,
     namespace.name relative to `root` (e.g. "test_repo.collisions.wrapper_a.wrapper"),
     which matches index_repo's dotted qnames, so seed names line up directly.
 
-    Resilient: if pyan chokes on a file, that file is excluded and the analysis is
-    retried (up to _MAX_CG_EXCLUSIONS files) so one bad file doesn't zero the graph.
-    Pass `stats` to receive {'excluded_files': N, 'cg_source': 'pyan'|'pyan_resilient'|'none'}.
+    Resilient in two stages: every file is first checked with `ast.parse` and the
+    unparseable ones are dropped before pyan runs at all; if pyan then still chokes on
+    a file, that file is excluded and the analysis is retried (up to
+    _MAX_CG_EXCLUSIONS files) so one bad file doesn't zero the graph.
+    Pass `stats` to receive {'excluded_files': N, 'prefiltered_files': N,
+    'cg_source': 'pyan'|'pyan_resilient'|'none'}.
     """
     try:
         from pyan.analyzer import CallGraphVisitor
@@ -534,9 +537,51 @@ def build_call_graph(repo: Path, repo_root: Optional[Path] = None,
     ]
     root = repo_root if repo_root is not None else repo  # match index_repo's base
 
+    # Cheap pre-filter, before pyan sees anything. pyan has no parser of its own: it
+    # feeds every file to Python's `ast`/`compile`, and it is all-or-nothing, so ONE
+    # unparseable file zeroes the graph for the whole repo. Recovering from that costs
+    # a full re-parse of every good file per dropped file, which is what pushes big
+    # repos past the time-box. `ast.parse` is the SAME check pyan would apply, run per
+    # file at a fraction of the cost, so dropping the broken files up front removes the
+    # entire Class-1 bucket in one pass (see CALL_GRAPH_EXCLUSIONS.md) and leaves the
+    # expensive exclude-and-retry loop to fire only for pyan's own scope bug (Class 2).
+    # It also rescues repos whose bad file pyan named in a form `_find_offending_file`
+    # could not map back to a path — those previously died with 0 exclusions.
+    prefiltered: list[str] = []
+    parseable: list[str] = []
+    # Same suppression the CallGraphVisitor call below uses: analyzed repos are full of
+    # unescaped regex strings, and one SyntaxWarning per such literal per file would
+    # bury the run's real output. These are warnings, not parse failures -- the file is
+    # valid Python and must be KEPT.
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        for ep in entry_points:
+            try:
+                # bytes, not text: ast.parse then honours a PEP 263 coding cookie
+                # exactly the way the compiler pyan calls does.
+                src = Path(ep).read_bytes()
+                ast.parse(src, filename=ep)
+            except (SyntaxError, ValueError, RecursionError, OSError):
+                # SyntaxError covers Indentation/TabError; ValueError covers null bytes
+                # and bad encodings; RecursionError covers deeply nested literals.
+                prefiltered.append(Path(ep).name)
+            else:
+                parseable.append(ep)
+    entry_points = parseable
+    if prefiltered:
+        print(f"# pre-filter: dropped {len(prefiltered)} unparseable file(s) from "
+              f"{repo.name}: {', '.join(prefiltered[:5])}"
+              f"{' ...' if len(prefiltered) > 5 else ''}", file=sys.stderr)
+
     def _record(source: str, excluded: list) -> None:
         if stats is not None:
-            stats["excluded_files"] = len(excluded)
+            # One number for "files we had to drop to get a graph", however they were
+            # dropped. The split is available on the `prefiltered_files` key and in the
+            # log line above; it is deliberately NOT a new call_graph_health column,
+            # because append_rows only writes a header for an empty file and would
+            # silently misalign the existing 1,035 rows.
+            stats["excluded_files"] = len(excluded) + len(prefiltered)
+            stats["prefiltered_files"] = len(prefiltered)
             stats["cg_source"] = source
 
     if not entry_points:
@@ -601,7 +646,7 @@ def build_call_graph(repo: Path, repo_root: Optional[Path] = None,
                 continue
             graph[src_q].add(dst_q)
 
-    _record("pyan_resilient" if excluded else "pyan", excluded)
+    _record("pyan_resilient" if (excluded or prefiltered) else "pyan", excluded)
     return dict(graph)
 
 

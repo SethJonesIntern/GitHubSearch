@@ -12,7 +12,8 @@ quality: deciding which of those repos belong in the study and which numbers sur
 
 | doc | what it settles |
 |---|---|
-| `AUDIT_HANDOFF.md` | **start here** — current state, totals, and the ordered open list |
+| `HANDOFF_2026-08-25.md` | **start here** — the live run, the clone-failure bug, the framework triage sheet, uncommitted changes, and the current open list |
+| `AUDIT_HANDOFF.md` | the audit sheet's design and the three-valued `in_scope` (its *current state* is superseded by the file above) |
 | `EXCLUSIONS.md` | the canonical ledger of every exclusion/exemption/pattern-cut. **Add a dated row whenever you exclude anything.** |
 | `COVERAGE_ANALYSIS.md` | the three scope buckets and the 90.1% coverage claim |
 | `RUNBOOK.md` | how to run Stage 5/6 |

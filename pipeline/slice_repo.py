@@ -36,10 +36,17 @@ from pipeline.per_variable_pdg_slicer import (
 )
 
 DEFAULT_JAVA_STACK_SIZES = "default,32m,64m,128m,256m,512m"
-# Heap (-Xmx) escalation ladder: start at 8g, bump to 12g then 16g only when a repo
-# hits OutOfMemoryError. Each joern process is short-lived and most repos finish at
-# 8g using far less, so the larger heap is transient and only for the few big repos.
-DEFAULT_JAVA_HEAP_SIZES = "8g,12g,16g"
+# Heap (-Xmx) escalation ladder: start at 8g and climb only when a repo fails. Each
+# joern process is short-lived and most repos finish at 8g using far less, so the
+# larger heap is transient and only for the few big repos.
+# 24g is the top rung, added 2026-08-24: on the 2026-08-17 run 7 repos exhausted the
+# old 16g ceiling with a genuine OutOfMemoryError (apache/airflow,
+# Azure/azure-sdk-for-python, synaptent/aragora, rush86999/atom, pipeshub-ai,
+# sands-lab/FOCUS, drussell23/JARVIS). NOTE this is a ladder, not a floor -- do NOT
+# set a flat _JAVA_OPTIONS=-Xmx24g instead, because that hands 24g to every repo
+# including the ~99% that finish at 8g. Both the parent joern JVM and the child
+# pysrc2cpg JVM receive this ceiling, so keep it below physical RAM.
+DEFAULT_JAVA_HEAP_SIZES = "8g,12g,16g,24g"
 
 # A single multi-MB .py — almost always generated data embedded as a literal (e.g.
 # a giant lookup dict) — explodes Joern's CPG and OOMs it at any heap, while never

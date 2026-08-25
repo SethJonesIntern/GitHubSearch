@@ -24,7 +24,7 @@ from __future__ import annotations
 import argparse
 import csv
 import json
-import shutil
+import os
 import sys
 import time
 from pathlib import Path
@@ -88,7 +88,11 @@ def strip_rows(path: Path, repos: set[str], backup_dir: Path, apply: bool) -> tu
                 bak.close()
     if apply:
         if removed:
-            shutil.move(str(tmp), str(path))
+            # os.replace, NOT shutil.move: on Windows os.rename refuses an existing
+            # destination, so shutil.move falls back to copy2 -- which rewrites the
+            # 189 MB original in place and leaves it TRUNCATED if interrupted.
+            # os.replace is atomic here and does not copy.
+            os.replace(tmp, path)
         else:
             tmp.unlink(missing_ok=True)
             removed_path.unlink(missing_ok=True)

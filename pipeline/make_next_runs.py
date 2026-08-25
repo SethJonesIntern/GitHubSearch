@@ -95,10 +95,68 @@ def main() -> None:
                                     f"0 transitive)")),
                 fields)
 
+    # rerun.csv -- the queue to ACTUALLY run. reslice and regraph overlap on 11 repos
+    # (and prepare_rerun is per-queue), so running them as two queues either processes
+    # those 11 twice or, in the other order, lets --resume silently skip them and leaves
+    # them unsliced. One merged queue makes each repo run exactly once with no ordering
+    # to get wrong. reclone is disjoint from both but folded in so a single run clears
+    # everything; it is listed FIRST so the 20 cheap "no data at all" repos land before
+    # the expensive ones.
+    #
+    # Repos with no .py file at all are dropped: a Python static-analysis pass can never
+    # produce a graph for them, so re-running only reproduces the same empty result.
+    # (They keep their audit row and their in_scope value -- this is a run-queue filter,
+    # not a population cut.)
+    def py_count(a) -> int:
+        d = paths.REPOS_DIR / a["clone_slug"]
+        if not d.is_dir():
+            return -1          # not cloned yet: reclone will fetch it, keep it
+        return sum(1 for _ in d.rglob("*.py"))
+
+    def needs_rerun(a):
+        return (needs_clone(a)
+                or a["slice_status"] == "failed"
+                or (a["processed"] == "1" and a["graph_usable"] != "True"))
+
+    def rerun_reason(a):
+        if needs_clone(a):
+            return clone_reason(a)
+        why = []
+        if a["processed"] == "1" and a["graph_usable"] != "True":
+            # Carry the exclusion count: 0 means pyan never completed even a FIRST pass,
+            # which the ast.parse pre-filter may not help and which a no-timer re-run can
+            # leave running for hours. Non-zero means it was time-boxed mid-retry.
+            why.append(f"no usable graph (cg_source={a['cg_source'] or 'none'}, "
+                       f"{a['graph_excluded_files'] or 0} files excluded, "
+                       f"{a['invokers_direct']} direct invokers, 0 transitive)")
+        if a["slice_status"] == "failed":
+            why.append(f"joern slice failed: {a['slice_error'] or 'unknown'}")
+        return "; ".join(why)
+
+    merged, skipped = [], []
+    for a in audit:
+        if not needs_rerun(a) or a["full_name"] not in slim:
+            continue
+        # ...but only for repos whose checkout is COMPLETE. A reclone repo's checkout
+        # is the failed/partial one, so its .py count says nothing about what a fresh
+        # clone will contain (kagenti/agent-examples has 0 .py on disk and is alive on
+        # GitHub). Never drop a repo we are about to re-clone.
+        if not needs_clone(a) and py_count(a) == 0:
+            skipped.append(a["full_name"])
+            continue
+        r = dict(slim[a["full_name"]])
+        r["reason"] = rerun_reason(a)
+        merged.append((0 if needs_clone(a) else 1, r))
+    merged.sort(key=lambda t: t[0])
+    write_queue("rerun.csv", [r for _, r in merged], fields)
+    if skipped:
+        print(f"  NOTE rerun.csv: dropped {len(skipped)} repo(s) with no .py file at all "
+              f"(a graph is impossible, not a pyan failure): {', '.join(skipped)}")
+
     prog = json.loads(paths.BATCH_PROGRESS_JSON.read_text(encoding="utf-8")) \
         if paths.BATCH_PROGRESS_JSON.exists() else {}
     done = set(prog.get("processed", []))
-    for name in ("reclone.csv", "reslice.csv", "regraph.csv"):
+    for name in ("reclone.csv", "reslice.csv", "regraph.csv", "rerun.csv"):
         q = list(csv.DictReader((OUT_DIR / name).open(encoding="utf-8")))
         blocked = sum(1 for r in q if r["full_name"] in done)
         if blocked:
