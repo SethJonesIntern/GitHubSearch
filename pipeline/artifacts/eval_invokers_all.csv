@@ -876,3 +876,5 @@
 "mlflow/mlflow","mlflow_mlflow.tests.genai.scorers.ragas.test_ragas_scorer.test_ragas_scorer_telemetry_in_genai_evaluate","mlflow_mlflow/tests/genai/scorers/ragas/test_ragas_scorer.py","349","matches 'evaluate' from ragas","direct"
 "mlflow/mlflow","mlflow_mlflow.mlflow.genai.scorers.deepeval.DeepEvalScorer.__call__","mlflow_mlflow/mlflow/genai/scorers/deepeval/__init__.py","118","matches '.measure' from deepeval","direct"
 "mlflow/mlflow","mlflow_mlflow.mlflow.genai.scorers.ragas.RagasScorer._evaluate","mlflow_mlflow/mlflow/genai/scorers/ragas/__init__.py","218","matches 'single_turn_score' from ragas","direct"
+"Lyra-stellAI/BYO-LLM-WIKI","Lyra-stellAI_BYO-LLM-WIKI.ragas_eval._score","Lyra-stellAI_BYO-LLM-WIKI/ragas_eval.py","59","matches 'single_turn_ascore' from ragas","direct"
+"Lyra-stellAI/BYO-LLM-WIKI","Lyra-stellAI_BYO-LLM-WIKI.ragas_eval.run_ragas_experiment","Lyra-stellAI_BYO-LLM-WIKI/ragas_eval.py","114","matches 'evaluate' from ragas","direct"

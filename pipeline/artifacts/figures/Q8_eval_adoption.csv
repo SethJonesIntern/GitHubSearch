@@ -1,6 +1,6 @@
 evaluator,apps_using,pct_of_analyzed
-ragas,24,2.9
+ragas,25,3.0
 deepeval,16,1.9
 opik,1,0.1
 phoenix,1,0.1
-ANY evaluator,39,4.7
+ANY evaluator,40,4.7

@@ -1,5 +1,5 @@
 measure,repos,pct_of_analyzed
-Calls an LLM somewhere in its source,677,80.8
-Has a TEST that calls an LLM,255,30.4
-Uses an LLM evaluation framework,39,4.7
-analyzed applications (denominator),838,100.0
+Calls an LLM somewhere in its source,695,82.4
+Has a TEST that calls an LLM,264,31.3
+Uses an LLM evaluation framework,40,4.7
+analyzed applications (denominator),843,100.0

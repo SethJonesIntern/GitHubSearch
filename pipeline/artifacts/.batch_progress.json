@@ -1001,7 +1001,38 @@
     "endomorphosis/ipfs_datasets_py",
     "spurbey/agent-memory-orchestrator",
     "canonical/maas",
-    "fathom-lab/styxx"
+    "fathom-lab/styxx",
+    "huaweicloud/huaweicloud-sdk-python-v3",
+    "opencord/voltha",
+    "promptdriven/pdd",
+    "Edraak/edraak-platform",
+    "pipeshub-ai/pipeshub-ai",
+    "volcengine/volcengine-python-sdk",
+    "rocketride-org/rocketride-server",
+    "Noveum/noveum-trace",
+    "3D-Tech-Solutions/code-scalpel",
+    "capocchi/DEVSimPy",
+    "modaic-ai/modaic",
+    "TracecatHQ/tracecat",
+    "Strong-AI-Lab/Von",
+    "musicmonk42/The_Code_Factory_Working_V2",
+    "deltacodes1/Hackotberfest2025",
+    "MODSetter/SurfSense",
+    "xbrxr03/clawos",
+    "sonic-net/sonic-mgmt",
+    "Jize-W/RouteMoA",
+    "sands-lab/FOCUS",
+    "haohervchb/GooseLLM",
+    "jianghuguoguo/LORE",
+    "Lyra-stellAI/BYO-LLM-WIKI",
+    "eneo-ai/eneo",
+    "thiswillbeyourgithub/wdoc",
+    "Capsize-Games/airunner",
+    "jeremiedecock/snippets",
+    "FusionBrainLab/gigaevo-core",
+    "eidolon-ai/eidolon",
+    "angr/angr",
+    "swarm-ai-research/swarm"
   ],
   "failed": [
     {
@@ -1083,6 +1114,14 @@
     {
       "repo": "openJiuwen-ai/agent-store",
       "stage": "clone"
+    },
+    {
+      "repo": "peteromallet/Arnold",
+      "stage": "clone"
+    },
+    {
+      "repo": "kungfuai/CVlization",
+      "stage": "clone"
     }
   ],
   "slice_failed": [
@@ -1121,6 +1160,10 @@
     {
       "repo": "endomorphosis/ipfs_datasets_py",
       "error": "joern-parse failed for C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\endomorphosis_ipfs_datasets_py: Picked up _JAVA_OPTIONS: -Xmx24g\n2026-08-26 04:42:24.759 WARN  CfgCreator$               Using order fallback for try statement catch body\n2026-08-26 04:42:24.774 WARN  CfgCreator$               Using order fallback for continue statement jump argument\n2026-08-26 04:42:24.784 WARN  CfgCreator$               Using order fallback for try statement finally body\n2026-08-26 04:42:24.858 WARN  CfgCreator$               Using order fallback for break statement jump argument\n2026-08-26 04:42:59.483 WARN  ReachingDefPass           ipfs_datasets_py\\logic\\modal\\decompiler.py:<module> has more than 4000 definitions\n2026-08-26 04:42:59.483 WARN  ReachingDefPass           Skipping.\n2026-08-26 04:43:15.928 WARN  ReachingDefPass           tests\\unit\\processors\\test_docket_dataset.py:<module>.test_packaged_docket_query_planner_selects_relevant_pieces_and_executes has more than 4000 definitions\n2026-08-26 04:43:15.928 WARN  ReachingDefPass           Skipping.\n2026-08-26 04:43:17.651 WARN  ReachingDefPass           ipfs_datasets_py\\processors\\legal_scrapers\\state_admin_rules_scraper.py:<module>._agentic_discover_admin_state_blocks has more than 4000 definitions\n2026-08-26 04:43:17.651 WARN  ReachingDefPass           Skipping.\n2026-08-26 04:43:21.491 WARN  ReachingDefPass           ipfs_datasets_cli.py:<module>.execute_heavy_comman\n... <truncated 553496 chars> ...\noner\\hybrid_v2_blueprint.py#L1970\nException in thread \"main\" java.lang.OutOfMemoryError: Java heap space\n\tat flatgraph.DiffGraphBuilder._addEdge(DiffGraphBuilder.scala:31)\n\tat flatgraph.DiffGraphBuilder.addEdge(DiffGraphBuilder.scala:24)\n\tat io.joern.x2cpg.passes.callgraph.NaiveCallLinker.run$$anonfun$1$$anonfun$1$$anonfun$1(NaiveCallLinker.scala:22)\n\tat io.joern.x2cpg.passes.callgraph.NaiveCallLinker$$Lambda/0x0000018dbc66f738.applyVoid(Unknown Source)\n\tat scala.runtime.function.JProcedure1.apply(JProcedure1.java:15)\n\tat scala.runtime.function.JProcedure1.apply(JProcedure1.java:10)\n\tat scala.collection.immutable.List.foreach(List.scala:334)\n\tat io.joern.x2cpg.passes.callgraph.NaiveCallLinker.run$$anonfun$1$$anonfun$1(NaiveCallLinker.scala:20)\n\tat io.joern.x2cpg.passes.callgraph.NaiveCallLinker$$Lambda/0x0000018dbc66f330.applyVoid(Unknown Source)\n\tat scala.runtime.function.JProcedure1.apply(JProcedure1.java:15)\n\tat scala.runtime.function.JProcedure1.apply(JProcedure1.java:10)\n\tat scala.Option.foreach(Option.scala:437)\n\tat io.joern.x2cpg.passes.callgraph.NaiveCallLinker.run$$anonfun$1(NaiveCallLinker.scala:19)\n\tat io.joern.x2cpg.passes.callgraph.NaiveCallLinker$$Lambda/0x0000018dbc66ef28.applyVoid(Unknown Source)\n\tat scala.runtime.function.JProcedure1.apply(JProcedure1.java:15)\n\tat scala.runtime.function.JProcedure1.apply(JProcedure1.java:10)\n\tat scala.collection.IterableOnceOps.foreach(IterableOnce.scala:619)\n\tat scala.collection.IterableOnceOps.foreach$(IterableOnce.scala:617)\n\tat scala.collection.AbstractIterator.foreach(Iterator.scala:1306)\n\tat io.joern.x2cpg.passes.callgraph.NaiveCallLinker.run(NaiveCallLinker.scala:18)\n\tat io.shiftleft.passes.CpgPass.runOnPart(CpgPass.scala:35)\n\tat io.shiftleft.passes.ForkJoinParallelCpgPass.runOnPart(CpgPass.scala:88)\n\tat io.shiftleft.passes.ForkJoinParallelCpgPass.runOnPart(CpgPass.scala:88)\n\tat io.shiftleft.passes.ForkJoinParallelCpgPassWithAccumulator$$anon$2.accept(CpgPass.scala:214)\n\tat io.shiftleft.passes.ForkJoinParallelCpgPassWithAccumulator$$anon$2.accept(CpgPass.scala:212)\n\tat java.base/java.util.stream.ReduceOps$4ReducingSink.accept(ReduceOps.java:220)\n\tat java.base/java.util.Spliterators$ArraySpliterator.forEachRemaining(Spliterators.java:1024)\n\tat java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:570)\n\tat java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:560)\n\tat java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)\n\tat java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:265)\n\tat java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:738)"
+    },
+    {
+      "repo": "pipeshub-ai/pipeshub-ai",
+      "error": "joern-parse failed for C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\pipeshub-ai_pipeshub-ai: Picked up _JAVA_OPTIONS: -Xmx24g\n2026-08-26 13:48:46.088 WARN  CfgCreator$               Using order fallback for try statement catch body\n2026-08-26 13:48:46.169 WARN  CfgCreator$               Using order fallback for continue statement jump argument\n2026-08-26 13:48:46.170 WARN  CfgCreator$               Using order fallback for try statement finally body\n2026-08-26 13:48:46.194 WARN  CfgCreator$               Using order fallback for break statement jump argument\n2026-08-26 13:49:01.108 WARN  ReachingDefPass           backend\\python\\app\\schema\\arango\\documents.py:<module> has more than 4000 definitions\n2026-08-26 13:49:01.108 WARN  ReachingDefPass           Skipping.\n2026-08-26 13:49:07.138 WARN  ReachingDefPass           backend\\python\\code-generator\\asana.py:<module> has more than 4000 definitions\n2026-08-26 13:49:07.138 WARN  ReachingDefPass           Skipping.\n2026-08-26 13:49:07.407 WARN  ReachingDefPass           backend\\python\\code-generator\\snowflake.py:<module> has more than 4000 definitions\n2026-08-26 13:49:07.407 WARN  ReachingDefPass           Skipping.\n2026-08-26 13:49:08.322 WARN  ReachingDefPass           backend\\python\\code-generator\\zammad.py:<module>.ZammadAPIDefinition.get_all_endpoints has more than 4000 definitions\n2026-08-26 13:49:08.322 WARN  ReachingDefPass           Skipping.\n2026-08\n... <truncated 5993591 chars> ...\n026-08-26 13:51:58.472 WARN  RecoverForPythonFile      Unable to assign identifier 'tmp788' to field load '<unknown>' @ backend\\python\\app\\sources\\external\\microsoft\\users_groups\\users_groups.py#L18530\nException in thread \"main\" java.lang.OutOfMemoryError: Java heap space\n\tat flatgraph.DiffGraphApplier.splitUpdate$$anonfun$2(DiffGraphApplier.scala:179)\n\tat flatgraph.DiffGraphApplier$$Lambda/0x000002261f339b90.applyVoid(Unknown Source)\n\tat scala.runtime.function.JProcedure1.apply(JProcedure1.java:15)\n\tat scala.runtime.function.JProcedure1.apply(JProcedure1.java:10)\n\tat scala.collection.IterableOnceOps.foreach(IterableOnce.scala:619)\n\tat scala.collection.IterableOnceOps.foreach$(IterableOnce.scala:617)\n\tat scala.collection.AbstractIterable.foreach(Iterable.scala:935)\n\tat flatgraph.DiffGraphApplier.splitUpdate(DiffGraphApplier.scala:143)\n\tat flatgraph.DiffGraphApplier.applyUpdate(DiffGraphApplier.scala:246)\n\tat flatgraph.DiffGraphApplier$.applyDiff(DiffGraphApplier.scala:28)\n\tat flatgraph.DiffGraphApplier$.applyDiff(DiffGraphApplier.scala:33)\n\tat io.shiftleft.passes.ForkJoinParallelCpgPassWithAccumulator.createAndApply(CpgPass.scala:173)\n\tat io.joern.console.cpgcreation.PythonSrcCpgGenerator.applyPostProcessingPasses$$anonfun$1(PythonSrcCpgGenerator.scala:27)\n\tat io.joern.console.cpgcreation.PythonSrcCpgGenerator$$Lambda/0x000002261f4546c8.applyVoid(Unknown Source)\n\tat scala.runtime.function.JProcedure1.apply(JProcedure1.java:15)\n\tat scala.runtime.function.JProcedure1.apply(JProcedure1.java:10)\n\tat scala.collection.immutable.List.foreach(List.scala:334)\n\tat io.joern.console.cpgcreation.PythonSrcCpgGenerator.applyPostProcessingPasses(PythonSrcCpgGenerator.scala:27)\n\tat io.joern.joerncli.JoernParse$.applyDefaultOverlays$$anonfun$1(JoernParse.scala:159)\n\tat io.joern.joerncli.JoernParse$$$Lambda/0x000002261f2653d0.apply(Unknown Source)\n\tat scala.util.Try$.apply(Try.scala:217)\n\tat io.joern.joerncli.JoernParse$.applyDefaultOverlays(JoernParse.scala:163)\n\tat io.joern.joerncli.JoernParse$.run$$anonfun$2$$anonfun$1$$anonfun$1(JoernParse.scala:90)\n\tat io.joern.joerncli.JoernParse$$$Lambda/0x000002261f265000.apply(Unknown Source)\n\tat scala.util.Success.flatMap(Try.scala:266)\n\tat io.joern.joerncli.JoernParse$.run$$anonfun$2$$anonfun$1(JoernParse.scala:89)\n\tat io.joern.joerncli.JoernParse$$$Lambda/0x000002261f0f6e20.apply(Unknown Source)\n\tat scala.util.Success.flatMap(Try.scala:266)\n\tat io.joern.joerncli.JoernParse$.run$$anonfun$2(JoernParse.scala:88)\n\tat io.joern.joerncli.JoernParse$$$Lambda/0x000002261f0f61c0.apply(Unknown Source)\n\tat scala.util.Success.flatMap(Try.scala:266)\n\tat io.joern.joerncli.JoernParse$.run(JoernParse.scala:87)"
     }
   ]
 }
