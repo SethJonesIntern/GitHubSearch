@@ -357,4 +357,54 @@ uncovered. ~53 lower-weight triage candidates (mostly <2,000 ND each) remain unr
 
 ---
 
-*Last updated: 2026-08-25. Add new exclusions as rows above, dated, with the enforcing code location.*
+## 13. Denominator-side collision cuts (2026-08-26) — enforced via `in_scope=0` in `application_audit.csv`
+
+The §11/§12 combs ranked candidates by **ND-test weight**, so by construction they could
+only surface repos that *contribute* something. Repos that are pure denominator — 0 calls,
+0 invokers, 0 ND tests — were invisible to that queue. This is the first pass from the
+other side, and it is the reason "81% of analyzed apps contain an LLM call site" was low:
+the shortfall was mostly non-applications sitting in the denominator, not undetected LLM use.
+
+**Criterion (in code — `pipeline/waterfall.py`, `queues()` bucket A):** analyzed, **0 LLM
+call sites**, `frameworks_imported` **empty** (the clone imports no known LLM library), and
+`real_ai_app=0` (the search token is not a key in `FRAMEWORK_CALLS`/`EVAL_CALLS`) — **and**
+`http_llm_files == 0` **and** `cli_llm_files == 0`.
+
+Those last two conditions are the guardrail: an import scan cannot see a provider called
+over `requests`/`httpx` or a shelled-out CLI, so a zero import count alone is not evidence
+of absence. **9 of the 30 candidates carry HTTP/CLI evidence and were deliberately NOT
+cut** (`HKUDS/ClawTeam`, `psi-oss/get-physics-done`, `Lyellr88/MARM-Systems`,
+`Intelligent-Internet/CommonGround`, `Stage-11-Agentics/lattice`, `web3spreads/quant-flow`,
+`noetl/noetl`, `ttlequals0/PixelProbe`, `canvas-medical/canvas-plugins`) — they are held for
+source review and remain counted.
+
+| Cut | Count | Reason |
+|---|---:|---|
+| `omnigent`-token repos | 18 | The token matches the diffusion class `OmniGe`**`nt`**`ransformer`. All 18 are image/video/audio **generation** research code — out of scope for a study of LLM text generation. Includes `huggingface/diffusers` (33,955★, 2,053 `.py`, **0** LLM calls / 0 invokers / 0 ND tests / `llm_calls_raw=0`) and `bytedance/Video-As-Prompt` — **both named in §9 as "plainly not LLM apps" but never enforced.** |
+| `sia`-token repos | 2 | `eavanvalkenburg/pysiaalarm` (SIA DC-09 alarm-panel client), `gip-inclusion/les-emplois` (French employment platform). |
+| `pyautogen`-token repo | 1 | `memory-graph/memory-graph` — an MCP memory server with **0 Python files**. |
+
+**Impact: 0 LLM calls, 0 invokers, 0 ND tests leave the counted set** — that is the point,
+they never contributed any. The denominator moves 838 → 817 and LLM-call prevalence
+80.8% → 82.9%. No numerator anywhere changes.
+
+**The §9 enforcement gap this exposes.** §9 assigns 137 repos to a bucket whose column
+reads *"in denominator? **no**"*, and `RUNBOOK.md:28` says scope is decided by the
+`real_ai_app`/`analyzed` flags — but **no code reads those columns.** `analyze.py` builds
+its exclusions from `QUALITY_EXCLUDED` + `NOT_LLM_APP` + `in_scope`, so every §9 "Excluded"
+repo has been counted all along. Measured 2026-08-26: **84** `real_ai_app=0` repos sat in
+the 838-repo analyzed set.
+
+**Do not "fix" this by honouring the flag.** Of those 84, **54 demonstrably ARE LLM
+applications** — `NVIDIA-AI-Blueprints/aiq` (198 calls, 147 direct ND tests),
+`hsliuping/TradingAgents-CN` (82), `project-ryoma/ryoma` (48) — flagged 0 only because the
+*search token* that found them was junk. That is exactly the failure §9 itself warns about
+("83% of analyzed repos import a framework their matched token never mentions") and why
+`applications_analyzed.csv` was deleted. **`real_ai_app` is superseded by
+`frameworks_imported` for all scope decisions** (CLAUDE.md: *"never decide scope from
+`matched_frameworks`"*). It is retained only as provenance. The correct filter is the
+code-derived criterion above, applied repo by repo.
+
+---
+
+*Last updated: 2026-08-26. Add new exclusions as rows above, dated, with the enforcing code location.*
