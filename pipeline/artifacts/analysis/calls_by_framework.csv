@@ -1,21 +1,21 @@
 framework,calls,kind,pct_of_calls
-langchain,11221,framework,31.3
-langgraph,6488,framework,18.1
-openai,5452,raw SDK,15.2
-haystack,2603,framework,7.3
-agent_framework (MS),1874,framework,5.2
-pydantic_ai,1785,framework,5.0
-autogen,1272,framework,3.6
-anthropic,1230,raw SDK,3.4
-agents,688,framework,1.9
-mem0,579,framework,1.6
-crewai,542,framework,1.5
-swarm,505,framework,1.4
-agno,434,framework,1.2
-dspy,401,framework,1.1
-smolagents,337,framework,0.9
-camel,162,framework,0.5
-semantic_kernel,149,framework,0.4
-astrbot,45,framework,0.1
+langchain,8503,framework,31.0
+openai,4005,raw SDK,14.6
+langgraph,3758,framework,13.7
+haystack,2590,framework,9.4
+agent_framework (MS),1898,framework,6.9
+pydantic_ai,1274,framework,4.6
+autogen,1223,framework,4.5
+anthropic,1003,raw SDK,3.7
+agents,661,framework,2.4
+mem0,524,framework,1.9
+crewai,462,framework,1.7
+agno,412,framework,1.5
+dspy,396,framework,1.4
+swarm,234,framework,0.9
+camel,154,framework,0.6
+semantic_kernel,142,framework,0.5
+smolagents,140,framework,0.5
+astrbot,45,framework,0.2
 graphrag,28,framework,0.1
 swarms,3,framework,0.0

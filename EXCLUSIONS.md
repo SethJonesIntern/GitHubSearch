@@ -294,4 +294,67 @@ provider SDKs). See `pipeline/artifacts/framework_triage.csv` /
 
 ---
 
+## 12. Framework/library and platform cuts from the triage review (2026-08-25) — enforced via `in_scope=0` in `application_audit.csv`
+
+Second pass of the framework-vs-application comb (queue: `framework_triage.csv` +
+`imported_by.csv`, top 30 still-counted candidates by ND-test weight, each read
+tree+README). **23 cut, 7 kept.** Two cut categories:
+
+### 12a. Self-described frameworks/libraries (18) — their own READMEs say so
+
+| Repo | ND tests | Own words / evidence |
+|---|---:|---|
+| `DeytaHQ/khora` | 8,108 | "A Python **library** for creating knowledge repositories" |
+| `nhadaututtheky/neural-memory` | 5,025 | memory component for *your* agent |
+| `TheodoreGalanos/aec-bench` | 4,577 | "A Python **platform** for … evaluating benchmarks", published package |
+| `jwwelbor/AgentMap` | 4,408 | "declarative orchestration **framework**" |
+| `massgen/MassGen` | 3,961 | "multi-agent **framework**" |
+| `kdcube/kdcube-ai-app` | 3,879 | "self-hosted production **runtime** for AI applications" |
+| `wandb/weave` | 3,758 | observability toolkit — the §2 agentops precedent; imported by **14** corpus repos |
+| `NVIDIA-NeMo/Guardrails` | 3,596 | guardrails **library**; imported by 7 |
+| `fabceolin/the_edge_agent` | 3,596 | YAML agent runtime |
+| `semantica-agi/semantica` | 3,578 | "Graph-Native **Infrastructure**" |
+| `DemonDamon/AgenticX` | 3,472 | "agent technology **stack** … Python Agent Runtime" |
+| `vladkesler/initrunner` | 3,358 | agents-from-YAML engine |
+| `msu-denver/bili-core` | 3,303 | "An Open-Source LLM **Framework**" (title) |
+| `nfraxlab/ai-infra` | 3,252 | "One unified **SDK** for LLMs, agents, RAG" |
+| `topoteretes/cognee` | 3,193 | "AI memory **platform**"; imported by 8 |
+| `pydantic/pydantic-ai-harness` | 2,208 | first-party pydantic-ai add-on (the §11 deepagents precedent); imported by 3 |
+| `areal-project/AReaL` | 2,076 | "RL **infrastructure**" |
+| `cuga-project/cuga-agent` | 1,954 | "Agent **Harness** for the Enterprise" |
+
+### 12b. Platforms/builders (5) — ruled 2026-08-25
+
+**The test, decided this date: is the repo's product an LLM application itself (keep),
+or a thing whose users build/run their own LLM applications (cut)?** Platforms fail it.
+
+| Repo | ND tests | Evidence |
+|---|---:|---|
+| `databrickslabs/kasal` | 14,334 | drag-and-drop AI-workflow designer — largest single ND holder in the corpus at cut time |
+| `langflow-ai/langflow` | 11,236 | "platform for building and deploying AI-powered agents" |
+| `marimo-team/marimo` | 8,470 | notebook IDE; hardest case — its LLM code is its own assistant feature, but it is imported as a library by 7 corpus repos |
+| `dimagi/open-chat-studio` | 4,222 | "platform for building, deploying, and evaluating AI-powered chat applications" |
+| `griptape-ai/griptape-nodes-engine` | 3,362 | visual workflow builder engine (framework vendor) |
+
+**This supersedes the informal §7-era remark that `langflow`/`marimo` "STAY as apps"** —
+that was scoping mechanics (they are not `FRAMEWORK_CALLS` keys, so the self-repo rule
+could not reach them), not a considered judgment. The platform test above is the
+considered judgment. **Consistency check still open:** `astrbot` (a plugin platform,
+kept per the earlier platform-skew note) arguably fails the same test; it is a measured
+framework in our dicts, so its situation differs — flagged, not yet relitigated.
+
+### Kept as applications (7)
+
+`theexperiencecompany/gaia` (personal assistant) · `gptme/gptme` (terminal assistant) ·
+`NorthlandPositronics/Cogtrix` (local agent app) · `bytedance/deer-flow` (deep-research
+agent, run from source, no package) · `ginlix-ai/LangAlpha` (financial analysis) ·
+`mpfaffenberger/code_puppy` (code-agent CLI) · `open-jarvis/OpenJarvis` (assistant;
+thinnest evidence — README is doc links only). All carry dated KEEP notes in the sheet.
+
+**Impact:** 1,809 LLM calls, **108,926 ND tests** (40% of the pre-cut total), 1,540
+direct invokers leave the counted set. `in_scope` now 887 counted / 82 cut / 86
+uncovered. ~53 lower-weight triage candidates (mostly <2,000 ND each) remain unreviewed.
+
+---
+
 *Last updated: 2026-08-25. Add new exclusions as rows above, dated, with the enforcing code location.*

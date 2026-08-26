@@ -137,6 +137,31 @@ def kind_of(name: str) -> str:
     return "raw SDK" if name in RAW_SDKS else "framework"
 
 
+def args_per_call(meta: pd.DataFrame) -> pd.Series:
+    """How many arguments each distinct call site passes, from the recorded
+    `arg_count`. One value per call, so a 12-argument call counts once, not twice."""
+    return (meta.drop_duplicates("call_id")["arg_count"]
+            .astype(int).value_counts().sort_index())
+
+
+def knobs_per_call(meta: pd.DataFrame) -> pd.Series:
+    """How many of the eight determinism kwargs each call sets — the joint view the
+    per-knob table can't give: a call could set several or, as most do, none.
+
+    Reindexed over EVERY call, so calls that set nothing land in bin 0 instead of
+    vanishing (they are the headline: ~84% of call sites)."""
+    all_calls = meta["call_id"].drop_duplicates()
+    per = (meta[meta["arg_keyword"].isin(set(KNOBS))]
+           .groupby("call_id")["arg_keyword"].nunique()
+           .reindex(all_calls).fillna(0).astype(int))
+    return per.value_counts().sort_index()
+
+
+def print_distribution(title: str, counts: pd.Series, total: int) -> None:
+    for value, n in counts.items():
+        print(f"{value:>5}: {n:>7}  {100 * n / total:>5.1f}%" if total else f"{value:>5}: {n:>7}")
+
+
 def by_import_name(df: pd.DataFrame, keys: list, label: str) -> pd.DataFrame:
     """The ungrouped per-package view, kept alongside every grouped table so the
     family breakdown is never lost."""
@@ -288,6 +313,24 @@ def main():
         save(knobs, "determinism_knobs.csv")
         print(knobs.to_string(index=False))
         print("(literal_value = hard-coded in the call; variable_value = passed via a variable)")
+
+        # The per-knob table above is marginal — each knob counted separately. These two
+        # are the joint views: how big a call is, and how many knobs any one call sets.
+        print()
+        print(f"arg rows: {len(meta)}  distinct calls: {total_calls}")
+        args = args_per_call(meta)
+        print()
+        print("(a) TOTAL arguments per call")
+        print_distribution("args", args, total_calls)
+        print(f"  max: {int(args.index.max())}")
+        knob_dist = knobs_per_call(meta)
+        print()
+        print(f"(b) DETERMINISM KNOBS per call (of {KNOBS} )")
+        print_distribution("knobs", knob_dist, total_calls)
+        save(args.rename("calls").rename_axis("n_arguments").reset_index(),
+             "args_per_call.csv")
+        save(knob_dist.rename("calls").rename_axis("knobs_set").reset_index(),
+             "knobs_per_call.csv")
 
     # ── call characteristics ──────────────────────────────────────────────────
     section("LLM CALL CHARACTERISTICS")

@@ -1,9 +1,9 @@
 kwarg,calls_setting_it,pct_of_calls,literal_value,variable_value
-temperature,1782,5.0,1284,498
-top_p,300,0.8,194,106
-top_k,157,0.4,112,45
-seed,41,0.1,28,13
-max_tokens,2419,6.7,1732,687
-frequency_penalty,85,0.2,64,21
-presence_penalty,78,0.2,60,18
-model,5250,14.6,1901,3349
+temperature,1037,3.8,651,386
+top_p,192,0.7,105,87
+top_k,155,0.6,111,44
+seed,27,0.1,15,12
+max_tokens,1720,6.2,1127,593
+frequency_penalty,79,0.3,60,19
+presence_penalty,74,0.3,58,16
+model,3809,13.8,1560,2249

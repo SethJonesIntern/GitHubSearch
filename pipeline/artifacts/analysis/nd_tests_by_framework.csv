@@ -1,18 +1,18 @@
 framework,nd_tests,kind
-langchain,4834,framework
-langgraph,2447,framework
-haystack,2218,framework
-openai,1693,raw SDK
-pydantic_ai,913,framework
+langchain,2946,framework
+haystack,2211,framework
+langgraph,1216,framework
+openai,1040,raw SDK
 agent_framework (MS),620,framework
-autogen,510,framework
-anthropic,443,raw SDK
-swarm,319,framework
-crewai,256,framework
-smolagents,148,framework
-agents,136,framework
-agno,119,framework
-mem0,83,framework
-dspy,79,framework
-semantic_kernel,28,framework
+pydantic_ai,557,framework
+autogen,490,framework
+anthropic,338,raw SDK
+crewai,217,framework
+swarm,148,framework
+agno,121,framework
+agents,115,framework
+mem0,77,framework
+dspy,75,framework
+smolagents,49,framework
+semantic_kernel,26,framework
 camel,1,framework

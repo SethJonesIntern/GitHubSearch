@@ -44,8 +44,19 @@ def main():
     args = ap.parse_args()
 
     rows = cuts.drop_cut(list(csv.DictReader(open(SLIM_CSV, encoding="utf-8"))))
+    # Coverage denominator = REAL AI APPS (COVERAGE_ANALYSIS.md). drop_cut alone is not
+    # enough: the §9 "Excluded" bucket (junk-token-only rows — omnigent/clai/
+    # langchain_tests collisions, real_ai_app=0) was enforced as a flag column, never as
+    # in_scope=0, so ~107 junk rows survive it. They are only "coverable" by junk
+    # categories, which pushed the 90% cut from top-19 to top-21 (found 2026-08-25).
+    rows = [r for r in rows if (r.get("real_ai_app") or "").strip() == "1"]
     total = len(rows)
+    # Exempt/phantom frameworks cannot COVER an app: omnigent is the §2 phantom and
+    # agentops is exempt observability. With the real-AI denominator they no longer
+    # change the cut, but excluding them keeps the ranking principled.
+    NON_COVERING = {"omnigent", "agentops"}
     app_cats = [{kf.category(n.strip()) for n in (r.get("matched_frameworks") or "").split(",") if n.strip()}
+                - NON_COVERING
                 for r in rows]
     per = Counter()
     for cats in app_cats:
