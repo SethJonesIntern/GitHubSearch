@@ -1,0 +1,10 @@
+kwarg,calls_setting_it,pct_of_calls,literal_value,variable_value
+model,4333,15.0,1799,2534
+max_tokens,1987,6.9,1363,624
+temperature,1291,4.5,854,437
+top_p,218,0.8,121,97
+top_k,155,0.5,111,44
+frequency_penalty,79,0.3,60,19
+presence_penalty,74,0.3,58,16
+seed,27,0.1,15,12
+(total distinct calls),28965,100.0,,
