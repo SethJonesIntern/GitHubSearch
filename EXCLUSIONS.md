@@ -502,4 +502,140 @@ returned by a known provider-getter.
 
 ---
 
+## 16. Queue B — Stage-2 token collisions with no framework import (2026-08-27) — enforced via `in_scope=0`
+
+72 repos that matched a framework token, import **no tracked framework at all** in the
+clone (`zero_invoker_reason = framework_never_imported` for 68 of them), and produced 0
+LLM call sites. **59 cut as collisions, 13 held for file-level review.**
+
+The token breakdown is the evidence — each is a real English word or a common code idiom:
+
+| token | cut | what GitHub actually matched |
+|---|---:|---|
+| `camel` | 26 | **camelCase**, and `camelot` |
+| `notte` | 12 | **`@nottest`** (nose decorator), `annotte…` |
+| `agno` | 8 | **agnostic** |
+| `swarms` / `swarm` | 9 | particle swarms, drone swarms, federated learning |
+| `patchwork` | 5 | email **patch** workflows |
+| `dynamiq` | 3 | **dynamiqs**, a quantum-simulation library |
+| `headroom` | 3 | capacity "headroom" modelling |
+
+Representative cuts, none LLM-related: `getmoto/moto` (AWS mocking, 8,555★),
+`rasbt/mlxtend` (scikit-learn extensions, 5,152★), `Pylons/pyramid` (web framework),
+`mongodb/motor` (async MongoDB driver), `camelot-dev/camelot` (PDF tables),
+`frostming/marko` (markdown parser), two Ansible collections, `RBVI/ChimeraX`
+(molecular graphics), three quantum-computing libraries, `mricon/b4` (kernel email
+patches), and the Zscaler / Checkmarx / Infobip SDKs.
+
+Impact: 0 LLM calls, 0 ND tests — **denominator-only**, same as §13–§15.
+
+### ⏳ HELD — 13 repos needing file-level review
+
+Per the §14 lesson (5 of 9 Queue A repos with HTTP/CLI evidence turned out to be real LLM
+apps), nothing with out-of-process evidence is cut on inference. Held: any repo with
+`http_llm_files` or `cli_llm_files` > 0, plus four whose descriptions are AI-shaped.
+
+| Repo | http/cli | Why held |
+|---|---|---|
+| `professorpalmer/Puppetmaster` | 13/32 | "provider-neutral control plane"; heaviest evidence in the queue |
+| `larksuite/oapi-sdk-python` | 25/0 | Lark SDK — likely §12 framework rather than collision |
+| `spurbey/agent-memory-orchestrator` | 10/2 | "Persistent Memory and Agent Orchestrator" |
+| `alireza787b/mavsdk_drone_show` | 2/1 | matched both `swarm` and `swarms` |
+| `invoice-x/invoice2data` | 2/0 | PDF invoice extraction; evidence may be a false positive |
+| `JSONbored/mem0-aio` | 1/1 | Mem0 Docker/Unraid template |
+| `strangeadvancedmarketing/Adam` | 2/0 | "5-layer persistent memory and identity architecture" |
+| `RBVI/ChimeraX` | 0/1 | molecular graphics; single CLI hit, likely false positive |
+| `nottelabs/bua` | 1/0 | "Browser using agent (bua) **notte** model" — matched `notte` AND `notte_sdk`; possible true positive / first-party |
+| `The-Swarm-Corporation/swarms-client` | 0/0 | first-party Swarms API client — §11/§12 territory |
+| `sr-857/AstraGuard-AI-Apertre-3.0` | 0/0 | "Autonomous Fault Detection & Recovery" |
+| `hasanmehediii/CSE-2216-Project` | 0/0 | "LangMastero" language-learning app |
+| `muyouzhi6/Astrbot-desktop-assistant` | 0/0 | AstrBot desktop client — may belong in §15 |
+
+---
+
+## 17. Scope correction — "agentic application", and the Queue B held set (2026-08-27)
+
+**Terminology fix, applied from here on.** The study's unit is an **agentic application**:
+an application that *imports an agentic framework*. It is **not** "an LLM application".
+A repo that reaches a model only through a raw provider SDK (`openai`, `anthropic`,
+`ollama`, `litellm`, `dashscope`…) or over raw HTTP is **out of scope** — Stage 2 only
+ever searched for framework import names, so such repos were never sampled deliberately
+and can only have arrived by a token collision.
+
+This does **not** change how calls are counted *inside* agentic applications: raw-SDK
+calls made by an in-scope app remain measured, and the share of call sites that bypass the
+framework is a finding in its own right (figure Q3).
+
+### 17a. Queue B held set resolved (13 repos, all cut)
+
+| Repo | Reason |
+|---|---|
+| `strangeadvancedmarketing/Adam` | raw providers only (OpenAI/Ollama/Gemini base URLs, `cohere`), no agentic framework |
+| `alireza787b/mavsdk_drone_show` | raw OpenAI base URL in `gcs-server/agent_runtime/assistant.py` |
+| `invoice-x/invoice2data` | PDF-extraction library with a raw-provider `ai/config.py` |
+| `nottelabs/bua` | imports `notte_sdk` — the hosted browser-session REST client (`NotteClient(api_key=…)`), used as a Playwright browser provider beside `browserbase`/`scrapybara`. **Not the `notte` framework**: `frameworks.csv` lists notte's import names as `notte; notte_agent; notte_browser; notte_core; notte_eva…`, and `notte_sdk` is absent. Own agent loop over raw `api.openai.com/v1/responses` |
+| `professorpalmer/Puppetmaster` | platform — `pip install puppetmaster-ai`, orchestrates other agent tools (§12b logic) |
+| `spurbey/agent-memory-orchestrator` | platform — self-described memory/coordination *layer* for Codex, Claude, Slack (§12b logic) |
+| `The-Swarm-Corporation/swarms-client` | first-party REST client library for the Swarms API (§12a logic) |
+| `larksuite/oapi-sdk-python` | Lark SDK; its 25 "HTTP" hits were `/open-apis/im/v1/messages` — Lark's own IM API caught by the `/v1/messages` regex |
+| `JSONbored/mem0-aio` | Unraid/Docker deployment packaging for Mem0; only LLM hit is `tests/fixtures/mock_ollama.py` |
+| `muyouzhi6/Astrbot-desktop-assistant` | AstrBot desktop UI client, no LLM API used (§15 logic) |
+| `RBVI/ChimeraX` | `camel` collision; 0 HTTP hits, the single CLI hit was the bare-word regex |
+| `sr-857/AstraGuard-AI-Apertre-3.0` | `swarms` collision; no LLM imports or endpoints |
+| `hasanmehediii/CSE-2216-Project` | `agno` collision; student language-learning app, no LLM code |
+
+### 17b. Raw-SDK-only repos removed from `uncovered` (15)
+
+`uncovered` means *a real agentic application on a framework outside the top-20*. 42 repos
+in that bucket imported **only** raw provider SDKs. `openai`/`anthropic` were never search
+terms, so each arrived through an agentic-framework token it does not import. Cut this
+pass (the remainder still to review):
+
+- **8 × `clai`** — `infinitywings/rka`, `claudlos/hermes-katana`, `HolobiomicsLab/Perspicacite-AI`, `hkust-nlp/LOCA-bench`, `IINemo/lm-polygraph`, `JawadAminMSFT/WorkbenchIQ`, `s-nlp/AdaRAGUE`, `wsman/MY-DOGE-MICRO`
+- **5 × `omnigent`** — `cisco-ai-defense/defenseclaw`, `vita-epfl/Stable-Video-Infinity`, `bghira/SimpleTuner`, `TIGER-AI-Lab/Context-Forcing`, `MoonLadderStudios/MoonMind`
+- **1 × `pentestagent`** — `Gnosisone/ERR0RS-Ultimate` (`pentestagent` *is* a Stage-1 framework, but this clone does not import it)
+- **1 × non-invocation** — `NatLabRockies/elm` imports `langchain_text_splitters` (3 files) for text splitting, a langchain non-LLM utility (§9)
+
+### 17b-ii. Raw-SDK-only `uncovered` repos with invokers (19 more, 2026-08-27)
+
+20 raw-SDK-only `uncovered` repos had `invokers_direct > 0`, which looked like it might
+contradict `frameworks_imported`. It does not: `openai` and `anthropic` are themselves
+keys in `FRAMEWORK_CALLS`, so their patterns fire and a raw-SDK-only repo *should* have
+invokers. Checked the `reason` column of `llm_invokers_all.csv` for each — **every direct
+invoker in all 20 came from `openai` or `anthropic` patterns and nothing else.**
+
+19 cut as not-agentic (matched token → invoker sources): `InternScience/SciEvalKit`
+(smolagents → openai 9, anthropic 1) · `jmcentire/pact` (swarm → anthropic 6, openai 3) ·
+`swarmauri/swarmauri-sdk` (swarm → openai 8) · `AIAsys/AIASys` (graphrag → openai 6) ·
+`mims-harvard/ToolUniverse` (smolagents → openai 7) · `igeniusai/domyn-swarm` (swarms →
+openai 7) · `Strong-AI-Lab/Von` (haystack → openai 6) · `nduckmink/arkon` · `symgraph/IDAssist` ·
+`Rimuwu/DinoGochi` · `guaardvark/guaardvark` · `entropy-research/Devon` · `jianghuguoguo/LORE` ·
+`getagentseal/agentseal` · `capocchi/DEVSimPy` · `nikhilvallishayee/duh` ·
+`AI-Buddy-Catalyst-Labs/insta_rag` · `veritasfuji-japan/veritas_os` · `IlyaGusev/saiga_bot`.
+
+**Limit of this check, important:** an *unregistered* framework produces no invokers at
+all, so this cross-reference can confirm raw-SDK-only status but can never detect a
+missing registry name. `fetchai/fetchai` is exactly that case and was KEPT — see §17c.
+The 7 remaining raw-SDK-only `uncovered` repos have no invokers, so only
+`imports_matched_fw` (populated by `audit_zero_invokers`, currently limited to
+`zero_invoker == 1`) can judge them.
+
+### 17c. NOT collisions — two repos verified and kept as `uncovered`
+
+Checked against `frameworks.csv` (the Stage-1 discovery set) rather than assumed:
+
+| Repo | Token | Verdict |
+|---|---|---|
+| `IBM/ares` | `deepteam` | `confident-ai/deepteam` is a discovered framework; the clone imports `deepteam` in **3 files**. Correct match, real agentic app outside the top-20 |
+| `fetchai/fetchai` | `uagents_core` | `fetchai/uAgents` is a discovered framework (`import_names = src;uagents_adapter;uagents_core`); the clone imports `uagents_core` in **19 files** |
+
+**Registry gap this exposes:** neither `deepteam` nor `uagents_core` is a key in
+`FRAMEWORK_CALLS`, so `audit_imports` cannot record them and `frameworks_imported` showed
+only `openai` for both. A repo can therefore import a *discovered* framework and still look
+raw-SDK-only. Same shape as the `biliVideo` miss (§15) — see plan item H4b. **A matched
+token is only a collision when the clone does not import it; verify against
+`frameworks.csv` before cutting on that basis.**
+
+---
+
 *Last updated: 2026-08-27. Add new exclusions as rows above, dated, with the enforcing code location.*

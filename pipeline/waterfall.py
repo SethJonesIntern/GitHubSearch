@@ -87,6 +87,10 @@ def build():
             return "collision token, Queue A review (EXCL 14)"
         if "EXCLUSIONS §15" in t:
             return "framework imported for a non-invocation purpose (EXCL 15)"
+        if "EXCLUSIONS §16" in t:
+            return "token collision, no framework import (EXCL 16)"
+        if "EXCLUSIONS §17" in t:
+            return "not an agentic application / collision (EXCL 17)"
         for prefix, label in NOTE_BUCKETS:
             if t.startswith(prefix):
                 return label
