@@ -12,7 +12,9 @@ quality: deciding which of those repos belong in the study and which numbers sur
 
 | doc | what it settles |
 |---|---|
-| `HANDOFF_2026-08-25.md` | **start here** — the live run, the clone-failure bug, the framework triage sheet, uncommitted changes, and the current open list |
+| `HANDOFF_2026-08-27.md` | **start here** — current totals, the settled "agentic application" scope definition, and the ordered desktop work queue |
+| `PLAN_2026-08-26.md` | the H-numbered task list and the machine-capability table |
+| `HANDOFF_2026-08-25.md` | the clone-failure bug in detail, the framework triage sheet, and laptop/LFS setup |
 | `AUDIT_HANDOFF.md` | the audit sheet's design and the three-valued `in_scope` (its *current state* is superseded by the file above) |
 | `EXCLUSIONS.md` | the canonical ledger of every exclusion/exemption/pattern-cut. **Add a dated row whenever you exclude anything.** |
 | `COVERAGE_ANALYSIS.md` | the three scope buckets and the 90.1% coverage claim |
