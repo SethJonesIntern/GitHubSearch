@@ -83,6 +83,8 @@ def build():
         # criterion but each row names its own token, so no common prefix exists.
         if "EXCLUSIONS §13" in t or "EXCLUSIONS §13" in t:
             return "collision token, denominator-side cut (EXCL 13)"
+        if "EXCLUSIONS §14" in t or "collision-token cut (EXCLUSIONS §14)" in t:
+            return "collision token, Queue A review (EXCL 14)"
         for prefix, label in NOTE_BUCKETS:
             if t.startswith(prefix):
                 return label

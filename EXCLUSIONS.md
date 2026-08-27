@@ -407,4 +407,42 @@ code-derived criterion above, applied repo by repo.
 
 ---
 
-*Last updated: 2026-08-26. Add new exclusions as rows above, dated, with the enforcing code location.*
+## 14. Queue A — the `clai` collision survivors (2026-08-27) — enforced via `in_scope=0`
+
+The nine repos §13 held back pending evidence. Each was read at file level (the flagged
+lines, not the README). **All nine cut.**
+
+**Why:** eight matched only the token `clai`, one only `langchain_exa`, and **none of the
+49 `clai`-matched repos in the corpus imports `clai`** (verified by grep over every
+clone). `clai` *is* pydantic-ai's CLI package — the premise of the
+`keep_frequency.EXTRA_MEMBERS` mapping was correct — but Stage 2 is code search, so
+`"import clai"` matched the substring in **claim / claims / claimed / disclaimer**:
+`claim_line_item_id` (medical billing), `claimtoken` (auth), `claimed_index` (job queue).
+The matched token names nothing these repos use.
+
+| Repo | What the flagged files contain |
+|---|---|
+| `noetl/noetl` | `ollama_bridge/server.py` posts to `/api/chat` on `localhost:11434` — a real model call over raw HTTP |
+| `HKUDS/ClawTeam` | spawns Claude/Codex CLIs; `openrouter.ai` / `api.deepseek.com` base URLs |
+| `web3spreads/quant-flow` | DeepSeek OpenAI-compatible client in `src/llm.py` |
+| `psi-oss/get-physics-done` | Codex CLI adapter |
+| `Stage-11-Agentics/lattice` | spawns `claude` with kill-on-timeout handling |
+| `canvas-medical/canvas-plugins` | plugin **SDK** (`canvas_sdk`), not an application (§12a logic) |
+| `ttlequals0/PixelProbe` | media-integrity scanner; HTTP flag was the regex matching `/api/generate-pdf-report` |
+| `Intelligent-Internet/CommonGround` | HTTP evidence is a placeholder URL in tests (`example.openai.azure.com`) |
+| `Lyellr88/MARM-Systems` | HTTP evidence is a string literal in an assertion + a smoke-test script |
+
+The first five reach a model through `httpx`/`requests` or a spawned CLI; none imports a
+tracked framework, `openai`/`anthropic`, or `transformers`. Recorded here so the cut is
+not misread as "no LLM present" — the cut criterion is the collision, not the absence.
+
+**Measured alongside, for the record:** of the 42 repos matched by `clai` and nothing
+else, 19 import a tracked framework or SDK, and the 5 above use a model by another route.
+Stage 2's filters (≥10 stars, ≥2 contributors, ≥2 commits/month, ≥1 test file, pushed
+since 2025-04-14) restrict the corpus to actively maintained, tested Python projects.
+
+Impact: 0 LLM calls and 0 ND tests — a **denominator-only** cut.
+
+---
+
+*Last updated: 2026-08-27. Add new exclusions as rows above, dated, with the enforcing code location.*
