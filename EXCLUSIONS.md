@@ -445,4 +445,61 @@ Impact: 0 LLM calls and 0 ND tests — a **denominator-only** cut.
 
 ---
 
+## 15. Framework imported for a non-invocation purpose (2026-08-27) — enforced via `in_scope=0`
+
+**A new criterion, reusable.** A repo can import a tracked framework without ever asking
+it to call a model. The import may register a handler, declare a tool the *host's* model
+may call, pull in a type/config object, or use a non-LLM utility of the package. Stage 2
+matched a real framework name and `frameworks_imported` confirms a real import — but the
+repo is not an application that invokes an LLM.
+
+This is distinct from every earlier cut: §10/§13/§14 are token collisions (the name means
+nothing here), §11/§12 are frameworks/platforms (the repo is the thing others build on).
+Here the name is real, the import is real, and the *purpose* is not invocation.
+
+**Criterion.** Cut when all three hold: (a) the repo imports a tracked framework,
+(b) the import serves registration / typing / a non-LLM utility rather than invocation,
+and (c) no other LLM route is present (no raw HTTP to a model endpoint, no spawned CLI,
+no other SDK).
+
+### First application — AstrBot plugins (9)
+
+AstrBot is a QQ-bot platform; a plugin imports `astrbot` to register event handlers. Two
+sub-cases, both non-invoking:
+
+| Repo | ★ | Evidence |
+|---|---:|---|
+| `FlanChanXwO/astrbot_plugin_setu` | 13 | registers `@llm_tool` ×51 — declares tools FOR the host's model |
+| `Clhikari/astrbot_plugin_office_assistant` | 38 | `@llm_tool` ×11, exposes file tools to the host's model |
+| `vmoranv-reborn/astrbot_plugin_pixiv_reborn` | 47 | `@llm_tool` ×9; Pixiv adapter |
+| `zouyonghe/astrbot_plugin_ebooks` | 29 | `@llm_tool` ×5; ebook search/download |
+| `GEMILUXVII/astrbot_plugin_jm_cosmos` | 213 | no LLM API at all; manga downloader |
+| `Zhalslar/astrbot_plugin_parser` | 158 | no LLM API at all; Bilibili/TikTok link parser |
+| `0xNMLSS/astrbot_plugin_fishing` | 43 | no LLM API at all; fishing minigame |
+| `HSJ-BanFan/astrbot_plugin_telegram_forwarder` | 25 | no LLM API at all; Telegram→QQ forwarder |
+| `1-20182/astrbot_plugin_phigros` | 11 | no LLM API at all; rhythm-game stats |
+
+A `@llm_tool` registration makes the plugin a **callee** of a model, never a caller — so
+its zero call sites are correct, not a detection miss.
+
+Impact: 0 LLM calls, 0 ND tests — **denominator-only**. Consistent with the existing
+astrbot platform-skew note (astrbot stays in the study; its raw counts were already known
+not to reflect application behaviour).
+
+### ⏳ HELD — `storyAura/astrbot_plugin_biliVideo` (TODO, not cut)
+
+The tenth AstrBot plugin in this bucket **does** invoke a model and must not be cut:
+`bilivideo/llm/astrbot_provider.py` wraps `context.get_using_provider()` and calls
+`await provider.text_chat(prompt=..., session_id=...)`.
+
+Our patterns missed it: `.get_using_provider` was cut in §4 as "a provider getter, not a
+model call" on the reasoning that `.text_chat` would catch the call — but here the getter
+and the call are split across a wrapper class, and `.text_chat` fires on a local variable.
+**This is a detector gap, not a population question.** Open questions: how many of the 55
+repos in `analysis/zero_call_triage.csv` bucket 5 (imports a tracked framework, no call
+site) share this split-receiver shape, and whether `seed_invokers` should bind a receiver
+returned by a known provider-getter.
+
+---
+
 *Last updated: 2026-08-27. Add new exclusions as rows above, dated, with the enforcing code location.*
