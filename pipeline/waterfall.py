@@ -133,7 +133,7 @@ def build():
     return dict(
         candidates=len(candidates), self_repos=len(self_repos), population=len(slim),
         ladder=ladder, analyzed=analyzed, with_calls=live, audit=audit, slim=slim,
-        lifted=lifted, rerun=rerun, have_calls=have_calls,
+        lifted=lifted, rerun=rerun, have_calls=have_calls, failed=failed,
     )
 
 
@@ -189,13 +189,31 @@ def report(d, md=False):
     if not md:
         print("=" * 104)
 
-    in_scope_lifted = {r for r in d["lifted"]
-                       if (d["audit"].get(r, {}).get("in_scope") or "").strip()
-                       not in ("0", "uncovered")}
-    print(f"\nRE-RUN: {len(d['rerun'])} repos queued, {len(d['lifted'])} currently lifted out of "
-          f".batch_progress,\n  {len(in_scope_lifted)} of them in scope. The denominator returns to "
-          f"~{n_an + len(in_scope_lifted)} when the run finishes.\n  This is machinery, not a scope "
-          f"decision - do not read it as a result.")
+    # "Missing" splits two ways and they need different actions. A repo lifted by
+    # prepare_rerun comes back on its own when the driver finishes; a clone failure
+    # never does, no matter how long you wait. Once the run is done the two sets
+    # coincide, and reporting them as one reads as "be patient" when the real answer
+    # is "fix shallow_clone" (HANDOFF 2026-08-27, H4).
+    missing = d["lifted"]
+    stuck = missing & d["failed"]
+    pending = missing - stuck
+
+    def in_scope(rs):
+        return {r for r in rs if (d["audit"].get(r, {}).get("in_scope") or "").strip()
+                not in ("0", "uncovered")}
+
+    print(f"\nNOT PROCESSED: {len(missing)} of the {len(d['rerun'])} queued repos "
+          f"({len(in_scope(missing))} in scope)")
+    if pending:
+        print(f"  {len(pending):>4} still queued - the driver has not reached them yet. "
+              f"They return on their own.")
+    if stuck:
+        print(f"  {len(stuck):>4} CLONE-FAILED ({len(in_scope(stuck))} in scope) - these do NOT "
+              f"come back by waiting.")
+        print(f"       Windows illegal-filename bug; the source is already on disk. "
+              f"Fix shallow_clone (H4).")
+    print(f"  denominator would be ~{n_an + len(in_scope(missing))} with all of them counted "
+          f"(now {n_an}).")
 
     print(f"\n{'PENDING REVIEW - still counted, no decision recorded':=^104}" if not md
           else "\n**Pending review**\n")

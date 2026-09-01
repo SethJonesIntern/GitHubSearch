@@ -1,4 +1,4 @@
-"""Eight research questions, each answered by one figure and one table.
+"""Nine research questions, each answered by one figure and one table.
 
     Q1  Do the mined applications actually call an LLM, and do their tests?
     Q2  Which frameworks do these applications really import?
@@ -8,6 +8,7 @@
     Q6  How many tests reach a live LLM?
     Q7  Can the static analysis be trusted?
     Q8  Do these projects use an LLM evaluation framework?
+    Q9  How far is a "non-deterministic test" from the model?
 
 Every question emits three things into `pipeline/artifacts/figures/`:
 
@@ -25,7 +26,8 @@ Two deliberate departures from `analyze.py`'s printed report:
   * **Non-deterministic tests are reported DIRECT ONLY.** The transitive count is
     ~92% of the total, inflates with call-graph size, and is absent entirely for
     repos with no usable graph — so it measures the graph as much as the code.
-    Q7 is the figure that justifies this. See CLAUDE.md, "Known-bad things".
+    Q7 and Q9 are the figures that justify this: Q9 measures the hop count and
+    finds only ~7.5% of graph-reached tests invoke a model in their own body.
   * **Q2 counts imports found in the cloned source** (`frameworks_imported` in the
     audit sheet), not `matched_frameworks`. The latter is the GitHub *code-search*
     token that surfaced the repo; 139 repos never import what they matched. This
@@ -52,6 +54,7 @@ import pandas as pd  # noqa: E402
 
 import analyze  # noqa: E402
 import figstyle as F  # noqa: E402
+import jump_depth  # noqa: E402
 import keep_frequency as kf  # noqa: E402
 from FrameworkDict import IN_SCOPE_FRAMEWORKS  # noqa: E402
 from pipeline import paths  # noqa: E402
@@ -200,15 +203,18 @@ def q1():
     # the middle bar is the study's subject; the other two are context for it
     colors = [F.EMPHASIS if i == 1 else F.CONTEXT for i in range(len(measures))]
 
+    # The out-of-process clause only earns its space when there is something to report.
+    # It was written when the no-framework group was ~100 repos with real HTTP/CLI
+    # evidence; after the §13-§17 cuts that group is tiny, and printing "0 call a
+    # provider over raw HTTP" reads as a finding when it is an empty set.
+    oop = ""
+    if http_n or cli_n:
+        parts = ([f"{http_n} call a provider over raw HTTP"] if http_n else []) + \
+                ([f"{cli_n} shell out to an LLM CLI"] if cli_n else [])
+        oop = " (" + ", ".join(parts) + ")"
     fig, ax = F.figure(
         "Q1.  Do these applications actually call an LLM — and do their tests?",
-        f"Yes to the first, mostly no to the second. {vals[0]:.0f}% contain an LLM call\n"
-        f"site, but only {vals[1]:.0f}% have a test that reaches one.",
-        f"n = {n:,} analyzed applications; test counts are DIRECT invocations only (see Q6, Q7).\n"
-        f"Bar 1 is a floor on DETECTION, not on LLM use: of the {len(zero)} with no call site, "
-        f"{len(no_fw)} import\nno framework this pipeline matches ({http_n} call a provider over raw HTTP, "
-        f"{cli_n} shell out to an\nLLM CLI, and raw Gemini is not yet detected); the other "
-        f"{len(zero) - len(no_fw)} import one that yielded no match.",
+        f"n = {n:,} applications",
         plot_height_in=0.52 * len(measures) + 0.35)
     y = range(len(measures))
     bars = ax.barh(list(y), vals, height=0.58, color=colors, linewidth=0)
@@ -243,20 +249,20 @@ def q2():
             members.setdefault(kf.category(x), set()).add(x)
     measured = {g: any(m in IN_SCOPE_FRAMEWORKS for m in ms) for g, ms in members.items()}
 
-    rows = groups.most_common(15)
+    # In-scope only. Showing unmeasured families (litellm, ollama, mistralai, cohere,
+    # vertexai...) turned this into a coverage chart and put four bars on it that no
+    # other figure can account for — a reader comparing Q2 to Q3 or Q6 would find
+    # rows that exist here and nowhere else. Coverage belongs in its own figure.
+    in_scope = Counter({g: c for g, c in groups.items() if measured.get(g)})
+    rows = in_scope.most_common(15)
     n = len(live)
     labels = [g for g, _ in rows]
     vals = [pct(v, n) for _, v in rows]
-    colors = [F.SERIES[0] if measured.get(g) else F.SERIES[1] for g in labels]
-    n_unmeasured = sum(1 for g in groups if not measured.get(g))
+    colors = [F.SDK if analyze.kind_of(g) == "raw SDK" else F.FRAMEWORK for g, _ in rows]
 
     fig, ax = F.figure(
         "Q2.  Which frameworks do these applications really import?",
-        f"LangChain dominates at {vals[0]:.0f}% of applications, and the raw OpenAI SDK is\n"
-        f"second — most of this population talks to a provider directly as well.",
-        f"n = {n:,} analyzed applications; top 15 of {len(groups)} import families. Counted from\n"
-        f"imports in the cloned source, NOT the GitHub search token. {n_unmeasured} families fall\n"
-        f"outside the analysed set. Raw Gemini (google.generativeai) is not yet detected.",
+        f"n = {n:,} applications; top 15 of {len(in_scope)} analysed families",
         plot_height_in=0.34 * len(rows) + 0.55, legend_rows=1)
     y = range(len(rows))
     bars = ax.barh(list(y), vals, height=0.62, color=colors, linewidth=0)
@@ -267,8 +273,10 @@ def q2():
         ax.text(v + max(vals) * 0.015, i, f"{v:.0f}%  ({raw})", va="center", ha="left",
                 fontsize=8.5, color=F.MUTED)
     F.frame(ax, axis="x")
-    F.legend(fig, ["analysed by this study", "outside the analysed set"], F.SERIES[:2])
+    F.legend(fig, ["agent / LLM framework", "raw provider SDK"], [F.FRAMEWORK, F.SDK])
     F.round_ends(ax, bars, horizontal=True)
+    # The table twin keeps the unmeasured families, flagged, so the coverage gap is
+    # still recoverable from the artifact even though it is off the chart.
     F.table(OUT, stem, ["framework_family", "applications", "pct_of_analyzed", "analysed_by_study",
                         "member_import_names"],
             [[g, v, f"{pct(v, n):.1f}", int(bool(measured.get(g))),
@@ -288,15 +296,12 @@ def q3():
     rows, n_tail, _ = top_n(list(grouped.items()), 12, "other frameworks")
     labels = [k for k, _ in rows]
     vals = [pct(v, total) for _, v in rows]
-    colors = [F.SERIES[1] if analyze.kind_of(k) == "raw SDK" else F.SERIES[0] for k in labels]
+    colors = [F.SDK if analyze.kind_of(k) == "raw SDK" else F.FRAMEWORK for k in labels]
     sdk = sum(v for k, v in grouped.items() if analyze.kind_of(k) == "raw SDK")
 
     fig, ax = F.figure(
         "Q3.  Where do the LLM calls go?",
-        f"Through frameworks, mostly — but {pct(sdk, total):.0f}% of call sites bypass\n"
-        f"them and hit a provider SDK directly.",
-        f"n = {total:,} distinct LLM call sites across {calls['repo'].nunique():,} repositories.\n"
-        f"Package families are grouped (langchain_openai -> langchain); tail folded into 'other'.",
+        f"n = {total:,} call sites in {calls['repo'].nunique():,} repositories",
         plot_height_in=0.34 * len(rows) + 0.55, legend_rows=1)
     y = range(len(rows))
     bars = ax.barh(list(y), vals, height=0.62, color=colors, linewidth=0)
@@ -307,7 +312,7 @@ def q3():
         ax.text(v + max(vals) * 0.015, i, f"{v:.0f}%  ({raw:,})", va="center", ha="left",
                 fontsize=8.5, color=F.MUTED)
     F.frame(ax, axis="x")
-    F.legend(fig, ["agent / LLM framework", "raw provider SDK"], F.SERIES[:2])
+    F.legend(fig, ["agent / LLM framework", "raw provider SDK"], [F.FRAMEWORK, F.SDK])
     F.round_ends(ax, bars, horizontal=True)
     F.table(OUT, stem, ["framework", "calls", "pct_of_calls", "kind"],
             [[k, v, f"{pct(v, total):.1f}", analyze.kind_of(k)]
@@ -339,10 +344,7 @@ def q4():
 
     fig, ax = F.figure(
         "Q4.  Are LLM calls pinned to deterministic settings?",
-        f"Almost never. temperature is set on {pct(temp[1], total):.1f}% of call sites and\n"
-        f"seed — the only parameter that actually pins output — on {pct(seed[1], total):.1f}%.",
-        f"n = {total:,} distinct LLM call sites. A bar is the share of call sites passing that\n"
-        f"keyword at all; the split is whether the value is a literal or comes from a variable.",
+        f"n = {total:,} call sites",
         plot_height_in=0.40 * len(rows) + 0.55, legend_rows=1)
     y = list(range(len(rows)))
     gap = span * 0.005                     # ~2px surface gap between the segments
@@ -351,10 +353,10 @@ def q4():
     # top of it. Stacking the segments instead would round the JOIN as well, and
     # two curved edges meeting there pinch the bar into an arrowhead.
     totals = [l + gap + v for l, v in zip(lit_pct, var_pct)]
-    b_total = ax.barh(y, totals, height=0.58, color=F.SERIES[1], linewidth=0, zorder=2)
+    b_total = ax.barh(y, totals, height=0.58, color=F.CONTEXT, linewidth=0, zorder=2)
     ax.barh(y, [l + gap for l in lit_pct], height=0.58, color=F.SURFACE,
             linewidth=0, zorder=3)
-    ax.barh(y, lit_pct, height=0.58, color=F.SERIES[0], linewidth=0, zorder=4)
+    ax.barh(y, lit_pct, height=0.58, color=F.EMPHASIS, linewidth=0, zorder=4)
     ax.set_yticks(y, labels, fontsize=9.5, color=F.SECOND)
     ax.invert_yaxis()
     ax.set_xlim(0, span * 1.28)
@@ -365,7 +367,7 @@ def q4():
                 fontsize=8.5, color=F.INK if r[0] == "seed" else F.MUTED,
                 fontweight="bold" if r[0] == "seed" else "normal")
     F.frame(ax, axis="x")
-    F.legend(fig, ["hard-coded value", "passed via a variable"], F.SERIES[:2])
+    F.legend(fig, ["hard-coded value", "passed via a variable"], [F.EMPHASIS, F.CONTEXT])
     F.round_ends(ax, list(b_total), horizontal=True)
     F.table(OUT, stem, ["kwarg", "calls_setting_it", "pct_of_calls", "literal_value",
                         "variable_value"],
@@ -391,7 +393,7 @@ def q5():
 
     fig, ax = F.figure(
         "Q5.  How many determinism parameters does a single call set?",
-        f"None, in {vals[0]:.0f}% of cases. The call is left entirely on provider defaults.",
+        f"{vals[0]:.0f}% of call sites set none, leaving the call on provider defaults.",
         f"n = {total:,} distinct LLM call sites across {meta['repo'].nunique():,} repositories.\n"
         f"Parameters counted: {', '.join(analyze.KNOBS)}.",
         plot_height_in=2.9)
@@ -419,48 +421,89 @@ def q5():
 
 
 def q6():
-    stem = "Q6_nd_tests"
-    tests = direct(D.tests)
-    uniq = tests.drop_duplicates(["repo", "qname"])
-    n_tests, n_repos = len(uniq), uniq["repo"].nunique()
-    n_analyzed = len(D.analyzed)
+    """Two definitions of a non-deterministic test, side by side.
 
-    fw = tests.assign(framework=tests["reason"].map(analyze.fw_from_reason))
-    fw = fw.assign(framework=fw["framework"].map(analyze.group_of))
-    grouped = (fw.drop_duplicates(["repo", "qname", "framework"])
-               .groupby("framework").size().sort_values(ascending=False))
-    rows, _, _ = top_n(list(grouped.items()), 12, "other frameworks")
+    0 jumps — the test's own body calls the model.
+    1 jump  — the test calls a function that does.
+
+    Both are non-deterministic when run; they differ only in how far the evidence sits
+    from the test. Deeper than 1 is left to Q9, where 3+ is 75% of everything the call
+    graph reaches and is mostly entrypoints rather than tests of the model.
+
+    A 1-jump test carries no framework of its own — its `reason` is `calls <qname>` —
+    so it is attributed to the framework of the direct invoker at the end of its chain
+    (jump_depth.depth_and_root).
+    """
+    stem = "Q6_nd_tests"
+    graph = jump_depth.load("llm_invokers_all.csv")
+    depth, root = jump_depth.depth_and_root(graph)
+    fw_of = {(r, q): analyze.group_of(analyze.fw_from_reason(reason))
+             for r, q, reason, k in graph.itertuples(index=False) if k == "direct"}
+
+    tests = D.tests.drop_duplicates(["repo", "qname"])
+    per_fw = {0: Counter(), 1: Counter()}
+    n_by_depth, repos_by_depth = Counter(), {0: set(), 1: set()}
+    for key in tests[["repo", "qname"]].itertuples(index=False, name=None):
+        d = depth.get(key)
+        if d not in (0, 1):
+            continue
+        n_by_depth[d] += 1
+        repos_by_depth[d].add(key[0])
+        f = fw_of.get(root.get(key))
+        if isinstance(f, str):
+            per_fw[d][f] += 1
+
+    order = [k for k, _ in (per_fw[0] + per_fw[1]).most_common()]
+    rows, _, _ = top_n([(k, per_fw[0][k] + per_fw[1][k]) for k in order], 12,
+                       "other frameworks")
     labels = [k for k, _ in rows]
-    vals = [v for _, v in rows]
+    tail = [x for x in order if x not in labels]
+
+    def series(d):
+        return [sum(per_fw[d][x] for x in tail) if k.startswith("other frameworks")
+                else per_fw[d][k] for k in labels]
+
+    v0, v1 = series(0), series(1)
+    span = max(max(v0), max(v1))
+    n0, n1 = n_by_depth[0], n_by_depth[1]
 
     fig, ax = F.figure(
         "Q6.  How many tests reach a live LLM?",
-        f"{n_tests:,} distinct tests across {n_repos} repositories "
-        f"({pct(n_repos, n_analyzed):.0f}% of the corpus)\ninvoke a real model, so their outcome "
-        f"is not reproducible.",
-        f"DIRECT invocations only — a test whose own body calls the model. Tests that reach one\n"
-        f"through the call graph are excluded: that count inflates with graph size and is absent\n"
-        f"for repos with no usable graph (Q7). A test can count for more than one framework.",
-        plot_height_in=0.34 * len(rows) + 0.55)
-    y = range(len(rows))
-    bars = ax.barh(list(y), vals, height=0.62, linewidth=0,
-                   color=[F.EMPHASIS if i == 0 else F.CONTEXT for i in range(len(rows))])
-    ax.set_yticks(list(y), labels, fontsize=9.5, color=F.SECOND)
+        f"{n0:,} tests call a model in their own body; a further {n1:,} call a\n"
+        f"function that does. Both are non-deterministic when run.",
+        f"n = {n0 + n1:,} tests in {len(repos_by_depth[0] | repos_by_depth[1])} repositories. "
+        f"Deeper chains: see Q9.",
+        plot_height_in=0.46 * len(rows) + 0.6, legend_rows=2)
+    y = list(range(len(rows)))
+    h = 0.36
+    is_sdk = [analyze.kind_of(k) == "raw SDK" for k in labels]
+    b0 = ax.barh([i - h / 2 for i in y], v0, height=h, linewidth=0,
+                 color=[F.SDK if s else F.FRAMEWORK for s in is_sdk])
+    b1 = ax.barh([i + h / 2 for i in y], v1, height=h, linewidth=0,
+                 color=[F.SDK_LIGHT if s else F.CONTEXT for s in is_sdk])
+    ax.set_yticks(y, labels, fontsize=9.5, color=F.SECOND)
     ax.invert_yaxis()
-    ax.set_xlim(0, max(vals) * 1.20)
-    for i, v in enumerate(vals):
-        ax.text(v + max(vals) * 0.015, i, f"{v:,}", va="center", ha="left",
-                fontsize=8.5, color=F.MUTED)
+    ax.set_xlim(0, span * 1.22)
+    for i, (a, b) in enumerate(zip(v0, v1)):
+        ax.text(a + span * 0.012, i - h / 2, f"{a:,}", va="center", ha="left",
+                fontsize=8, color=F.MUTED)
+        ax.text(b + span * 0.012, i + h / 2, f"{b:,}", va="center", ha="left",
+                fontsize=8, color=F.MUTED)
     F.frame(ax, axis="x")
-    F.round_ends(ax, bars, horizontal=True)
-    F.table(OUT, stem, ["framework", "direct_nd_tests"],
-            [[k, v] for k, v in grouped.items()]
-            + [["(distinct tests, deduplicated across frameworks)", n_tests],
-               ["(repositories containing them)", n_repos]])
+    F.legend(fig, ["framework — calls the model itself",
+                   "framework — calls a function that does",
+                   "raw SDK — calls the model itself",
+                   "raw SDK — calls a function that does"],
+             [F.FRAMEWORK, F.CONTEXT, F.SDK, F.SDK_LIGHT], ncol=2)
+    F.round_ends(ax, list(b0) + list(b1), horizontal=True)
+    F.table(OUT, stem, ["framework", "tests_0_jumps", "tests_1_jump", "total"],
+            [[k, per_fw[0][k], per_fw[1][k], per_fw[0][k] + per_fw[1][k]] for k in order]
+            + [["(distinct tests, deduplicated across frameworks)", n0, n1, n0 + n1],
+               ["(repositories)", len(repos_by_depth[0]), len(repos_by_depth[1]),
+                len(repos_by_depth[0] | repos_by_depth[1])]])
     return stem, fig, (
         "Q6. How many tests reach a live LLM?",
-        f"{n_tests:,} distinct tests in {n_repos} repositories "
-        f"({pct(n_repos, n_analyzed):.0f}% of the corpus), counting direct invocations only.")
+        f"{n0:,} tests call a model directly; a further {n1:,} call a function that does.")
 
 
 def q7():
@@ -478,11 +521,7 @@ def q7():
 
     fig, ax = F.figure(
         "Q7.  Can the static analysis be trusted?",
-        f"For direct findings, yes — those come from the source itself. For anything\n"
-        f"reached through the call graph, only for the {usable:.0f}% of repositories that have one.",
-        f"n = {n:,} analyzed applications. {none_n} have no usable call graph, so their transitive\n"
-        f"count is structurally zero rather than genuinely zero — which is why every test number\n"
-        f"in this set (Q1, Q6) reports direct invocations only.",
+        f"{usable:.0f}% have a usable call graph; {none_n} have none",
         plot_height_in=1.05, legend_rows=3)
     left = 0.0
     gap = 0.35
@@ -531,10 +570,7 @@ def q8():
 
     fig, ax = F.figure(
         "Q8.  Do these projects use an LLM evaluation framework?",
-        f"Hardly any do. {pct(any_apps, n):.1f}% of applications call an evaluator at all —\n"
-        f"the tooling built to cope with non-deterministic output is barely adopted.",
-        f"n = {n:,} analyzed applications. Evaluators detected: "
-        f"{', '.join(per.index)}.",
+        f"{pct(any_apps, n):.1f}% of {n:,} applications call an evaluator",
         plot_height_in=0.42 * len(rows) + 0.35)
     y = range(len(rows))
     bars = ax.barh(list(y), vals, height=0.58, color=colors, linewidth=0)
@@ -554,8 +590,49 @@ def q8():
         f"Only {pct(any_apps, n):.1f}% of {n:,} applications call one.")
 
 
-QUESTIONS = {"Q1": q1, "Q2": q2, "Q3": q3, "Q4": q4,
-             "Q5": q5, "Q6": q6, "Q7": q7, "Q8": q8}
+def q9():
+    """Why Q6 reports 11,774 and not 156,091."""
+    stem = "Q9_test_jump_depth"
+    s = jump_depth.summary("llm_tests_all.csv")
+    inv = jump_depth.summary("llm_invokers_all.csv")
+    n = s["n_lower"]
+    bands = jump_depth.BANDS
+    vals = [100 * s["lower"][b] / n for b in bands]
+
+    fig, ax = F.figure(
+        "Q9.  How far is a “non-deterministic test” from the model?",
+        f"n = {n:,} tests reached by the call graph; depth is a lower bound",
+        plot_height_in=2.9)
+    fig.subplots_adjust(left=0.11)
+    bars = ax.bar(range(len(bands)), vals, width=0.6, linewidth=0,
+                  color=[F.EMPHASIS if b == "0" else F.CONTEXT for b in bands])
+    ax.set_xticks(range(len(bands)), [f"{b}" for b in bands])
+    ax.set_ylim(0, max(vals) * 1.2)
+    ax.set_yticks([0, 20, 40, 60, 80], ["0", "20%", "40%", "60%", "80%"])
+    for i, (b, v) in enumerate(zip(bands, vals)):
+        ax.text(i, v + max(vals) * 0.025, f"{v:.1f}%\n{s['lower'][b]:,}", ha="center",
+                va="bottom", fontsize=9, linespacing=1.4,
+                color=F.INK if b == "0" else F.MUTED,
+                fontweight="bold" if b == "0" else "normal")
+    ax.set_xlabel("calls between the test and the function that invokes the model",
+                  fontsize=9.5, color=F.SECOND, labelpad=8)
+    F.frame(ax, axis="y")
+    F.round_ends(ax, bars)
+    F.table(OUT, stem,
+            ["jumps", "tests", "pct_of_tests", "invokers", "pct_of_invokers"],
+            [[b, s["lower"][b], f"{100*s['lower'][b]/n:.2f}",
+              inv["lower"][b], f"{100*inv['lower'][b]/inv['n_lower']:.2f}"] for b in bands]
+            + [["(deepest chain observed)", s["max"], "", inv["max"], ""],
+               ["(rows with an unindexed parent, counted at minimum depth)",
+                s["orphans"], "", inv["orphans"], ""]])
+    return stem, fig, (
+        "Q9. How far is a “non-deterministic test” from the model?",
+        f"Only {vals[0]:.1f}% of {n:,} graph-reached tests invoke a model themselves; "
+        f"{vals[3]:.0f}% are 3+ calls away.")
+
+
+QUESTIONS = {"Q1": q1, "Q2": q2, "Q3": q3, "Q4": q4, "Q5": q5,
+             "Q6": q6, "Q7": q7, "Q8": q8, "Q9": q9}
 
 
 # ── driver ───────────────────────────────────────────────────────────────────

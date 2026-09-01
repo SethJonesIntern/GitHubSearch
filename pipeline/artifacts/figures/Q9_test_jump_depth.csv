@@ -1,0 +1,7 @@
+jumps,tests,pct_of_tests,invokers,pct_of_invokers
+0,11774,7.54,24369,6.15
+1,13329,8.54,35598,8.98
+2,13979,8.96,35509,8.96
+3+,117009,74.96,300798,75.91
+(deepest chain observed),21,,21,
+"(rows with an unindexed parent, counted at minimum depth)",36578,,93974,

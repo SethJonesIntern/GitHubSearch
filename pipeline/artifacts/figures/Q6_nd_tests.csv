@@ -1,20 +1,21 @@
-framework,direct_nd_tests
-langchain,3337
-haystack,2218
-openai,1650
-langgraph,1249
-agent_framework (MS),620
-pydantic_ai,608
-autogen,501
-anthropic,423
-swarm,319
-crewai,252
-smolagents,144
-agents,133
-agno,129
-mem0,83
-dspy,79
-semantic_kernel,28
-camel,1
-"(distinct tests, deduplicated across frameworks)",11774
-(repositories containing them),264
+framework,tests_0_jumps,tests_1_jump,total
+langchain,3337,1884,5221
+openai,1650,823,2473
+haystack,2218,92,2310
+langgraph,1249,925,2174
+pydantic_ai,608,566,1174
+agent_framework (MS),620,126,746
+anthropic,423,257,680
+autogen,501,22,523
+crewai,252,115,367
+swarm,319,36,355
+mem0,83,209,292
+agno,129,67,196
+agents,133,41,174
+smolagents,144,16,160
+dspy,79,23,102
+semantic_kernel,28,43,71
+camel,1,11,12
+astrbot,0,11,11
+"(distinct tests, deduplicated across frameworks)",11774,13329,25103
+(repositories),264,346,438

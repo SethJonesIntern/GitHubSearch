@@ -4,7 +4,7 @@ Regenerate with `py -3.14 Applications/make_figures.py`.
 
 ## Q1. Do these applications actually call an LLM, and do their tests?
 
-**82% contain an LLM call site; only 31% have a test that reaches one (n = 843).**
+**92% contain an LLM call site; only 35% have a test that reaches one (n = 753).**
 
 ![Q1](figures/Q1_llm_usage.png)
 
@@ -12,7 +12,7 @@ Table: [`Q1_llm_usage.csv`](figures/Q1_llm_usage.csv)
 
 ## Q2. Which frameworks do these applications really import?
 
-**langchain leads at 59% of 843 applications, with the raw OpenAI SDK close behind; measured from imports in the cloned source.**
+**langchain leads at 66% of 753 applications, with the raw OpenAI SDK close behind; measured from imports in the cloned source.**
 
 ![Q2](figures/Q2_frameworks_imported.png)
 
@@ -44,7 +44,7 @@ Table: [`Q5_knobs_per_call.csv`](figures/Q5_knobs_per_call.csv)
 
 ## Q6. How many tests reach a live LLM?
 
-**11,774 distinct tests in 264 repositories (31% of the corpus), counting direct invocations only.**
+**11,774 tests call a model directly; a further 13,329 call a function that does.**
 
 ![Q6](figures/Q6_nd_tests.png)
 
@@ -52,7 +52,7 @@ Table: [`Q6_nd_tests.csv`](figures/Q6_nd_tests.csv)
 
 ## Q7. Can the static analysis be trusted?
 
-**93% of 843 applications have a usable call graph; the 59 without one are why test counts are reported direct-only.**
+**93% of 753 applications have a usable call graph; the 53 without one are why test counts are reported direct-only.**
 
 ![Q7](figures/Q7_graph_health.png)
 
@@ -60,8 +60,16 @@ Table: [`Q7_graph_health.csv`](figures/Q7_graph_health.csv)
 
 ## Q8. Do these projects use an LLM evaluation framework?
 
-**Only 4.7% of 843 applications call one.**
+**Only 5.3% of 753 applications call one.**
 
 ![Q8](figures/Q8_eval_adoption.png)
 
 Table: [`Q8_eval_adoption.csv`](figures/Q8_eval_adoption.csv)
+
+## Q9. How far is a “non-deterministic test” from the model?
+
+**Only 7.5% of 156,091 graph-reached tests invoke a model themselves; 75% are 3+ calls away.**
+
+![Q9](figures/Q9_test_jump_depth.png)
+
+Table: [`Q9_test_jump_depth.csv`](figures/Q9_test_jump_depth.csv)

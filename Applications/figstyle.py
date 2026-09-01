@@ -34,6 +34,18 @@ from matplotlib.patches import FancyBboxPatch  # noqa: E402
 SERIES = ["#2a78d6", "#eb6834", "#1baf7a"]   # categorical slots 1-3
 EMPHASIS = "#2a78d6"                          # blue 450 — the bar that answers it
 CONTEXT = "#86b6ef"                           # blue 250 — the rest
+
+# Reserved identity pair. Orange means "raw provider SDK" in EVERY figure and never
+# anything else, so a reader can scan the set and trust the hue without re-reading
+# each legend. Anything needing a second series for a NON-SDK distinction uses the
+# blue ordinal pair (EMPHASIS/CONTEXT) instead — see Q4.
+FRAMEWORK = SERIES[0]        # blue 450
+SDK = SERIES[1]              # orange
+# Light steps for a second series WITHIN each identity (Q6: 0 jumps vs 1 jump).
+# Hue keeps carrying framework-vs-SDK; lightness carries the depth. Both pairs
+# validated --ordinal on the light surface (blue 2.06:1, orange 2.03:1).
+FRAMEWORK_LIGHT = CONTEXT    # blue 250
+SDK_LIGHT = "#f2a07d"
 INK = "#0b0b0b"
 SECOND = "#52514e"
 MUTED = "#898781"
@@ -57,29 +69,21 @@ LEFT_FRAC = 0.055         # header text x, as a figure fraction
 matplotlib.rcParams["font.family"] = ["Segoe UI", "DejaVu Sans", "sans-serif"]
 
 
-def _header_height(answer: str, note: str) -> tuple[float, float]:
-    """(total header inches, note top inches). Both derived from line counts,
-    so the block never overruns the plot no matter how long the text gets."""
-    a_lines = answer.count("\n") + 1
-    note_top = ANSWER_Y + a_lines * ANSWER_LINE + NOTE_PAD - ANSWER_LINE
-    if not note:
-        return ANSWER_Y + a_lines * ANSWER_LINE + BOTTOM_PAD, note_top
-    n_lines = note.count("\n") + 1
-    return note_top + n_lines * NOTE_LINE + BOTTOM_PAD, note_top
-
-
-def figure(question: str, answer: str, note: str = "", *,
+def figure(question: str, subtitle: str = "", note: str = "", *,
            plot_height_in: float, width_in: float = 7.6, legend_rows: int = 0):
-    """Build the figure AND draw its header, sized to fit that header's text.
+    """Build the figure and draw its header.
 
-    Header and figure are one call because the header's height determines the
-    figure's — splitting them means choosing a height before knowing what has
-    to fit in it, which is how the note ends up printed across the top bar.
+    The header is the QUESTION and nothing else. The reader is expected to draw
+    their own conclusion from the marks, the axis and the key; a prose answer
+    printed above the chart tells them what to think and dates badly the moment
+    the numbers move. `subtitle` and `note` are accepted and ignored so the nine
+    call sites can keep passing their computed strings — those still flow into
+    FIGURES.md and the table twins, where prose belongs.
 
-    `legend_rows` reserves footer space for a legend BELOW the plot. The legend
-    cannot go above the axes: that region is the question/answer header.
+    `legend_rows` reserves footer space for a legend BELOW the plot; it cannot go
+    above the axes, because that space is the question.
     """
-    header_in, note_top = _header_height(answer, note)
+    header_in = TITLE_Y + 0.34
     footer = FOOTER_IN + 0.30 * legend_rows
     total = header_in + plot_height_in + footer
     fig, ax = plt.subplots(figsize=(width_in, total), facecolor=SURFACE)
@@ -87,17 +91,8 @@ def figure(question: str, answer: str, note: str = "", *,
     fig.subplots_adjust(top=1 - header_in / total, bottom=footer / total,
                         left=0.30, right=0.97)
     fig._legend_anchor = 0.06 / total       # figure fraction, read by legend()
-
-    def y(inches_from_top):
-        return 1 - inches_from_top / total
-
-    fig.text(LEFT_FRAC, y(TITLE_Y), question, fontsize=12.5, color=INK,
+    fig.text(LEFT_FRAC, 1 - TITLE_Y / total, question, fontsize=12.5, color=INK,
              fontweight="bold", va="top")
-    fig.text(LEFT_FRAC, y(ANSWER_Y), answer, fontsize=9.5, color=SECOND,
-             va="top", linespacing=1.55)
-    if note:
-        fig.text(LEFT_FRAC, y(note_top), note, fontsize=8.5, color=MUTED,
-                 va="top", linespacing=1.5)
     return fig, ax
 
 

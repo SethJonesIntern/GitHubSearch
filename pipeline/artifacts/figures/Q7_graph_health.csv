@@ -1,5 +1,5 @@
 cg_source,meaning,repos,pct_of_analyzed
-pyan,complete call graph,502,59.5
-pyan_resilient,graph built after dropping unparseable files,282,33.5
-none,no usable call graph,59,7.0
-(analyzed applications),denominator,843,100.0
+pyan,complete call graph,444,59.0
+pyan_resilient,graph built after dropping unparseable files,256,34.0
+none,no usable call graph,53,7.0
+(analyzed applications),denominator,753,100.0
