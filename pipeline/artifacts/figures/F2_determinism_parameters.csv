@@ -1,0 +1,10 @@
+parameter,call_sites,pct_of_calls,literal,variable
+top_k,152,0.63,108,44
+model,92,0.38,19,73
+temperature,24,0.1,13,11
+max_tokens,14,0.06,6,8
+top_p,10,0.04,5,5
+frequency_penalty,2,0.01,1,1
+presence_penalty,2,0.01,1,1
+seed,0,0.0,0,0
+(calls setting no parameter at all),23814,98.9,,

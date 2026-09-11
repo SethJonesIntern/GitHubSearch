@@ -1,75 +1,29 @@
 # Findings — one question, one figure, one table
 
+Observed population: **644 applications** in which a framework LLM call site was detected. Raw provider-SDK calls are excluded.
+
 Regenerate with `py -3.14 Applications/make_figures.py`.
 
-## Q1. Do these applications actually call an LLM, and do their tests?
+## F1. Do these applications use an LLM evaluation framework?
 
-**92% contain an LLM call site; only 35% have a test that reaches one (n = 753).**
+**38 of 644 (5.9%) call one. Two tools account for all but one of them; giskard and phoenix appear in none.**
 
-![Q1](figures/Q1_llm_usage.png)
+![F1](figures/F1_eval_adoption.png)
 
-Table: [`Q1_llm_usage.csv`](figures/Q1_llm_usage.csv)
+Table: [`F1_eval_adoption.csv`](figures/F1_eval_adoption.csv)
 
-## Q2. Which frameworks do these applications really import?
+## F2. Do LLM calls set the parameters that control non-determinism?
 
-**langchain leads at 66% of 753 applications, with the raw OpenAI SDK close behind; measured from imports in the cloned source.**
+**23,814 of 24,077 call sites (98.9%) set none of the eight. `seed` is set at no call site in the corpus, and `model` — the most often set — is usually passed as a variable rather than pinned.**
 
-![Q2](figures/Q2_frameworks_imported.png)
+![F2](figures/F2_determinism_parameters.png)
 
-Table: [`Q2_frameworks_imported.csv`](figures/Q2_frameworks_imported.csv)
+Table: [`F2_determinism_parameters.csv`](figures/F2_determinism_parameters.csv)
 
-## Q3. Where do the LLM calls go?
+## F3. Which frameworks do these applications actually call?
 
-**21% of 30,439 call sites bypass every framework and call a provider SDK directly.**
+**langchain leads at 60% of 644 applications. Measured from detected call sites, not from the search token, so a framework is credited only where it is actually invoked.**
 
-![Q3](figures/Q3_calls_by_framework.png)
+![F3](figures/F3_frameworks_called.png)
 
-Table: [`Q3_calls_by_framework.csv`](figures/Q3_calls_by_framework.csv)
-
-## Q4. Are LLM calls pinned to deterministic settings?
-
-**Almost never — temperature on 5.7% of 30,542 call sites, seed on 0.1%.**
-
-![Q4](figures/Q4_determinism_knobs.png)
-
-Table: [`Q4_determinism_knobs.csv`](figures/Q4_determinism_knobs.csv)
-
-## Q5. How many determinism parameters does a single call set?
-
-**83% of 30,542 call sites set none at all.**
-
-![Q5](figures/Q5_knobs_per_call.png)
-
-Table: [`Q5_knobs_per_call.csv`](figures/Q5_knobs_per_call.csv)
-
-## Q6. How many tests reach a live LLM?
-
-**11,774 tests call a model directly; a further 13,329 call a function that does.**
-
-![Q6](figures/Q6_nd_tests.png)
-
-Table: [`Q6_nd_tests.csv`](figures/Q6_nd_tests.csv)
-
-## Q7. Can the static analysis be trusted?
-
-**93% of 753 applications have a usable call graph; the 53 without one are why test counts are reported direct-only.**
-
-![Q7](figures/Q7_graph_health.png)
-
-Table: [`Q7_graph_health.csv`](figures/Q7_graph_health.csv)
-
-## Q8. Do these projects use an LLM evaluation framework?
-
-**Only 5.3% of 753 applications call one.**
-
-![Q8](figures/Q8_eval_adoption.png)
-
-Table: [`Q8_eval_adoption.csv`](figures/Q8_eval_adoption.csv)
-
-## Q9. How far is a “non-deterministic test” from the model?
-
-**Only 7.5% of 156,091 graph-reached tests invoke a model themselves; 75% are 3+ calls away.**
-
-![Q9](figures/Q9_test_jump_depth.png)
-
-Table: [`Q9_test_jump_depth.csv`](figures/Q9_test_jump_depth.csv)
+Table: [`F3_frameworks_called.csv`](figures/F3_frameworks_called.csv)
