@@ -23,11 +23,21 @@ Ambiguous candidates are ranked by path proximity to the test file; where that
 still ties, an import of the candidate by the test file breaks it (flagged in
 `import_tiebreak` so the effect stays measurable).
 
+Scope: the DIRECT non-deterministic tests of the OBSERVED population — the 9,700
+in 233 apps that METHODOLOGY.md reports, not the 286,533 rows of the raw artifact.
+The definition is not restated here; it is imported from the modules that own it
+(`analyze.drop_removed_patterns_invokers` for retired patterns, `make_figures.POP`
+for the 644), so this artifact moves with every other statistic. Transitive tests
+are excluded by default because they inflate with graph size and are missing for
+the repos with no usable graph; raw-SDK-seeded tests because the study observes
+framework call sites only. `--kind` / `--unscoped` widen it.
+
 READ-ONLY over existing artifacts. The single file this writes is FOCAL_MAP_CSV,
 a new artifact; no existing CSV is ever opened for write.
 
-    python -m pipeline.focal_map                # all repos in llm_tests_all.csv
-    python -m pipeline.focal_map --limit 20     # first 20 repos, for a smoke run
+    python -m pipeline.focal_map                 # the 9,700 direct tests, 233 repos
+    python -m pipeline.focal_map --limit 20      # the 20 biggest, for a smoke run
+    python -m pipeline.focal_map --kind all --unscoped   # the raw 286,533 rows
 """
 from __future__ import annotations
 
@@ -41,6 +51,8 @@ from concurrent.futures import ProcessPoolExecutor, as_completed
 from pathlib import Path
 
 from pipeline.paths import ARTIFACTS_DIR, LLM_TESTS_CSV, REPOS_DIR
+
+_ROOT = Path(__file__).resolve().parent.parent
 
 FOCAL_MAP_CSV = ARTIFACTS_DIR / "focal_map_llm_tests.csv"
 
@@ -273,6 +285,10 @@ def match_method(test_qname: str, focal_rel, idx: RepoIndex):
 
 def process_repo(job):
     repo, slug, tests = job
+    if not (REPOS_DIR / slug).is_dir():
+        # rglob over a missing dir yields nothing, which would score every test
+        # `no_match` and quietly depress the cascade. Report it instead.
+        return repo, [], 0, f"clone missing: {slug}"
     try:
         idx = build_index(slug)
     except Exception as exc:                      # noqa: BLE001 — keep the batch alive
@@ -294,12 +310,50 @@ def process_repo(job):
     return repo, rows, idx.parse_errors, None
 
 
-def load_tests(limit=None):
-    csv.field_size_limit(10**9)
+def observed_tests(kind="direct", scoped=True):
+    """The test rows to map, as the rest of the study defines them.
+
+    Imported rather than reimplemented, so a cut or a retired pattern reaches this
+    artifact the same day it reaches the report:
+      * `analyze.drop_removed_patterns_invokers` — direct rows seeded by a pattern
+        that has since been retired leave; transitive rows are kept as-is.
+      * `make_figures.POP` — the 644 applications in which a framework call site was
+        detected (which already folds in `pipeline.cuts` and the clone failures).
+      * RAW_SDKS — a test reached only from an `openai`/`anthropic` call site is not
+        observing a framework call, so it is not in the population either.
+    """
+    import pandas as pd
+
+    for extra in (_ROOT / "Applications", _ROOT / "Wrapper"):
+        if str(extra) not in sys.path:
+            sys.path.insert(0, str(extra))
+    import analyze as AZ            # noqa: PLC0415 — heavy, and only main needs it
+    import make_figures as MF       # noqa: PLC0415 — computes POP at import
+
+    df = pd.read_csv(LLM_TESTS_CSV)
+    steps = [("all rows", len(df))]
+
+    df = AZ.drop_removed_patterns_invokers(df)
+    steps.append(("valid pattern", len(df)))
+
+    if kind != "all":
+        df = df[df["kind"].eq(kind)]
+        steps.append((f"kind={kind}", len(df)))
+
+    if scoped:
+        df = df[df["repo"].isin(MF.POP)]
+        steps.append((f"observed population ({len(MF.POP)} apps)", len(df)))
+        framework = df["reason"].str.extract(r"from (\S+)\s*$")[0]
+        df = df[~framework.isin(AZ.RAW_SDKS)]   # NaN (transitive) is kept
+        steps.append(("framework-seeded", len(df)))
+
+    return df, steps
+
+
+def load_tests(df, limit=None):
     by_repo = defaultdict(list)
-    with LLM_TESTS_CSV.open(newline="", encoding="utf-8") as fh:
-        for row in csv.DictReader(fh):
-            by_repo[row["repo"]].append((row["qname"], row["file"], row["kind"]))
+    for repo, qname, file, kind in zip(df["repo"], df["qname"], df["file"], df["kind"]):
+        by_repo[repo].append((qname, file, kind))
     jobs = [(repo, tests[0][1].split("/", 1)[0], tests)
             for repo, tests in by_repo.items()]
     jobs.sort(key=lambda j: -len(j[2]))           # long poles first
@@ -311,9 +365,18 @@ def main() -> None:
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--limit", type=int, help="only the N repos with the most LLM tests")
     ap.add_argument("--workers", type=int, default=min(8, os.cpu_count() or 4))
+    ap.add_argument("--kind", choices=("direct", "transitive", "all"), default="direct",
+                    help="which invoker rows to map (default: direct)")
+    ap.add_argument("--unscoped", action="store_true",
+                    help="skip the observed-population and raw-SDK filters")
     args = ap.parse_args()
 
-    jobs = load_tests(args.limit)
+    df, steps = observed_tests(kind=args.kind, scoped=not args.unscoped)
+    print("# scope:")
+    for label, n in steps:
+        print(f"#   {label:35s} {n:7d}")
+
+    jobs = load_tests(df, args.limit)
     print(f"# {sum(len(j[2]) for j in jobs)} LLM tests across {len(jobs)} repos")
 
     fstrat, mstrat = Counter(), Counter()

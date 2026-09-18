@@ -7,6 +7,11 @@ pipeline/repos/
 Wrapper/repos/
 *.cpg/
 pipeline/artifacts/slices/
+pipeline/artifacts/pym2t/
+# pyMethods2Test general run over every test (not LLM-specific); regenerate with
+# pipeline/pym2t_focal.py. The LLM-scoped outputs (pym2t_focal_calls, pym2t_nd_tests) stay tracked.
+pipeline/artifacts/pym2t_focal_tests.csv
+pipeline/artifacts/pym2t_runs.csv
 .batch_progress.json
 
 # python bytecode
