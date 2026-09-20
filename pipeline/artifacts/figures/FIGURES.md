@@ -6,7 +6,7 @@ Regenerate with `py -3.14 Applications/make_figures.py`.
 
 ## F1. Do these applications use an LLM evaluation framework?
 
-**38 of 644 (5.9%) call one. Two tools account for all but one of them; giskard and phoenix appear in none.**
+**38 of 644 (5.9%) call one. ragas and deepeval account for 37 of them; giskard and phoenix appear in none.**
 
 ![F1](figures/F1_eval_adoption.png)
 
@@ -14,7 +14,7 @@ Table: [`F1_eval_adoption.csv`](figures/F1_eval_adoption.csv)
 
 ## F2. Do LLM calls set the parameters that control non-determinism?
 
-**23,814 of 24,077 call sites (98.9%) set none of the eight. `seed` is set at no call site in the corpus, and `model` — the most often set — is usually passed as a variable rather than pinned.**
+**23,814 of 24,077 call sites (98.9%) set none of the eight. The most often set is `top_k` (152 call sites, 44 of them passed as a variable); `seed` is set at no call site.**
 
 ![F2](figures/F2_determinism_parameters.png)
 
@@ -27,3 +27,11 @@ Table: [`F2_determinism_parameters.csv`](figures/F2_determinism_parameters.csv)
 ![F3](figures/F3_frameworks_called.png)
 
 Table: [`F3_frameworks_called.csv`](figures/F3_frameworks_called.csv)
+
+## F4. Is the code that calls the LLM ever what a test is written against?
+
+**558 tests in 110 applications (0.05% of the 1,217,210 identified) are written against a method that calls an LLM; 36 of those call the model in their own body as well. From the other side, 296 of 23,990 framework call sites (1.2%) sit inside such a method.**
+
+![F4](figures/F4_focal_mapping.png)
+
+Table: [`F4_focal_mapping.csv`](figures/F4_focal_mapping.csv)

@@ -1,12 +1,10 @@
 framework,calls
 langchain_core,6398
-openai,5288
 langgraph,3800
 haystack,2603
 agent_framework,1898
 pydantic_ai,1343
 langchain_openai,1197
-anthropic,1161
 agents,684
 langchain,632
 mem0,533
@@ -38,5 +36,5 @@ swarms,3
 langchain_groq,3
 langchain_together,2
 langchain_deepseek,1
-langchain_xai,1
 langchain_perplexity,1
+langchain_xai,1

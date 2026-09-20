@@ -253,7 +253,9 @@ def main() -> None:
             "fp_dropped_calls": calls_fp.get(repo, 0),
             "invokers_direct": direct,
             "invokers_transitive": trans,
-            "nd_tests": t_direct + t_trans,
+            # direct only: transitive is out of scope (EXCLUSIONS.md §18). The
+            # nd_tests_transitive column below is kept as a raw record, read by nothing.
+            "nd_tests": t_direct,
             "nd_tests_direct": t_direct,
             "nd_tests_transitive": t_trans,
             "eval_calls": len(ev_calls.get(repo, ())),
@@ -273,7 +275,9 @@ def main() -> None:
                 row[f] = prior[repo][f]
         if repo in CUT:
             row["in_scope"], row["notes"] = "0", CUT[repo]
-        elif repo in UNCOVERED:
+        elif repo in UNCOVERED and row["in_scope"] != "0":
+            # never downgrade a later cut: both UNCOVERED repos were cut in-sheet on
+            # 2026-08-27 as `clai` collisions (EXCLUSIONS §17), which this used to undo
             row["in_scope"], row["notes"] = "uncovered", UNCOVERED[repo]
         rows.append(row)
 

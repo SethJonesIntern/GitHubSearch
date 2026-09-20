@@ -2,7 +2,7 @@
 
 Focal mapping comes from the published tool (Abdelmadjid & Dyer, MSR 2025; vendored,
 unmodified, in `pipeline/third_party/pymethods2test/`), not from `focal_map.py`.
-Decision and rationale: HANDOFF_2026-09-15.md.
+Decision and rationale: CLAUDE.md, "Focal mapping — pyMethods2Test".
 
 Per repo, their two scripts run as CLIs, exactly as their README shows:
 
@@ -20,7 +20,7 @@ and printed, so the replay can never silently drift from the tool.
 
 Three joins, all written to ARTIFACTS_DIR:
   pym2t_focal_tests.csv  every test method the tool identified, with its focal file/method
-  pym2t_nd_tests.csv     our ND tests (observed scope, direct + transitive) -> focal status
+  pym2t_nd_tests.csv     our direct ND tests (observed scope) -> focal status
   pym2t_focal_calls.csv  the 23,990 framework call sites -> does a test's focal method
                          (by line range in the focal file) contain it?
   pym2t_runs.csv         one row per repo: tool exit status, counts, parse errors
@@ -240,7 +240,8 @@ def _scope():
             sys.path.insert(0, str(extra))
     import make_figures as MF                        # noqa: PLC0415
     from pipeline.focal_map import observed_tests    # noqa: PLC0415
-    nd, steps = observed_tests(kind="all", scoped=True)
+    # Direct only: transitive is out of scope (README "Scope rule", EXCLUSIONS.md §18).
+    nd, steps = observed_tests(kind="direct", scoped=True)
     return MF.POP, MF.CALLS, nd, steps
 
 

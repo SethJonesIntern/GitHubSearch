@@ -2,7 +2,8 @@
 
 Loads the analysis CSVs and produces the standard conclusions:
   - population + LLM-usage prevalence
-  - non-deterministic tests (headline): totals, per-framework, direct vs transitive
+  - non-deterministic tests (headline): totals, per-framework — DIRECT only
+    (transitive is out of scope: README "Scope rule", EXCLUSIONS.md §18)
   - determinism knobs (temperature/seed/model set? literal or variable?)
   - call characteristics (per framework, sync vs async)
   - eval-framework usage
@@ -197,6 +198,25 @@ def main():
     calls, meta = _drop_excluded(calls, "repo"), _drop_excluded(meta, "repo")
     ev_calls, ev_inv = _drop_excluded(ev_calls, "repo"), _drop_excluded(ev_inv, "repo")
 
+    # Raw provider SDKs (openai/anthropic) are not part of the study: drop their call
+    # sites, argument metadata and invokers everywhere (filter, not deletion).
+    calls = calls[~calls["framework"].isin(RAW_SDKS)] if "framework" in calls else calls
+    meta = meta[~meta["framework"].isin(RAW_SDKS)] if "framework" in meta else meta
+    if not invokers.empty:
+        invokers = invokers[~invokers["reason"].map(fw_from_reason).isin(RAW_SDKS)]
+
+    # ND tests are DIRECT only — transitive is out of scope (README "Scope rule",
+    # EXCLUSIONS.md §18). Filter, not deletion: the rows stay in llm_tests_all.csv.
+    # Raw provider SDKs (openai/anthropic) are not observed either: a test seeded only by
+    # a raw-SDK call site leaves, same rule as focal_map.observed_tests / make_figures.
+    n_trans_tests = n_sdk_tests = 0
+    if not tests.empty and "kind" in tests.columns:
+        n_trans_tests = int(tests["kind"].eq("transitive").sum())
+        tests = tests[tests["kind"].eq("direct")]
+        raw_sdk = tests["reason"].map(fw_from_reason).isin(RAW_SDKS)
+        n_sdk_tests = int(raw_sdk.sum())
+        tests = tests[~raw_sdk]
+
     prog = json.loads(paths.BATCH_PROGRESS_JSON.read_text()) \
         if paths.BATCH_PROGRESS_JSON.exists() else {}
     analyzed = set(prog.get("processed", [])) - set(EXCLUDED)
@@ -269,11 +289,10 @@ def main():
         print("no llm_tests rows yet.")
     else:
         uniq = tests.drop_duplicates(["repo", "qname"])
-        print(f"distinct non-deterministic tests : {len(uniq)}")
+        print(f"distinct non-deterministic tests : {len(uniq)}  (direct, framework-seeded)")
         print(f"repos containing them            : {uniq['repo'].nunique()}")
-        print(f"direct vs transitive             : "
-              f"{(tests['kind'] == 'direct').sum()} direct / "
-              f"{(tests['kind'] == 'transitive').sum()} transitive")
+        print(f"transitive rows excluded (§18)   : {n_trans_tests}")
+        print(f"raw-SDK-seeded rows excluded     : {n_sdk_tests}")
         by_repo = (uniq.groupby("repo").size().sort_values(ascending=False)
                    .rename("nd_tests").reset_index())
         save(by_repo, "nd_tests_by_repo.csv")

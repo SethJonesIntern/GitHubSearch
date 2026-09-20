@@ -93,9 +93,15 @@ def f1():
 
     S.table(OUT, "F1_eval_adoption", ["group", "applications", "pct_of_population"],
             [[l, v, round(100 * v / N, 1)] for l, v in rows])
-    answer = ("%d of %d (%.1f%%) call one. Two tools account for all but one of them; "
-              "giskard and phoenix appear in none."
-              % (users, N, 100 * users / N))
+    # Every claim in the caption is computed, never typed: it must move with the data.
+    top2 = sorted(per, key=lambda k: -per[k])[:2]
+    by_top2 = ev[ev["framework"].isin(top2)]["repo"].nunique()
+    unused = [k for k in EVAL_CALLS if per[k] == 0]
+    answer = ("%d of %d (%.1f%%) call one. %s and %s account for %d of them%s."
+              % (users, N, 100 * users / N, top2[0], top2[1], by_top2,
+                 "; %s appear%s in none" % (" and ".join(unused),
+                                            "" if len(unused) > 1 else "s")
+                 if unused else ""))
     return ("F1_eval_adoption", fig,
             ("Do these applications use an LLM evaluation framework?", answer))
 
@@ -151,10 +157,14 @@ def f2():
             [[k, c, round(100 * c / total, 2), l, v] for k, c, l, v in rows]
             + [["(calls setting no parameter at all)", none,
                 round(100 * none / total, 1), "", ""]])
-    answer = ("%s of %s call sites (%.1f%%) set none of the eight. `seed` is set at no "
-              "call site in the corpus, and `model` — the most often set — is usually "
-              "passed as a variable rather than pinned."
-              % (format(none, ","), format(total, ","), 100 * none / total))
+    # Computed, never typed (the old text called `model` the most often set; it was 2nd).
+    top = rows[0]
+    seed = next(r for r in rows if r[0] == "seed")
+    answer = ("%s of %s call sites (%.1f%%) set none of the eight. The most often set is "
+              "`%s` (%s call sites, %s of them passed as a variable); `seed` is set at %s."
+              % (format(none, ","), format(total, ","), 100 * none / total,
+                 top[0], format(top[1], ","), format(top[3], ","),
+                 "no call site" if seed[1] == 0 else "%d call sites" % seed[1]))
     return ("F2_determinism_parameters", fig,
             ("Do LLM calls set the parameters that control non-determinism?", answer))
 
@@ -201,7 +211,141 @@ def f3():
             ("Which frameworks do these applications actually call?", answer))
 
 
-FIGURES = {"F1": f1, "F2": f2, "F3": f3}
+# ── F4 ───────────────────────────────────────────────────────────────────────
+
+def f4():
+    """Is the code that calls the LLM ever what a test is written against?
+
+    Asked of EVERY test pyMethods2Test identified, not only of the tests that call
+    an LLM themselves — starting from those would drop the commonest shape, a test
+    that calls repo code which in turn calls the model. A test counts when its focal
+    method (pyMethods2Test's answer to "what is under test") contains a framework
+    call site; every such method is a direct invoker in llm_invokers_all.csv.
+    """
+    fc = pd.read_csv(paths.ARTIFACTS_DIR / "pym2t_focal_calls.csv")
+    t = pd.read_csv(paths.ARTIFACTS_DIR / "pym2t_focal_tests.csv", low_memory=False)
+    lines = fc.groupby("file")["call_line"].apply(list).to_dict()
+
+    resolved = t[t["focal_method"].notna()].copy()
+    resolved["llm"] = [any(s <= ln <= e for ln in lines.get(f, ()))
+                       for f, s, e in zip(resolved["focal_file"], resolved["focal_line"],
+                                          resolved["focal_line_end"])]
+    hit = resolved[resolved["llm"]]
+
+    total = len(fc)
+    in_file = fc["tests_focal_method"].gt(0) | fc["tests_focal_file"].gt(0)
+    in_method = fc["tests_focal_method"].gt(0)
+    # (label, value, is_a_share_of_total). The tests bar counts tests, not call sites,
+    # so it carries no percentage — 558/23,990 would divide tests by call sites.
+    rows = [
+        ("LLM call sites", total, True),
+        ("in a tested file", int(in_file.sum()), True),
+        ("tests on LLM methods", len(hit), False),
+        ("call sites tested", int(in_method.sum()), True),
+    ]
+    colors = [S.CONTEXT, S.CONTEXT, S.CONTEXT, S.EMPHASIS]
+
+    fig, ax = S.figure("How many of the LLM calls are actually tested?",
+                       plot_height_in=0.46 * len(rows) + 0.35)
+    y = range(len(rows))
+    vals = [r[1] for r in rows]
+    bars = ax.barh(list(y), vals, color=colors, height=0.62)
+    ax.set_yticks(list(y))
+    ax.set_yticklabels([r[0] for r in rows], fontsize=9.5, color=S.INK)
+    ax.invert_yaxis()
+    # Linear, deliberately: a log axis would read 296 as a peer of 23,990.
+    ax.set_xlim(0, max(vals) * 1.26)
+    ax.set_xlabel("framework LLM call sites (n = %s in %d applications)"
+                  % (format(total, ","), fc["repo"].nunique()),
+                  fontsize=9, color=S.SECOND, labelpad=8)
+    S.frame(ax, axis="x")
+    span = ax.get_xlim()[1]
+    for bar, (_, v, share) in zip(bars, rows):
+        text = ("%s  (%.1f%%)" % (format(v, ","), 100 * v / total) if share
+                else "%s tests" % format(v, ","))
+        ax.text(bar.get_width() + span * 0.015,
+                bar.get_y() + bar.get_height() / 2, text,
+                va="center", ha="left", fontsize=9, color=S.SECOND)
+
+    apps = fc.loc[in_method, "repo"].nunique()
+    S.table(OUT, "F4_focal_mapping", ["step", "unit", "count", "pct_of_call_sites",
+                                      "applications"],
+            [["framework LLM call sites", "call sites", total, 100.0,
+              fc["repo"].nunique()],
+             ["in a file some test targets", "call sites", rows[1][1],
+              round(100 * rows[1][1] / total, 1), fc.loc[in_file, "repo"].nunique()],
+             ["tests whose focal method calls an LLM", "tests", len(hit), "",
+              hit["repo"].nunique()],
+             ["distinct focal methods those tests target", "methods",
+              len(hit.drop_duplicates(["focal_file", "focal_line"])), "", apps],
+             ["call sites inside those methods", "call sites", rows[3][1],
+              round(100 * rows[3][1] / total, 2), apps]])
+    answer = ("%d of %s framework call sites (%.1f%%, in %d of %d applications) sit "
+              "inside a method some test is written against — %d tests over %d distinct "
+              "methods. The other %.1f%% of call sites are targeted by no test."
+              % (rows[3][1], format(total, ","), 100 * rows[3][1] / total, apps,
+                 fc["repo"].nunique(), len(hit),
+                 len(hit.drop_duplicates(["focal_file", "focal_line"])),
+                 100 * (total - rows[3][1]) / total))
+    return ("F4_focal_mapping", fig,
+            ("How many of the LLM calls are actually tested?", answer))
+
+
+# ── F5 ───────────────────────────────────────────────────────────────────────
+
+def f5():
+    """Two mapping rates side by side, each a share of its own population:
+    how often pyMethods2Test can say what a test targets at all, and how often an
+    LLM-calling method is what some test targets. The second is the coverage
+    question; the first is the ceiling the tool puts on it."""
+    t = pd.read_csv(paths.ARTIFACTS_DIR / "pym2t_focal_tests.csv", low_memory=False,
+                    usecols=["focal_file", "focal_method", "focal_line"])
+    fm = t[t["focal_method"].notna()]
+    focal = {(f, int(ln)) for f, ln in zip(fm["focal_file"], fm["focal_line"])}
+
+    inv = pd.read_csv(paths.LLM_INVOKERS_CSV,
+                      usecols=["repo", "file", "line", "reason", "kind"])
+    inv = AZ.drop_removed_patterns_invokers(inv)
+    fw = inv["reason"].str.extract(r"from (\S+)\s*$")[0]
+    d = inv[inv["kind"].eq("direct") & inv["repo"].isin(POP) & ~fw.isin(RAW_SDKS)] \
+        .drop_duplicates(["file", "line"])
+    covered = sum((f, int(ln)) in focal for f, ln in zip(d["file"], d["line"]))
+
+    rows = [("tests with a focal method", len(fm), len(t), "tests"),
+            ("LLM-calling methods a test targets", covered, len(d), "methods")]
+    fig, ax = S.figure("Does focal mapping reach the code that calls the LLM?",
+                       plot_height_in=0.52 * len(rows) + 0.45)
+    y = range(len(rows))
+    pcts = [100 * n / tot for _, n, tot, _ in rows]
+    bars = ax.barh(list(y), pcts, color=[S.CONTEXT, S.EMPHASIS], height=0.55)
+    ax.set_yticks(list(y))
+    ax.set_yticklabels([r[0] for r in rows], fontsize=9.5, color=S.INK)
+    ax.invert_yaxis()
+    ax.set_xlim(0, max(pcts) * 1.55)
+    ax.set_xlabel("share of its own population (%)", fontsize=9, color=S.SECOND,
+                  labelpad=8)
+    S.frame(ax, axis="x")
+    span = ax.get_xlim()[1]
+    for bar, (_, n, tot, unit), p in zip(bars, rows, pcts):
+        ax.text(bar.get_width() + span * 0.015, bar.get_y() + bar.get_height() / 2,
+                "%.1f%%   ·   %s of %s %s" % (p, format(n, ","), format(tot, ","), unit),
+                va="center", ha="left", fontsize=9, color=S.SECOND)
+
+    S.table(OUT, "F5_mapping_rates", ["population", "unit", "mapped", "total", "pct"],
+            [[lab, unit, n, tot, round(100 * n / tot, 2)] for lab, n, tot, unit in rows])
+    answer = ("pyMethods2Test resolves a focal method for %.1f%% of tests (%s of %s). "
+              "Of the %s methods that make a framework LLM call, %.2f%% (%d, in %d "
+              "applications) are what a test targets — an order of magnitude below the "
+              "tool's own hit rate, so the gap is coverage, not only tooling."
+              % (pcts[0], format(len(fm), ","), format(len(t), ","), format(len(d), ","),
+                 pcts[1], covered,
+                 d.assign(c=[(f, int(ln)) in focal for f, ln in zip(d["file"], d["line"])])
+                 .query("c")["repo"].nunique()))
+    return ("F5_mapping_rates", fig,
+            ("Does focal mapping reach the code that calls the LLM?", answer))
+
+
+FIGURES = {"F1": f1, "F2": f2, "F3": f3, "F4": f4, "F5": f5}
 
 
 def main(argv):

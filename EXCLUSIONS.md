@@ -636,6 +636,34 @@ raw-SDK-only. Same shape as the `biliVideo` miss (§15) — see plan item H4b. *
 token is only a collision when the clone does not import it; verify against
 `frameworks.csv` before cutting on that basis.**
 
+## 18. Transitive analysis out of scope (2026-09-18) — decision by Seth; partly **Pending** in code
+
+| Scope cut | Reason | Enforced in |
+|---|---|---|
+| All `transitive` rows: ND tests, focal mapping, test prevalence, coverage | A transitive row means a pyan call-graph path *exists*, not that it runs. Its counts scale with graph size (r ≈ 0.57) and it is missing for repos with no usable graph. Out of scope **until explicitly reinstated**. | see sweep below |
+| **Exception:** blast radius of LLM use | The one permitted use: how much of an app's code can reach an LLM call. | — |
+
+`direct`/`transitive` is our Stage-5 term (pyan invoker search), not a pyMethods2Test
+concept. Transitive rows stay in the raw CSVs; this is a filter, not a deletion.
+
+**Sweep of the analysis tools, 2026-09-18:**
+
+| Tool | Status |
+|---|---|
+| `Applications/analyze.py` | **fixed**: `tests` filtered to `kind == "direct"` at load, so ND-test totals, `nd_tests_by_repo/_by_import_name/_by_framework.csv` and the ">=1 LLM test" prevalence line are direct only. The call-graph health section still prints transitive *invoker* counts (blast radius, permitted) |
+| `pipeline/audit_apps.py` | **fixed**: `nd_tests` = direct only (was direct + transitive). `nd_tests_transitive` kept as a raw column. Flows into `audit_framework_check`, `audit_framework_triage` and `audit_imported_by`, which rank/threshold on `nd_tests` |
+| `pipeline/pym2t_focal.py` | **fixed**: `observed_tests(kind="direct")` (was `"all"`) |
+| `Applications/jump_depth.py` | **fixed**: reports invoker depth only (blast radius); test depth (Q9) dropped |
+| `METHODOLOGY.md` | **fixed**: ND-test definition is direct only; Q9 section marked out of scope |
+| `pipeline/focal_map.py` | already compliant: `observed_tests` defaults to `kind="direct"` |
+| `Applications/make_figures.py` (F1–F3), `waterfall.py`, `keep_frequency.py`, `plot_coverage.py`, `pipeline/cuts.py` | compliant: no test or transitive data |
+| `pipeline/joern_call_graph.py` | compliant: seeds from `kind == "direct"` only |
+| Stage 6 slicing (`batch_call_metadata --slice` → `per_variable_pdg_slicer.function_filter_from_rows`) | **Open, decision needed**: the slicer is fed the whole invoker closure, transitive included. Slice-based analysis should filter to direct invoker functions, or this is ruled blast-radius |
+
+**Pending:** the artifacts regenerate only on re-run. `application_audit.csv` (`nd_tests`),
+`analysis/*.csv`, and the `pym2t_*` CSVs still carry transitive numbers until
+`audit_apps`, `analyze.py` and `pym2t_focal` are run again.
+
 ---
 
-*Last updated: 2026-08-27. Add new exclusions as rows above, dated, with the enforcing code location.*
+*Last updated: 2026-09-18. Add new exclusions as rows above, dated, with the enforcing code location.*

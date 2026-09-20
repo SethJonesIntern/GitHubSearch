@@ -1,11 +1,9 @@
 framework,nd_tests
 langchain_core,2695
 haystack,2218
-openai,1650
 langgraph,1249
 agent_framework,620
 pydantic_ai,608
-anthropic,423
 swarm,319
 crewai,252
 autogen_agentchat,223

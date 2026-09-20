@@ -189,7 +189,11 @@ def summary(source: str = "llm_invokers_all.csv") -> dict:
 
 
 def main():
-    for src in ("llm_invokers_all.csv", "llm_tests_all.csv"):
+    # Invoker depth only — it describes how far LLM reach spreads (blast radius, the one
+    # permitted use of transitive data). Test depth (the retired Q9) is out of scope:
+    # README "Scope rule", EXCLUSIONS.md §18. summary("llm_tests_all.csv") still works
+    # if the scope is ever reinstated.
+    for src in ("llm_invokers_all.csv",):
         s = summary(src)
         n = s["n_lower"]
         print(f"\n{src}  —  {s['rows']:,} distinct (repo, qname) in the analyzed set")

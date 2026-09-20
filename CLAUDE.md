@@ -1,115 +1,255 @@
 # GitHubSearch — project instructions
 
-Empirical software-mining study of **non-determinism in the testing of LLM / agent-
-framework applications** mined from GitHub. Pipeline: discover frameworks → code-search
-for apps importing them → clone + static analysis (LLM call sites, invoker closure,
-determinism kwargs, tests) → Joern per-variable slicing.
+Empirical software-mining study of **non-determinism in the testing of agentic
+applications** mined from GitHub. Pipeline: discover frameworks → GitHub code search for
+apps importing them → clone + static analysis (LLM call sites, invoker closure,
+determinism kwargs, tests) → Joern per-variable slicing → focal mapping (pyMethods2Test).
 
-**The full run is DONE** (2026-08-17, 1,035 of 1,055 repos). Current work is data
-quality: deciding which of those repos belong in the study and which numbers survive.
+The full Stage-5 run is done (1,033 of 1,055 processed). Current work: data quality, and
+test-to-code traceability. This file is the single handoff: keep it current instead of
+writing dated `HANDOFF_*.md` files.
 
-## Read these, in this order
+## Where the study stands (measured 2026-09-18)
+
+| | |
+|---|---:|
+| population | 1,055 |
+| analyzed (prevalence denominator) | 753 |
+| with ≥1 LLM call site | 695 |
+| **observed apps** (≥1 *framework* call site; the paper's population) | **644** |
+| framework call sites | 23,990 |
+| call sites setting **no** determinism knob | 98.9% (`temperature` 0.1%, `seed` 0) |
+| **direct ND tests** | **9,700 in 233 apps** |
+
+The paper's numbers use the observed scope: `make_figures.POP` / `.CALLS` and
+`focal_map.observed_tests`. Import those definitions; don't restate them. `analyze.py`
+covers the wider 753 and gives 9,701 ND tests in 234 apps. The extra one is
+`Portkey-AI/portkey-python-sdk`, whose only calls are false positives.
+
+Regenerate: `py -3.14 -m pipeline.waterfall` (population + pending queues),
+`py -3.14 Applications/analyze.py` (report + `analysis/*.csv`),
+`py -3.14 Applications/make_figures.py` (F1–F3 + `FIGURES.md`).
+
+## Scope rules — settled, do not re-litigate
+
+1. **An agentic application is one that imports an agentic framework** (2026-08-27).
+   A repo reaching a model only through a raw SDK (`openai`, `anthropic`, `ollama`,
+   `litellm`) or raw HTTP is out. Stage 2 only searched framework names, so such a repo
+   can only have arrived by a token collision.
+2. **Raw provider SDKs are out of every number** (2026-09-18). `openai`/`anthropic` rows
+   stay in the raw CSVs but are never observed, measured or reported: no calls, knobs,
+   invokers or ND tests. This overrides the 08-27 note that raw-SDK calls inside agentic
+   apps "stay measured". Raw Gemini is undetected, which is moot for the same reason.
+3. **Direct only; transitive is out of scope** (2026-09-18, until Seth says otherwise).
+   Transitive's sole permitted use is the **blast radius** of LLM use (share of an app's
+   functions that can reach an LLM call). See README "Scope rule" and `EXCLUSIONS.md` §18.
+   `direct`/`transitive` is our pyan term, not a pyMethods2Test one.
+4. **Stage 2 is GitHub code search, not import matching.** `matched_frameworks` is the
+   token that surfaced a repo, and it hits substrings: `camel`→camelCase,
+   `agno`→agnostic, `notte`→`@nottest`, `clai`→claim, `omnigent`→`OmniGe(nt)ransformer`.
+   **Never decide scope from `matched_frameworks`**; use `frameworks_imported`.
+5. **A matched token is a collision only when the clone does not import it.** Check
+   `frameworks.csv` (the Stage-1 set) before cutting on that basis. It saved `IBM/ares`
+   (`deepteam`) and `fetchai/fetchai` (`uagents_core`); `notte_sdk` is *not* notte.
+
+**Trap, hit twice:** `openai` and `anthropic` are keys in `FRAMEWORK_CALLS`, so a
+raw-SDK-only repo *does* have invokers. That isn't a contradiction; check the `reason`
+column of `llm_invokers_all.csv` for which patterns fired.
+
+## Docs
 
 | doc | what it settles |
 |---|---|
-| `HANDOFF_2026-08-27.md` | **start here** — current totals, the settled "agentic application" scope definition, and the ordered desktop work queue |
-| `PLAN_2026-08-26.md` | the H-numbered task list and the machine-capability table |
-| `HANDOFF_2026-08-25.md` | the clone-failure bug in detail, the framework triage sheet, and laptop/LFS setup |
-| `AUDIT_HANDOFF.md` | the audit sheet's design and the three-valued `in_scope` (its *current state* is superseded by the file above) |
-| `EXCLUSIONS.md` | the canonical ledger of every exclusion/exemption/pattern-cut. **Add a dated row whenever you exclude anything.** |
+| `EXCLUSIONS.md` | **the ledger**: every cut, exemption, pattern cut and scope decision, dated, with the enforcing code. Add a row whenever you exclude anything. §18 = transitive sweep |
+| `METHODOLOGY.md` | what was done, stage by stage, with the paper's figures |
+| `METHODOLOGY_REVIEW.md` | parked methodological issues; the agenda for the review pass, nothing settled |
+| `README.md` | public overview, headline, the direct-only scope rule |
 | `COVERAGE_ANALYSIS.md` | the three scope buckets and the 90.1% coverage claim |
-| `RUNBOOK.md` | how to run Stage 5/6 |
-| `pipeline/next_runs/README.md` | targeted re-runs, and why they need prep |
+| `RUNBOOK.md` | running Stage 5/6, flags, stop/resume without duplicate rows |
+| `pipeline/next_runs/README.md` | targeted re-runs and why they need prep |
 | `CALL_GRAPH_EXCLUSIONS.md` | why some repos have no pyan graph |
-| `PIPELINE.md` | stage-by-stage design. **Its "CURRENT STATE" is stale (2026-06-25)** — ignore that section |
-
-## The one thing to understand first
-
-**Stage 2 is GitHub *code search*, not import matching.** `matched_frameworks` records
-the token that surfaced a repo — GitHub tokenizes, so it hits substrings and
-co-occurrences, not parsed imports. `camel` matched camelCase, `agno` matched
-`agnostic`, `notte` matched `nottest`, `omnigent` matched `OmniGe`**`nt`**`ransformer`.
-139 repos never import what they matched.
-
-Consequence: **never decide scope from `matched_frameworks`.** Scope now comes from
-`frameworks_imported` in the audit sheet — what the clone actually imports. Anything
-still keyed off the search token is suspect.
+| `PIPELINE.md` | stage design. Its "CURRENT STATE" (2026-06-25) is stale; ignore it |
+| `pipeline/third_party/pymethods2test/NOTICE.md` | provenance of the vendored tool |
 
 ## The audit sheet
 
-`pipeline/artifacts/application_audit.csv` — one row per population repo (1,055), one
-column per quality question. Rebuild/refill with:
+`pipeline/artifacts/application_audit.csv`: one row per population repo (1,055). Each
+pass owns its columns. `in_scope` / `notes` are hand-edited and always preserved.
 
 ```
-py -3.14 -m pipeline.audit_apps              # the sheet + counts + CUT list
-py -3.14 -m pipeline.audit_imports --scan    # what each clone imports -> in_scope (~15 min)
+py -3.14 -m pipeline.audit_apps                     # the sheet + counts   (PC only, see below)
+py -3.14 -m pipeline.audit_imports --scan           # frameworks_imported -> in_scope (~15 min)
 py -3.14 -m pipeline.audit_framework_check --scan   # framework-vs-app (~13 min)
-py -3.14 -m pipeline.audit_zero_invokers     # why a repo has no invokers
+py -3.14 -m pipeline.audit_zero_invokers            # why a repo has no invokers
+py -3.14 -m pipeline.audit_framework_triage         # framework_triage.csv (reads clones)
 ```
 
-Each pass owns its columns; re-running never clobbers another pass's work or a hand
-edit. `in_scope` / `notes` are yours to edit by hand and are always preserved.
-
-**`in_scope` is three-valued, and the difference matters:**
-
-| value | analyzed stats | coverage denominator |
+| `in_scope` | analyzed stats | coverage denominator |
 |---|---|---|
-| *(blank)* — in scope | counted | counted |
-| `uncovered` — real LLM app on a framework outside the top-20 | **out** | **in** (it *is* the tail the 90.1% measures) |
-| `0` — not an LLM app | out | out |
+| *(blank)*: in scope | counted | counted |
+| `uncovered`: real agentic app on a framework outside the top-20 | out | **in** (the tail the 90.1% measures) |
+| `0`: cut | out | out |
 
-`pipeline/cuts.py` is the single source of truth. `analyze.py`, `keep_frequency.py` and
-`plot_coverage.py` all read it, so **editing `in_scope` in the CSV changes every
-statistic** on the next run.
+`pipeline/cuts.py` reads `in_scope`; `analyze.py`, `keep_frequency.py`,
+`plot_coverage.py` and `make_figures.py` read `cuts.py`. **Editing `in_scope` moves every
+statistic on the next run.**
 
-## Commands
+- **`audit_apps` needs the slices.** It derives `slice_status` from
+  `os.scandir(SLICES_DIR)`; on a machine without `pipeline/artifacts/slices/` it blanks
+  ~780 rows. Recover with `git checkout -- pipeline/artifacts/application_audit.csv`.
+- `nd_tests` in the sheet is direct only. `nd_tests_transitive` is a raw column that
+  nothing reads.
+- Supporting sheets: `framework_triage.csv` (all 1,055 ranked by framework-likelihood;
+  the score is a ranking aid, trust only the top ~58), `imported_by.csv`,
+  `analysis/zero_call_triage.csv`, `analysis/no_framework_no_call.csv`.
 
-```
-py -3.14 Applications/analyze.py             # the report + analysis/*.csv cross-tabs
-py -3.14 Applications/keep_frequency.py      # framework ranking
-py -3.14 Applications/plot_coverage.py       # framework_coverage.png
-py -3.14 -m pipeline.make_next_runs          # regenerate the re-run queues
-```
+## Focal mapping — pyMethods2Test
 
-Re-running Stage 5 on selected repos: see `pipeline/next_runs/README.md`. Never run
-`batch_call_metadata` without `--resume` — it deletes every artifact and restarts the
-1,035-repo run.
+**Decided 2026-09-15: focal mapping uses pyMethods2Test** (Abdelmadjid & Dyer, MSR 2025,
+Zenodo `14264519`, Apache 2.0), not our `pipeline/focal_map.py` (26.5% method-level match,
+superseded; its `observed_tests()` is still the ND-test scope definition).
+
+- Vendored **unmodified** in `pipeline/third_party/pymethods2test/`. Byte-identical to
+  Zenodo (verified 2026-09-18).
+- `py -3.14 -m pipeline.pym2t_focal` runs it over all 644 observed apps, reusing the
+  per-repo JSON in `artifacts/pym2t/` (gitignored); `--rerun` re-runs the tool. It replays
+  their loop with their own functions to record per-test detail, and checks the replay
+  against their CLI output (0 mismatches).
+- Outputs: `pym2t_nd_tests.csv` (direct ND tests → focal status) and
+  `pym2t_focal_calls.csv` (call site → inside a focal method?) are tracked.
+  `pym2t_focal_tests.csv` (1.2M tests, 290 MB) and `pym2t_runs.csv` are gitignored.
+- **Environment:** their pinned `python-Levenshtein~=0.26.1` has no cp314 wheel. Install
+  `fuzzywuzzy~=0.18.0` + modern `Levenshtein`. The driver refuses to run if `fuzz` has
+  fallen back to `difflib`, which changes every ratio against their `> 50` cutoff. This
+  deviation belongs in the methodology.
+
+**How it works** (read from their source; the paper's HTML summary is wrong):
+- **Focal file:** source files whose module the test imports. If none, a basename match,
+  and every `.py` file (tests included) is a candidate. So it never returns "no focal
+  file". Only `file_rule == "import"` is real evidence.
+- **Focal method:** a name the test body calls. The test name must end with it, otherwise
+  any name with `fuzz.ratio > 50`.
+- **A test is only seen if** its file has a top-level `import pytest`/`unittest`, and it
+  calls ≥1 name defined in the repo.
+
+**Two different questions, two tools.** Our detector decides whether a test *calls* an
+LLM (an ND test: a pytest test whose own body matches a framework invocation pattern).
+Calling an LLM does not make the LLM the test's focus. **pyMethods2Test decides what the
+test targets.** A test is **LLM-focal** only when its pyMethods2Test focal method contains
+a framework LLM call site. Their focal methods are always repo-defined, so a test whose
+only LLM call goes straight to the framework API can never be LLM-focal.
+
+**Results on the 9,700 direct ND tests:**
+- 19.1% are never identified by the tool. Mostly plain-`assert` pytest files with no
+  `import pytest`.
+- 76.9% get a focal file only; 49.4% via import.
+- **4.0% get a focal method** (391 tests, 57 apps). 56% of those are
+  `haystack-core-integrations`, 234 are `run`/`run_async`.
+- **LLM-focal: 36 tests (0.4%) in 16 apps.** 10 are `haystack-core-integrations`;
+  23 exact / 13 fuzzy method matches; 24 via import / 12 basename file matches.
+- **Only 25 of 23,990 call sites (0.1%) lie inside the focal method of an ND test.**
+- 3 repos crash on non-UTF-8 files (dd-trace-py, artiphishell,
+  astrbot_plugin_self_evolution).
+
+Not yet done: hand-check a precision sample of the 391; report with and without
+haystack-core-integrations.
+
+## To look at: found 2026-09-18, nothing decided or changed
+
+- **Haystack `.run` matches non-LLM components.** Haystack's patterns are just
+  `.run` / `.run_async`, and every Haystack component has `.run()`. By receiver name
+  (unverified), ~1,356 of 2,603 haystack call sites (52%, 18 apps) are retrievers (490),
+  embedders (333), converters (218), rankers (145), fetchers, cleaners, etc. All 152 calls
+  setting `top_k` in F2 are retrieval `top_k` (haystack retriever/ranker 104, mem0
+  `.search` 47), not sampling. Also touches haystack ND tests (2,218).
+- **Chained calls share a call ID.** `call_id` is `file::line::col`, so in
+  `llm.invoke(x).content.strip()` the real call and the chained `.strip()` collide.
+  106 IDs (87 in the observed scope). `llm_calls_all.csv` kept the chained row, which is
+  flagged `tier2_nonterminal`, so the real call is dropped from the call counts but kept in
+  `call_metadata_all.csv`. That's why F2 says 24,077 call sites and F3/METHODOLOGY say
+  23,990. Counting them would give 645 apps (+ `Portkey-AI/portkey-python-sdk`) and
+  24,079 call sites.
+- **F2's committed caption** calls `model` the most often set parameter; its own table has
+  `top_k` (152) above `model` (92).
+
+## Open work, in value order
+
+- **H4. Fix `shallow_clone`** (`Wrapper/transitive_invokers.py:58`). 22 repos (20 in
+  scope) "failed to clone" over a `:` in a filename, illegal on Windows. Git fetches
+  everything, checkout aborts, and the function returns `False`, but the tree is on
+  disk (`Azure/plan-search-chatbot`: all 36 `.py` present). Fix: on
+  `CalledProcessError`, if `dest` holds `.py` files, warn, record `clone_partial`, and
+  return `True`; genuine failures (auth, 404, timeout) still return `False`. Then
+  re-queue. ⚠️ `batch_call_metadata` `rmtree`s the checkout before cloning, so **do not
+  re-queue before the fix**. Truly gone: `agno-agi/pal`, `holetron/hindsight-mempalace`,
+  `openJiuwen-ai/agent-store`. Denominator returns to ~773.
+- **`clai` → `pydantic_ai` in `keep_frequency.EXTRA_MEMBERS` (line 46)**: still there
+  and wrong. Inflates pydantic_ai 79 → 127 apps, #4 → #2. Remove it.
+- **H5. Queue C: 56 repos import a framework but have no call site.** Detector
+  questions, not cuts. The waterfall's 100% for C is arithmetic. ~10 import `litellm`
+  (not in `IN_SCOPE_FRAMEWORKS`, can't produce a call site), plus the H4b shape.
+- **H4b. Split-receiver detector gap.** `storyAura/astrbot_plugin_biliVideo` calls
+  `await provider.text_chat(...)` on a receiver from `context.get_using_provider()` held
+  in a wrapper. Missed because `.get_using_provider` was cut (EXCLUSIONS §4). Held, not
+  cut (§15). Size how many of queue C share it.
+- **H4d. Registry gaps.** `uagents_core` and `deepteam` are Stage-1 discovered but not
+  `FRAMEWORK_CALLS` keys (only `uagents` is). Audit every `frameworks.csv` `import_names`
+  against `FRAMEWORK_CALLS`.
+- **H4c. 7 raw-SDK-only `uncovered` repos.** They have no invokers, so only
+  `imports_matched_fw` can judge them. `audit_zero_invokers.py:154` limits `targets` to
+  `zero_invoker == "1"`; widen it to `uncovered` rows (EXCLUSIONS §17b-ii).
+- **Stage 6 slicing vs the direct-only rule.** The slicer is fed the whole invoker
+  closure, transitive included (EXCLUSIONS §18). Decide: filter slice analysis to direct
+  invoker functions, or rule it blast radius.
+- **Joern: 10 repos still fail at 24g** (5 OOM, 4 process-exit). Heap isn't the
+  binding constraint; needs a different approach.
+- **H7. `audit_framework_triage --pypi`**: the one independent framework signal never
+  switched on (desktop, it reads the clones).
+- **H8. Second pyan pass with `PYAN_TIME_BUDGET_SEC=0`**, time-boxed subset only. Low
+  priority now that transitive only feeds blast radius. PowerShell:
+  `$env:PYAN_TIME_BUDGET_SEC = "0"` on its own line.
+- Unverified whether done: Queue D (~53 lower-weight framework/library candidates,
+  §12); `prepare_rerun` has no guard against `--apply` on the wrong CSV; no EXCLUSIONS row
+  for 3 zero-Python repos dropped from the run queue (`wesleysimplicio/hermes-turbo-agent`,
+  `erfanzar/Xerxes-Agents`, `memory-graph/memory-graph`).
+
+## Machines
+
+- **PC (desktop)** has the clone tree (`pipeline/repos/`, ~107 GB, 1,056 repos) and
+  `artifacts/slices/`. Needed for: reading source to justify a cut, every `--scan`,
+  `audit_framework_triage`, `batch_call_metadata`, slicing, `audit_apps`, `pym2t_focal
+  --rerun`.
+- **Laptop** has neither. The cut loop still works there: hand-edit `in_scope` →
+  `analyze.py` / `keep_frequency.py` / `plot_coverage.py`. Never run `audit_apps` there.
+- **Git LFS** tracks `llm_invokers_all.csv` (172 MB) and `llm_tests_all.csv` (87 MB).
+  Without `git lfs install` you get pointer stubs and scripts fail confusingly. Free tier
+  is **1 GB bandwidth/month**, and one fresh clone is ~259 MB of LFS. `git pull` into an
+  existing checkout; don't re-clone. `git pull` before hand-editing the sheet on either
+  machine; git can't merge two machines' edits to it.
 
 ## Conventions
 
-- **`py -3.14` always.** pyan3 (the transitive call graph) requires it.
-- **Cuts are filters, never deletions.** A cut repo keeps its row and its raw data; only
-  its `in_scope` value changes. Every criterion lives in code with a comment, and gets a
-  dated row in `EXCLUSIONS.md`.
-- **Evidence before cutting.** Read the actual matched code; inference has been wrong
-  repeatedly (omnigent, connectonion, haystack, clai all fooled inference).
+- **`py -3.14` always** (pyan3 requires it).
+- **Cuts are filters, never deletions.** A cut repo keeps its row and raw data; only
+  `in_scope` changes. Every criterion lives in code with a comment and gets a dated row in
+  `EXCLUSIONS.md`.
+- **Evidence before cutting.** Read the actual matched code. Inference has been wrong
+  repeatedly: omnigent, connectonion, haystack, clai, notte_sdk, deepteam.
 - Distinguish **measured / projected / assumed** when reporting numbers.
 - Prefer giving Seth a command to run over backgrounding a long job.
+- Never run `batch_call_metadata` without `--resume`: it deletes every artifact and
+  restarts the whole run. Re-runs: `pipeline/next_runs/README.md`.
 
 ## Gotchas
 
-- **The Grep tool silently skips `pipeline/repos`** (gitignored, and ripgrep honours
-  `.gitignore`). Use Bash `grep` or `rg --no-ignore` for the clones.
-- The clone tree is **~107 GB / 1,056 repos**. A full-corpus scan is ~15 min at 8
-  workers — use one alternation regex over the names you want, not match-everything-
-  then-filter (that difference was 90 min vs 15).
-- Windows: `ProcessPoolExecutor` needs an `if __name__ == "__main__"` guard; pass Joern
-  as the `.bat` (a bare `joern` is a Unix script → `WinError 193`).
+- **The Grep tool silently skips `pipeline/repos`** (gitignored). Use Bash `grep` or
+  `rg --no-ignore` for the clones. A recursive `grep -r` from the repo root also walks
+  `Applications/repo_cache` and the clones and will time out; scope it.
+- Full-corpus scans take ~15 min at 8 workers. Use one alternation regex over the names
+  you want, not match-everything-then-filter (90 min vs 15).
+- Windows: `ProcessPoolExecutor` needs an `if __name__ == "__main__"` guard. Pass Joern as
+  the `.bat`; bare `joern` gives `WinError 193`.
+- Set `PYTHONIOENCODING=utf-8` before `analyze.py` if it dies on a non-ASCII description.
+- 107 `__pycache__/*.pyc` files are tracked. Running or compiling a script dirties them;
+  restore with `git checkout` rather than committing them.
 - `core.autocrlf=true`, so LF-written files produce a harmless CRLF warning on commit.
-
-## Known-bad things not yet fixed
-
-- **`keep_frequency.EXTRA_MEMBERS` still maps `clai` → pydantic_ai.** `clai` is a junk
-  collision token; the mapping inflates pydantic_ai from 79 to 127 apps and moves it
-  from #4 to #2 in the ranking. Both `COVERAGE_ANALYSIS.md` and `EXCLUSIONS.md` §9 say
-  it is wrong.
-- **Raw Gemini is invisible to the whole pipeline** — `google.generativeai` /
-  `google.genai` is in no dict, while 254 repos (24% of the corpus) import it. `openai`
-  and `anthropic` are both in scope, so SDK-level numbers silently omit one of the three
-  major providers.
-- **109 repos are undecided** (no LLM import found anywhere). They contribute 0 calls and
-  0 ND tests but sit in the denominator — resolving them moves ND-test prevalence ~12
-  points.
-- **ND tests are 95% transitive** (272,008 total, 14,848 direct) and transitive inflates
-  with graph size, and is missing entirely for the 98 repos with no usable graph. Report
-  direct and transitive separately; 14,848 is the defensible figure.

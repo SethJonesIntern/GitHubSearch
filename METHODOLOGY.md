@@ -205,15 +205,20 @@ codebase. Everything the study reports as a headline is computed from direct cal
 ## Stage 5 — Non-deterministic tests
 → `llm_tests_all.csv`
 
-- **Defined a non-deterministic test as a pytest test that reaches an LLM call** — directly
-  or through the call graph.
+- **Defined a non-deterministic test as a pytest test that reaches an LLM call directly.**
+  Tests that reach one only through the call graph (`transitive`) are recorded but out of
+  scope (2026-09-18; README "Scope rule", `EXCLUSIONS.md` §18).
 - **Required both pytest naming conventions**: the file is `test_*.py` or `*_test.py` and
   the function name starts with `test_` — pytest's own default discovery rules.
 - **Took the tests as a filtered view of the invoker set** rather than a separate analysis —
   a test is non-deterministic for exactly the same reason any other function is.
 
-### Distance from the model
-`Applications/jump_depth.py` → `Q9_test_jump_depth.csv`
+### Distance from the model — OUT OF SCOPE (2026-09-18)
+`Applications/jump_depth.py` → `Q9_test_jump_depth.csv` (figure retired)
+
+> **Not reported.** Test depth is measured over transitive tests, which are out of scope
+> (`EXCLUSIONS.md` §18). Kept below as a record of what was done. `jump_depth.py` now
+> reports invoker depth only, as part of blast radius.
 
 - **Measured how many calls separate each test from the function that hits the model** — to
   distinguish a test that calls a model itself from one that reaches one several frames
