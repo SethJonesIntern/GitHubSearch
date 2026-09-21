@@ -54,6 +54,12 @@ SEMANTIC_EVALUATOR_REPOS_CSV = ARTIFACTS_DIR / "semantic_evaluator_repos.csv"
 NO_DEPS_CSV = ARTIFACTS_DIR / "no_deps_found.csv"
 DEP_CHECK_PROGRESS_JSON = ARTIFACTS_DIR / ".dep_check_progress.json"
 
+# ── Eval-framework search (GitHub issue #3) ─────────────────────────────────────
+# Discovery only: a candidate list of LLM-evaluation frameworks. Independent of the
+# Stage-7 artifacts above — nothing here feeds EVAL_CALLS or any pipeline statistic.
+EVAL_FRAMEWORKS_CSV = ARTIFACTS_DIR / "eval_frameworks.csv"
+EVAL_FRAMEWORKS_FILTER_STATS_JSON = ARTIFACTS_DIR / "eval_frameworks_filter_stats.json"
+
 
 def ensure_dirs() -> None:
     """Create artifacts/ and repos/ if they don't exist. Safe to call repeatedly."""
