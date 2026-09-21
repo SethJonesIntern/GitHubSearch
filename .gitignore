@@ -17,3 +17,9 @@ pipeline/artifacts/pym2t_runs.csv
 # python bytecode
 __pycache__/
 *.pyc
+
+# Stage 6a slice index (pipeline/slice_index.py). Regenerable from artifacts/slices/,
+# which is itself gitignored. The summary JSON stays tracked.
+pipeline/artifacts/slice_index.csv
+pipeline/artifacts/slice_pdg_lines.csv.gz
+pipeline/artifacts/slice_code.jsonl.gz
