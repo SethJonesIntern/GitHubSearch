@@ -98,8 +98,15 @@ SEEDED_EVALUATOR_REPOS = {
 SEEDED_IMPORT_NAMES = set(SEEDED_EVALUATOR_REPOS.values())
 
 CANDIDATES_CSV = paths.ARTIFACTS_DIR / "eval_framework_candidates.csv"
+CONTRIBUTORS_CSV = paths.ARTIFACTS_DIR / "eval_framework_contributors.csv"
 FIGURES_DIR = paths.ARTIFACTS_DIR / "figures"
 FIGURE_STEM = "eval_search_waterfall"
+
+# Everything below the enrichment boundary. A fresh Phase A must reset these to
+# None: they were measured against a PREVIOUS candidate set, and carrying them
+# through a stats merge would draw a stale bar as final against new data.
+ENRICHMENT_KEYS = ("dropped_contributors", "kept_contributors",
+                   "dropped_no_tests", "kept_enriched", "confirmed")
 
 CANDIDATE_FIELDNAMES = [
     "full_name", "description", "stars", "language", "topics",
@@ -317,14 +324,32 @@ def waterfall_rows(stats: Dict[str, object]) -> List[dict]:
     figure genuinely cannot know those numbers. Once a step is pending, every step
     after it is too. Nothing here is fabricated to fill the chart.
     """
-    rows: List[dict] = []
-    retrieved = int(stats.get("retrieved") or 0)
-    rows.append({"step": "search hits retrieved", "survivors": retrieved,
-                 "dropped": None, "status": "final"})
+    def pending(label: str) -> dict:
+        return {"step": label, "survivors": None, "dropped": None,
+                "status": "pending"}
 
-    survivors = int(stats.get("deduped") or 0)
-    rows.append({"step": "deduped across phrases", "survivors": survivors,
-                 "dropped": retrieved - survivors, "status": "final"})
+    rows: List[dict] = []
+    # A missing count is pending, never 0: a zero-width bar labelled `final`
+    # before the search has run would be a measurement we never took.
+    retrieved = stats.get("retrieved")
+    deduped = stats.get("deduped")
+    pending_from_here = retrieved is None
+
+    if pending_from_here:
+        rows.append(pending("search hits retrieved"))
+    else:
+        retrieved = int(retrieved)
+        rows.append({"step": "search hits retrieved", "survivors": retrieved,
+                     "dropped": None, "status": "final"})
+
+    if pending_from_here or deduped is None:
+        pending_from_here = True
+        survivors = 0
+        rows.append(pending("deduped across phrases"))
+    else:
+        survivors = int(deduped)
+        rows.append({"step": "deduped across phrases", "survivors": survivors,
+                     "dropped": retrieved - survivors, "status": "final"})
 
     sequence = [
         ("not fork / archived / disabled", "dropped_fork_archived"),
@@ -333,12 +358,10 @@ def waterfall_rows(stats: Dict[str, object]) -> List[dict]:
         (f"contributors >= {MIN_CONTRIBUTORS}", "dropped_contributors"),
         (f"test files >= {MIN_TEST_FILES}", "dropped_no_tests"),
     ]
-    pending = False
     for label, key in sequence:
-        if pending or stats.get(key) is None:
-            pending = True
-            rows.append({"step": label, "survivors": None, "dropped": None,
-                         "status": "pending"})
+        if pending_from_here or stats.get(key) is None:
+            pending_from_here = True
+            rows.append(pending(label))
             continue
         dropped = int(stats[key])
         survivors -= dropped
@@ -346,7 +369,7 @@ def waterfall_rows(stats: Dict[str, object]) -> List[dict]:
                      "status": "final"})
 
     confirmed = stats.get("confirmed")
-    if pending or confirmed is None:
+    if pending_from_here or confirmed is None:
         rows.append({"step": "confirmed eval framework (hand triage)",
                      "survivors": None, "dropped": None, "status": "pending"})
     else:
@@ -416,6 +439,15 @@ def render_waterfall(stats: Dict[str, object], out_dir: Optional[Path] = None) -
 
 # ── stats file ────────────────────────────────────────────────────────────────
 
+def clear_enrichment_tier(stats: Dict[str, object]) -> Dict[str, object]:
+    """Reset every below-the-boundary key to None.
+
+    Phase A runs this over the merged stats so a previous enrichment's counts
+    cannot survive into a fresh candidate set and be drawn as a final bar.
+    """
+    return {**stats, **{key: None for key in ENRICHMENT_KEYS}}
+
+
 def load_stats() -> Dict[str, object]:
     path = paths.EVAL_FRAMEWORKS_FILTER_STATS_JSON
     if not path.exists():
@@ -469,9 +501,8 @@ def run_search(max_pages: int = MAX_PAGES, out_path: Optional[Path] = None) -> d
                       for r, (_, items) in zip(pre, results)],
         "retrieved": retrieved,
         **funnel,
-        "confirmed": None,
     }
-    merged = {**load_stats(), **stats}
+    merged = clear_enrichment_tier({**load_stats(), **stats})
     save_stats(merged)
 
     seeded_found = sorted(r["full_name"] for r in rows if r["already_seeded"] == "1")
@@ -559,12 +590,111 @@ def run_enrich(limit: Optional[int] = None,
     return stats
 
 
+# ── contributors-only pass ────────────────────────────────────────────────────
+# The contributors bar costs ONE API call per repo (gs.get_contributor_count uses
+# the Link-header last-page trick), where the test-file bar costs a tree walk plus
+# a fetch per candidate test file. That asymmetry is why this pass exists: it
+# measures the cheap half of the enrichment tier over every free-filter survivor,
+# without triage, and leaves the test-file bar pending.
+
+def load_contributor_counts(path: Optional[Path] = None) -> Dict[str, int]:
+    """Previously measured counts, so an interrupted pass resumes for free."""
+    path = path or CONTRIBUTORS_CSV
+    if not path.exists():
+        return {}
+    out: Dict[str, int] = {}
+    with open(path, newline="", encoding="utf-8") as fh:
+        for row in csv.DictReader(fh):
+            try:
+                out[row["full_name"]] = int(row["contributors_count"])
+            except (KeyError, TypeError, ValueError):
+                continue
+    return out
+
+
+def write_contributor_counts(counts: Dict[str, int],
+                             path: Optional[Path] = None) -> None:
+    path = path or CONTRIBUTORS_CSV
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with open(path, "w", newline="", encoding="utf-8") as fh:
+        writer = csv.writer(fh, quoting=csv.QUOTE_ALL)
+        writer.writerow(["full_name", "contributors_count"])
+        for name, count in sorted(counts.items(), key=lambda kv: (-kv[1], kv[0])):
+            writer.writerow([name, count])
+
+
+def count_contributor_drops(counts: Dict[str, int]) -> Tuple[int, int]:
+    """(kept, dropped) at the MIN_CONTRIBUTORS threshold."""
+    dropped = sum(1 for c in counts.values() if (c or 0) < MIN_CONTRIBUTORS)
+    return len(counts) - dropped, dropped
+
+
+def run_contributors(candidates_path: Optional[Path] = None,
+                     limit: Optional[int] = None, rerun: bool = False) -> dict:
+    rows = read_candidates(candidates_path)
+    targets = [r for r in rows if candidate_passes_free_filters(r)]
+    counts = {} if rerun else load_contributor_counts()
+    todo = [r for r in targets if r["full_name"] not in counts]
+    if limit is not None:
+        todo = todo[:limit]
+
+    print(f"{len(targets)} free-filter survivors; "
+          f"{len(targets) - len(todo)} already measured, {len(todo)} to fetch "
+          f"(1 API call each)")
+
+    failed = []
+    for i, row in enumerate(todo, start=1):
+        full_name = row["full_name"]
+        owner, repo = full_name.split("/", 1)
+        try:
+            counts[full_name] = gs.get_contributor_count(owner, repo)
+        except Exception as e:      # noqa: BLE001 — one bad repo must not end the run
+            failed.append(full_name)
+            print(f"  [{i}/{len(todo)}] skipped {full_name}: {e}")
+            continue
+        if i % 25 == 0 or i == len(todo):
+            print(f"  [{i}/{len(todo)}] {full_name} -> {counts[full_name]}")
+            write_contributor_counts(counts)   # checkpoint
+        time.sleep(0.05)
+
+    measured = {r["full_name"]: counts[r["full_name"]]
+                for r in targets if r["full_name"] in counts}
+    write_contributor_counts(measured)
+    kept, dropped = count_contributor_drops(measured)
+
+    complete = len(measured) == len(targets)
+    stats = load_stats()
+    if complete:
+        stats = {**stats, "dropped_contributors": dropped,
+                 "kept_contributors": kept}
+    else:
+        # A partial pass cannot own the bar: a drop count over a subset would be
+        # drawn as final against the full survivor set. Leave it pending.
+        print(f"\nPARTIAL: measured {len(measured)} of {len(targets)}. "
+              f"The contributors bar stays pending until the pass completes.")
+        if failed:
+            print(f"  {len(failed)} failed: {', '.join(failed[:10])}"
+                  + (" ..." if len(failed) > 10 else ""))
+    save_stats(stats)
+
+    print(f"\nContributors (measured over {len(measured)} survivors):")
+    print(f"  dropped (contributors<{MIN_CONTRIBUTORS}) : {dropped:,}")
+    print(f"  kept                    : {kept:,}")
+    print(f"\nWrote {CONTRIBUTORS_CSV}")
+    print(f"Wrote {render_waterfall(stats)}")
+    return stats
+
+
 def main(argv: Optional[Sequence[str]] = None) -> int:
     parser = argparse.ArgumentParser(
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     mode = parser.add_mutually_exclusive_group(required=True)
     mode.add_argument("--search-only", action="store_true",
                       help="Phase A: free search + candidate CSV + waterfall")
+    mode.add_argument("--contributors", action="store_true",
+                      help="Measure the contributors bar only, over every "
+                           "free-filter survivor (1 API call each); leaves the "
+                           "test-file bar pending")
     mode.add_argument("--enrich", action="store_true",
                       help="Phase B: Stage-1 enrichment over triaged survivors")
     mode.add_argument("--figure-only", action="store_true",
@@ -573,7 +703,9 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
                         help=f"Search pages per phrase (default {MAX_PAGES}, "
                              f"GitHub's {RESULT_CEILING}-result ceiling)")
     parser.add_argument("--limit", type=int, default=None,
-                        help="--enrich: enrich at most N repos (quick test runs)")
+                        help="--enrich/--contributors: process at most N repos")
+    parser.add_argument("--rerun", action="store_true",
+                        help="--contributors: re-fetch counts already measured")
     parser.add_argument("--candidates", type=Path, default=None,
                         help=f"Candidate CSV path (default {CANDIDATES_CSV})")
     parser.add_argument("--out", type=Path, default=None,
@@ -585,6 +717,9 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
 
     if args.search_only:
         run_search(max_pages=args.max_pages, out_path=args.candidates)
+    elif args.contributors:
+        run_contributors(candidates_path=args.candidates, limit=args.limit,
+                         rerun=args.rerun)
     elif args.enrich:
         run_enrich(limit=args.limit, candidates_path=args.candidates,
                    out_path=args.out)

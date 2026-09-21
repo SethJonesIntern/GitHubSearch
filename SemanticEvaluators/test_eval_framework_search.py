@@ -317,3 +317,74 @@ def test_waterfall_confirmed_zero_is_drawn_not_pending():
     stats = {**PHASE_A, "dropped_contributors": 0, "dropped_no_tests": 0,
              "confirmed": 0}
     assert efs.waterfall_rows(stats)[-1]["status"] == "final"
+
+
+# -- contributors-only pass ---------------------------------------------------
+
+def test_contributor_drops_at_the_boundary():
+    kept, dropped = efs.count_contributor_drops(
+        {"a/0": 0, "a/1": 1, "a/2": 2, "a/3": 3})
+    assert (kept, dropped) == (2, 2)
+
+
+def test_contributor_drops_on_empty_input():
+    assert efs.count_contributor_drops({}) == (0, 0)
+
+
+def test_contributor_counts_round_trip(tmp_path):
+    path = tmp_path / "contrib.csv"
+    efs.write_contributor_counts({"a/one": 7, "b/two": 1}, path)
+    assert efs.load_contributor_counts(path) == {"a/one": 7, "b/two": 1}
+
+
+def test_contributor_counts_missing_file_is_empty(tmp_path):
+    assert efs.load_contributor_counts(tmp_path / "nope.csv") == {}
+
+
+# -- stale enrichment counts never survive a fresh Phase A --------------------
+
+def test_clear_enrichment_tier_resets_every_below_boundary_key():
+    stale = {"retrieved": 10, "deduped": 9, "dropped_contributors": 3,
+             "kept_contributors": 6, "dropped_no_tests": 2, "kept_enriched": 4,
+             "confirmed": 1}
+    cleared = efs.clear_enrichment_tier(stale)
+    assert cleared["retrieved"] == 10 and cleared["deduped"] == 9
+    for key in efs.ENRICHMENT_KEYS:
+        assert cleared[key] is None
+
+
+def test_stale_enrichment_counts_do_not_draw_as_final():
+    stale = {"retrieved": 500, "deduped": 400, "dropped_fork_archived": 40,
+             "dropped_stars": 200, "dropped_language": 100,
+             "dropped_contributors": 3, "dropped_no_tests": 2, "confirmed": 1}
+    rows = {r["step"]: r for r in
+            efs.waterfall_rows(efs.clear_enrichment_tier(stale))}
+    for step in ("contributors >= 2", "test files >= 1",
+                 "confirmed eval framework (hand triage)"):
+        assert rows[step]["status"] == "pending"
+
+
+# -- a missing count is pending, never a zero-width final bar -----------------
+
+def test_empty_stats_are_all_pending():
+    rows = efs.waterfall_rows({})
+    assert len(rows) == 8
+    assert all(r["status"] == "pending" for r in rows)
+    assert all(r["survivors"] is None for r in rows)
+
+
+def test_missing_deduped_makes_everything_below_pending():
+    rows = {r["step"]: r for r in efs.waterfall_rows({"retrieved": 100})}
+    assert rows["search hits retrieved"]["status"] == "final"
+    assert rows["search hits retrieved"]["survivors"] == 100
+    assert rows["deduped across phrases"]["status"] == "pending"
+    assert rows["stars >= 10"]["status"] == "pending"
+
+
+def test_contributors_measured_alone_leaves_test_files_pending():
+    stats = {**PHASE_A, "dropped_contributors": 12}
+    rows = {r["step"]: r for r in efs.waterfall_rows(stats)}
+    assert rows["contributors >= 2"]["status"] == "final"
+    assert rows["contributors >= 2"]["survivors"] == 48
+    assert rows["test files >= 1"]["status"] == "pending"
+    assert rows["confirmed eval framework (hand triage)"]["status"] == "pending"
