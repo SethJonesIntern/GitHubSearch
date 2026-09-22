@@ -265,6 +265,44 @@ codebase. Everything the study reports as a headline is computed from direct cal
   ceiling** — almost every repository finishes at 8 GB, and a flat 24 GB would hand that to
   all of them.
 
+### Stage 6a — Slice index (2026-09-21)
+`pipeline/slice_index.py`
+
+- **Flattened the 788 per-repo `programs.jsonl` into one row per subprogram** — 2,955,122
+  rows over 77,901 sliced source files. Stage 6 wrote 4.3 GB of nested JSON that no
+  analysis script opened; every question we wanted to ask of it was a group-by over a
+  table that did not exist.
+- **Moved the code bodies to a content store keyed by `code_sha256`**, and the `pdg_lines`
+  lists to a long-form `(slice_id, line)` table — the index stays joinable and neither
+  file is ever held in memory.
+- **Recomputed parseability per subprogram with `compile()`** — the refined JSONL keeps
+  only a per-file syntax-error count. 63.1% of subprograms parse.
+- **Paired bodies to rows by position, not by filename** — the slicer names a subprogram
+  `<program>_<method>_<variable>.py`, so two same-named functions in one source file
+  collide (16 filenames, 32 rows corpus-wide) and a name lookup gives both the same body.
+- Reconciled against the slicer's own totals, exactly: 2,955,122 subprograms, and
+  1,089,429 unparseable against its summed `syntax_error_count`.
+- Descriptively: 19.96% of subprograms are within-file duplicates; 2,227,979 distinct
+  bodies, of which only 43,629 (1.96%) occur in more than one repository; median slice
+  4 PDG lines, with a median 5 further lines added only to keep the snippet parseable.
+
+### Stage 6b — Slice-to-call join (2026-09-21)
+`pipeline/slice_calls.py`
+
+- **Joined slices to the framework call inventory** on (repo slug, repo-relative path,
+  line), in the observed scope imported from `make_figures` (POP 644, CALLS 23,990)
+  rather than restated.
+- **22,492 of 23,990 observed call sites (93.8%) lie inside at least one slice** — 96.1%
+  of the 23,401 in repositories Stage 6 actually sliced. 51,089 of 2,955,122 slices
+  (1.73%) touch a call, over 58,478 slice-call pairs in 632 repositories.
+- **Recorded what the sliced variable *is* at the call by reading the call text**, because
+  position cannot say. The slicing criterion is the variable's **last use** —
+  `bidirectional` mode seeds its backward half at last-use — so a prompt argument's
+  criterion is the call line itself and no positional test separates it from a response
+  binding. Roles: receiver 29.3% (`agent`, `graph`, `llm`, `chain`, `model`), argument
+  33.9% (`config`, `messages`, `prompt`, `query`), binding 36.9% (`result`, `response`,
+  `chunk`, `output`).
+
 ---
 
 ## Adjudication and counting

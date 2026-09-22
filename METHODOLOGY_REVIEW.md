@@ -97,3 +97,40 @@ method cannot see. Nothing here is settled — it's the agenda for that conversa
     itself. Commit the classifier; publish the lists.
 30. Code search is not reproducible over time — the artifact CSVs are the record. State
     collection dates.
+
+## I. Slice analysis (2026-09-21)
+
+31. **`relation` in `slice_call_hits.csv` cannot separate prompt from response.** The
+    slicing criterion is the variable's last use, so a prompt argument's criterion is the
+    call line itself. The `role` column (receiver/argument/binding, read off `callable` and
+    `call_source`) carries that distinction instead. `role` has face validity from the
+    variable names alone — `agent`/`graph`/`llm` as receivers, `prompt`/`messages` as
+    arguments, `result`/`response` as bindings — but has had **no hand-checked precision
+    sample**.
+32. **The slice→call join is per-line, so a multi-line call expression loses its binding.**
+    `response = cast("AIMessage", await model.ainvoke(...))` records the call two lines
+    below the assignment. 10.6% of no-binding call sites sit on a multi-line statement
+    against 0.4% of binding ones; 529 are `Assign`/`AnnAssign`. Fix: join on the enclosing
+    statement span rather than the call line.
+33. **"No binding-role slice" is not "the LLM result is unused."** Of the 6,673 in-slice
+    call sites with none: 61.0% bare expression statement, 17.2% inside an `assert`, 13.1%
+    `return`, 7.9% assigned (item 32). At most **4,068 (18.1% of in-slice call sites)** are
+    candidates for a discarded result, and **3,320 of those (81.6%) are in test files** —
+    an LLM called in a test with the result neither bound nor asserted. Before that is a
+    finding it needs: a hand-checked sample; deduction of side-effecting patterns
+    (`.publish_message` 161, `.add` 127, `.stream`/`.run_stream` 99); and deduction of
+    detector false positives — two of four hand-read samples were not LLM calls at all
+    (`create_crm_task.invoke`, `send_fn.invoke`, both caught by the bare `.invoke` pattern).
+34. **Slice hits inherit the haystack `.run` problem** (see CLAUDE.md): 616 of the
+    discarded-result bucket is haystack, and `retriever` (446) and `component` (351) appear
+    among the receivers. The slice tables make that contamination countable per receiver
+    name for the first time, but do not correct it.
+35. **The slice index spans 788 repo directories; the observed scope is 644**, and Stage 6
+    was fed the whole invoker closure, transitive included (`EXCLUSIONS.md` §18). Stage 6b
+    filters to POP on the call side only; the index does not filter at all. This is the
+    same open question as "Stage 6 slicing vs the direct-only rule".
+36. **30.6% of slice-call hits are in slices whose emitted body does not parse**, and 38%
+    are in test paths. Both are columns in `slice_call_hits.csv`, not defects in the join —
+    but any analysis that reads slice *bodies* rather than their line sets has to filter on
+    `parses` first.
+

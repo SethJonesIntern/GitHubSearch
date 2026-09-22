@@ -154,6 +154,46 @@ only LLM call goes straight to the framework API can never be LLM-focal.
 Not yet done: hand-check a precision sample of the 391; report with and without
 haystack-core-integrations.
 
+## Slice analysis — Stage 6a/6b (2026-09-21, branch `slice-index`)
+
+Stage 6 left 4.3 GB of per-repo `programs.jsonl` that nothing read. Two scripts make it
+queryable; neither re-slices nor touches Joern. **PC only** — 6a reads `artifacts/slices/`,
+6b reads 6a's gitignored index.
+
+```
+py -3.14 -m pipeline.slice_index     # ~5 min  -> slice_index.csv + 3 more
+py -3.14 -m pipeline.slice_calls     # ~4 min  -> slice_call_hits.csv + 2 more
+```
+
+| output | tracked | what |
+|---|---|---|
+| `slice_index.csv` (994 MB) | no | 1 row / subprogram, 2,955,122 rows |
+| `slice_pdg_lines.csv.gz` | no | long form `(slice_id, line)`; the join key |
+| `slice_code.jsonl.gz` | no | content store, 1 row / unique `code_sha256` |
+| `slice_files.csv`, `slice_index_summary.json` | yes | 77,901 sliced files; corpus totals |
+| `slice_call_hits.csv` (23 MB) | yes | 1 row / slice-call pair, 58,478 rows |
+| `slice_calls_by_call.csv`, `slice_calls_summary.json` | yes | 1 row / observed call site |
+
+**Reconciled exactly** against the slicer's own totals: 2,955,122 subprograms, 1,089,429
+unparseable. 6b takes its scope from `make_figures` (POP 644, CALLS 23,990).
+
+- **93.8% of the 23,990 observed call sites lie inside ≥1 slice** (96.1% of the 23,401 in
+  a sliced repo). Only 1.73% of slices touch a call.
+- **63.1% of subprograms parse.** The emitted body is truncated otherwise; the `pdg_lines`
+  metadata is unaffected, so the join is unharmed but body-level analysis must filter on
+  `parses`.
+- **Exact cross-repo clones are thin**: 43,629 of 2,227,979 distinct bodies (1.96%) occur
+  in >1 repo. Mining shared idioms off `code_sha256` alone will not carry a result.
+- **`relation` is not a prompt/response split.** The criterion is the variable's *last
+  use*, so a prompt argument's criterion is the call line. Use `role` (receiver 29.3% /
+  argument 33.9% / binding 36.9%), read off `callable` + `call_source`.
+
+Unsettled, parked in `METHODOLOGY_REVIEW.md` §I (items 31–36): no precision sample for
+`role`; the per-line join loses bindings on multi-line calls; **"no binding" ≠ "result
+unused"** (at most 4,068 call sites, 81.6% of them in test files, before deducting
+side-effecting patterns and `.invoke` false positives); haystack contamination carries
+through; the index spans 788 dirs against the observed 644.
+
 ## To look at: found 2026-09-18, nothing decided or changed
 
 - **Haystack `.run` matches non-LLM components.** Haystack's patterns are just
