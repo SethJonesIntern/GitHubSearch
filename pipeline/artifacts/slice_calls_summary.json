@@ -1,0 +1,265 @@
+{
+  "generated": "2026-09-21T20:15:36",
+  "elapsed_seconds": 22.5,
+  "scope": "observed (make_figures.POP/CALLS)",
+  "observed_repos": 644,
+  "observed_call_sites": 23990,
+  "call_sites_in_a_sliced_repo": 23401,
+  "pct_call_sites_in_a_sliced_repo": 97.54,
+  "call_sites_inside_at_least_one_slice": 22492,
+  "pct_call_sites_inside_a_slice": 93.76,
+  "pct_call_sites_inside_a_slice_of_sliced": 96.12,
+  "index_rows_scanned": 2955122,
+  "slices_touching_a_call": 51089,
+  "slices_touching_a_call_nondup": 40278,
+  "pct_slices_touching_a_call": 1.73,
+  "slice_call_pairs": 58478,
+  "repos_with_a_hit": 632,
+  "hits_in_test_paths": 22272,
+  "hits_unparseable_slice": 17913,
+  "relation": {
+    "call_at_last_use": 27040,
+    "call_before_last_use": 30323,
+    "call_after_last_use": 1115
+  },
+  "role": {
+    "argument": 19798,
+    "binding": 21573,
+    "receiver": 17107
+  },
+  "role_nondup": {
+    "argument": 12377,
+    "binding": 19383,
+    "receiver": 14616
+  },
+  "pct_role": {
+    "argument": 33.86,
+    "binding": 36.89,
+    "receiver": 29.25
+  },
+  "relation_x_role": {
+    "call_after_last_use|argument": 414,
+    "call_after_last_use|binding": 399,
+    "call_after_last_use|receiver": 302,
+    "call_at_last_use|argument": 14085,
+    "call_at_last_use|binding": 341,
+    "call_at_last_use|receiver": 12614,
+    "call_before_last_use|argument": 5299,
+    "call_before_last_use|binding": 20833,
+    "call_before_last_use|receiver": 4191
+  },
+  "relation_nondup": {
+    "call_at_last_use": 18852,
+    "call_before_last_use": 26889,
+    "call_after_last_use": 635
+  },
+  "pct_relation": {
+    "call_at_last_use": 46.24,
+    "call_before_last_use": 51.85,
+    "call_after_last_use": 1.91
+  },
+  "criterion_exact_hits": 58478,
+  "criterion_span_hits": 0,
+  "pct_criterion_exact": 100.0,
+  "by_framework": {
+    "langchain_core": {
+      "call_sites": 6398,
+      "in_slice": 5786,
+      "pct": 90.43
+    },
+    "langgraph": {
+      "call_sites": 3800,
+      "in_slice": 3695,
+      "pct": 97.24
+    },
+    "haystack": {
+      "call_sites": 2603,
+      "in_slice": 2509,
+      "pct": 96.39
+    },
+    "agent_framework": {
+      "call_sites": 1898,
+      "in_slice": 1864,
+      "pct": 98.21
+    },
+    "pydantic_ai": {
+      "call_sites": 1343,
+      "in_slice": 1312,
+      "pct": 97.69
+    },
+    "langchain_openai": {
+      "call_sites": 1197,
+      "in_slice": 1158,
+      "pct": 96.74
+    },
+    "agents": {
+      "call_sites": 684,
+      "in_slice": 671,
+      "pct": 98.1
+    },
+    "langchain": {
+      "call_sites": 632,
+      "in_slice": 580,
+      "pct": 91.77
+    },
+    "mem0": {
+      "call_sites": 533,
+      "in_slice": 495,
+      "pct": 92.87
+    },
+    "crewai": {
+      "call_sites": 508,
+      "in_slice": 478,
+      "pct": 94.09
+    },
+    "swarm": {
+      "call_sites": 505,
+      "in_slice": 503,
+      "pct": 99.6
+    },
+    "autogen_agentchat": {
+      "call_sites": 481,
+      "in_slice": 474,
+      "pct": 98.54
+    },
+    "agno": {
+      "call_sites": 445,
+      "in_slice": 421,
+      "pct": 94.61
+    },
+    "autogen_core": {
+      "call_sites": 407,
+      "in_slice": 382,
+      "pct": 93.86
+    },
+    "dspy": {
+      "call_sites": 401,
+      "in_slice": 336,
+      "pct": 83.79
+    },
+    "langchain_anthropic": {
+      "call_sites": 392,
+      "in_slice": 347,
+      "pct": 88.52
+    },
+    "langchain_community": {
+      "call_sites": 370,
+      "in_slice": 346,
+      "pct": 93.51
+    },
+    "smolagents": {
+      "call_sites": 335,
+      "in_slice": 139,
+      "pct": 41.49
+    },
+    "autogen_ext": {
+      "call_sites": 246,
+      "in_slice": 246,
+      "pct": 100.0
+    },
+    "camel": {
+      "call_sites": 160,
+      "in_slice": 145,
+      "pct": 90.62
+    },
+    "semantic_kernel": {
+      "call_sites": 149,
+      "in_slice": 145,
+      "pct": 97.32
+    },
+    "autogen": {
+      "call_sites": 103,
+      "in_slice": 95,
+      "pct": 92.23
+    },
+    "langchain_ollama": {
+      "call_sites": 97,
+      "in_slice": 93,
+      "pct": 95.88
+    },
+    "langchain_google_genai": {
+      "call_sites": 85,
+      "in_slice": 81,
+      "pct": 95.29
+    },
+    "langchain_aws": {
+      "call_sites": 60,
+      "in_slice": 56,
+      "pct": 93.33
+    },
+    "astrbot": {
+      "call_sites": 45,
+      "in_slice": 45,
+      "pct": 100.0
+    },
+    "graphrag": {
+      "call_sites": 28,
+      "in_slice": 28,
+      "pct": 100.0
+    },
+    "langchain_google_vertexai": {
+      "call_sites": 19,
+      "in_slice": 7,
+      "pct": 36.84
+    },
+    "langchain_experimental": {
+      "call_sites": 16,
+      "in_slice": 16,
+      "pct": 100.0
+    },
+    "langchain_cohere": {
+      "call_sites": 13,
+      "in_slice": 13,
+      "pct": 100.0
+    },
+    "langchain_huggingface": {
+      "call_sites": 12,
+      "in_slice": 4,
+      "pct": 33.33
+    },
+    "langchain_mistralai": {
+      "call_sites": 9,
+      "in_slice": 6,
+      "pct": 66.67
+    },
+    "langchain_nvidia_ai_endpoints": {
+      "call_sites": 5,
+      "in_slice": 5,
+      "pct": 100.0
+    },
+    "langchain_groq": {
+      "call_sites": 3,
+      "in_slice": 3,
+      "pct": 100.0
+    },
+    "swarms": {
+      "call_sites": 3,
+      "in_slice": 3,
+      "pct": 100.0
+    },
+    "langchain_together": {
+      "call_sites": 2,
+      "in_slice": 2,
+      "pct": 100.0
+    },
+    "langchain_deepseek": {
+      "call_sites": 1,
+      "in_slice": 1,
+      "pct": 100.0
+    },
+    "langchain_perplexity": {
+      "call_sites": 1,
+      "in_slice": 1,
+      "pct": 100.0
+    },
+    "langchain_xai": {
+      "call_sites": 1,
+      "in_slice": 1,
+      "pct": 100.0
+    }
+  },
+  "outputs": {
+    "slice_call_hits_csv": "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\artifacts\\slice_call_hits.csv",
+    "slice_calls_by_call_csv": "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\artifacts\\slice_calls_by_call.csv"
+  }
+}
