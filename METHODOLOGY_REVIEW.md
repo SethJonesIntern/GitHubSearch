@@ -115,9 +115,11 @@ method cannot see. Nothing here is settled — it's the agenda for that conversa
 33. **"No binding-role slice" is not "the LLM result is unused."** Of the 6,673 in-slice
     call sites with none: 61.0% bare expression statement, 17.2% inside an `assert`, 13.1%
     `return`, 7.9% assigned (item 32). At most **4,068 (18.1% of in-slice call sites)** are
-    candidates for a discarded result, and **3,320 of those (81.6%) are in test files** —
-    an LLM called in a test with the result neither bound nor asserted. Before that is a
-    finding it needs: a hand-checked sample; deduction of side-effecting patterns
+    candidates for a discarded result. Split by `code_kind`: **3,248 in test functions**,
+    84 in test support, **736 in production** — an LLM called in a test with the result
+    neither bound nor asserted, and a smaller production set that calls and drops. (The
+    first write-up said 3,320 test / 748 non-test from an ad-hoc path check; superseded.)
+    Before either is a finding it needs: a hand-checked sample; deduction of side-effecting patterns
     (`.publish_message` 161, `.add` 127, `.stream`/`.run_stream` 99); and deduction of
     detector false positives — two of four hand-read samples were not LLM calls at all
     (`create_crm_task.invoke`, `send_fn.invoke`, both caught by the bare `.invoke` pattern).
@@ -129,8 +131,10 @@ method cannot see. Nothing here is settled — it's the agenda for that conversa
     was fed the whole invoker closure, transitive included (`EXCLUSIONS.md` §18). Stage 6b
     filters to POP on the call side only; the index does not filter at all. This is the
     same open question as "Stage 6 slicing vs the direct-only rule".
-36. **30.6% of slice-call hits are in slices whose emitted body does not parse**, and 38%
-    are in test paths. Both are columns in `slice_call_hits.csv`, not defects in the join —
-    but any analysis that reads slice *bodies* rather than their line sets has to filter on
-    `parses` first.
+36. **35.1% of the 51,089 slices touching a call have a body that does not parse**
+    (17,913). Corrected 2026-09-22: the first write-up divided that slice count by the
+    58,478 slice-call *pairs* and said 30.6%, and did the same for test paths (said 38%).
+    The summary JSON now names slice and pair counts separately. `parses` is a column, not
+    a defect in the join — but anything that reads slice *bodies* rather than their line
+    sets has to filter on it first.
 

@@ -1,13 +1,23 @@
 {
-  "generated": "2026-09-21T19:43:17",
+  "generated": "2026-09-22T15:07:30",
   "slices_dir": "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\artifacts\\slices",
-  "elapsed_seconds": 284.7,
+  "elapsed_seconds": 300.0,
   "repo_dirs_seen": 788,
   "repos_with_programs_jsonl": 788,
   "repos_without_programs_jsonl": 0,
   "repos_without_programs_jsonl_names": [],
   "sliced_source_files": 77901,
   "subprograms": 2955122,
+  "subprograms_by_code_kind": {
+    "test": 1033549,
+    "test_support": 101816,
+    "production": 1819757
+  },
+  "pct_subprograms_by_code_kind": {
+    "test": 34.97,
+    "test_support": 3.45,
+    "production": 61.58
+  },
   "subprograms_duplicate": 589788,
   "pct_duplicate": 19.96,
   "unique_bodies_corpus_wide": 2227979,

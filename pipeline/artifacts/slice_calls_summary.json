@@ -1,6 +1,6 @@
 {
-  "generated": "2026-09-21T20:15:36",
-  "elapsed_seconds": 22.5,
+  "generated": "2026-09-22T15:07:53",
+  "elapsed_seconds": 22.4,
   "scope": "observed (make_figures.POP/CALLS)",
   "observed_repos": 644,
   "observed_call_sites": 23990,
@@ -15,8 +15,50 @@
   "pct_slices_touching_a_call": 1.73,
   "slice_call_pairs": 58478,
   "repos_with_a_hit": 632,
-  "hits_in_test_paths": 22272,
-  "hits_unparseable_slice": 17913,
+  "call_sites_by_code_kind": {
+    "test": 12519,
+    "test_support": 549,
+    "production": 10922
+  },
+  "call_sites_in_slice_by_code_kind": {
+    "test": 11902,
+    "test_support": 529,
+    "production": 10061
+  },
+  "slices_touching_a_call_by_code_kind": {
+    "test": 21046,
+    "test_support": 1218,
+    "production": 28825
+  },
+  "pct_slices_touching_a_call_by_code_kind": {
+    "test": 41.19,
+    "test_support": 2.38,
+    "production": 56.42
+  },
+  "pairs_by_code_kind": {
+    "test": 24887,
+    "test_support": 1407,
+    "production": 32184
+  },
+  "role_by_code_kind": {
+    "test": {
+      "receiver": 10766,
+      "argument": 6261,
+      "binding": 7860
+    },
+    "test_support": {
+      "receiver": 432,
+      "argument": 479,
+      "binding": 496
+    },
+    "production": {
+      "receiver": 5909,
+      "argument": 13058,
+      "binding": 13217
+    }
+  },
+  "slices_touching_a_call_unparseable": 17913,
+  "pct_slices_touching_a_call_unparseable": 35.06,
   "relation": {
     "call_at_last_use": 27040,
     "call_before_last_use": 30323,

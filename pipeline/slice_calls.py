@@ -54,7 +54,7 @@ for _p in (_ROOT, _ROOT / "Applications", _ROOT / "Wrapper"):
 
 from pipeline import paths  # noqa: E402
 from pipeline.slice_index import (  # noqa: E402
-    SLICE_INDEX_CSV, SLICE_PDG_LINES_CSV_GZ,
+    CODE_KINDS, SLICE_INDEX_CSV, SLICE_PDG_LINES_CSV_GZ, code_kind,
 )
 
 SLICE_CALL_HITS_CSV = paths.ARTIFACTS_DIR / "slice_call_hits.csv"      # 1 row / (slice, call site)
@@ -62,16 +62,19 @@ SLICE_CALLS_BY_CALL_CSV = paths.ARTIFACTS_DIR / "slice_calls_by_call.csv"  # 1 r
 SLICE_CALLS_SUMMARY_JSON = paths.ARTIFACTS_DIR / "slice_calls_summary.json"
 
 HIT_FIELDS = [
-    "slice_id", "repo", "rel_path", "is_test_path", "method", "variable",
+    "slice_id", "repo", "rel_path", "code_kind", "method", "variable",
     "is_duplicate", "parses", "n_pdg", "n_criterion", "criterion_first", "criterion_last",
     "criterion_exact",   # n_criterion == 1, so the direction call is exact rather than a span test
-    "call_id", "call_repo", "framework", "pattern", "call_line", "enclosing_qname",
+    "call_id", "call_repo", "call_code_kind", "framework", "pattern", "call_line",
+    "enclosing_qname",
     "relation",          # call_before_last_use | call_at_last_use | call_after_last_use
     "role",              # receiver | argument | binding  (what the variable is at the call)
 ]
 
 CALL_FIELDS = [
-    "call_id", "repo", "repo_slug", "rel_path", "framework", "pattern", "call_line",
+    "call_id", "repo", "repo_slug", "rel_path",
+    "code_kind",   # test | test_support | production, from the file + enclosing function
+    "framework", "pattern", "call_line",
     "enclosing_qname", "repo_sliced", "in_slice",
     "n_slices", "n_slices_nondup", "n_variables",
     "n_before", "n_at", "n_after",
@@ -158,7 +161,9 @@ def build(all_repos: bool, quiet: bool) -> Dict[str, Any]:
         slug, rel = _split_file(c["file"])
         key = (slug, rel, int(c["call_line"]))
         by_line[key].append(c)
-        call_meta[c["call_id"]] = {"slug": slug, "rel": rel, "row": c}
+        func = str(c.get("enclosing_qname") or "").rsplit(".", 1)[-1]
+        call_meta[c["call_id"]] = {"slug": slug, "rel": rel, "row": c,
+                                   "kind": code_kind(rel, func)}
     slugs_with_calls = {k[0] for k in by_line}
 
     # Which of those slugs were actually sliced at all (Stage 6 coverage).
@@ -182,8 +187,12 @@ def build(all_repos: bool, quiet: bool) -> Dict[str, Any]:
     rel_role_counter: Counter = Counter()
     crit_counter: Counter = Counter()
     hit_repos: set = set()
-    test_hits = 0
-    unparseable_hits = 0
+    # Counted per SLICE (a slice can hold several call sites) and per PAIR;
+    # the two have different denominators and must not be mixed.
+    slices_by_kind: Counter = Counter()
+    pairs_by_kind: Counter = Counter()
+    role_by_kind: Counter = Counter()
+    n_slices_unparseable = 0
 
     hits_fh = SLICE_CALL_HITS_CSV.open("w", encoding="utf-8", newline="")
     try:
@@ -228,16 +237,19 @@ def build(all_repos: bool, quiet: bool) -> Dict[str, Any]:
                         role = _role(row["variable"], str(c.get("callable") or ""),
                                      str(c.get("call_source") or ""))
                         hits_w.writerow([
-                            sid, slug, rel, row["is_test_path"], row["method"], row["variable"],
+                            sid, slug, rel, row["code_kind"], row["method"], row["variable"],
                             row["is_duplicate"], row["parses"], row["n_pdg"],
                             n_crit, c_first, c_last, crit_exact,
-                            c["call_id"], c["repo"], c["framework"], c["pattern"], ln,
+                            c["call_id"], c["repo"], call_meta[c["call_id"]]["kind"],
+                            c["framework"], c["pattern"], ln,
                             c.get("enclosing_qname", ""), rel_kind, role,
                         ])
                         n_hits += 1
                         slice_hit = True
                         rel_counter[rel_kind] += 1
                         role_counter[role] += 1
+                        pairs_by_kind[row["code_kind"]] += 1
+                        role_by_kind[(row["code_kind"], role)] += 1
                         rel_role_counter[(rel_kind, role)] += 1
                         if not is_dup:
                             rel_counter_nondup[rel_kind] += 1
@@ -260,10 +272,9 @@ def build(all_repos: bool, quiet: bool) -> Dict[str, Any]:
                     hit_repos.add(slug)
                     if not is_dup:
                         n_slices_with_hit_nondup += 1
-                    if row["is_test_path"] == "1":
-                        test_hits += 1
+                    slices_by_kind[row["code_kind"]] += 1
                     if row["parses"] == "0":
-                        unparseable_hits += 1
+                        n_slices_unparseable += 1
 
                 if not quiet and n_index_rows % 500000 == 0:
                     print("  {:>9,} index rows, {:,} hits".format(n_index_rows, n_hits),
@@ -274,6 +285,8 @@ def build(all_repos: bool, quiet: bool) -> Dict[str, Any]:
     # Per-call-site table: every observed call site, whether or not a slice hit it.
     fw_total: Counter = Counter()
     fw_in_slice: Counter = Counter()
+    calls_by_kind: Counter = Counter()
+    calls_in_slice_by_kind: Counter = Counter()
     with SLICE_CALLS_BY_CALL_CSV.open("w", encoding="utf-8", newline="") as fh:
         w = csv.writer(fh)
         w.writerow(CALL_FIELDS)
@@ -282,11 +295,15 @@ def build(all_repos: bool, quiet: bool) -> Dict[str, Any]:
             pc = per_call[cid]
             in_slice = 1 if pc["n_slices"] else 0
             fw_total[c["framework"]] += 1
+            calls_by_kind[meta["kind"]] += 1
+            if in_slice:
+                calls_in_slice_by_kind[meta["kind"]] += 1
             if in_slice:
                 fw_in_slice[c["framework"]] += 1
             variables = sorted(pc["variables"])
             w.writerow([
-                cid, c["repo"], meta["slug"], meta["rel"], c["framework"], c["pattern"],
+                cid, c["repo"], meta["slug"], meta["rel"], meta["kind"],
+                c["framework"], c["pattern"],
                 c["call_line"], c.get("enclosing_qname", ""),
                 1 if meta["slug"] in sliced_slugs else 0, in_slice,
                 pc["n_slices"], pc["n_slices_nondup"], len(variables),
@@ -319,8 +336,17 @@ def build(all_repos: bool, quiet: bool) -> Dict[str, Any]:
         "pct_slices_touching_a_call": _pct(n_slices_with_hit, n_index_rows),
         "slice_call_pairs": n_hits,
         "repos_with_a_hit": len(hit_repos),
-        "hits_in_test_paths": test_hits,
-        "hits_unparseable_slice": unparseable_hits,
+        "call_sites_by_code_kind": {k: calls_by_kind.get(k, 0) for k in CODE_KINDS},
+        "call_sites_in_slice_by_code_kind": {k: calls_in_slice_by_kind.get(k, 0) for k in CODE_KINDS},
+        "slices_touching_a_call_by_code_kind": {k: slices_by_kind.get(k, 0) for k in CODE_KINDS},
+        "pct_slices_touching_a_call_by_code_kind": {
+            k: _pct(slices_by_kind.get(k, 0), n_slices_with_hit) for k in CODE_KINDS},
+        "pairs_by_code_kind": {k: pairs_by_kind.get(k, 0) for k in CODE_KINDS},
+        "role_by_code_kind": {
+            k: {r: role_by_kind.get((k, r), 0) for r in ("receiver", "argument", "binding")}
+            for k in CODE_KINDS},
+        "slices_touching_a_call_unparseable": n_slices_unparseable,
+        "pct_slices_touching_a_call_unparseable": _pct(n_slices_unparseable, n_slices_with_hit),
         "relation": dict(rel_counter),
         "role": dict(role_counter),
         "role_nondup": dict(role_counter_nondup),

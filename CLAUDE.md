@@ -187,12 +187,20 @@ unparseable. 6b takes its scope from `make_figures` (POP 644, CALLS 23,990).
 - **`relation` is not a prompt/response split.** The criterion is the variable's *last
   use*, so a prompt argument's criterion is the call line. Use `role` (receiver 29.3% /
   argument 33.9% / binding 36.9%), read off `callable` + `call_source`.
+- **Split test from production with `code_kind`**, never a path check:
+  `test` | `test_support` | `production`, on every slice, hit and call site.
+  `test` = Stage 5's own rule (`engines.is_test_file` + `is_test_function`), and matches
+  the ND tests (9,702 vs 9,700, overlap 9,693). `test_support` (fixtures, helpers,
+  `conftest.py`, the rest of `tests/`) is what Stage 5 calls production; keep it out of
+  production claims. Slices 35.0 / 3.4 / 61.6%; call sites 12,519 / 549 / 10,922.
+  Tests slice the agent object (receiver 43.3% of pairs); production slices prompt and
+  response (argument 40.6%, binding 41.1%).
 
 Unsettled, parked in `METHODOLOGY_REVIEW.md` §I (items 31–36): no precision sample for
 `role`; the per-line join loses bindings on multi-line calls; **"no binding" ≠ "result
-unused"** (at most 4,068 call sites, 81.6% of them in test files, before deducting
-side-effecting patterns and `.invoke` false positives); haystack contamination carries
-through; the index spans 788 dirs against the observed 644.
+unused"** (at most 4,068 bare-statement call sites: 3,248 test, 84 test support, 736
+production, before deducting side-effecting patterns and `.invoke` false positives);
+haystack contamination carries through; the index spans 788 dirs against the observed 644.
 
 ## To look at: found 2026-09-18, nothing decided or changed
 

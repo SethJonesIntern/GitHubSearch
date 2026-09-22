@@ -34,6 +34,7 @@ from pathlib import Path
 from typing import Any, Dict, Iterator, List, Optional, Set, Tuple
 
 from . import paths
+from .engines import is_test_file, is_test_function
 
 # -- outputs -------------------------------------------------------------------
 SLICE_INDEX_CSV = paths.ARTIFACTS_DIR / "slice_index.csv"                 # 1 row / subprogram
@@ -47,7 +48,7 @@ INDEX_FIELDS = [
     "repo",            # slices/ subdir name == clone dir name == repo slug
     "program",         # the slicer's name for the source file (its stem)
     "rel_path",        # source file, repo-relative, forward slashes
-    "is_test_path",
+    "code_kind",       # test | test_support | production -- see code_kind()
     "slice_file",      # the slicer's filename for this subprogram
     "method",
     "variable",
@@ -64,7 +65,7 @@ INDEX_FIELDS = [
 ]
 
 FILE_FIELDS = [
-    "repo", "program", "rel_path", "is_test_path",
+    "repo", "program", "rel_path", "file_kind",   # test | test_support | production
     "subprogram_count", "deduplicated_count", "duplicate_count",
     "syntax_error_count",   # as the slicer recorded it, per source file
     "n_methods", "n_variables",
@@ -73,6 +74,8 @@ FILE_FIELDS = [
 ]
 
 TEST_DIR_NAMES = {"test", "tests", "testing", "unittest", "unittests"}
+
+CODE_KINDS = ("test", "test_support", "production")
 
 
 def _rel_path(source_path: str, repo: str) -> str:
@@ -91,12 +94,38 @@ def _rel_path(source_path: str, repo: str) -> str:
     return norm.rsplit("/", 1)[-1]
 
 
-def _is_test_path(rel_path: str) -> bool:
+def _in_test_tree(rel_path: str) -> bool:
     parts = rel_path.split("/")
-    stem = parts[-1]
-    if any(p.lower() in TEST_DIR_NAMES for p in parts[:-1]):
-        return True
-    return stem.startswith("test_") or stem.endswith(("_test.py", "_tests.py"))
+    return parts[-1] == "conftest.py" or any(p.lower() in TEST_DIR_NAMES for p in parts[:-1])
+
+
+def file_kind(rel_path: str) -> str:
+    """test | test_support | production, for a source file."""
+    if is_test_file(rel_path):
+        return "test"
+    return "test_support" if _in_test_tree(rel_path) else "production"
+
+
+def code_kind(rel_path: str, function: str) -> str:
+    """test | test_support | production, for code in `function` of `rel_path`.
+
+    ``test`` is exactly Stage 5's definition of a test -- the engines
+    predicates that batch_call_metadata._tests_among applies: a pytest-
+    discoverable file (``test_*.py`` / ``*_test.py``) AND a function named
+    ``test_*``. Imported, not restated, so the slice split and the ND-test
+    count can never drift apart.
+
+    ``test_support`` is test code that is not a test: helpers and fixtures
+    inside a test file, ``conftest.py``, and anything else under a test
+    directory. Stage 5 would call it production; it is kept apart because a
+    fixture that calls a model is test scaffolding, and counting it as
+    production would contaminate any claim about application code.
+    """
+    if is_test_file(rel_path) and is_test_function(function or ""):
+        return "test"
+    if is_test_file(rel_path) or _in_test_tree(rel_path):
+        return "test_support"
+    return "production"
 
 
 def _span(lines: List[int]) -> Tuple[int, str, str, str]:
@@ -180,6 +209,7 @@ def build(slices_dir: Path, limit: Optional[int], only: Optional[str],
     pdg_sizes = array("i")
     inserted_sizes = array("i")
     per_repo: Dict[str, Dict[str, int]] = {}
+    kind_counts: Dict[str, int] = {k: 0 for k in CODE_KINDS}
 
     code_fh = gzip.open(SLICE_CODE_JSONL_GZ, "wt", encoding="utf-8", newline="\n") if write_code else None
     lines_fh = gzip.open(SLICE_PDG_LINES_CSV_GZ, "wt", encoding="utf-8", newline="")
@@ -215,7 +245,7 @@ def build(slices_dir: Path, limit: Optional[int], only: Optional[str],
                 schemas[schema] = schemas.get(schema, 0) + 1
 
                 rel_path = _rel_path(rec.get("source_path") or rec.get("source_file") or "", repo)
-                is_test = _is_test_path(rel_path)
+                fkind = file_kind(rel_path)
                 program = rec.get("program") or Path(rel_path).stem
 
                 # Bodies live only on the deduplicated records. Pair them to the
@@ -302,9 +332,11 @@ def build(slices_dir: Path, limit: Optional[int], only: Optional[str],
                     n_pdg, p_first, p_last, p_span = _span(pdg)
                     n_inserted = len(set(standalone) - set(pdg))
 
+                    kind = code_kind(rel_path, item.get("method") or "")
+                    kind_counts[kind] += 1
                     slice_id += 1
                     index_w.writerow([
-                        slice_id, repo, program, rel_path, int(is_test),
+                        slice_id, repo, program, rel_path, kind,
                         slice_file, item.get("method") or "", item.get("variable") or "",
                         item.get("criterion_mode") or "",
                         int(is_dup), dedup_file,
@@ -330,7 +362,7 @@ def build(slices_dir: Path, limit: Optional[int], only: Optional[str],
                     repo_rows += 1
 
                 files_w.writerow([
-                    repo, program, rel_path, int(is_test),
+                    repo, program, rel_path, fkind,
                     rec.get("subprogram_count", ""), rec.get("deduplicated_count", ""),
                     rec.get("duplicate_count", ""), rec.get("syntax_error_count", ""),
                     len(methods), len(variables), file_rows, schema,
@@ -368,6 +400,8 @@ def build(slices_dir: Path, limit: Optional[int], only: Optional[str],
         "repos_without_programs_jsonl_names": sorted(repos_without_jsonl)[:50],
         "sliced_source_files": n_programs,
         "subprograms": n_rows,
+        "subprograms_by_code_kind": kind_counts,
+        "pct_subprograms_by_code_kind": {k: _pct(v, n_rows) for k, v in kind_counts.items()},
         "subprograms_duplicate": n_dup_rows,
         "pct_duplicate": _pct(n_dup_rows, n_rows),
         "unique_bodies_corpus_wide": n_unique,

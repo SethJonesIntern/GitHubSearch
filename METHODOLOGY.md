@@ -282,6 +282,14 @@ codebase. Everything the study reports as a headline is computed from direct cal
   collide (16 filenames, 32 rows corpus-wide) and a name lookup gives both the same body.
 - Reconciled against the slicer's own totals, exactly: 2,955,122 subprograms, and
   1,089,429 unparseable against its summed `syntax_error_count`.
+- **Classified every slice as `test`, `test_support` or `production`** (`code_kind`).
+  `test` is Stage 5's own definition, imported from `pipeline.engines`: a pytest-discoverable
+  file (`test_*.py` / `*_test.py`) *and* a `test_*` function. `test_support` is test code
+  that is not a test — helpers and fixtures inside a test file, `conftest.py`, anything else
+  under a test directory — kept apart because Stage 5 would call it production, and a
+  fixture that calls a model is scaffolding, not application code. Slices: 35.0% test, 3.4%
+  test support, 61.6% production. Checked against the ND tests: 9,702 test functions hold an
+  observed call site against 9,700 ND tests, overlapping on 9,693.
 - Descriptively: 19.96% of subprograms are within-file duplicates; 2,227,979 distinct
   bodies, of which only 43,629 (1.96%) occur in more than one repository; median slice
   4 PDG lines, with a median 5 further lines added only to keep the snippet parseable.
@@ -302,6 +310,11 @@ codebase. Everything the study reports as a headline is computed from direct cal
   binding. Roles: receiver 29.3% (`agent`, `graph`, `llm`, `chain`, `model`), argument
   33.9% (`config`, `messages`, `prompt`, `query`), binding 36.9% (`result`, `response`,
   `chunk`, `output`).
+- **The role mix differs sharply between tests and production.** Of slice-call pairs in
+  test functions, 43.3% are receivers (the agent object); in production, 18.4%. Production
+  pairs are 40.6% argument and 41.1% binding — prompt in, response out — against 25.2% and
+  31.6% in tests. Of the 23,990 call sites, 12,519 sit in test functions, 549 in test
+  support and 10,922 in production.
 
 ---
 
