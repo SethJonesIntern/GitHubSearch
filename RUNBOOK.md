@@ -107,3 +107,61 @@ population, test, determinism-knob, and call-graph-health sections.
 - **Grep tooling**: `pipeline/repos` is gitignored, so ripgrep-based tools skip it
   silently and report a false "not found". Use `rg --no-ignore` on the clones.
 - To wipe kept clones: `py -3.14 -m pipeline.clean_clones` (`--dry-run` to preview).
+
+## Method-to-test baseline (branch codex/method-test-mapping-baseline)
+
+Run on the PC holding `pipeline/repos/`, `pipeline/artifacts/pym2t_focal_tests.csv`
+and `pipeline/artifacts/pym2t_runs.csv` from the completed focal-mapping run:
+
+```powershell
+git fetch origin
+git switch codex/method-test-mapping-baseline
+git pull --ff-only
+git lfs pull
+py -3.14 -m pipeline.method_test_baseline
+```
+
+The script reads existing clones and mappings; it does not rerun Joern or
+PyMethods2Test. It also reads the canonical tracked inputs used by
+`Applications.make_figures.POP/CALLS`; use the existing analysis environment.
+If the focal outputs are missing, regenerate them with
+`py -3.14 -m pipeline.pym2t_focal` on that PC first (see CLAUDE.md).
+`--limit 5` is a smoke run only. `--repos-dir`, `--artifacts-dir` (focal inputs),
+and `--output-dir` override local paths; observed scope still comes from this
+checkout's canonical POP/CALLS inputs.
+
+The denominator is **production functions/methods**, inventoried by AST from the
+saved clones (including nested and async defs, excluding synthetic constructors).
+The same `slice_index.code_kind` rule excludes tests and test support. A method
+is LLM-containing when an observed, direct framework call lies in its innermost
+function body; `other` means no such detected call, not necessarily no indirect
+LLM behavior. Calls in decorators/default expressions are not function-body calls;
+unjoined production calls are flagged for review.
+
+Each method counts once. Its numerator flag is whether at least one test maps to
+that exact file/definition line/name/end line, using all identified tests, not
+only tests that call an LLM themselves. The report also gives exact-name-only
+mapping rates as a sensitivity check alongside the exact+fuzzy rates. These are
+heuristic test correspondences, not execution coverage or proof of absent tests.
+
+Outputs under `pipeline/artifacts/method_test_baseline/`:
+
+- `summary.json`: method counts/rates for LLM vs other methods, pooled over all
+  complete repos and separately over repos having both groups; equal-weight
+  per-repo averages and paired percentage-point differences; exclusion diagnostics.
+- `by_repo.csv`: both denominators, mapped counts, rates and difference per repo.
+- `methods.csv`: one row per eligible method with mapped-test counts (gitignored).
+
+Missing clones, failed/incomplete focal runs, replay mismatches, inconsistent
+mapping counts, source parse failures and unjoined production calls/focals exclude
+the whole repo from both groups, with a recorded reason. Successful `no_tests`
+runs remain eligible with zero mappings. Inspect exclusions before interpreting
+results; the retained subset may differ from the full observed population.
+Line/name/end checks detect some snapshot drift but do not verify source hashes.
+The raw tool may also have skipped source files; this baseline inventories parseable
+clone source independently and does not make its denominator depend on successful
+test identification. Existing name/location heuristics may miss unconventional tests.
+
+Return `summary.json` and `by_repo.csv` for review; individual methods can be inspected
+on the PC. This replaces the earlier unfiltered 262/18,911 estimate for any
+production-only claim. It does not overwrite existing F4 figures or historical results.

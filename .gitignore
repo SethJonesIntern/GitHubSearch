@@ -23,3 +23,6 @@ __pycache__/
 pipeline/artifacts/slice_index.csv
 pipeline/artifacts/slice_pdg_lines.csv.gz
 pipeline/artifacts/slice_code.jsonl.gz
+
+# Full method inventory; keep the small baseline summary/by-repo outputs reviewable.
+pipeline/artifacts/method_test_baseline/methods.csv

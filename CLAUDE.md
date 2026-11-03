@@ -105,6 +105,13 @@ statistic on the next run.**
 
 ## Focal mapping — pyMethods2Test
 
+Method-first comparison branch: `codex/method-test-mapping-baseline`.
+`py -3.14 -m pipeline.method_test_baseline` compares production methods with a
+direct observed framework call against other production methods in the same
+repos. Needs full focal CSVs + clones on the PC; see RUNBOOK.md's method-to-test
+baseline section. Results pending a full PC run. Earlier 262/18,911 counts included
+test code and must not be presented as production-method test correspondence.
+
 **Decided 2026-09-15: focal mapping uses pyMethods2Test** (Abdelmadjid & Dyer, MSR 2025,
 Zenodo `14264519`, Apache 2.0), not our `pipeline/focal_map.py` (26.5% method-level match,
 superseded; its `observed_tests()` is still the ND-test scope definition).
