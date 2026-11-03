@@ -1,5 +1,10 @@
 # Findings — one question, one figure, one table
 
+**Historical figures under review for the correctness-guardrail study (2026-11-03).**
+See `METHODOLOGY_REVIEW.md` section J. These figures do not measure validated guardrail
+prevalence. F2 is generation configuration; F4/F5 need a production-method baseline.
+The saved images have not been regenerated during this review.
+
 Observed population: **644 applications** in which a framework LLM call site was detected. Raw provider-SDK calls are excluded.
 
 Regenerate with `py -3.14 Applications/make_figures.py`.

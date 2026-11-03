@@ -1,4 +1,9 @@
-"""The figure set: one question, one figure, one table twin.
+"""Historical figure set; guardrail relevance reviewed in METHODOLOGY_REVIEW.md J.
+
+F1 is an evaluation-library proxy, F2 generation configuration, F3 population
+context, and F4/F5 heuristic correspondence diagnostics. None measures validated
+correctness guardrails. Production-method comparison lives in
+pipeline.method_test_baseline; its full results are pending the data-PC run.
 
 Three questions, asked of the observed population — applications in which a
 FRAMEWORK LLM call site was detected. Raw provider-SDK calls (openai/anthropic)
@@ -241,11 +246,11 @@ def f4():
         ("LLM call sites", total, True),
         ("in a tested file", int(in_file.sum()), True),
         ("tests on LLM methods", len(hit), False),
-        ("call sites tested", int(in_method.sum()), True),
+        ("call sites in mapped methods", int(in_method.sum()), True),
     ]
     colors = [S.CONTEXT, S.CONTEXT, S.CONTEXT, S.EMPHASIS]
 
-    fig, ax = S.figure("How many of the LLM calls are actually tested?",
+    fig, ax = S.figure("Which LLM call sites lie in a method with a mapped test?",
                        plot_height_in=0.46 * len(rows) + 0.35)
     y = range(len(rows))
     vals = [r[1] for r in rows]
@@ -282,7 +287,9 @@ def f4():
               round(100 * rows[3][1] / total, 2), apps]])
     answer = ("%d of %s framework call sites (%.1f%%, in %d of %d applications) sit "
               "inside a method some test is written against — %d tests over %d distinct "
-              "methods. The other %.1f%% of call sites are targeted by no test."
+              "methods. The other %.1f%% have no identified focal-test mapping. "
+              "This historical call-site measure includes test/support code and "
+              "does not establish correctness checks or execution coverage."
               % (rows[3][1], format(total, ","), 100 * rows[3][1] / total, apps,
                  fc["repo"].nunique(), len(hit),
                  len(hit.drop_duplicates(["focal_file", "focal_line"])),
@@ -296,8 +303,9 @@ def f4():
 def f5():
     """Two mapping rates side by side, each a share of its own population:
     how often pyMethods2Test can say what a test targets at all, and how often an
-    LLM-calling method is what some test targets. The second is the coverage
-    question; the first is the ceiling the tool puts on it."""
+    LLM-calling method is what some test targets. These use different units and
+    cannot establish a method testing gap.
+    The production-method baseline replaces this comparison for the new study."""
     t = pd.read_csv(paths.ARTIFACTS_DIR / "pym2t_focal_tests.csv", low_memory=False,
                     usecols=["focal_file", "focal_method", "focal_line"])
     fm = t[t["focal_method"].notna()]
@@ -335,8 +343,9 @@ def f5():
             [[lab, unit, n, tot, round(100 * n / tot, 2)] for lab, n, tot, unit in rows])
     answer = ("pyMethods2Test resolves a focal method for %.1f%% of tests (%s of %s). "
               "Of the %s methods that make a framework LLM call, %.2f%% (%d, in %d "
-              "applications) are what a test targets — an order of magnitude below the "
-              "tool's own hit rate, so the gap is coverage, not only tooling."
+              "applications) have an identified focal-test mapping. These percentages "
+              "use different units (tests versus methods), include test/support code, "
+              "and cannot distinguish a testing gap from mapping limitations."
               % (pcts[0], format(len(fm), ","), format(len(t), ","), format(len(d), ","),
                  pcts[1], covered,
                  d.assign(c=[(f, int(ln)) in focal for f, ln in zip(d["file"], d["line"])])
@@ -368,6 +377,9 @@ def main(argv):
                  "call site was detected. Raw provider-SDK calls are excluded." % N,
                  "",
                  "Regenerate with `py -3.14 Applications/make_figures.py`.", ""]
+        lines += ["Historical figures under review for the correctness-guardrail study. "
+                  "See METHODOLOGY_REVIEW.md section J. These figures do not measure "
+                  "validated guardrail prevalence; F4/F5 need a production-method baseline.", ""]
         for key, stem, question, answer in entries:
             lines += ["## %s. %s" % (key, question), "",
                       "**%s**" % answer, "",

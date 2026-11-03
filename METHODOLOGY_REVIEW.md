@@ -8,6 +8,50 @@ Findings from the 2026-08-31/09-01 code review, held for the review pass. `METHO
 states what was done; this file is what's wrong with it, what's undocumented, and what the
 method cannot see. Nothing here is settled — it's the agenda for that conversation.
 
+## J. Guardrail study: figure review (2026-11-03)
+
+The current question is whether production application methods containing framework
+LLM invocations have associated correctness checks in tests or during execution.
+The baseline must count methods with at least one mapped test / eligible methods;
+identifying a guardrail then requires evidence of the checked property, and runtime
+checks additionally require an intervention before acceptance or action.
+
+This is an initial review of figure measures and generator code, not a new analysis
+of the missing source/slice corpus. Existing outputs remain historical artifacts.
+
+| Existing figure or output | Proposed place in the new story | Reason / next action |
+|---|---|---|
+| F1 — evaluation-framework adoption | Supporting detector evidence; redesign before a guardrail claim | A library call anywhere in an app does not establish a correctness check associated with a particular LLM-containing method. Separate test/runtime context, checked property and intervention; include checks implemented without those libraries. |
+| F2 — determinism parameters | Retire from the main figure set | Temperature, seed and sampling settings describe generation configuration. Their presence or absence does not establish a correctness guardrail. Retain historical data/code pending dependency review. |
+| F3 — frameworks called | Population context, potentially a table or appendix | Describes the sampled ecosystems and detector scope; does not answer the guardrail question. |
+| F4 — tests on LLM-containing methods / call sites | Replace with a production-method correspondence figure | Current chart mixes test counts with call-site counts and its title suggests testedness. Use methods with >=1 mapped test / eligible production methods, alongside the other-method baseline. Correspondence is only the first step toward checking correctness assertions. |
+| F5 — tool mapping rate versus LLM-method mapping rate | Replace as a main result; retain tool diagnostics separately | Its 14.12% denominator is tests, while 1.38% uses methods; comparing them cannot establish a method-level testing gap. The generator's old claim that the gap is coverage rather than tooling is unsupported. Its method population also includes test/support code. Use the new baseline's paired repositories and report mapping limitations. |
+| `07_knob_count.png`, `knob_count.csv` | Retire from the main figure set | Same generation-configuration issue as F2. |
+| `framework_coverage.png`, keep-frequency plots | Sampling/methodology context | Explain discovery and exclusions, with the unit named explicitly. Avoid conflating framework-population coverage with test or guardrail coverage. |
+| Jump-depth / blast-radius reports | Methodology diagnostics unless needed for guardrail association | Static reachability alone establishes neither a check nor intervention. Historical transitive-prevalence restrictions remain in force. |
+
+Candidate replacement sequence, with results still pending:
+
+1. Population flow: discovered frameworks → import-search candidates → verified
+   applications → production methods with observed framework LLM calls. Use separate
+   units at each stage; do not turn mixed units into a common percentage.
+2. Test correspondence: fraction of LLM-containing production methods with >=1 mapped
+   test versus other production methods in the same repos. Report pooled and paired
+   repo rates, exact-only sensitivity and excluded/missing data from
+   `pipeline.method_test_baseline`. No percentages until the PC run is reviewed.
+3. Test-suite guardrails: among eligible LLM-containing methods, which have an associated
+   correctness check? Record the property checked and mapping/inspection evidence.
+4. Runtime guardrails: which methods have associated checks with intervention, including
+   the checked property, placement and failure response? Detection and validation pending.
+5. Combined view: test-suite only / runtime only / both / no identified guardrail,
+   with unassessed cases reported separately. Use one common method denominator and
+   avoid interpreting no identified guardrail as proven absence.
+
+Before deleting older code, inventory entry points, imports, generated outputs and
+reproducibility dependencies. Preserve raw artifacts, the vendored focal mapper,
+discovery, scope filters, call extraction, the new baseline and slice tooling until
+their role in guardrail detection is established. No deletion is made by this review.
+
 ## A. Claims in the code that are false
 
 1. **`search_candidates.py:5`** says the code search matches an exact substring "so a repo

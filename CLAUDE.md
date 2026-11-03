@@ -1,9 +1,14 @@
 # GitHubSearch — project instructions
 
-Empirical software-mining study of **non-determinism in the testing of agentic
-applications** mined from GitHub. Pipeline: discover frameworks → GitHub code search for
-apps importing them → clone + static analysis (LLM call sites, invoker closure,
-determinism kwargs, tests) → Joern per-variable slicing → focal mapping (pyMethods2Test).
+Empirical software-mining study of **correctness guardrails in agentic applications**
+mined from GitHub (reframed by Seth, 2026-11-03). Discover agentic frameworks → search
+GitHub using framework import patterns → locate in-application framework LLM invocations
+→ identify associated test-suite correctness checks and runtime checks with intervention.
+Primary unit: production application methods containing direct observed framework calls.
+Corresponding tests come from all identified tests, not only direct LLM-calling tests.
+Mapping establishes correspondence, not a correctness guardrail. Guardrail detection
+and prevalence results are pending; the historical analysis below is infrastructure.
+README.md describes the current story; METHODOLOGY_REVIEW.md section J reviews figures.
 
 The full Stage-5 run is done (1,033 of 1,055 processed). Current work: data quality, and
 test-to-code traceability. This file is the single handoff: keep it current instead of

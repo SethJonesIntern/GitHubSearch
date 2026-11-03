@@ -1,19 +1,42 @@
 # GitHubSearch
 
-Mining study of **non-determinism in agentic applications**: which agent frameworks real
-applications are built on, where those applications invoke a model, whether they pin the
-parameters that make a call reproducible, and whether their tests exercise that code.
+Mining study of **correctness guardrails in agentic applications**: where applications
+invoke LLMs through agentic frameworks, and how they check correctness in their test
+suites and during execution.
 
-The population is mined from GitHub, cloned, and analyzed statically: AST pattern
-matching for framework call sites, a pyan3 call graph for the blast radius of LLM use,
-Joern CPGs for per-variable program slices, and pyMethods2Test for test-to-code (focal)
-mapping.
+The study follows **agentic frameworks → applications importing those frameworks →
+application methods containing framework LLM invocations → associated guardrails**.
+GitHub code search uses framework import patterns to discover candidate applications;
+clone-side analysis checks their imports and locates uses of framework methods that
+invoke LLMs.
+
+## What counts as a guardrail?
+
+We distinguish two categories by when the correctness check operates:
+
+| Category | What we look for |
+|---|---|
+| **Test-suite guardrails** | Tests associated with an LLM-containing application method, with assertions, validators, or evaluations that check correctness. A mapped test alone establishes correspondence; its checks still need inspection. |
+| **Runtime guardrails** | Checks during execution that detect a deviation and intervene before the result is accepted or acted upon, for example by rejecting, correcting, retrying, or requesting review. Logging alone does not establish intervention. |
+
+The primary unit is an **application function or method containing a detected framework
+LLM invocation**. Report the share of these methods with associated checks, using methods
+as both numerator and denominator. Multiple tests or call sites in one method do not
+increase its count. Test code and test-support code are excluded from production-method
+denominators.
+
+A guardrail may live inside the method or in associated caller, validator, or downstream
+code. Establishing that association and identifying the checked property are part of the
+analysis; proximity or a matching library name alone is insufficient evidence.
 
 ---
 
-## Status (2026-09-18)
+## Status
 
-The full-population run is complete. Current work is data quality and test traceability.
+The study was reframed around guardrails on **2026-11-03**. The existing discovery and
+LLM-call inventory provide the starting population. **Guardrail prevalence has not yet
+been measured.** The numbers below describe the saved September run, not a new guardrail
+analysis.
 
 | | |
 |---|---:|
@@ -23,14 +46,18 @@ The full-population run is complete. Current work is data quality and test trace
 | analyzed, after documented scope cuts (`EXCLUSIONS.md`) | 753 |
 | **observed applications** (≥1 framework LLM call site) | **644** |
 | framework LLM call sites | 23,990 |
-| direct non-deterministic tests | 9,700, in 233 apps (36%) |
+| tests whose own bodies contain detected framework calls | 9,700, in 233 apps |
 
-**Headline results** (observed scope):
-- **98.9% of framework LLM call sites set none of the eight determinism-relevant
-  parameters.** Temperature is set on 0.1% of calls, seed on none.
-- **Only 25 of 23,990 call sites (0.1%) lie inside the focal method of a direct
-  non-deterministic test**, as mapped by pyMethods2Test. Tests that reach an LLM rarely
-  target the function that makes the call.
+Current work:
+
+- Compare the share of production LLM-containing methods with a corresponding test
+  against other production methods in the same applications. The runnable baseline is
+  `pipeline/method_test_baseline.py`; the full run needs saved clones and focal outputs
+  on the data PC. Results are pending.
+- Inspect corresponding tests for correctness checks, then identify runtime checks and
+  their interventions. Test correspondence is an input to guardrail detection.
+- Review existing figures against the new questions. The initial review is in
+  `METHODOLOGY_REVIEW.md`, section J. Existing figures are historical analyses.
 
 ---
 
@@ -43,12 +70,14 @@ filtered at analysis time, never deleted.
    framework. A repo that reaches a model only through a raw SDK or raw HTTP is out.
 2. **Raw provider SDKs are excluded.** `openai` and `anthropic` call sites are detected
    but not observed, measured or reported: no calls, parameters, invokers or tests.
-3. **Direct only (2026-09-18).** `direct` / `transitive` is our Stage-5 term: a direct
-   row contains an LLM call, and a transitive row only reaches one through the pyan call
-   graph. All test analysis (ND tests, focal mapping, prevalence) uses direct rows only.
-   **The only permitted use of transitive data is the blast radius of LLM use**: how
-   much of an app's code can reach an LLM call. Transitive means a path *exists*, not
-   that it runs, and its counts scale with graph size. Ledger: `EXCLUSIONS.md` §18.
+3. **Direct invocation methods form the denominator.** `direct` / `transitive` is our
+   Stage-5 terminology: a direct method contains a detected call; a transitive method
+   reaches one through the static call graph. Transitive reachability does not prove
+   execution or a correctness check. The existing restriction on transitive prevalence
+   counts remains (`EXCLUSIONS.md` §18); tracing associated guardrails is future work.
+4. **Use all corresponding tests.** A test need not contain an LLM call itself to check
+   an LLM-containing application method. The historical direct-test subset is not the
+   denominator or the eligibility filter for guardrail analysis.
 
 ---
 
@@ -59,8 +88,8 @@ Read these before trusting any number in the artifacts.
 | Document | What it is |
 |---|---|
 | **`EXCLUSIONS.md`** | **The ledger, single source of truth.** Every repo dropped, framework exempted, pattern cut and scope decision, each with its reason and the code that enforces it. Start here. |
-| `METHODOLOGY.md` | What was done, stage by stage, with the population waterfall and headline figures. |
-| `METHODOLOGY_REVIEW.md` | Parked methodological issues, held for review. |
+| `METHODOLOGY.md` | Historical implementation and results; not yet rewritten for the guardrail study. |
+| `METHODOLOGY_REVIEW.md` | Methodological issues and the guardrail figure review (section J). |
 | `PIPELINE.md` | Stage-by-stage design (its "CURRENT STATE" section is stale). |
 | `RUNBOOK.md` | How to run Stage 5 + Stage 6: the command, every flag, the Windows/Joern gotchas, and how to stop and resume without duplicating rows. |
 | `COVERAGE_ANALYSIS.md` | How much of the population the analyzed frameworks cover, and the units that number is in. |
@@ -91,8 +120,14 @@ Read these before trusting any number in the artifacts.
    call graph, extract per-argument metadata.
 6. **Joern slicing**: per-variable SubPDGs for each LLM-invoker function.
 7. **Semantic evaluation**: eval-framework usage, piggybacked on the invoker search.
-8. **Focal mapping**: pyMethods2Test maps each test to the file and method it targets;
-   the result is joined to the direct ND tests and the framework call sites.
+8. **Focal mapping**: pyMethods2Test maps identified tests to the files and methods they
+   appear to target. The production-method baseline uses all corresponding tests.
+
+The existing stages supply evidence: AST matching locates invocations, pyMethods2Test
+provides heuristic test correspondence, and Joern slices provide variable-dependence
+context. **A detector for correctness checks and runtime interventions is still to be
+designed and validated.** Framework evaluation-library usage and determinism parameters
+do not, by themselves, establish a guardrail.
 
 ---
 
@@ -117,8 +152,11 @@ py -3.14 -m pipeline.waterfall
 # the standard report (population, tests, determinism parameters, graph health)
 py -3.14 Applications/analyze.py
 
-# the figure set (F1-F3 + FIGURES.md)
+# historical figures (F1-F5); under review for the guardrail study
 py -3.14 Applications/make_figures.py
+
+# production-method test correspondence baseline (needs the data PC)
+py -3.14 -m pipeline.method_test_baseline
 
 # focal mapping over the observed apps (reuses saved per-repo output; --rerun to redo)
 py -3.14 -m pipeline.pym2t_focal
@@ -135,9 +173,11 @@ Things that are easy to misread, all of which have bitten:
 
 - **`llm_tests_all.csv` is a subset of `llm_invokers_all.csv`**, not a parallel measure.
   Every row in it is also an invoker row. The two counts cannot be divided.
-- **It measures static reachability, not non-determinism.** A direct row may still be
-  mocked. The defensible claim is "a test whose own body calls an LLM API", minus mocks
-  (not yet measured).
+- **Detected calls and mapped tests do not establish correctness guardrails.** A call
+  in a test may be mocked; a mapped test may check something unrelated. Inspect the
+  checked property and, at runtime, the action taken on failure.
+- **Keep units consistent.** Guardrail and correspondence rates divide methods by
+  methods. Call-site shares, test counts and repository shares answer separate questions.
 - **The raw CSVs still contain out-of-scope rows**: transitive rows and raw-SDK rows.
   Count through `analyze.py`, `make_figures.py` or `focal_map.observed_tests`, which
   apply the scope rules, not by summing a raw CSV.
