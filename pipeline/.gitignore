@@ -1,0 +1,12 @@
+# Python caches
+__pycache__/
+*.pyc
+
+# Cloned repos — large and regenerable, not tracked.
+repos/*
+
+
+# artifacts/ IS tracked so the analysis data (CSVs, plots, reports) travels with
+# the repo and can be worked on from another machine. The only exclusion is the
+# resumable search-progress cache (.search_progress.json, ~100MB) which exceeds
+# GitHub's file-size limit — it stays ignored via the root .gitignore.

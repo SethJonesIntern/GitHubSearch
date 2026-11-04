@@ -1,0 +1,160 @@
+{
+  "generated": "2026-09-22T15:07:30",
+  "slices_dir": "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\artifacts\\slices",
+  "elapsed_seconds": 300.0,
+  "repo_dirs_seen": 788,
+  "repos_with_programs_jsonl": 788,
+  "repos_without_programs_jsonl": 0,
+  "repos_without_programs_jsonl_names": [],
+  "sliced_source_files": 77901,
+  "subprograms": 2955122,
+  "subprograms_by_code_kind": {
+    "test": 1033549,
+    "test_support": 101816,
+    "production": 1819757
+  },
+  "pct_subprograms_by_code_kind": {
+    "test": 34.97,
+    "test_support": 3.45,
+    "production": 61.58
+  },
+  "subprograms_duplicate": 589788,
+  "pct_duplicate": 19.96,
+  "unique_bodies_corpus_wide": 2227979,
+  "unique_bodies_in_more_than_one_repo": 43629,
+  "pct_unique_bodies_cross_repo": 1.96,
+  "rows_with_body": 2955122,
+  "rows_without_body": 0,
+  "positional_mismatches": 0,
+  "unpaired_canonicals": 0,
+  "rows_parseable": 1865693,
+  "rows_unparseable": 1089429,
+  "pct_rows_parseable": 63.13,
+  "unique_bodies_parseable": 1470062,
+  "pct_unique_bodies_parseable": 65.98,
+  "slicer_reported_syntax_errors": 1089429,
+  "slicer_reported_subprograms": 2955122,
+  "schemas": {
+    "aegisma.refined_programs.v1": 77901
+  },
+  "malformed_jsonl_lines": 0,
+  "malformed_jsonl_examples": [],
+  "pdg_lines_per_slice": {
+    "min": 1,
+    "p25": 3,
+    "median": 4,
+    "p75": 7,
+    "p90": 11,
+    "p99": 30,
+    "max": 2250,
+    "mean": 6.03
+  },
+  "inserted_lines_per_slice": {
+    "min": 0,
+    "p25": 1,
+    "median": 5,
+    "p75": 13,
+    "p90": 29,
+    "p99": 132,
+    "max": 5126,
+    "mean": 14.27
+  },
+  "top_repos_by_subprograms": [
+    {
+      "repo": "cctbx_cctbx_project",
+      "programs": 3379,
+      "subprograms": 182995,
+      "unique_bodies": 141512
+    },
+    {
+      "repo": "agno-agi_agno",
+      "programs": 2193,
+      "subprograms": 103517,
+      "unique_bodies": 81026
+    },
+    {
+      "repo": "kdcube_kdcube-ai-app",
+      "programs": 1186,
+      "subprograms": 80528,
+      "unique_bodies": 58138
+    },
+    {
+      "repo": "databrickslabs_kasal",
+      "programs": 1076,
+      "subprograms": 76294,
+      "unique_bodies": 62200
+    },
+    {
+      "repo": "DeytaHQ_khora",
+      "programs": 970,
+      "subprograms": 54970,
+      "unique_bodies": 41554
+    },
+    {
+      "repo": "TheodoreGalanos_aec-bench",
+      "programs": 1184,
+      "subprograms": 53523,
+      "unique_bodies": 38169
+    },
+    {
+      "repo": "Osilly_Vision-DeepResearch",
+      "programs": 1427,
+      "subprograms": 52076,
+      "unique_bodies": 31701
+    },
+    {
+      "repo": "marieai_marie-ai",
+      "programs": 1475,
+      "subprograms": 48504,
+      "unique_bodies": 36271
+    },
+    {
+      "repo": "DemonDamon_AgenticX",
+      "programs": 1248,
+      "subprograms": 46003,
+      "unique_bodies": 36459
+    },
+    {
+      "repo": "theexperiencecompany_gaia",
+      "programs": 1069,
+      "subprograms": 42344,
+      "unique_bodies": 35335
+    },
+    {
+      "repo": "jxxghp_MoviePilot",
+      "programs": 825,
+      "subprograms": 41645,
+      "unique_bodies": 32002
+    },
+    {
+      "repo": "SuperagenticAI_superqode",
+      "programs": 786,
+      "subprograms": 38909,
+      "unique_bodies": 30922
+    },
+    {
+      "repo": "topoteretes_cognee",
+      "programs": 1363,
+      "subprograms": 36542,
+      "unique_bodies": 27829
+    },
+    {
+      "repo": "gptme_gptme",
+      "programs": 674,
+      "subprograms": 36317,
+      "unique_bodies": 31541
+    },
+    {
+      "repo": "langchain-ai_deepagents",
+      "programs": 406,
+      "subprograms": 35915,
+      "unique_bodies": 31572
+    }
+  ],
+  "outputs": {
+    "slice_index_csv": "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\artifacts\\slice_index.csv",
+    "slice_files_csv": "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\artifacts\\slice_files.csv",
+    "slice_pdg_lines_csv_gz": "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\artifacts\\slice_pdg_lines.csv.gz",
+    "slice_code_jsonl_gz": "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\artifacts\\slice_code.jsonl.gz"
+  }
+}

@@ -1,0 +1,19 @@
+framework,applications,pct_of_population,call_sites,call_sites_per_app
+langchain,384,59.6,9313,24.3
+langgraph,233,36.2,3800,16.3
+pydantic_ai,95,14.8,1343,14.1
+crewai,76,11.8,508,6.7
+mem0,70,10.9,533,7.6
+autogen,64,9.9,1237,19.3
+agents,54,8.4,684,12.7
+agent_framework (MS),39,6.1,1898,48.7
+haystack,31,4.8,2603,84.0
+agno,30,4.7,445,14.8
+smolagents,29,4.5,335,11.6
+semantic_kernel,25,3.9,149,6.0
+dspy,21,3.3,401,19.1
+astrbot,17,2.6,45,2.6
+swarm,8,1.2,505,63.1
+camel,8,1.2,160,20.0
+graphrag,4,0.6,28,7.0
+swarms,2,0.3,3,1.5

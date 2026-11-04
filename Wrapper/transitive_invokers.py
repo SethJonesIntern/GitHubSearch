@@ -20,6 +20,9 @@ import argparse
 import ast
 import json
 import os
+import re
+import time
+import warnings
 import shutil
 import stat
 import subprocess
@@ -30,7 +33,12 @@ from pathlib import Path
 from typing import Optional
 
 from astWrappers import SKIP_DIRS, matcher, file_imports
-from FrameworkDict import FRAMEWORK_CALLS
+from false_positives import classify_fp
+from FrameworkDict import (
+    FRAMEWORK_CALLS,
+    DSPY_MODULE_CLASSES,
+    resolve_framework_imports,
+)
 
 
 REPOS_DIR = Path(__file__).parent / "repos"
@@ -49,10 +57,15 @@ def _on_rm_error(func, path, _):
 
 def shallow_clone(url: str, dest: Path) -> bool:
     """git clone --depth 1 into dest. Returns True on success, or prints the
-    error and returns False on timeout/failure."""
+    error and returns False on timeout/failure.
+
+    core.longpaths=true is required on Windows: many repos have paths over the
+    260-char MAX_PATH limit, which otherwise fetch fine but fail at checkout
+    ("Clone succeeded, but checkout failed") and leave no working tree to analyze."""
     try:
         subprocess.run(
-            ["git", "clone", "--depth", "1", "--quiet", url, str(dest)],
+            ["git", "-c", "core.longpaths=true", "clone", "--depth", "1", "--quiet",
+             url, str(dest)],
             check=True,
             timeout=CLONE_TIMEOUT_SEC,
             capture_output=True,
@@ -122,6 +135,10 @@ class FunctionInfo:
     is_method: bool = False
     enclosing_class: Optional[str] = None
     local_names: dict[str, str] = field(default_factory=dict)
+    # Names bound to a dspy module instance here (`pred = dspy.Predict(...)` -> "pred";
+    # `self.prog = dspy.ChainOfThought(...)` -> "self.prog"). A later bare call on one
+    # of these names is the dspy __call__ invocation; see seed_invokers.
+    dspy_binds: set[str] = field(default_factory=set)
 
 
 @dataclass
@@ -134,11 +151,6 @@ class FileContext:
     current_module: str
     name_map: dict[str, str]
     imported_frameworks: set[str]
-    # Every top-level package imported anywhere in the file (incl. lazy imports
-    # inside function bodies). `imported_frameworks` is just this set narrowed to
-    # FRAMEWORK_CALLS; the full set is kept so other passes (e.g. the semantic-
-    # evaluator scan) can detect their own packages without re-parsing the file.
-    imports: set[str] = field(default_factory=set)
 
 
 # ── path & name plumbing ──────────────────────────────────────────────────────
@@ -174,6 +186,41 @@ def root_name(node: ast.AST) -> Optional[str]:
             node = node.func
         else:
             return None
+
+
+def _dspy_ctor_class(value: ast.AST) -> Optional[str]:
+    """If `value` is a call to a dspy module constructor, return the class name.
+    Handles both `dspy.Predict(...)` (Attribute) and imported `Predict(...)` (Name).
+    Returns None otherwise (including for non-call values)."""
+    if not isinstance(value, ast.Call):
+        return None
+    func = value.func
+    if isinstance(func, ast.Attribute):
+        cls = func.attr
+    elif isinstance(func, ast.Name):
+        cls = func.id
+    else:
+        return None
+    return cls if cls in DSPY_MODULE_CLASSES else None
+
+
+def _bind_target_names(target: ast.AST) -> list[str]:
+    """Assignment-target names we can key a dspy binding on: a plain `pred` (Name)
+    or an attribute chain `self.prog` (Attribute, unparsed). Tuple/list targets are
+    unpacked; anything else is ignored."""
+    if isinstance(target, ast.Name):
+        return [target.id]
+    if isinstance(target, ast.Attribute):
+        try:
+            return [ast.unparse(target)]
+        except Exception:
+            return []
+    if isinstance(target, (ast.Tuple, ast.List)):
+        out: list[str] = []
+        for elt in target.elts:
+            out.extend(_bind_target_names(elt))
+        return out
+    return []
 
 
 def build_name_map(tree: ast.Module, current_pkg: str, current_module: str) -> dict[str, str]:
@@ -242,6 +289,13 @@ def _make_function_info(
             except Exception:
                 continue
             fi.calls.append(CallSite(line=sub.lineno, text=text, root=root_name(sub.func)))
+        elif isinstance(sub, (ast.Assign, ast.AnnAssign)):
+            # Bind names assigned from a dspy module constructor so a later bare call
+            # on the name resolves to the dspy __call__ invocation (see seed_invokers).
+            if _dspy_ctor_class(sub.value) is not None:
+                targets = sub.targets if isinstance(sub, ast.Assign) else [sub.target]
+                for tgt in targets:
+                    fi.dspy_binds.update(_bind_target_names(tgt))
         elif isinstance(sub, ast.Import):
             for alias in sub.names:
                 if alias.asname:
@@ -282,15 +336,19 @@ def collect_functions(
 
 
 def index_repo(
-    target: Path, repo_root: Path
+    target: Path, repo_root: Path, framework_calls: dict = FRAMEWORK_CALLS,
 ) -> tuple[dict[str, FunctionInfo], dict[str, FileContext]]:
     """Parse every .py file under `target` and return the two dicts the rest
     of the pipeline runs on: `functions` (qname -> FunctionInfo) and
     `contexts` (module -> FileContext). Files that fail to parse are skipped,
-    so one syntax error doesn't sink the whole run."""
+    so one syntax error doesn't sink the whole run.
+
+    `framework_calls` supplies the keys used to decide which imports count as
+    "framework imports" per file. Pass a union of dicts (e.g. LLM + eval) to
+    capture both in a single parse, then run the matching passes per dict."""
     functions: dict[str, FunctionInfo] = {}
     contexts: dict[str, FileContext] = {}
-    framework_keys = set(FRAMEWORK_CALLS.keys())
+    framework_keys = set(framework_calls.keys())
 
     for path in target.rglob("*.py"):
         if any(part in SKIP_DIRS for part in path.parts):
@@ -307,14 +365,13 @@ def index_repo(
         current_pkg, current_module = derive_module(path, repo_root)
         rel = path.resolve().relative_to(repo_root.resolve()).as_posix()
 
-        all_imports = file_imports(tree)
         contexts[current_module] = FileContext(
             rel_path=rel,
             current_pkg=current_pkg,
             current_module=current_module,
             name_map=build_name_map(tree, current_pkg, current_module),
-            imported_frameworks=all_imports & framework_keys,
-            imports=all_imports,
+            imported_frameworks=resolve_framework_imports(file_imports(tree),
+                                                          framework_keys),
         )
         for fi in collect_functions(tree, current_module, current_pkg, rel):
             functions[fi.qname] = fi
@@ -327,6 +384,7 @@ def index_repo(
 def seed_invokers(
     functions: dict[str, FunctionInfo],
     contexts: dict[str, FileContext],
+    framework_calls: dict = FRAMEWORK_CALLS,
 ) -> dict[str, str]:
     """Find every function whose body directly contains an LLM call.
 
@@ -334,12 +392,17 @@ def seed_invokers(
     frameworks its file actually imports, so a langchain file never gets
     checked against openai patterns and vice versa.
 
+    `framework_calls` selects which pattern set to match (e.g. FRAMEWORK_CALLS
+    for LLM calls, EVAL_CALLS for eval calls). A file's imported_frameworks may
+    include keys outside this dict (when indexed against a union); those are
+    skipped here.
+
     Returns {qname -> "matches 'X' from <framework>"} for every direct hit.
     """
     # Compile each pattern's matcher once up front; we run them a lot.
     matchers_by_fw: dict[str, list[tuple[str, callable]]] = {
         fw: [(pat, matcher(pat)) for pat in pats]
-        for fw, pats in FRAMEWORK_CALLS.items()
+        for fw, pats in framework_calls.items()
     }
     invokers: dict[str, str] = {}
 
@@ -361,13 +424,38 @@ def seed_invokers(
         active = [
             (pat, m, fw)
             for fw in ctx.imported_frameworks
+            if fw in matchers_by_fw
             for (pat, m) in matchers_by_fw[fw]
         ]
         if not active:
             continue
+        # dspy is invoked by calling a bound module instance (`pred(...)`), so its
+        # invocation site can't be a text pattern — it's a bare local/attr call whose
+        # name was bound from a dspy constructor. Gather the self.<attr> bindings at
+        # CLASS scope so a module built in __init__ but called in forward still resolves
+        # (local bare-name bindings apply within their own function only).
+        dspy_active = "dspy" in ctx.imported_frameworks
+        class_self_binds: dict[str, set[str]] = defaultdict(set)
+        if dspy_active:
+            for fi in fns:
+                if fi.enclosing_class:
+                    class_self_binds[fi.enclosing_class] |= {
+                        b for b in fi.dspy_binds if b.startswith("self.")
+                    }
         for fi in fns:
+            binds = (
+                fi.dspy_binds | class_self_binds.get(fi.enclosing_class, set())
+                if dspy_active else set()
+            )
             for call in fi.calls:
-                hit = next(((pat, fw) for pat, m, fw in active if m(call.text)), None)
+                if binds and call.text in binds:
+                    invokers[fi.qname] = "matches '__call__' from dspy"
+                    break
+                # Seed only via a genuine match — skip false-positive collisions
+                # (asyncio.run, tool.invoke, Mock assertions; see false_positives /
+                # EXCLUSIONS.md §6) so a function isn't an invoker off a collision.
+                hit = next(((pat, fw) for pat, m, fw in active
+                            if m(call.text) and classify_fp(call.text, pat) is None), None)
                 if hit:
                     pat, fw = hit
                     invokers[fi.qname] = f"matches '{pat}' from {fw}"
@@ -375,7 +463,53 @@ def seed_invokers(
     return invokers
 
 
-def build_call_graph(repo: Path, repo_root: Optional[Path] = None) -> dict[str, set[str]]:
+# pyan3 is all-or-nothing: a single file it can't parse (or its own scope bug on
+# nested lambdas/comprehensions) throws and kills the graph for the WHOLE repo. We
+# recover by dropping the offending file and retrying — this keeps pyan's (superior)
+# resolution on everything else. Most repos need 0; the failing ones need 1-2.
+_MAX_CG_EXCLUSIONS = int(os.environ.get("PYAN_MAX_EXCLUSIONS", "40"))
+# Each exclusion re-parses the WHOLE repo, so a huge repo with many bad files (e.g.
+# litellm: 55k functions + many nested-lambda test files) could churn for an hour.
+# Bound the total resilient-retry time; a repo that blows the budget gives up (empty
+# graph, later covered by the Joern fallback) rather than stalling the whole run.
+# Both overridable via env for targeted "no-limit" reruns: PYAN_MAX_EXCLUSIONS,
+# PYAN_TIME_BUDGET_SEC (set to 0 to disable the time-box entirely).
+_CG_TIME_BUDGET_SEC = int(os.environ.get("PYAN_TIME_BUDGET_SEC", "480"))
+
+
+def _module_name(path: str, root: Path) -> Optional[str]:
+    try:
+        return ".".join(Path(path).relative_to(root).with_suffix("").parts)
+    except ValueError:
+        return None
+
+
+def _find_offending_file(err: str, entry_points: list[str], root: Path) -> Optional[str]:
+    """From a pyan failure message, identify which entry-point file to drop:
+    a parse error names it as '(file.py, line N)'; the scope bug names a qname
+    ('Unknown scope 'pkg.mod.func...') we map back to its module file."""
+    # Filename must not contain spaces/parens: pyan messages can carry an extra '('
+    # (e.g. "'(' was never closed (test_x.py, line 488)"), and a greedy [^)]+ would
+    # latch onto the wrong paren and capture garbage instead of the real file.
+    m = re.search(r"\(([^()\s]+\.py), line", err)
+    if m:
+        want = Path(m.group(1)).name
+        for ep in entry_points:
+            if Path(ep).name == want:
+                return ep
+    m = re.search(r"Unknown scope '([^']+)'", err)
+    if m:
+        qn, best, best_len = m.group(1), None, -1
+        for ep in entry_points:
+            mn = _module_name(ep, root)
+            if mn and (qn == mn or qn.startswith(mn + ".")) and len(mn) > best_len:
+                best, best_len = ep, len(mn)
+        return best
+    return None
+
+
+def build_call_graph(repo: Path, repo_root: Optional[Path] = None,
+                     stats: Optional[dict] = None) -> dict[str, set[str]]:
     """Build a static call graph for the repo with pyan3.
 
     pyan3 handles the cases our own resolver couldn't: aliased imports,
@@ -385,8 +519,12 @@ def build_call_graph(repo: Path, repo_root: Optional[Path] = None) -> dict[str, 
     namespace.name relative to `root` (e.g. "test_repo.collisions.wrapper_a.wrapper"),
     which matches index_repo's dotted qnames, so seed names line up directly.
 
-    Edges with an unresolved endpoint (no namespace, or a wildcard name) are
-    dropped since they can't take part in the BFS.
+    Resilient in two stages: every file is first checked with `ast.parse` and the
+    unparseable ones are dropped before pyan runs at all; if pyan then still chokes on
+    a file, that file is excluded and the analysis is retried (up to
+    _MAX_CG_EXCLUSIONS files) so one bad file doesn't zero the graph.
+    Pass `stats` to receive {'excluded_files': N, 'prefiltered_files': N,
+    'cg_source': 'pyan'|'pyan_resilient'|'none'}.
     """
     try:
         from pyan.analyzer import CallGraphVisitor
@@ -397,16 +535,99 @@ def build_call_graph(repo: Path, repo_root: Optional[Path] = None) -> dict[str, 
         str(p) for p in repo.rglob("*.py")
         if not any(part in SKIP_DIRS for part in p.parts)
     ]
+    root = repo_root if repo_root is not None else repo  # match index_repo's base
+
+    # Cheap pre-filter, before pyan sees anything. pyan has no parser of its own: it
+    # feeds every file to Python's `ast`/`compile`, and it is all-or-nothing, so ONE
+    # unparseable file zeroes the graph for the whole repo. Recovering from that costs
+    # a full re-parse of every good file per dropped file, which is what pushes big
+    # repos past the time-box. `ast.parse` is the SAME check pyan would apply, run per
+    # file at a fraction of the cost, so dropping the broken files up front removes the
+    # entire Class-1 bucket in one pass (see CALL_GRAPH_EXCLUSIONS.md) and leaves the
+    # expensive exclude-and-retry loop to fire only for pyan's own scope bug (Class 2).
+    # It also rescues repos whose bad file pyan named in a form `_find_offending_file`
+    # could not map back to a path — those previously died with 0 exclusions.
+    prefiltered: list[str] = []
+    parseable: list[str] = []
+    # Same suppression the CallGraphVisitor call below uses: analyzed repos are full of
+    # unescaped regex strings, and one SyntaxWarning per such literal per file would
+    # bury the run's real output. These are warnings, not parse failures -- the file is
+    # valid Python and must be KEPT.
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        for ep in entry_points:
+            try:
+                # bytes, not text: ast.parse then honours a PEP 263 coding cookie
+                # exactly the way the compiler pyan calls does.
+                src = Path(ep).read_bytes()
+                ast.parse(src, filename=ep)
+            except (SyntaxError, ValueError, RecursionError, OSError):
+                # SyntaxError covers Indentation/TabError; ValueError covers null bytes
+                # and bad encodings; RecursionError covers deeply nested literals.
+                prefiltered.append(Path(ep).name)
+            else:
+                parseable.append(ep)
+    entry_points = parseable
+    if prefiltered:
+        print(f"# pre-filter: dropped {len(prefiltered)} unparseable file(s) from "
+              f"{repo.name}: {', '.join(prefiltered[:5])}"
+              f"{' ...' if len(prefiltered) > 5 else ''}", file=sys.stderr)
+
+    def _record(source: str, excluded: list) -> None:
+        if stats is not None:
+            # One number for "files we had to drop to get a graph", however they were
+            # dropped. The split is available on the `prefiltered_files` key and in the
+            # log line above; it is deliberately NOT a new call_graph_health column,
+            # because append_rows only writes a header for an empty file and would
+            # silently misalign the existing 1,035 rows.
+            stats["excluded_files"] = len(excluded) + len(prefiltered)
+            stats["prefiltered_files"] = len(prefiltered)
+            stats["cg_source"] = source
+
     if not entry_points:
+        _record("none", [])
         return {}
 
-    # Root pyan at the same base index_repo uses so module names match.
-    root = repo_root if repo_root is not None else repo
-    try:
-        v = CallGraphVisitor(entry_points, root=str(root))
-    except Exception as e:
-        print(f"# Warning: pyan3 analysis failed: {e}", file=sys.stderr)
+    excluded: list[str] = []
+    v = None
+    started = time.monotonic()
+    while entry_points and len(excluded) <= _MAX_CG_EXCLUSIONS:
+        if excluded and _CG_TIME_BUDGET_SEC and time.monotonic() - started > _CG_TIME_BUDGET_SEC:
+            print(f"# pyan resilient retries exceeded {_CG_TIME_BUDGET_SEC}s after "
+                  f"{len(excluded)} exclusions; giving up on {repo.name}", file=sys.stderr)
+            _record("none", excluded)
+            return {}
+        try:
+            # pyan re-parses every file each pass; suppress the SyntaxWarning flood
+            # from analyzed repos' own code (e.g. unescaped regex strings).
+            with warnings.catch_warnings():
+                warnings.simplefilter("ignore")
+                v = CallGraphVisitor(entry_points, root=str(root))
+            break
+        except Exception as e:  # noqa: BLE001 - pyan raises many parse/scope errors
+            bad = _find_offending_file(str(e), entry_points, root)
+            if bad is None:
+                print(f"# Warning: pyan3 analysis failed (unrecoverable): {e}", file=sys.stderr)
+                _record("none", excluded)
+                return {}
+            entry_points.remove(bad)
+            excluded.append(Path(bad).name)
+            if os.environ.get("PYAN_VERBOSE"):
+                # emit each exclusion so a long resilient run is observable (count,
+                # elapsed, which file, and the error class that triggered it).
+                kind = "scope-bug" if "Unknown scope" in str(e) else type(e).__name__
+                print(f"# [{repo.name}] exclusion {len(excluded):>3} "
+                      f"({time.monotonic() - started:6.0f}s): dropped {Path(bad).name} "
+                      f"[{kind}]", file=sys.stderr, flush=True)
+    if v is None:
+        print(f"# Warning: pyan3 still failing after {len(excluded)} exclusions",
+              file=sys.stderr)
+        _record("none", excluded)
         return {}
+    if excluded:
+        print(f"# pyan recovered after excluding {len(excluded)} file(s): "
+              f"{', '.join(excluded[:5])}{' ...' if len(excluded) > 5 else ''}",
+              file=sys.stderr)
 
     def node_qname(node) -> Optional[str]:
         if node.namespace is None or "*" in node.name:
@@ -425,6 +646,7 @@ def build_call_graph(repo: Path, repo_root: Optional[Path] = None) -> dict[str, 
                 continue
             graph[src_q].add(dst_q)
 
+    _record("pyan_resilient" if (excluded or prefiltered) else "pyan", excluded)
     return dict(graph)
 
 

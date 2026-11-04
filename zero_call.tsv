@@ -1,0 +1,58 @@
+3D-Tech-Solutions/code-scalpel	3D-Tech-Solutions_code-scalpel	autogen, crewai, langgraph
+AuvaLab/itext2kg	AuvaLab_itext2kg	langchain_openai, langchain_mistralai, langchain_anthropic, openai
+Azure-Samples/agent-architecture-review-sample	Azure-Samples_agent-architecture-review-sample	agent_framework
+Azure/app-service-linux-docs	Azure_app-service-linux-docs	langchain
+Harshit-J004/toolguard	Harshit-J004_toolguard	langchain_core, autogen_core, crewai, swarm, langgraph, langchain_google_genai, langchain_community, smolagents
+IvanWng97/TradingAgents-Telegram	IvanWng97_TradingAgents-Telegram	langchain_core
+OWASP/DockSec	OWASP_DockSec	langchain_core, langchain_ollama, langchain_openai, langchain_google_genai, langchain_anthropic
+Portkey-AI/portkey-python-sdk	Portkey-AI_portkey-python-sdk	openai, langchain, langchain_core
+Strategic-Automation/dspy-compounding-engineering	Strategic-Automation_dspy-compounding-engineering	dspy, agents, litellm, openai
+Vocab-Apps/anki-hyper-tts	Vocab-Apps_anki-hyper-tts	agents, pydantic_ai, openai, anthropic, cohere, langchain_mistralai, langchain, langchain_cohere, langchain_aws, langchain_core, langchain_huggingface, langchain_google_vertexai, langchain_openai, langchain_ollama, langgraph, litellm
+ZeroSumEval/ZeroSumEval	ZeroSumEval_ZeroSumEval	dspy, litellm
+ark-forge/mcp-eu-ai-act	ark-forge_mcp-eu-ai-act	openai, anthropic, langchain
+aws-solutions-library-samples/guidance-for-no-code-multi-agent-ai-orchestration-on-aws	aws-solutions-library-samples_guidance-for-no-code-multi-agent-ai-orchestration-on-aws	langchain, langchain_community, langchain_core
+aws/nova-prompt-optimizer	aws_nova-prompt-optimizer	dspy, litellm
+awslabs/graphrag-toolkit	awslabs_graphrag-toolkit	langchain_huggingface, langchain_aws
+climateandtech/report-analyst	climateandtech_report-analyst	langchain
+cloud-ru/evo-ai-agents-labs	cloud-ru_evo-ai-agents-labs	phoenix, litellm, crewai, langchain, langchain_core, langchain_openai, smolagents, agents
+conveyordata/data-product-portal	conveyordata_data-product-portal	agno
+cytoflow/cytoflow	cytoflow_cytoflow	camel
+darinkishore/codex_dspy	darinkishore_codex_dspy	dspy
+datastax/graph-rag	datastax_graph-rag	langchain_core, langchain_community
+dealfluence/adeu	dealfluence_adeu	langchain_core, langchain
+deepsense-ai/db-ally	deepsense-ai_db-ally	dspy, litellm, openai
+deltacodes1/Hackotberfest2025	deltacodes1_Hackotberfest2025	langchain, langchain_core, langchain_community
+dylibso/mcpx-py	dylibso_mcpx-py	pydantic_ai
+eneo-ai/eneo	eneo-ai_eneo	litellm, langchain_core
+erfanzar/Xerxes-Agents	erfanzar_Xerxes-Agents	
+flepied/second-brain-agent	flepied_second-brain-agent	langchain_community, langchain_huggingface
+gapilongo/SOC	gapilongo_SOC	langgraph, langchain_anthropic, langchain_google_genai, langchain_openai
+gleanwork/glean-agent-toolkit	gleanwork_glean-agent-toolkit	agents, langchain_core, crewai, langchain, langchain_openai, openai
+google/adk-samples	google_adk-samples	vertexai, agents, phoenix, langchain_community
+huggingface/screenenv	huggingface_screenenv	smolagents
+jeremiedecock/snippets	jeremiedecock_snippets	langchain_core, langchain_openai, langchain_huggingface, langchain_mistralai, langchain_community, openai, langchain_google_genai, langchain_anthropic, langchain_cohere, mistralai
+kubeflow/docs-agent	kubeflow_docs-agent	langchain
+m7mdhka/pydantic-ai-production-ready-template	m7mdhka_pydantic-ai-production-ready-template	pydantic_ai
+maxim-saplin/mcp_safe_local_python_executor	maxim-saplin_mcp_safe_local_python_executor	smolagents
+memgrafter/flatmachines	memgrafter_flatmachines	litellm, smolagents
+meta-llama/prompt-ops	meta-llama_prompt-ops	dspy, litellm
+microsoft/Build26-LAB520-get-started-with-models-in-microsoft-foundry-to-build-ai-apps	microsoft_Build26-LAB520-get-started-with-models-in-microsoft-foundry-to-build-ai-apps	agent_framework
+microsoft/pgtoolsservice	microsoft_pgtoolsservice	semantic_kernel
+mozilla-ai/mcpd-sdk-python	mozilla-ai_mcpd-sdk-python	pydantic_ai, any_agent
+mozilla-ai/surf-spot-finder	mozilla-ai_surf-spot-finder	any_agent, litellm, langchain_core
+neo4j-graphacademy/workshop-genai	neo4j-graphacademy_workshop-genai	langchain, langchain_core, openai
+neo4j-labs/neo4j-maf-provider	neo4j-labs_neo4j-maf-provider	agent_framework, openai
+pyinstaller/pyinstaller-hooks-contrib	pyinstaller_pyinstaller-hooks-contrib	langchain
+radiantlogicinc/fastworkflow	radiantlogicinc_fastworkflow	dspy, litellm
+rileylemm/graphrag-hybrid	rileylemm_graphrag-hybrid	langchain
+sahiee-dev/Tesserae	sahiee-dev_Tesserae	langchain_core, langchain, langchain_openai
+singlestore-labs/singlestoredb-python	singlestore-labs_singlestoredb-python	langchain_openai, langchain_aws
+storyAura/astrbot_plugin_biliVideo	storyAura_astrbot_plugin_biliVideo	astrbot
+swarm-subnet/swarm	swarm-subnet_swarm	swarm
+timescale/tiger-slack	timescale_tiger-slack	pydantic_ai
+traccia-ai/traccia-py	traccia-ai_traccia-py	crewai, agents, anthropic, openai, langchain_openai, langchain_core
+vibeforge1111/spark-domain-chip-labs	vibeforge1111_spark-domain-chip-labs	dspy
+vishnupriyanpr/Cardiac-Care	vishnupriyanpr_Cardiac-Care	langchain, langchain_groq, groq, langchain_community, langchain_openai, openai
+wesleysimplicio/hermes-turbo-agent	wesleysimplicio_hermes-turbo-agent	
+wi2trier/cbrkit	wi2trier_cbrkit	pydantic_ai, openai, cohere, ollama, anthropic, agents
+xtekky/gpt4free	xtekky_gpt4free	openai, langchain_community, pydantic_ai

@@ -1,0 +1,5 @@
+framework,eval_calls,pct_of_eval_calls
+deepeval,117,69.2
+ragas,47,27.8
+phoenix,4,2.4
+opik,1,0.6

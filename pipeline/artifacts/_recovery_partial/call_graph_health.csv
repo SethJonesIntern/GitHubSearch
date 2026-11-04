@@ -1,0 +1,8 @@
+"repo","cg_source","excluded_files","graph_usable","total_functions","graph_nodes","graph_edges","graph_coverage_pct","llm_direct_invokers","llm_transitive_invokers","eval_direct_invokers","eval_transitive_invokers"
+"langflow-ai/langflow","pyan_resilient","3","True","30048","35479","611433","118.1","80","17054","0","0"
+"bytedance/deer-flow","pyan_resilient","20","True","17902","19948","144883","111.4","160","9775","0","0"
+"BerriAI/litellm","pyan_resilient","3","True","62962","76538","5682052","121.6","50","105","0","0"
+"Arize-ai/phoenix","pyan_resilient","13","True","12972","17007","507559","131.1","157","7329","131","76"
+"mlflow/mlflow","none","5","False","30022","0","0","0.0","211","0","3","0"
+"marimo-team/marimo","pyan_resilient","25","True","17919","23747","670667","132.5","11","14624","0","0"
+"angr/angr","none","0","False","15510","0","0","0.0","2","0","0","0"

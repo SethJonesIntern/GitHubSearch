@@ -1,0 +1,16 @@
+framework,nd_tests,kind
+langchain,3337,framework
+haystack,2218,framework
+langgraph,1249,framework
+agent_framework (MS),620,framework
+pydantic_ai,608,framework
+autogen,501,framework
+swarm,319,framework
+crewai,252,framework
+smolagents,144,framework
+agents,133,framework
+agno,129,framework
+mem0,83,framework
+dspy,79,framework
+semantic_kernel,28,framework
+camel,1,framework

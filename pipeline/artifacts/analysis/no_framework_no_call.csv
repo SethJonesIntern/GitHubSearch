@@ -1,0 +1,101 @@
+full_name,bucket,matched_frameworks,stars,py_files,test_files,http_llm_files,cli_llm_files,zero_invoker_reason,in_scope,description
+HKUDS/ClawTeam,calls a provider over raw HTTP,clai,5363,145,39,3,9,framework_never_imported,,"""ClawTeam: Agent Swarm Intelligence"" (One Command → Full Automation)"
+invoice-x/invoice2data,calls a provider over raw HTTP,camel,2169,116,51,2,0,framework_never_imported,,Extract structured data from PDF invoices
+larksuite/oapi-sdk-python,calls a provider over raw HTTP,patchwork,528,12266,80,25,0,framework_never_imported,,Larksuite development interface SDK
+Lyellr88/MARM-Systems,calls a provider over raw HTTP,clai,306,228,72,2,3,framework_never_imported,,"Stop re-explaining yourself to AI. MARM offers persistent memory, cross-agent context sharing, write queues, swarm-ready presets, and compaction for clean recall. Includes a live web dashboard for man"
+alireza787b/mavsdk_drone_show,calls a provider over raw HTTP,"swarm, swarms",303,560,182,2,1,imports_fw_no_call_site,,"Open-source MAVLink fleet operations for PX4: SITL, drone shows, search and rescue, cooperative autonomy, and field validation"
+Intelligent-Internet/CommonGround,calls a provider over raw HTTP,clai,138,180,51,1,3,framework_never_imported,,From isolated agents to shared work
+professorpalmer/Puppetmaster,calls a provider over raw HTTP,swarms,86,180,43,13,32,framework_never_imported,,"Provider-neutral control plane for durable-state agent swarms: subprocess workers, leases, artifacts, memory, and deterministic stitching."
+strangeadvancedmarketing/Adam,calls a provider over raw HTTP,swarm,44,16,4,2,0,framework_never_imported,,5-layer persistent memory and identity architecture for AI agents. Production-validated over 353+ sessions. First documented case of emergent values in persistent AI -- quantum-verified on IBM hardwar
+web3spreads/quant-flow,calls a provider over raw HTTP,langchain_exa,38,48,13,2,0,framework_never_imported,,AI-powered crypto perpetual futures trading bot for Hyperliquid DEX.
+JSONbored/mem0-aio,calls a provider over raw HTTP,mem0,16,8,4,1,1,framework_never_imported,,"Unraid CA template and Docker build for Mem0 (OpenMemory). This mega-container utilizes s6-overlay to seamlessly bundle the pre-compiled Qdrant Vector Database, the Python FastAPI/MCP server, and the "
+spurbey/agent-memory-orchestrator,calls a provider over raw HTTP,graphrag,16,668,115,10,2,framework_never_imported,,Persistent Memory and Agent Orchestator
+noetl/noetl,calls a provider over raw HTTP,clai,14,610,199,2,0,framework_never_imported,,"Automation, Data Mash, Message Learning, AI Ops, Quantum Ops"
+nottelabs/bua,calls a provider over raw HTTP,"notte, notte_sdk",14,19,1,1,0,imports_fw_no_call_site,,Browser using agent (bua) notte model on any browser environment
+ttlequals0/PixelProbe,calls a provider over raw HTTP,clai,13,131,39,1,0,framework_never_imported,,Advanced media integrity scanning and corruption detection
+canvas-medical/canvas-plugins,calls a provider over raw HTTP,clai,12,1218,277,7,0,framework_never_imported,,
+The-Swarm-Corporation/swarms-client,imports_fw_no_call_site,swarms,10,120,27,0,0,imports_fw_no_call_site,,"A production-grade Python client for the Swarms API, providing a simple and intuitive interface for creating and managing AI swarms."
+memory-graph/memory-graph,no Python files,pyautogen,213,0,0,0,0,no_python_files,,A graph DB-based MCP memory server for coding agents with intelligent relationship tracking
+erfanzar/Xerxes-Agents,no Python files,honcho,24,0,0,0,0,no_python_files,,Agents for intelligence and coordination
+wesleysimplicio/hermes-turbo-agent,no Python files,mem0,16,0,0,0,0,no_python_files,,"Hermes Agent 100x faster: real benchmarks, optimized hot-paths, and performance dashboard. Turbo scoring + low-latency for production-ready AI agents."
+huggingface/diffusers,no evidence found yet - needs a look,omnigent,33955,2053,486,0,0,framework_never_imported,,"🤗 Diffusers: State-of-the-art diffusion models for image, video, and audio generation in PyTorch."
+getmoto/moto,no evidence found yet - needs a look,camel,8555,2552,860,0,0,framework_never_imported,,A library that allows you to easily mock out tests based on AWS infrastructure.
+rasbt/mlxtend,no evidence found yet - needs a look,notte,5152,212,85,0,0,framework_never_imported,,A library of extension and helper modules for Python's data analysis and machine learning libraries.
+Pylons/pyramid,no evidence found yet - needs a look,notte,4086,552,98,0,0,framework_never_imported,,Pyramid - A Python web framework
+camelot-dev/camelot,no evidence found yet - needs a look,camel,3767,63,29,0,0,framework_never_imported,,A Python library to extract tabular data from PDFs
+elevenlabs/elevenlabs-python,no evidence found yet - needs a look,patchwork,3014,2425,38,0,0,framework_never_imported,,The official Python SDK for the ElevenLabs API.
+mongodb/motor,no evidence found yet - needs a look,agno,2530,76,37,0,0,framework_never_imported,,Motor - the async Python driver for MongoDB and Tornado or asyncio
+uriyyo/fastapi-pagination,no evidence found yet - needs a look,agno,1670,95,27,0,0,framework_never_imported,,FastAPI pagination 📖 
+vipshop/cache-dit,no evidence found yet - needs a look,omnigent,1215,275,36,0,0,framework_never_imported,,"A PyTorch-native inference engine with cache, parallelism, quantization and cpu offload for DiTs."
+NVIDIA/NVFlare,no evidence found yet - needs a look,swarms,942,2858,506,0,0,framework_never_imported,,NVIDIA Federated Learning Application Runtime Environment
+logamee/lin-cms-flask,no evidence found yet - needs a look,camel,841,104,3,0,0,framework_never_imported,,🎀A simple and practical CMS implememted by Flask
+SkyworkAI/Matrix-3D,no evidence found yet - needs a look,omnigent,746,745,3,0,0,framework_never_imported,,Generate large-scale explorable 3D scenes with high-quality panorama videos from a single image or text prompt.
+Yaofang-Liu/Pusa-VidGen,no evidence found yet - needs a look,omnigent,683,219,1,0,0,framework_never_imported,,Pusa: Thousands Timesteps Video Diffusion Model
+yt-project/yt,no evidence found yet - needs a look,notte,556,899,218,0,0,framework_never_imported,,Main yt repository
+cevoaustralia/aws-google-auth,no evidence found yet - needs a look,notte,550,19,10,0,0,framework_never_imported,,Provides AWS STS credentials based on Google Apps SAML SSO auth (what a jumble!)
+adafruit/Adafruit_Blinka,no evidence found yet - needs a look,agno,534,446,5,0,0,framework_never_imported,,Add CircuitPython hardware API and libraries to MicroPython & CPython devices
+frostming/marko,no evidence found yet - needs a look,camel,460,36,6,0,0,framework_never_imported,,A markdown parser with high extensibility.
+aliyun/aliyun-odps-python-sdk,no evidence found yet - needs a look,camel,449,511,130,0,0,framework_never_imported,,ODPS Python SDK and data analysis framework
+bytedance/Video-As-Prompt,no evidence found yet - needs a look,omnigent,431,1542,366,0,0,framework_never_imported,,"[ICLR 2026] Official repo for paper ""Video-As-Prompt: Unified Semantic Control for Video Generation"""
+Kotti/Kotti,no evidence found yet - needs a look,camel,410,77,30,0,0,framework_never_imported,,"Kotti is a high-level, Pythonic web application framework based on Pyramid and SQLAlchemy. It includes an extensible Content Management System called the Kotti CMS."
+koldakov/futuramaapi,no evidence found yet - needs a look,camel,403,187,10,0,0,framework_never_imported,,"Futurama inspired REST and GraphQL API, blending characters exploration with real-time updates. Tech playground featuring FastAPI, Docker, and more!"
+ansible-collections/amazon.aws,no evidence found yet - needs a look,camel,388,471,189,0,0,framework_never_imported,,Ansible Collection for Amazon AWS
+dynamiqs/dynamiqs,no evidence found yet - needs a look,dynamiq,299,139,44,0,0,framework_never_imported,,High-performance quantum systems simulation with JAX (GPU-accelerated & differentiable solvers).
+yfyang007/RealRestorer,no evidence found yet - needs a look,omnigent,295,1704,386,0,0,framework_never_imported,,
+JJLibra/CC-Pan,no evidence found yet - needs a look,omnigent,268,1541,356,0,0,framework_never_imported,,"🤗 Official implementation for ""CC-Pan: Channel-wise Compression based Diffusion for Efficient Pan-Sharpening"" https://arxiv.org/abs/2602.04473"
+MaxApiTeam/PyMax,no evidence found yet - needs a look,camel,214,176,18,0,0,framework_never_imported,,Асинхронный Python-враппер для работы с внутренним API MAX Manager (Userbot). Упрощает автоматизацию и интеграцию.
+Leggin/dirigera,no evidence found yet - needs a look,camel,210,37,13,0,0,framework_never_imported,,This repository provides an unofficial Python client for controlling the IKEA Dirigera Smart Home Hub.
+ansible-collections/community.aws,no evidence found yet - needs a look,camel,202,197,19,0,0,framework_never_imported,,Ansible Collection for Community AWS
+pk-hack/CoilSnake,no evidence found yet - needs a look,notte,200,131,20,0,0,framework_never_imported,,
+RedMediaTech/ODTSR,no evidence found yet - needs a look,omnigent,174,399,8,0,0,framework_never_imported,,"[CVPR2026] ODTSR: This repo is the official implementation of ""One-Step Diffusion Transformer for Controllable Real-World Image Super-Resolution"""
+SilvioBaratto/optimizer,no evidence found yet - needs a look,camel,168,996,416,0,0,framework_never_imported,,Quantitative portfolio construction and optimization platform built on skfolio and scikit-learn.
+GVCLab/GSFixer,no evidence found yet - needs a look,omnigent,165,1364,296,0,0,framework_never_imported,,[ICML 2026] GSFixer: Improving 3D Gaussian Splatting with Reference-Guided Video Diffusion Priors
+accelero-cloud/appkernel,no evidence found yet - needs a look,agno,163,52,27,0,0,framework_never_imported,,API development made easy: a smart Python 3 API framework
+blue-marble/gridpath,no evidence found yet - needs a look,headroom,134,949,296,0,0,framework_never_imported,,A versatile simulation and optimization platform for power-system planning and operations.
+mricon/b4,no evidence found yet - needs a look,patchwork,134,62,27,0,0,framework_never_imported,,Tool to help with email-based patch workflows
+HALFpipe/HALFpipe,no evidence found yet - needs a look,camel,126,452,79,0,0,framework_never_imported,,ENIGMA HALFpipe is a user-friendly software that facilitates reproducible analysis of fMRI data
+hustvl/Turbo-VAED,no evidence found yet - needs a look,omnigent,126,1507,355,0,0,framework_never_imported,,[AAAI 2026] Turbo-VAED: Fast and Stable Transfer of Video-VAEs to Mobile Devices
+BluePilotDev/bluepilot,no evidence found yet - needs a look,agno,124,1283,165,0,0,framework_never_imported,,
+Echo-Team-Joy-Future-Academy-JD/Echo-Memory,no evidence found yet - needs a look,omnigent,120,237,4,0,0,framework_never_imported,,A Simple Baseline for Video World Models with Memory
+Netflix-Skunkworks/service-capacity-modeling,no evidence found yet - needs a look,headroom,92,109,53,0,0,framework_never_imported,,
+biocore/gemelli,no evidence found yet - needs a look,notte,87,46,16,0,0,framework_never_imported,,"Gemelli is a tool box for running Robust Aitchison PCA (RPCA), Joint Robust Aitchison PCA (Joint-RPCA), TEMPoral TEnsor Decomposition (TEMPTED), and Compositional Tensor Factorization (CTF) on sparse "
+globocom/GloboNetworkAPI,no evidence found yet - needs a look,notte,87,1016,143,0,0,framework_never_imported,,"API to automate IP Networking management, resource allocation and provisioning."
+Linaro/lava,no evidence found yet - needs a look,notte,79,560,127,0,0,framework_never_imported,,Read only mirror https://gitlab.com/lava/lava
+EnVision-Research/DualCamCtrl,no evidence found yet - needs a look,omnigent,75,264,5,0,0,framework_never_imported,,[ECCV 2026] DualCamCtrl: Dual-Branch Diffusion Model for Geometry-Aware Camera-Controlled Video Generation
+tejoesperanto/pasportaservo,no evidence found yet - needs a look,camel,71,316,59,0,0,framework_never_imported,,La fontkodo de Pasporta Servo
+xiaomi-research/drivelaw,no evidence found yet - needs a look,omnigent,71,1687,327,0,0,framework_never_imported,,[CVPR2026] DriveLaW: Unifying Planning and Video Generation in a Latent Driving World
+KOSASIH/nexus-revoluter,no evidence found yet - needs a look,swarms,62,309,62,0,0,framework_never_imported,,"Nexus Revoluter is a blockchain node application that enables decentralized transactions and smart contract execution. With a modular design, it offers a robust API for integration, advanced consensus"
+qiboteam/qibolab,no evidence found yet - needs a look,dynamiq,59,175,34,0,0,framework_never_imported,,Quantum hardware module and drivers for Qibo.
+eavanvalkenburg/pysiaalarm,no evidence found yet - needs a look,sia,55,35,5,0,0,framework_never_imported,,A python package to connect to a SIA DC-09 based alarm system.
+TUM-AVS/target-bench,no evidence found yet - needs a look,omnigent,52,174,0,0,0,framework_never_imported,,[ECCV'26] Official repo for Target-Bench: Can World Models Achieve Mapless Path Planning with Semantic Targets?
+muyouzhi6/Astrbot-desktop-assistant,no evidence found yet - needs a look,astrbot,52,67,10,0,0,framework_never_imported,,AstrBot 桌面助手客户端 (Desktop Client) - 提供可拖拽的悬浮球界面、多模态对话窗口、桌面感知和主动对话功能，让bot参与你的工作与生活。
+JouleCai/geospacelab,no evidence found yet - needs a look,swarm,48,489,30,0,0,framework_never_imported,,"A python-based library to collect, manage, and visualize geospace data (e.g. OMNI, geomagnetic indices, EISCAT, DMSP, SWARM, TEC, AMPERE, etc.). "
+cvlab-kaist/APPLE,no evidence found yet - needs a look,omnigent,42,3342,550,0,0,framework_never_imported,,"Official implementation of ""🍎APPLE: Attribute-Preserving Pseudo-Labeling for Diffusion-Based Face Swapping"""
+OuyangWenyu/hydrodataset,no evidence found yet - needs a look,camel,41,47,1,0,0,framework_never_imported,,Datasets downloader and reader for Hydrologic Modeling
+yazmolod/pynspd,no evidence found yet - needs a look,camel,38,42,15,0,0,framework_never_imported,,Python-библиотека для работы с https://nspd.gov.ru (ex-ПКК)
+gip-inclusion/les-emplois,no evidence found yet - needs a look,sia,37,1376,273,0,0,framework_never_imported,,Plate-forme numérique de l'inclusion
+360CVGroup/FLUX-Makeup,no evidence found yet - needs a look,omnigent,35,1261,25,0,0,framework_never_imported,,"Transfer face makeup with high fidelity, SoTA and production-ready"
+MingXiangL/Teacache-xDiT,no evidence found yet - needs a look,omnigent,33,1603,378,0,0,framework_never_imported,,Combining Teacache with xDiT to Accelerate Visual Generation Models
+PyUtilib/pyutilib,no evidence found yet - needs a look,notte,33,229,36,0,0,framework_never_imported,,"A collection of general Python utilities, including logging and file IO, subprocess management, plugin systems, and workflow management."
+checkmarx-ts/checkmarx-python-sdk,no evidence found yet - needs a look,camel,31,912,102,0,0,framework_never_imported,,Checkmarx Python SDK
+zscaler/zscaler-sdk-python,no evidence found yet - needs a look,camel,29,1009,270,0,0,framework_never_imported,,Official Zscaler SDK Python provides an uniform and easy-to-use interface for each of the Zscaler product APIs.
+OuyangWenyu/torchhydro,no evidence found yet - needs a look,camel,27,100,31,0,0,framework_never_imported,,"TorchHydro: datasets, and models for watershed hydrological modeling"
+dkweiss31/qontrol,no evidence found yet - needs a look,dynamiq,27,16,2,0,0,framework_never_imported,,"Quantum optimal control based on dynamiqs, diffrax and JAX"
+altescy/colt,no evidence found yet - needs a look,camel,26,46,18,0,0,framework_never_imported,,"🐎 Colt: Effortlessly configure and construct Python objects with colt, a lightweight library inspired by AllenNLP and Tango"
+aws-controllers-k8s/test-infra,no evidence found yet - needs a look,mem0,26,74,1,0,0,framework_never_imported,,Testing infrastructure and frameworks for ACK
+singer-io/target-stitch,no evidence found yet - needs a look,notte,26,7,1,0,0,framework_never_imported,,A Singer.io Target for the Stitch Import API
+linux-netdev/nipa,no evidence found yet - needs a look,patchwork,25,88,7,0,0,framework_never_imported,,Netdev Infrastructure for Patch Automation
+underworldcode/underworld3,no evidence found yet - needs a look,swarm,24,667,201,0,0,framework_never_imported,,Underworld v3
+infobip-community/infobip-api-python-sdk,no evidence found yet - needs a look,camel,19,309,111,0,0,framework_never_imported,,Python SDK for Infobip's API
+JuDFTteam/masci-tools,no evidence found yet - needs a look,camel,18,153,46,0,0,framework_never_imported,,Post-processing toolkit for electronic structure calculations
+1170300714/Local-DPO,no evidence found yet - needs a look,omnigent,16,1508,351,0,0,framework_never_imported,,Official implementation of Local DPO (CVPR 2026)
+edraj/dmart,no evidence found yet - needs a look,camel,15,165,28,0,0,framework_never_imported,,Headless information management system 
+sr-857/AstraGuard-AI-Apertre-3.0,no evidence found yet - needs a look,swarms,14,532,164,0,0,framework_never_imported,, 🚀 Autonomous Fault Detection & Recovery System for CubeSats | 🤖 Real-Time Telemetry Simulation • 🛰️ Anomaly Detection • 🔧 State Machine • 📊 Streamlit Dashboard • 🎥 3D Attitude Visualizer
+AdventurePilotDev/AdventurePilot,no evidence found yet - needs a look,agno,13,1091,158,0,0,framework_never_imported,,
+hasanmehediii/CSE-2216-Project,no evidence found yet - needs a look,agno,13,17,0,0,0,framework_never_imported,,"LangMastero, A Simple designed language learning app for beginners. If you want to learn basics of a language like Spanish or Chinese, can try this app. Also can test your progress with exams"
+4teamwork/opengever.core,no evidence found yet - needs a look,patchwork,12,3924,924,0,0,framework_never_imported,,OneGov GEVER core package
+debnet/common-framework,no evidence found yet - needs a look,camel,11,52,2,0,0,framework_never_imported,,Framework Django Commun
+dhruv-ahuja/backend_burger,no evidence found yet - needs a look,agno,10,52,4,0,0,framework_never_imported,,Demo application to learn and solidify my knowledge of backend and infra; now extending to be a practical project
+psi-oss/get-physics-done,shells out to an LLM CLI,clai,847,778,478,0,7,framework_never_imported,,"The first open-source agentic AI physicist, by Physical Superintelligence PBC (PSI)."
+RBVI/ChimeraX,shells out to an LLM CLI,camel,259,1359,39,0,1,framework_never_imported,,Source code for molecular graphics program UCSF ChimeraX
+Stage-11-Agentics/lattice,shells out to an LLM CLI,clai,39,162,77,0,15,framework_never_imported,,task tracking. upgraded for the agent-native era. event-sourced. file-based. for minds that think in tokens and act in tool calls.

@@ -1,0 +1,6 @@
+step,unit,count,pct_of_call_sites,applications
+framework LLM call sites,call sites,23990,100.0,644
+in a file some test targets,call sites,4137,17.2,276
+tests whose focal method calls an LLM,tests,558,,110
+distinct focal methods those tests target,methods,262,,110
+call sites inside those methods,call sites,296,1.23,110

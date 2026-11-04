@@ -1,0 +1,5360 @@
+{
+  "scope": "Observed POP/CALLS; production functions and methods; direct calls only",
+  "selected_repos": 644,
+  "included_repos": 589,
+  "excluded_repos": 55,
+  "smoke_run": false,
+  "pooled_all_complete_repos": {
+    "llm": {
+      "methods": 7642,
+      "with_mapped_test": 220,
+      "pct": 2.878828,
+      "with_exact_test": 59,
+      "exact_pct": 0.772049
+    },
+    "other": {
+      "methods": 1509996,
+      "with_mapped_test": 74441,
+      "pct": 4.929881,
+      "with_exact_test": 25627,
+      "exact_pct": 1.697157
+    }
+  },
+  "paired_repos": 571,
+  "pooled_paired_repos": {
+    "llm": {
+      "methods": 7642,
+      "with_mapped_test": 220,
+      "pct": 2.878828,
+      "with_exact_test": 59,
+      "exact_pct": 0.772049
+    },
+    "other": {
+      "methods": 1463857,
+      "with_mapped_test": 72527,
+      "pct": 4.954514,
+      "with_exact_test": 25118,
+      "exact_pct": 1.715878
+    }
+  },
+  "macro_paired_pct": {
+    "llm": 3.8255122224168128,
+    "other": 4.423628455341506
+  },
+  "mean_paired_difference_pp": -0.5981162329246935,
+  "median_paired_difference_pp": -0.965366,
+  "limitations": [
+    "Test correspondence is heuristic, not execution coverage.",
+    "Other means no detected direct in-scope framework call; may include transitive invokers or missed calls.",
+    "Whole repositories with source parse failures or unjoined production calls/focals are excluded.",
+    "Snapshot validation checks focal name/start/end, not source hashes.",
+    "Production classification follows slice_index.code_kind; unconventional test locations may remain."
+  ],
+  "diagnostics": [
+    {
+      "repo": "0ca/BoxPwnr",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "10xHub/Agentflow",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "1KevinFigueroa/vector4cyber",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "5zjk5/prompt-engineering",
+      "status": "inventory_or_snapshot_mismatch",
+      "parse_errors": 3,
+      "error_examples": [
+        "Skill/lang_chain&graphy_skill/resources/\u4e0a\u4e0b\u6587\u5de5\u7a0b/messages.py: invalid syntax. Perhaps you forgot a comma? (Skill/lang_chain&graphy_skill/resources/\u4e0a\u4e0b\u6587\u5de5\u7a0b/messages.py, line 43)",
+        "langchain-langgraph-V1.0/\u4e0a\u4e0b\u6587\u5de5\u7a0b/messages.py: invalid syntax. Perhaps you forgot a comma? (langchain-langgraph-V1.0/\u4e0a\u4e0b\u6587\u5de5\u7a0b/messages.py, line 43)",
+        "langfuse/\u89c2\u5bdf\u7c7b\u578b.py: unexpected indent (langfuse/\u89c2\u5bdf\u7c7b\u578b.py, line 2)"
+      ],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "AI-NAtive-I/agent-ros-bridge",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Acacian/aegis",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "AgentToolkit/agent-mentor",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Agentic-AI-Coach/AgenticAICoach",
+      "status": "inventory_or_snapshot_mismatch",
+      "parse_errors": 1,
+      "error_examples": [
+        "community_submissions/agent_template/agent.py: invalid syntax (community_submissions/agent_template/agent.py, line 4)"
+      ],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Aggregate-Intellect/sherpa",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "AleksNeStu/ai-real-estate-assistant",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Alex8791-cyber/cognithor",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Alpha-Labs-Inc/Alpha-Signal",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Arcadia-1/AMS-IO-Agent",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "ArchAI-Labs/code_explainer",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Arindam200/awesome-ai-apps",
+      "status": "inventory_or_snapshot_mismatch",
+      "parse_errors": 1,
+      "error_examples": [
+        "advance_ai_agents/conference_agnositc_cfp_generator/src/scrapers/platform_adapters.py: unexpected indent (advance_ai_agents/conference_agnositc_cfp_generator/src/scrapers/platform_adapters.py, line 222)"
+      ],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Arize-ai/openinference",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Arvo-AI/aurora",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "AstraSolis/astrbot_proactive_reply",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Ayleovelle/astrbot_plugin_sylanne",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "AzulClaw/AzulClaw-Core",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Azure-Samples/Azure-Language-OpenAI-Conversational-Agent-Accelerator",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Azure-Samples/Prism-Transform-Data-into-Queryable-Knowledge",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Azure-Samples/holiday-peak-hub",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Azure-Samples/llm-agent-ops-toolkit-sk",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Azure/agentops",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Azure/azure-sdk-for-python",
+      "status": "inventory_or_snapshot_mismatch",
+      "parse_errors": 7,
+      "error_examples": [
+        "eng/tools/azure-sdk-tools/packaging_tools/templates/packaging_files/setup.py: invalid syntax (eng/tools/azure-sdk-tools/packaging_tools/templates/packaging_files/setup.py, line 67)",
+        "scripts/quickstart_tooling_dpg/template_samples/sample.py: invalid syntax (scripts/quickstart_tooling_dpg/template_samples/sample.py, line 30)",
+        "scripts/quickstart_tooling_dpg/template_tests/testcase.py: invalid syntax (scripts/quickstart_tooling_dpg/template_tests/testcase.py, line 9)",
+        "scripts/quickstart_tooling_dpg/template_tests/testcase_async.py: invalid syntax (scripts/quickstart_tooling_dpg/template_tests/testcase_async.py, line 8)",
+        "scripts/templates/_multiapi_client.py: invalid syntax (scripts/templates/_multiapi_client.py, line 17)"
+      ],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Azure/contentflow",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Azure/gpt-rag-orchestrator",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "AzureCosmosDB/CosmosAIGraph",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "BG8CFB/TradingAgents-CN",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "BSTester/TradingAgentsWeb",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "BeautyyuYanli/Kapybara",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "BerriAI/litellm",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "BioGeMT/agentomics-ml",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "BjornMelin/docmind-ai-llm",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "CAI-testbooks/LLM-Course",
+      "status": "inventory_or_snapshot_mismatch",
+      "parse_errors": 6,
+      "error_examples": [
+        "LLM-Course-Assignments-2025/05-Software-Engineering/submissions/SZ2516075_\u738b\u7ecd\u4e00/dev-agent/output/\u6d4b\u8bd5.py: invalid character '\uff1a' (U+FF1A) (LLM-Course-Assignments-2025/05-Software-Engineering/submissions/SZ2516075_\u738b\u7ecd\u4e00/dev-agent/output/\u6d4b\u8bd5.py, line 8)",
+        "LLM-Course-Assignments-2025/08-Others/submission/Dataset/Delete.py: invalid syntax (LLM-Course-Assignments-2025/08-Others/submission/Dataset/Delete.py, line 26)",
+        "LLM-Course-Assignments-2025/08-Others/submission/Dataset/Group.py: invalid syntax (LLM-Course-Assignments-2025/08-Others/submission/Dataset/Group.py, line 101)",
+        "LLM-Course-Assignments-2025/08-Others/submission/Dataset/Pair.py: invalid syntax (LLM-Course-Assignments-2025/08-Others/submission/Dataset/Pair.py, line 186)",
+        "LLM-Course-Assignments-2025/08-Others/submission/Dataset/RenameFile.py: invalid syntax (LLM-Course-Assignments-2025/08-Others/submission/Dataset/RenameFile.py, line 30)"
+      ],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "CJohnDesign/FEN_Sliders",
+      "status": "inventory_or_snapshot_mismatch",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 261
+    },
+    {
+      "repo": "Capsize-Games/airunner",
+      "status": "inventory_or_snapshot_mismatch",
+      "parse_errors": 2,
+      "error_examples": [
+        "gui_vulture_whitelist.py: illegal target for annotation (gui_vulture_whitelist.py, line 2)",
+        "services_vulture_whitelist.py: illegal target for annotation (services_vulture_whitelist.py, line 2)"
+      ],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Certora/AIComposer",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "CharlesQ9/HistAgent",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Chrisolande/Medical-Research-Assistant",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Cisco-Talos/PEAK-Assistant",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Citrus-bit/Anaxa",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "CoDS-GCS/Chatty-KG",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Corpus-OS/corpusos",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "DataDog/dd-trace-py",
+      "status": "incomplete_mapping_run",
+      "run_status": "crash"
+    },
+    {
+      "repo": "Devsoul2026/Hermes-One-Click",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "DjTaNg-404/ChatTutor",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "EDEAI/NexusAI",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "ENDEVSOLS/Long-Trainer",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "EPFLiGHT/mmore",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "EfficientAI-tech/efficientAI",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "EfficientContext/ContextPilot",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "EpicStaff/EpicStaff",
+      "status": "inventory_or_snapshot_mismatch",
+      "parse_errors": 6,
+      "error_examples": [
+        "src/crew/libraries/crewAI/src/crewai/cli/templates/crew.py: invalid syntax (src/crew/libraries/crewAI/src/crewai/cli/templates/crew.py, line 11)",
+        "src/crew/libraries/crewAI/src/crewai/cli/templates/main.py: invalid syntax (src/crew/libraries/crewAI/src/crewai/cli/templates/main.py, line 3)",
+        "src/crew/libraries/crewAI/src/crewai/cli/templates/crew/crew.py: invalid syntax (src/crew/libraries/crewAI/src/crewai/cli/templates/crew/crew.py, line 9)",
+        "src/crew/libraries/crewAI/src/crewai/cli/templates/crew/main.py: invalid syntax (src/crew/libraries/crewAI/src/crewai/cli/templates/crew/main.py, line 7)",
+        "src/crew/libraries/crewAI/src/crewai/cli/templates/flow/main.py: invalid syntax (src/crew/libraries/crewAI/src/crewai/cli/templates/flow/main.py, line 8)"
+      ],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "EvoAgentX/EvoAgentX",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "EvoScientist/EvoScientist",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "ExtensionShield/ExtensionShield",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "FanDongzhe123/RAGSearch",
+      "status": "inventory_or_snapshot_mismatch",
+      "parse_errors": 1,
+      "error_examples": [
+        "Search-o1/scripts/run_search_o1_hyper.py: invalid character '\u3001' (U+3001) (Search-o1/scripts/run_search_o1_hyper.py, line 46)"
+      ],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "FaustoS88/Pydantic-AI-Pinescript-Expert",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "FinAgent-Lab/market-analysis-team",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "FlanChanXwO/astrbot_plugin_rsshub",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "FlanChanXwO/astrbot_plugin_status",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "FromCSUZhou/Econometrics-Agent",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "FudanSELab/TripSphere",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "FusionBrainLab/gigaevo-core",
+      "status": "inventory_or_snapshot_mismatch",
+      "parse_errors": 147,
+      "error_examples": [
+        "problems/tabular/adult/validate.py: invalid syntax (problems/tabular/adult/validate.py, line 1)",
+        "problems/tabular/black-friday/validate.py: invalid syntax (problems/tabular/black-friday/validate.py, line 1)",
+        "problems/tabular/california/validate.py: invalid syntax (problems/tabular/california/validate.py, line 1)",
+        "problems/tabular/churn/validate.py: invalid syntax (problems/tabular/churn/validate.py, line 1)",
+        "problems/tabular/covtype2/validate.py: invalid syntax (problems/tabular/covtype2/validate.py, line 1)"
+      ],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "GenseeAI/open_deep_research",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Genshin-bots/gsuid_core",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "GetBindu/Bindu",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "GetSherlog/Canvas",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "GhostInShells/MOSShell",
+      "status": "inventory_or_snapshot_mismatch",
+      "parse_errors": 1,
+      "error_examples": [
+        ".moss_ws/apps/bodies/g1/scripts/sdk/20_sit_stand_cycle.py: invalid syntax. Is this intended to be part of the string? (.moss_ws/apps/bodies/g1/scripts/sdk/20_sit_stand_cycle.py, line 254)"
+      ],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Gianthard-cyh/ValiRef",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "GoogleCloudPlatform/cloud-learning-platform",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "GoogleCloudPlatform/core-solution-services",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "GoogleCloudPlatform/terraform-genai-rag",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "GrafeoDB/grafeo-memory",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Grigorij-Dudnik/Clean-Coder-AI",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "HKUDS/MGP",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "HKUDS/ViMax",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "HKUDS/Vibe-Trading",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "HKUSTDial/DeepEye",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "HUST-AI-HYZ/MemoryAgentBench",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Haohao-end/openagent",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "HeKun-NVIDIA/hackathon_aiqtoolkit",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Health-Informatics-UoN/lettuce",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Heximiao/astrbot_plugin_atrifeed",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "HimanshuMohanty-Git24/RakshaQuant",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Hmbown/rlmagents",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "IABTechLab/buyer-agent",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "IABTechLab/seller-agent",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "IBM/ibm-watsonx-orchestrate-adk",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "IBM/oic-i-agentic-ai-tutorials",
+      "status": "inventory_or_snapshot_mismatch",
+      "parse_errors": 1,
+      "error_examples": [
+        "i-oic-wxo-planning-analytics-agent/tools/pa_get_variance_analysis.py: invalid character '\u201d' (U+201D) (i-oic-wxo-planning-analytics-agent/tools/pa_get_variance_analysis.py, line 11)"
+      ],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "IBM/watsonx-developer-hub",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "IPADS-SAI/MobiAgent",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Insight-Services-APAC/ingenious",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "InternScience/InternAgent",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "JetXu-LLM/llama-github",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "JohnnyFiv3r/Core-Memory",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "JulianNeuberger/llm-process-generation",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Just-Curieous/Curie",
+      "status": "inventory_or_snapshot_mismatch",
+      "parse_errors": 1,
+      "error_examples": [
+        "evaluation/error_stats.py: unexpected indent (evaluation/error_stats.py, line 5)"
+      ],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "KasarLabs/cairo-coder",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Kasma-Inc/Sagi",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "KruxAI/ragbuilder",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "KylinMountain/TradingAgents-AShare",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "LINs-lab/MASArena",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "LangConfig/langconfig",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Larens94/codedna",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "LeapLabTHU/cooragent",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "LearningCircuit/local-deep-research",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Leeroo-AI/kapso",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Lyra-stellAI/BYO-LLM-WIKI",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "MGdaasLab/WHartTest",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "MODSetter/SurfSense",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "MSDLLCpapers/teal-agents",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "MantisAI/sieves",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "MarksStuff/github-agent",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "MatsMoll/aligned",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "MemMachine/MemMachine",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "MemoriLabs/Memori",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "MervinPraison/PraisonAI-Tools",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "MigoXLab/dingo",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "MinBZK/poc-machine-law",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "MotleyAI/motleycrew",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Multi-Agent-LLMs/mallm",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "NForce-ai/SDRbot",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "NJUxlj/Travel-Agent-based-on-Qwen2-RLHF",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "NVIDIA-AI-Blueprints/aiq",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "NVIDIA-AI-Blueprints/biomedical-aiq-research-agent",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "NVIDIA/NeMo-Agent-Toolkit",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "NVIDIA/SkillSpector",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Nantero1/ai-first-devops-toolkit",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "NickCharlie/astrbot_plugin_self_learning",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "NorthlandPositronics/Cogtrix",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "NousResearch/hermes-agent",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Noveum/noveum-trace",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "NuGuardAI/nuguard",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "OPPO-PersonalAI/Agent-KB",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "OnePunchMonk/AgentQuant",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Open-Source-Legal/OpenContracts",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "OpenDCAI/Dataflow-LoopAI",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "OpenDCAI/Mycel",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "OpenDCAI/OpenResearchFlow",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "OpenDataBox/Workspace-Bench",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "OpenGradient/tee-gateway",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "OpenNorve/CogniFold",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "OpenSourceAGI/ai-broker-investing-agent",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Osilly/Vision-DeepResearch",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "PUITAR/DeepSlide",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "PacificAI/langtest",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "PangHu1020/scholar-rag",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "PlagueHO/microsoft-foundry-jumpstart",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "PostHog/posthog",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "PostHog/posthog-python",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "PrefectHQ/marvin",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Privatris/AgentLeak",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "PurCL/ASTRA",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "PurpleAILAB/Decepticon",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "PyPilot-ai/PyPilot-ai",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Qredence/agentic-fleet",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Qredence/agentic-kernel",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Qredence/fleet-rlm",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "RHEcosystemAppEng/sast-ai-workflow",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "RedHatInsights/tangerine-backend",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "RenqiChen/Virtual-Scientists-v2",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Renyus/astrbot_plugin_self_evolution",
+      "status": "incomplete_mapping_run",
+      "run_status": "crash"
+    },
+    {
+      "repo": "RevoltSecurities/RAI",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Rishabh-Bajpai/Chanakya-Local-Friend",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Root-IO-Labs/open-agent-teams",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Rootly-AI-Labs/on-call-health",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Rvosy/Sakura",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "SALT-NLP/autometrics",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "SAP/project-kb",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "SHAdd0WTAka/Zen-Ai-Pentest",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "SREGym/SREGym",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "SarthakJariwala/sqlsaber",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Scale3-Labs/langtrace-python-sdk",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Scottcjn/rustchain-bounties",
+      "status": "inventory_or_snapshot_mismatch",
+      "parse_errors": 1,
+      "error_examples": [
+        "submissions/bounty-2861-ai-agent/core/submitter.py: unterminated f-string literal (detected at line 111) (submissions/bounty-2861-ai-agent/core/submitter.py, line 111)"
+      ],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "ScrapeGraphAI/Scrapegraph-ai",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "SearchSavior/OpenArc",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Serverless-Devs/agentrun-sdk-python",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Shubhamsaboo/awesome-llm-apps",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Shy2593666979/AgentChat",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Significant-Gravitas/AutoGPT",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Simpleyyt/ai-manus",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "SmartFlowAI/EmoLLM",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "SocialAI-tianji/Tianji",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "SponsioLabs/Sponsio",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "StonyBrookNLP/appworld",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "SuperagenticAI/superqode",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "THUIR/MemoryBench",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "TauricResearch/TradingAgents",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "TeleAI-UAGI/telemem",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "TencentBlueKing/bk-aidev-agent",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Text2SqlAgent/text2sql-framework",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "The-School-of-AI/Arcturus",
+      "status": "inventory_or_snapshot_mismatch",
+      "parse_errors": 1,
+      "error_examples": [
+        "data/deekseek_moe_moh_v2_continue_with_hicra.py: unterminated string literal (detected at line 132) (data/deekseek_moe_moh_v2_continue_with_hicra.py, line 132)"
+      ],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "The-Swarm-Corporation/ClawSwarm",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "The-Swarm-Corporation/swarms-memory",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "ThreeMoonsLab/agents-shipgate",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Tianyi-Billy-Ma/AutoData",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "TracecatHQ/tracecat",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Trampoline-AI/predict-rlm",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "TsinghuaDatabaseGroup/DB-GPT",
+      "status": "inventory_or_snapshot_mismatch",
+      "parse_errors": 1,
+      "error_examples": [
+        "multiagents/utils/llm.py: unmatched ')' (multiagents/utils/llm.py, line 96)"
+      ],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Tswoen/Paper-Agent",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "UiPath/uipath-integrations-python",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Upsonic/Upsonic",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "ValueCell-ai/valuecell",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "VincenzoManto/Doxa",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "VirtualPatientEngine/AIAgents4Pharma",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Wh1isper/ya-mono",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "WhissleAI/PromptingNemo",
+      "status": "inventory_or_snapshot_mismatch",
+      "parse_errors": 2,
+      "error_examples": [
+        "scripts/data/audio/1person/real/process_indic-voices.py: invalid syntax (scripts/data/audio/1person/real/process_indic-voices.py, line 2)",
+        "scripts/utils/adjust_samplerate.py: invalid syntax. Perhaps you forgot a comma? (scripts/utils/adjust_samplerate.py, line 4)"
+      ],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "WhitzardAgent/snowl",
+      "status": "inventory_or_snapshot_mismatch",
+      "parse_errors": 5,
+      "error_examples": [
+        "templates/adapter/adapter.py: invalid syntax (templates/adapter/adapter.py, line 22)",
+        "templates/benchmark/adapter.py: invalid syntax (templates/benchmark/adapter.py, line 22)",
+        "templates/cookiecutter-snowl-adapter/{{cookiecutter.module_name}}/__init__.py: invalid syntax (templates/cookiecutter-snowl-adapter/{{cookiecutter.module_name}}/__init__.py, line 3)",
+        "templates/cookiecutter-snowl-adapter/{{cookiecutter.module_name}}/adapter.py: invalid syntax (templates/cookiecutter-snowl-adapter/{{cookiecutter.module_name}}/adapter.py, line 15)",
+        "templates/provider/provider.py: invalid syntax (templates/provider/provider.py, line 19)"
+      ],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "XAIHT/Tlamatini",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "XDEI-Group/AerialClaw",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "YILING0013/AI_NovelGenerator",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Yagami360/ai-product-dev-tips",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Yanyutin753/LambChat",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Yuliang-Liu/AlphaOracle",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Yuyang-Song/QUITE",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "Zhenhaooo/PCASim",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "aaronjmars/MiroShark",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "ababdotai/awesome-agent-quickstart",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "aegra/aegra",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "af-74413592/DeepWerewolf",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "agencyenterprise/draft-detective",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "agentbay-ai/wuying-agentbay-sdk",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "agentguard-ai/tealtiger",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "agentiqs/mcp-kit-python",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "agentscope-ai/agentscope",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "agentscope-ai/agentscope-runtime",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "agentstack-ai/AgentStack",
+      "status": "inventory_or_snapshot_mismatch",
+      "parse_errors": 9,
+      "error_examples": [
+        "agentstack/frameworks/templates/autogen/{{cookiecutter.project_metadata.project_slug}}/src/main.py: invalid syntax (agentstack/frameworks/templates/autogen/{{cookiecutter.project_metadata.project_slug}}/src/main.py, line 17)",
+        "agentstack/frameworks/templates/crewai/{{cookiecutter.project_metadata.project_slug}}/src/crew.py: invalid syntax (agentstack/frameworks/templates/crewai/{{cookiecutter.project_metadata.project_slug}}/src/crew.py, line 6)",
+        "agentstack/frameworks/templates/crewai/{{cookiecutter.project_metadata.project_slug}}/src/main.py: invalid syntax (agentstack/frameworks/templates/crewai/{{cookiecutter.project_metadata.project_slug}}/src/main.py, line 3)",
+        "agentstack/frameworks/templates/langgraph/{{cookiecutter.project_metadata.project_slug}}/src/graph.py: invalid syntax (agentstack/frameworks/templates/langgraph/{{cookiecutter.project_metadata.project_slug}}/src/graph.py, line 17)",
+        "agentstack/frameworks/templates/langgraph/{{cookiecutter.project_metadata.project_slug}}/src/main.py: invalid syntax (agentstack/frameworks/templates/langgraph/{{cookiecutter.project_metadata.project_slug}}/src/main.py, line 3)"
+      ],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "agiresearch/AIOS",
+      "status": "inventory_or_snapshot_mismatch",
+      "parse_errors": 1,
+      "error_examples": [
+        "aios/utils/calculator.py: unexpected indent (aios/utils/calculator.py, line 122)"
+      ],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "agiresearch/Cerebrum",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "agntcy/agentic-apps",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "ai-bot-pro/achatbot",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "ai-christianson/RA.Aid",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "ai-forever/giga_agent",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "airblackbox/airblackbox",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "aiteachme/AITeachMe",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "aitomatic/openssa",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "aivrar/portable-hermes-agent",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "alibaba/loongsuite-python",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "alibaizhanov/mengram",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "allenai/agent-baselines",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "amazon-science/CodeAssistBench",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "anchorco/anchor-sdk",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "andrewbartels1/SolidworksMCP-python",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "angr/angr",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "apache/airflow",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "apache/burr",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "archi-physics/archi",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "arcprize/ARC-AGI-3-Agents",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "arieradle/shekel",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "arklexai/arksim",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "arm/metis",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "arun-gupta/agentic-tictactoe",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "ascending-llc/jarvis-registry",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "assafelovic/gpt-researcher",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "auth0/auth0-ai-python",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "avnlp/dspy-opt",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "aws-samples/amazon-elasticache-samples",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "aws-samples/generative-ai-ml-latam-samples",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "aws-samples/sample-apj-sup-sa",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "awslabs/distributed-multi-agent-collaboration",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "awslabs/llm-evaluation-system",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "awslabs/threat-designer",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "axsaucedo/pydantic-ai-server",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "aymenfurter/slidefinder",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "baserow/baserow",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "basicmachines-co/basic-memory",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "basnijholt/agent-cli",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "beatwad/LinkedIn-AI-Job-Applier-Ultimate",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "benseverndev-oss/goldenmatch",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "bflaven/ia_usages",
+      "status": "inventory_or_snapshot_mismatch",
+      "parse_errors": 4,
+      "error_examples": [
+        "ia_augmented_journalist_wp_toolkit/ia_training_whisper/source_thema/RFI_BR_thematicTags_0.py: invalid syntax. Is this intended to be part of the string? (ia_augmented_journalist_wp_toolkit/ia_training_whisper/source_thema/RFI_BR_thematicTags_0.py, line 6)",
+        "ia_prompt_seo/full_seo_prompts.py: invalid syntax (ia_prompt_seo/full_seo_prompts.py, line 35)",
+        "ia_spacy_llm/spacy-llm-small/src/test.py: invalid syntax (ia_spacy_llm/spacy-llm-small/src/test.py, line 19)",
+        "ia_using_mlflow/code_mlflow_langchain/002_mlflow_langchain.py: Missing parentheses in call to 'print'. Did you mean print(...)? (ia_using_mlflow/code_mlflow_langchain/002_mlflow_langchain.py, line 102)"
+      ],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "bibinprathap/VeritasGraph",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "blaxel-ai/sdk-python",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "bmigette/BA2TradePlatform",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "bonigarcia/context-engineering",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "borealBytes/dokploy-wizard",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "boringdata/boring-semantic-layer",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "braintrustdata/braintrust-sdk-python",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "brevia-ai/brevia",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "brightdata/brightdata-agent-showcase",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "brucechou1983/chainlit_langgraph",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "bvcyber/Cyber-AutoAgent-ng",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "bytedance/deer-flow",
+      "status": "inventory_or_snapshot_mismatch",
+      "parse_errors": 1,
+      "error_examples": [
+        ".agent/skills/blocking-io-guard/templates/anchor.template.py: expected '(' (.agent/skills/blocking-io-guard/templates/anchor.template.py, line 23)"
+      ],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "causalNLP/causal-agent",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "ccbogel/QualCoder",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "cctbx/cctbx_project",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "cel-ai/celai",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "chaosblade-io/chaosblade",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "chatchat-space/Langchain-Chatchat",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "chattermate/chattermate.chat",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "chengzi0103/SoulSpeak",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "cisco-ai-defense/ai-defense-python-sdk",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "cladius/agentic-ai",
+      "status": "inventory_or_snapshot_mismatch",
+      "parse_errors": 1,
+      "error_examples": [
+        "Bedrock-Agents/Level5/objectifier_lambda_function.py: invalid syntax (Bedrock-Agents/Level5/objectifier_lambda_function.py, line 13)"
+      ],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "cloudera/CAI_STUDIO_AGENT",
+      "status": "inventory_or_snapshot_mismatch",
+      "parse_errors": 2,
+      "error_examples": [
+        "examples/custom_application/gradio_application.py: invalid syntax (examples/custom_application/gradio_application.py, line 3)",
+        "startup_scripts/uv_start-agent-ops-server.py: invalid syntax (startup_scripts/uv_start-agent-ops-server.py, line 33)"
+      ],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "cmjatai/cmj",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "cmpnd-ai/dspy-cli",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "codeligence/dev-agents",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "codemie-ai/codemie",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "cognizant-ai-lab/neuro-san-studio",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "coleam00/ottomator-agents",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "congwa/embedease-ai",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "consciousness-lab/ctm-ai",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "coredipper/operon",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "couchbaselabs/agent-catalog",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "crestalnetwork/intentkit",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "csml-rpi/Foam-Agent",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "cvs-health/langfair",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "cvs-health/uqlm",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "datamllab/ltsm",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "datarobot-community/datarobot-agent-templates",
+      "status": "inventory_or_snapshot_mismatch",
+      "parse_errors": 1,
+      "error_examples": [
+        "infra/infra/llm.py: invalid syntax (infra/infra/llm.py, line 1)"
+      ],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "datarobot-oss/datarobot-genai",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "datastax/ragstack-ai",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "datawhalechina/vibe-blog",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "davidmonterocrespo24/DaveAgent",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "davidmonterocrespo24/DaveLovable",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "daxa-ai/pebblo",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "dbt-labs/dbt-mcp",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "deepset-ai/hayhooks",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "deepset-ai/haystack-core-integrations",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "depalmar/ai_for_the_win",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "diaomin66/astrbot_plugin_omnidraw",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "digitalocean/gradient-adk",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "django-haystack/django-haystack",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "docling-project/docling-mcp",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "dog-qiuqiu/invincat",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "double16/Cyber-AutoAgent-ng",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "drussell23/JARVIS",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "dshivendra/crewai_mcp_adapter",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "dunetrace/dunetrace",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "dustland/vibex-py",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "ebiose-ai/ebiose",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "eidolon-ai/eidolon",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "eka-care/eka-mcp-sdk",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "emanueleielo/ciana-parrot",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "endomorphosis/ipfs_kit_py",
+      "status": "inventory_or_snapshot_mismatch",
+      "parse_errors": 197,
+      "error_examples": [
+        "archive/applied_patches/fix_mcp_server_combined.py: expected 'except' or 'finally' block (archive/applied_patches/fix_mcp_server_combined.py, line 378)",
+        "archive/archive_clutter/fix_scripts/direct_ipfs_mcp_fix.py: invalid syntax (archive/archive_clutter/fix_scripts/direct_ipfs_mcp_fix.py, line 53)",
+        "archive/archive_clutter/fix_scripts/fix_ipfs_model.py: invalid syntax. Perhaps you forgot a comma? (archive/archive_clutter/fix_scripts/fix_ipfs_model.py, line 85)",
+        "archive/archive_clutter/fix_scripts/fix_ipfs_parameter_handling.py: f-string: valid expression required before '}' (archive/archive_clutter/fix_scripts/fix_ipfs_parameter_handling.py, line 68)",
+        "archive/backup_files/streaming_metrics_patch.py: invalid syntax (archive/backup_files/streaming_metrics_patch.py, line 30)"
+      ],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "enoch3712/ExtractThinker",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "epam/statgpt-backend",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "ericjiang18/Agent-Q-Mix",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "escottrose01/ace-llm",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "eval-protocol/python-sdk",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "evalops/cognitive-dissonance-dspy",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "exynos967/astrbot_plugin_memorix",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "ezyang/codemcp",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "facebookresearch/prompt-siren",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "fathom-lab/styxx",
+      "status": "inventory_or_snapshot_mismatch",
+      "parse_errors": 2,
+      "error_examples": [
+        "benchmarks/cogvm_demo/demo_cross_vendor_transplant.py: f-string: expecting '}' (benchmarks/cogvm_demo/demo_cross_vendor_transplant.py, line 136)",
+        "papers/disjoint-worlds/replicate_legibility.py: unterminated triple-quoted string literal (detected at line 18) (papers/disjoint-worlds/replicate_legibility.py, line 1)"
+      ],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "femto/minion-agent",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "fetchai/innovation-lab-examples",
+      "status": "inventory_or_snapshot_mismatch",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 366
+    },
+    {
+      "repo": "fetchai/uAgent-Examples",
+      "status": "inventory_or_snapshot_mismatch",
+      "parse_errors": 1,
+      "error_examples": [
+        "5-documentation/guides/agent-courses/agents-for-ai/web_sentiment_agent.py: expected an indented block after function definition on line 31 (5-documentation/guides/agent-courses/agents-for-ai/web_sentiment_agent.py, line 34)"
+      ],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "forge-sdlc/forge",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "future-agi/traceAI",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "ganeshnikhil/J.A.R.V.I.S.2.0",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "gaoweijun5/arxiv-tracker-agent",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "generative-computing/mellea",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "getsentry/sentry-python",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "getzep/zep",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "ggozad/haiku.rag",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "ggozad/oterm",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "ginlix-ai/LangAlpha",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "gizmax/Sandcastle",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "googleapis/python-aiplatform",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "goruck/home-generative-agent",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "gravel-01/proview-desktop",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "grll/mcpadapt",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "growgraph/ontocast",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "grupa-ai/agent-mcp",
+      "status": "inventory_or_snapshot_mismatch",
+      "parse_errors": 1,
+      "error_examples": [
+        "demos/comprehensive_framework_demo.py: invalid syntax (demos/comprehensive_framework_demo.py, line 19)"
+      ],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "gstranded/RAGLEX",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "gtesei/agentic_design_patterns",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "gusye1234/nano-graphrag",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "hal9ai/hal9",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "haohervchb/GooseLLM",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "hashgraph/hedera-agent-kit-py",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "hepai-lab/hepai",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "hidai25/eval-view",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "hinthornw/trustcall",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "hnuGraph/LLM4DBdesign",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "hongbo-miao/hongbomiao.com",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "hpcaitech/ColossalAI",
+      "status": "inventory_or_snapshot_mismatch",
+      "parse_errors": 10,
+      "error_examples": [
+        "examples/language/deepseek/data_utils.py: invalid syntax (examples/language/deepseek/data_utils.py, line 1)",
+        "examples/language/deepseek/model_utils.py: invalid syntax (examples/language/deepseek/model_utils.py, line 1)",
+        "examples/language/deepseek/performance_evaluator.py: invalid syntax (examples/language/deepseek/performance_evaluator.py, line 1)",
+        "examples/language/gpt/gemini/commons/performance_evaluator.py: invalid syntax (examples/language/gpt/gemini/commons/performance_evaluator.py, line 1)",
+        "examples/language/llama/data_utils.py: invalid syntax (examples/language/llama/data_utils.py, line 1)"
+      ],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "hsliuping/TradingAgents-CN",
+      "status": "inventory_or_snapshot_mismatch",
+      "parse_errors": 1,
+      "error_examples": [
+        "scripts/\u8865\u5145\u884c\u4e1a\u4fe1\u606f_akshare.py: invalid syntax (scripts/\u8865\u5145\u884c\u4e1a\u4fe1\u606f_akshare.py, line 81)"
+      ],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "huggingface/optimum-habana",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "huggingface/screensuite",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "huka81/decision-intelligence-runtime",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "huygiatrng/AlpacaTradingAgent",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "hybroai/a2a-adapter",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "i-am-bee/agentstack",
+      "status": "inventory_or_snapshot_mismatch",
+      "parse_errors": 1,
+      "error_examples": [
+        "examples/.template/test.py: expected '(' (examples/.template/test.py, line 11)"
+      ],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "iAmGiG/AutoTrader-AgentEdge",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "ibm-granite-community/granite-playground-agents",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "iii-org/akasha",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "ikamensh/kodo",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "ilanbenb/wa_llm",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "inclusionAI/AWorld",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "indexedlabs/pydantic-ai-gepa",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "ironcladgeek/FalconSignals",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "it-at-m/zammad-ai",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "itbench-hub/ITBench-CISO-CAA-Agent",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "jagmarques/asqav-sdk",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "jaschadub/VectorSmuggle",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "jataware/archytas",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "jiangxxxue/KOCO-bench",
+      "status": "inventory_or_snapshot_mismatch",
+      "parse_errors": 58,
+      "error_examples": [
+        "KOCO-bench-ch/domain_code_generation/open-r1_CH/test_examples/VLM-R1/code/test.py: expected an indented block after 'if' statement on line 3 (KOCO-bench-ch/domain_code_generation/open-r1_CH/test_examples/VLM-R1/code/test.py, line 4)",
+        "KOCO-bench-ch/domain_code_generation/tensorrt_model_optimizer_CH/test_examples/FlagScale/code/flagscale/train/train_robotics_ddp.py: invalid syntax. Perhaps you forgot a comma? (KOCO-bench-ch/domain_code_generation/tensorrt_model_optimizer_CH/test_examples/FlagScale/code/flagscale/train/train_robotics_ddp.py, line 218)",
+        "KOCO-bench-en/domain_code_generation/open-r1/test_examples/VLM-R1/code/test.py: expected an indented block after 'if' statement on line 3 (KOCO-bench-en/domain_code_generation/open-r1/test_examples/VLM-R1/code/test.py, line 4)",
+        "KOCO-bench-en/domain_code_generation/scripts/agent/dataset/dataset_remove_implementation_remove_test_ch/open-r1/test_examples/VLM-R1/code/test.py: expected an indented block after 'if' statement on line 3 (KOCO-bench-en/domain_code_generation/scripts/agent/dataset/dataset_remove_implementation_remove_test_ch/open-r1/test_examples/VLM-R1/code/test.py, line 4)",
+        "KOCO-bench-en/domain_code_generation/scripts/agent/dataset/dataset_remove_implementation_remove_test_ch/open-r1/test_examples/VLM-R1/code/src/open-r1-multimodal/src/open_r1/grpo_jsonl.py: unexpected indent (KOCO-bench-en/domain_code_generation/scripts/agent/dataset/dataset_remove_implementation_remove_test_ch/open-r1/test_examples/VLM-R1/code/src/open-r1-multimodal/src/open_r1/grpo_jsonl.py, line 452)"
+      ],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "jleechanorg/claude-commands",
+      "status": "inventory_or_snapshot_mismatch",
+      "parse_errors": 1,
+      "error_examples": [
+        ".claude/skills/tessl__interface-contract-verifier/scripts/contract_extractor.py: expression expected after dictionary key and ':' (.claude/skills/tessl__interface-contract-verifier/scripts/contract_extractor.py, line 26)"
+      ],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "jmanhype/claude-code-plugin-marketplace",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "johnson7788/MultiUserClaw",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "joinly-ai/joinly",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "julienlucas/agentic-rag-multiagent",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "jupyter-naas/abi",
+      "status": "inventory_or_snapshot_mismatch",
+      "parse_errors": 5,
+      "error_examples": [
+        "libs/naas-abi-cli/naas_abi_cli/cli/new/templates/agent/{{agent_name_pascal}}Agent.py: invalid syntax (libs/naas-abi-cli/naas_abi_cli/cli/new/templates/agent/{{agent_name_pascal}}Agent.py, line 13)",
+        "libs/naas-abi-cli/naas_abi_cli/cli/new/templates/integration/{{integration_name_pascal}}Integration.py: invalid syntax (libs/naas-abi-cli/naas_abi_cli/cli/new/templates/integration/{{integration_name_pascal}}Integration.py, line 17)",
+        "libs/naas-abi-cli/naas_abi_cli/cli/new/templates/orchestration/{{orchestration_name_pascal}}Orchestration.py: invalid syntax (libs/naas-abi-cli/naas_abi_cli/cli/new/templates/orchestration/{{orchestration_name_pascal}}Orchestration.py, line 5)",
+        "libs/naas-abi-cli/naas_abi_cli/cli/new/templates/pipeline/{{pipeline_name_pascal}}Pipeline.py: invalid syntax (libs/naas-abi-cli/naas_abi_cli/cli/new/templates/pipeline/{{pipeline_name_pascal}}Pipeline.py, line 16)",
+        "libs/naas-abi-cli/naas_abi_cli/cli/new/templates/workflow/{{workflow_name_pascal}}Workflow.py: invalid syntax (libs/naas-abi-cli/naas_abi_cli/cli/new/templates/workflow/{{workflow_name_pascal}}Workflow.py, line 13)"
+      ],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "jxxghp/MoviePilot",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "kafein-technology/KAI-Flow",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "kaikai52125/NeoTutor",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "kawayiYokami/astrbot_plugin_angel_heart",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "kawayiYokami/astrbot_plugin_angel_memory",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "kayba-ai/agentic-context-engine",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "kd-research/Techies",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "kenhuangus/ZeroTrustAgent",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "kfq20/AEGIS",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "kjgpta/tracesage",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "kmavrodis/noRAG-multiagent-doc-qna",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "kreneskyp/ix",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "kvyb/opentulpa",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "kyaukyuai/gpt-all-star",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "langasync/langasync",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "langchain-ai/open-swe",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "lastmile-ai/mcp-agent",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "learntocloud/learn-to-cloud-app",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "linora-u/AgentLoom",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "lksnext-ai-lab/ai-core-tools",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "llm-agent-x/llm-agent-x",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "llm-workflow-engine/llm-workflow-engine",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "lossless-group/investment-memo-orchestrator",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "ltjed/multiagent-coaching",
+      "status": "inventory_or_snapshot_mismatch",
+      "parse_errors": 1,
+      "error_examples": [
+        "marti/worlds/workflows/research_workflow.py: invalid syntax. Perhaps you forgot a comma? (marti/worlds/workflows/research_workflow.py, line 60)"
+      ],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "lucebert/langchain-doc-graph",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "lvgalvao/data-engineering-roadmap",
+      "status": "inventory_or_snapshot_mismatch",
+      "parse_errors": 1,
+      "error_examples": [
+        "05-engenharia-de-dados-e-ia/09-streamlit-dashboard-realtime/parte-01/exemplo_erros_ruff/erros_ruff.py: unexpected indent (05-engenharia-de-dados-e-ia/09-streamlit-dashboard-realtime/parte-01/exemplo_erros_ruff/erros_ruff.py, line 41)"
+      ],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "lxfight-s-Astrbot-Plugins/astrbot_plugin_livingmemory",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "lxfight/astrbot_plugin_mnemosyne",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "malue-ai/dazee-small",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "mann1x/claude-hooks",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "manthanguptaa/water",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "marcelo-earth/generative-manim",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "marcgs/lob-agent-evaluation",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "marieai/marie-ai",
+      "status": "inventory_or_snapshot_mismatch",
+      "parse_errors": 2,
+      "error_examples": [
+        "hubble/resources/executor-template/executor.py: invalid syntax (hubble/resources/executor-template/executor.py, line 4)",
+        "marie/models/textfusenet/detectron2/evaluation/lvis_evaluation.py: invalid syntax (marie/models/textfusenet/detectron2/evaluation/lvis_evaluation.py, line 353)"
+      ],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "martinapugliese/askademic",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "maseval/MASEval",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "matthewhand/open-swarm",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "mattv8/ragtime",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "mcasalaina/QuestionnaireAgent_v3",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "mceck/shy-sh",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "mdhaarishussain/chaos-kitten",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "metauto-ai/GPTSwarm",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "meth04/vn_stock_rag",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "michaelalbada/BuildingApplicationsWithAIAgents",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "microsoft/Agent365-python",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "microsoft/Conversation-Knowledge-Mining-Solution-Accelerator",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "microsoft/Multi-Agent-Custom-Automation-Engine-Solution-Accelerator",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "microsoft/OpenAIWorkshop",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "microsoft/Prior-Authorization-Multi-Agent-Solution-Accelerator",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "microsoft/Sico",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "microsoft/Tyche",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "microsoft/agent-governance-toolkit",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "microsoft/agent-lightning",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "microsoft/content-generation-solution-accelerator",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "microsoft/content-processing-solution-accelerator",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "microsoft/dstoolkit-text2sql-and-imageprocessing",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "microsoft/langchain-for-beginners",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "microsoft/promptflow",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "microsoft/semanticworkbench",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "microsoft/simplechat",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "microsoft/spec-to-agents",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "mifunedev/orchestra",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "milvus-io/milvus-haystack",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "mindfiredigital/Agentic-Web-Starter",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "mindroom-ai/mindroom",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "minitap-ai/mobile-use",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "mitdbg/palimpzest",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "mixedbread-ai/mixedbread-ai-haystack",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "mixseek/mixseek-core",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "mlflow/mlflow",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "mochow13/pydantic-ai-litellm",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "modbender/skill-library-mcp",
+      "status": "inventory_or_snapshot_mismatch",
+      "parse_errors": 42,
+      "error_examples": [
+        "data/academic-citation-manager/academic_citation_skill.py: unexpected character after line continuation character (data/academic-citation-manager/academic_citation_skill.py, line 1354)",
+        "data/aruba-iap/fix_commands.py: invalid character '\uff1a' (U+FF1A) (data/aruba-iap/fix_commands.py, line 16)",
+        "data/azure-cosmos-py/scripts/setup_cosmos_container.py: closing parenthesis ')' does not match opening parenthesis '{' (data/azure-cosmos-py/scripts/setup_cosmos_container.py, line 68)",
+        "data/broedkrummen-overkill-token-optimizer/cli.py: unexpected indent (data/broedkrummen-overkill-token-optimizer/cli.py, line 34)",
+        "data/chinese-toolkit/chinese_tools.py: unexpected indent (data/chinese-toolkit/chinese_tools.py, line 1)"
+      ],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "modelscope/evalscope",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "modelscope/ms-agent",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "monarch-initiative/aurelian",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "mpfaffenberger/code_puppy",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "mpieniak01/Venom",
+      "status": "inventory_or_snapshot_mismatch",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 4
+    },
+    {
+      "repo": "multimindlab/multimind-sdk",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "musicmonk42/The_Code_Factory_Working_V2",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "mutx-dev/mutx-dev",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "muyouzhi6/astrbot_plugin_gitee_aiimg",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "muyouzhi6/astrbot_plugin_life_scheduler",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "mxgoai/mxgo-core",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "mycustomai/ACES",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "najeed/ai-agent-eval-harness",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "nalamap/nalamap",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "nasa-jpl/rosa",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "nativ3ai/hermes-agent-camel",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "neatlogs/neatlogs",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "neo4j-labs/agent-memory",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "neul-labs/fast-langgraph",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "niceberginc/agentipy",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "nolabs-ai/AgentUp",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "notadev-iamaura/OneRAG",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "ob-labs/agentseek-api",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "oceanbase/obdiag",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "oleksiijko/pmb",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "opea-project/GenAIComps",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "open-edge-platform/edge-ai-libraries",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "openagents-org/openagents",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "opinionated-systems/markspace",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "oracle-devrel/technology-engineering",
+      "status": "inventory_or_snapshot_mismatch",
+      "parse_errors": 6,
+      "error_examples": [
+        "ai/gen-ai-agents/assistant-secretary-agent/files/assistant.py: invalid syntax (ai/gen-ai-agents/assistant-secretary-agent/files/assistant.py, line 1)",
+        "ai/gen-ai-agents/assistant-secretary-agent/files/frontend.py: invalid syntax (ai/gen-ai-agents/assistant-secretary-agent/files/frontend.py, line 1)",
+        "ai/gen-ai-agents/assistant-secretary-agent/files/oci_models.py: invalid syntax (ai/gen-ai-agents/assistant-secretary-agent/files/oci_models.py, line 1)",
+        "ai/gen-ai-agents/assistant-secretary-agent/files/router.py: invalid syntax (ai/gen-ai-agents/assistant-secretary-agent/files/router.py, line 1)",
+        "ai/gen-ai-agents/assistant-secretary-agent/files/state.py: invalid syntax (ai/gen-ai-agents/assistant-secretary-agent/files/state.py, line 1)"
+      ],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "oracle/accelerated-data-science",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "oracle/agent-spec",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "pamelafox/github-repo-maintainer-agent",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "pathwaycom/pathway",
+      "status": "inventory_or_snapshot_mismatch",
+      "parse_errors": 1,
+      "error_examples": [
+        "docs/2.developers/7.templates/ETL/.live_data_jupyter/article.py: invalid syntax (docs/2.developers/7.templates/ETL/.live_data_jupyter/article.py, line 78)"
+      ],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "pettingllms-ai/PettingLLMs",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "phil65/agentpool",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "piexian/astrbot_plugin_gemini_image_generation",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "pipecat-ai/pipecat",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "pipeshub-ai/pipeshub-ai",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "pixell-global/sayou",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "plexe-ai/plexe",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "plurai-ai/intellagent",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "posit-dev/py-shiny",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "potpie-ai/potpie",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "pratikxpanda/agentskills-sdk",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "prebid/salesagent",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "project-ryoma/ryoma",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "promptdriven/pdd",
+      "status": "inventory_or_snapshot_mismatch",
+      "parse_errors": 2,
+      "error_examples": [
+        "context/__init__example.py: invalid syntax (context/__init__example.py, line 1)",
+        "examples/pi_calc/examples/pi_calc_example_iteration_2.py: unterminated f-string literal (detected at line 55) (examples/pi_calc/examples/pi_calc_example_iteration_2.py, line 55)"
+      ],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "prospectio-ai/prospectio-api-mcp",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "pydantic/logfire",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "qa296/astrbot_plugin_memora_connect",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "qbtrix/soul-protocol",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "quantifylabs/aegis-memory",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "rabbicse/llm",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "radlab-dev-group/llm-router",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "rand/cc-polymath",
+      "status": "inventory_or_snapshot_mismatch",
+      "parse_errors": 2,
+      "error_examples": [
+        "skills/protocols/grpc-implementation/resources/scripts/generate_client.py: invalid syntax (skills/protocols/grpc-implementation/resources/scripts/generate_client.py, line 720)",
+        "skills/rust/pyo3-classes-modules/resources/scripts/class_inspector.py: unterminated f-string literal (detected at line 310) (skills/rust/pyo3-classes-modules/resources/scripts/class_inspector.py, line 310)"
+      ],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "raxe-ai/raxe-ce",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "red-hat-data-services/agentic-starter-kits",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "redis-applied-ai/redis-sre-agent",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "redis-developer/langgraph-redis",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "respanai/respan",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "responsibleai/ASSERT",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "rhesis-ai/rhesis",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "robertwhiffin/ai-slide-generator",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "rocketride-org/rocketride-server",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "rte-france/BERTrend",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "run-llama/llama_index",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "runagent-dev/runagent",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "rungalileo/sdk-examples",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "ryaker/mcp-mem0-general",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "sambanova/agents",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "santosomar/AI-agents-for-cybersecurity",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "saxenauts/persona",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "sciosci/mamorx-review-system",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "seanchatmangpt/dslmodel",
+      "status": "inventory_or_snapshot_mismatch",
+      "parse_errors": 16,
+      "error_examples": [
+        "dsl_model_class_template_specification_model.py: positional argument follows keyword argument (dsl_model_class_template_specification_model.py, line 9)",
+        "nuxt_filesystem_model_model.py: positional argument follows keyword argument (nuxt_filesystem_model_model.py, line 9)",
+        "vue.py: positional argument follows keyword argument (vue.py, line 9)",
+        "vue_model_model.py: positional argument follows keyword argument (vue_model_model.py, line 9)",
+        "demo_generated_feature/auto_decision.py: expected 'except' or 'finally' block (demo_generated_feature/auto_decision.py, line 44)"
+      ],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "seanchatmangpt/dspygen",
+      "status": "inventory_or_snapshot_mismatch",
+      "parse_errors": 2,
+      "error_examples": [
+        "src/dspygen/experiments/cliapi/cli_app.py: unterminated string literal (detected at line 152) (src/dspygen/experiments/cliapi/cli_app.py, line 152)",
+        "src/dspygen/wip/udiff/fixed_source.py: invalid syntax (src/dspygen/wip/udiff/fixed_source.py, line 1)"
+      ],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "seawaylee/tradingagent",
+      "status": "inventory_or_snapshot_mismatch",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 12
+    },
+    {
+      "repo": "sentient-agi/ROMA",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "shellphish/artiphishell",
+      "status": "incomplete_mapping_run",
+      "run_status": "crash"
+    },
+    {
+      "repo": "shihongDev/evalyn",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "shotgun-sh/shotgun",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "shyftlabs/continuum",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "siddsachar/row-bot",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "skillrepos/ai-aip",
+      "status": "inventory_or_snapshot_mismatch",
+      "parse_errors": 2,
+      "error_examples": [
+        "agents/agent1.py: expected an indented block after 'try' statement on line 34 (agents/agent1.py, line 36)",
+        "agents/mcp_server_v2.py: unexpected indent (agents/mcp_server_v2.py, line 78)"
+      ],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "skygazer42/GustoBot",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "skygazer42/Weaver",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "skynetcmd/m3-memory",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "slimeslab/ComProScanner",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "snowsky/yourfinanceworks",
+      "status": "inventory_or_snapshot_mismatch",
+      "parse_errors": 1,
+      "error_examples": [
+        "api/scripts/fix_audit_logs_schema.py: unterminated string literal (detected at line 18) (api/scripts/fix_audit_logs_schema.py, line 18)"
+      ],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "sola-st/RepairAgent",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "soliplex/soliplex",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "sondera-ai/sondera-harness-python",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "songhahaha66/PaperAgent",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "sourangshupal/Agentic-RAG-project",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "splunk/splunk-sdk-python",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "splx-ai/agentic-radar",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "spyrae/kronos-agent-os",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "srtab/daiv",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "stackitcloud/rag-template",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "stair-lab/kg-gen",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "stevereiner/flexible-graphrag",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "strands-agents/tools",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "strnad/CrewAI-Studio",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "suitenumerique/conversations",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "sunbeam-labs/sunbeam",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "sunholo-data/sunholo-py",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "superlinked/sie",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "swarm-ai-research/swarm",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "synaptent/aragora",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "szczyglis-dev/py-gpt",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "tandemai-inc/rdkit-mcp-server",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "techloset/agentic-ai",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "temporalio/samples-python",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "the-omics-os/lobster",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "theexperiencecompany/gaia",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "themanojdesai/python-a2a",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "thiswillbeyourgithub/wdoc",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "tigergraph/graphrag",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "timbal-ai/timbal",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "timothy-odofin/agenthub-be",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "tinyfish-io/tinyfish-web-agent-integrations",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "tisu19021997/langclaw",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "tjni/langgraph-checkpoint-mysql",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "traceloop/openllmetry",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "tran-daniel4/DynoDocs",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "trpc-group/trpc-agent-python",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "truera/trulens",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "ui-insight/vandalizer",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "unibaseio/aip-agent",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "unoplat/unoplat-code-confluence",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "upsidelab/enthusiast",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "urstory/urstory-rag",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "usemoss/moss",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "ustc-ai4science/Science-Star",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "vcoderun/acpkit",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "vectorize-io/hindsight",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "vertelab/odoo-ai",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "vibesurf-ai/VibeSurf",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "victordibia/designing-multiagent-systems",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "virattt/ai-hedge-fund",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "vndee/local-talking-llm",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "volcengine/veadk-python",
+      "status": "inventory_or_snapshot_mismatch",
+      "parse_errors": 1,
+      "error_examples": [
+        "veadk/integrations/ve_faas/template/{{cookiecutter.local_dir_name}}/src/agent.py: invalid syntax (veadk/integrations/ve_faas/template/{{cookiecutter.local_dir_name}}/src/agent.py, line 15)"
+      ],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "voxel51/voxelgpt",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "vstorm-co/memv",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "vstorm-co/pydantic-ai-backend",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "vstorm-co/pydantic-ai-shields",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "vstorm-co/pydantic-ai-todo",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "vstorm-co/pydantic-deepagents",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "weaviate/elysia",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "wsargent/groundedllm",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "wshobson/maverick-mcp",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "xt765/mermaid-trace",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "xunharry4-source/AnimoCerebro",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "yaalalabs/agent-kernel",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "yifanfeng97/Hyper-Extract",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "yogeshhk/Sarvadnya",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "youware-labs/pai-agent-sdk",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "yueguobin/gns3-copilot",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "yusufkaraaslan/Skill_Seekers",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "zach-blumenfeld/graph-nd",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "zbambergerNLP/state-of-thoughts",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "zenml-io/kitaru",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "zhongyu09/openchatbi",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "zikuicai/aegisllm",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "zjunlp/LightMem",
+      "status": "inventory_or_snapshot_mismatch",
+      "parse_errors": 1,
+      "error_examples": [
+        "src/lightmem/memory/graph.py: expected an indented block after class definition on line 1 (src/lightmem/memory/graph.py, line 2)"
+      ],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "zjunlp/MemBase",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    },
+    {
+      "repo": "zyhuang-gif/agent_project",
+      "status": "included",
+      "parse_errors": 0,
+      "error_examples": [],
+      "unmatched_production_calls": 0,
+      "unmatched_production_focals": 0
+    }
+  ]
+}

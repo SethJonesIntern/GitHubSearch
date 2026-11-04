@@ -1,0 +1,19 @@
+framework,calls,kind,pct_of_calls
+langchain,9313,framework,38.8
+langgraph,3800,framework,15.8
+haystack,2603,framework,10.9
+agent_framework (MS),1898,framework,7.9
+pydantic_ai,1343,framework,5.6
+autogen,1237,framework,5.2
+agents,684,framework,2.9
+mem0,533,framework,2.2
+crewai,508,framework,2.1
+swarm,505,framework,2.1
+agno,445,framework,1.9
+dspy,401,framework,1.7
+smolagents,335,framework,1.4
+camel,160,framework,0.7
+semantic_kernel,149,framework,0.6
+astrbot,45,framework,0.2
+graphrag,28,framework,0.1
+swarms,3,framework,0.0

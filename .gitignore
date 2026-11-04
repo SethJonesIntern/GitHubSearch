@@ -1,2 +1,32 @@
 .search_progress.json
 .dep_check_progress.json
+
+# generated pipeline artifacts / build junk — regenerable, too big for git
+workspace/
+pipeline/repos/
+Wrapper/repos/
+*.cpg/
+pipeline/artifacts/slices/
+pipeline/artifacts/pym2t/
+# pyMethods2Test general run over every test (not LLM-specific); regenerate with
+# pipeline/pym2t_focal.py. The LLM-scoped outputs (pym2t_focal_calls, pym2t_nd_tests) stay tracked.
+pipeline/artifacts/pym2t_focal_tests.csv
+pipeline/artifacts/pym2t_runs.csv
+.batch_progress.json
+
+# python bytecode
+__pycache__/
+*.pyc
+
+# Stage 6a slice index (pipeline/slice_index.py). Regenerable from artifacts/slices/,
+# which is itself gitignored. The summary JSON stays tracked.
+pipeline/artifacts/slice_index.csv
+pipeline/artifacts/slice_pdg_lines.csv.gz
+pipeline/artifacts/slice_code.jsonl.gz
+
+# Full method inventory; keep the small baseline summary/by-repo outputs reviewable.
+pipeline/artifacts/method_test_baseline/methods.csv
+
+# Isolated local test environments/dependencies.
+.venv/
+.ci-test-deps/
