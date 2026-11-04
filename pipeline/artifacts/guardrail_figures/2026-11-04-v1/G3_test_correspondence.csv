@@ -1,0 +1,5 @@
+aggregation,group,pct,mapped_methods,total_methods
+Pooled methods,llm,2.878828,220,7642
+Pooled methods,other,4.954514,72527,1463857
+Equal-weight repository means,llm,3.8255122224168128,,
+Equal-weight repository means,other,4.423628455341506,,

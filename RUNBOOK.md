@@ -1,5 +1,11 @@
 # Runbook: Stage 5 (invoker/call analysis) + Stage 6 (slicing)
 
+> These commands describe intentional research operations, not setup or repository
+> cleanup. Read [docs/commands.md](docs/commands.md) before executing any producer:
+> some defaults overwrite artifacts or replace/delete clones. Organization work
+> does not authorize running them. New figures use saved inputs and a new output
+> directory; see [docs/research-questions.md](docs/research-questions.md).
+
 How to run the analysis over the application population, what each flag does, and
 which gotchas will bite on Windows.
 

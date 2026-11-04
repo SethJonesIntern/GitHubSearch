@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="849.6pt" height="396pt" viewBox="0 0 849.6 396" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-11-04T12:21:50.175607</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 396 
+L 849.6 396 
+L 849.6 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 203.904 277.2 
+L 458.784 277.2 
+L 458.784 122.76 
+L 203.904 122.76 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="xtick_1">
+     <g id="line2d_1">
+      <path d="M 203.904 277.2 
+L 203.904 122.76 
+" clip-path="url(#p588cc05c14)" style="fill: none; stroke: #e8edf3; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_2"/>
+     <g id="text_1">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle" x="203.904" y="293.557422" transform="rotate(-0 203.904 293.557422)">0</text>
+     </g>
+    </g>
+    <g id="xtick_2">
+     <g id="line2d_3">
+      <path d="M 246.384 277.2 
+L 246.384 122.76 
+" clip-path="url(#p588cc05c14)" style="fill: none; stroke: #e8edf3; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_4"/>
+     <g id="text_2">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle" x="246.384" y="293.557422" transform="rotate(-0 246.384 293.557422)">1</text>
+     </g>
+    </g>
+    <g id="xtick_3">
+     <g id="line2d_5">
+      <path d="M 288.864 277.2 
+L 288.864 122.76 
+" clip-path="url(#p588cc05c14)" style="fill: none; stroke: #e8edf3; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_6"/>
+     <g id="text_3">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle" x="288.864" y="293.557422" transform="rotate(-0 288.864 293.557422)">2</text>
+     </g>
+    </g>
+    <g id="xtick_4">
+     <g id="line2d_7">
+      <path d="M 331.344 277.2 
+L 331.344 122.76 
+" clip-path="url(#p588cc05c14)" style="fill: none; stroke: #e8edf3; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_8"/>
+     <g id="text_4">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle" x="331.344" y="293.557422" transform="rotate(-0 331.344 293.557422)">3</text>
+     </g>
+    </g>
+    <g id="xtick_5">
+     <g id="line2d_9">
+      <path d="M 373.824 277.2 
+L 373.824 122.76 
+" clip-path="url(#p588cc05c14)" style="fill: none; stroke: #e8edf3; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_10"/>
+     <g id="text_5">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle" x="373.824" y="293.557422" transform="rotate(-0 373.824 293.557422)">4</text>
+     </g>
+    </g>
+    <g id="xtick_6">
+     <g id="line2d_11">
+      <path d="M 416.304 277.2 
+L 416.304 122.76 
+" clip-path="url(#p588cc05c14)" style="fill: none; stroke: #e8edf3; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_12"/>
+     <g id="text_6">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle" x="416.304" y="293.557422" transform="rotate(-0 416.304 293.557422)">5</text>
+     </g>
+    </g>
+    <g id="xtick_7">
+     <g id="line2d_13">
+      <path d="M 458.784 277.2 
+L 458.784 122.76 
+" clip-path="url(#p588cc05c14)" style="fill: none; stroke: #e8edf3; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_14"/>
+     <g id="text_7">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle" x="458.784" y="293.557422" transform="rotate(-0 458.784 293.557422)">6</text>
+     </g>
+    </g>
+    <g id="text_8">
+     <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #172b46" x="331.344" y="308.558281" transform="rotate(-0 331.344 308.558281)">Methods with ≥1 mapped test (%)</text>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2">
+    <g id="ytick_1">
+     <g id="line2d_15"/>
+     <g id="text_9">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: end" x="195.904" y="157.359141" transform="rotate(-0 195.904 157.359141)">LLM-containing</text>
+     </g>
+    </g>
+    <g id="ytick_2">
+     <g id="line2d_16"/>
+     <g id="text_10">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: end" x="195.904" y="250.959141" transform="rotate(-0 195.904 250.959141)">Other</text>
+     </g>
+    </g>
+   </g>
+   <g id="patch_3">
+    <path d="M 203.904 129.78 
+L 326.196613 129.78 
+L 326.196613 176.58 
+L 203.904 176.58 
+z
+" clip-path="url(#p588cc05c14)" style="fill: #2864b7"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 203.904 223.38 
+L 414.371755 223.38 
+L 414.371755 270.18 
+L 203.904 270.18 
+z
+" clip-path="url(#p588cc05c14)" style="fill: #157f79"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 203.904 277.2 
+L 458.784 277.2 
+" style="fill: none; stroke: #d5dde7; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="text_11">
+    <text style="font-weight: 700; font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #172b46" x="331.294213" y="156.037422" transform="rotate(-0 331.294213 156.037422)">2.88%</text>
+   </g>
+   <g id="text_12">
+    <text style="font-weight: 700; font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #172b46" x="419.469355" y="249.637422" transform="rotate(-0 419.469355 249.637422)">4.95%</text>
+   </g>
+   <g id="text_13">
+    <text style="font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #172b46" x="203.904" y="106.76" transform="rotate(-0 203.904 106.76)">Pooled methods</text>
+   </g>
+  </g>
+  <g id="axes_2">
+   <g id="patch_6">
+    <path d="M 535.248 277.2 
+L 790.128 277.2 
+L 790.128 122.76 
+L 535.248 122.76 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="matplotlib.axis_3">
+    <g id="xtick_8">
+     <g id="line2d_17">
+      <path d="M 535.248 277.2 
+L 535.248 122.76 
+" clip-path="url(#p3e2a935287)" style="fill: none; stroke: #e8edf3; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_18"/>
+     <g id="text_14">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle" x="535.248" y="293.557422" transform="rotate(-0 535.248 293.557422)">0</text>
+     </g>
+    </g>
+    <g id="xtick_9">
+     <g id="line2d_19">
+      <path d="M 577.728 277.2 
+L 577.728 122.76 
+" clip-path="url(#p3e2a935287)" style="fill: none; stroke: #e8edf3; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_20"/>
+     <g id="text_15">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle" x="577.728" y="293.557422" transform="rotate(-0 577.728 293.557422)">1</text>
+     </g>
+    </g>
+    <g id="xtick_10">
+     <g id="line2d_21">
+      <path d="M 620.208 277.2 
+L 620.208 122.76 
+" clip-path="url(#p3e2a935287)" style="fill: none; stroke: #e8edf3; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_22"/>
+     <g id="text_16">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle" x="620.208" y="293.557422" transform="rotate(-0 620.208 293.557422)">2</text>
+     </g>
+    </g>
+    <g id="xtick_11">
+     <g id="line2d_23">
+      <path d="M 662.688 277.2 
+L 662.688 122.76 
+" clip-path="url(#p3e2a935287)" style="fill: none; stroke: #e8edf3; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_24"/>
+     <g id="text_17">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle" x="662.688" y="293.557422" transform="rotate(-0 662.688 293.557422)">3</text>
+     </g>
+    </g>
+    <g id="xtick_12">
+     <g id="line2d_25">
+      <path d="M 705.168 277.2 
+L 705.168 122.76 
+" clip-path="url(#p3e2a935287)" style="fill: none; stroke: #e8edf3; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_26"/>
+     <g id="text_18">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle" x="705.168" y="293.557422" transform="rotate(-0 705.168 293.557422)">4</text>
+     </g>
+    </g>
+    <g id="xtick_13">
+     <g id="line2d_27">
+      <path d="M 747.648 277.2 
+L 747.648 122.76 
+" clip-path="url(#p3e2a935287)" style="fill: none; stroke: #e8edf3; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_28"/>
+     <g id="text_19">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle" x="747.648" y="293.557422" transform="rotate(-0 747.648 293.557422)">5</text>
+     </g>
+    </g>
+    <g id="xtick_14">
+     <g id="line2d_29">
+      <path d="M 790.128 277.2 
+L 790.128 122.76 
+" clip-path="url(#p3e2a935287)" style="fill: none; stroke: #e8edf3; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_30"/>
+     <g id="text_20">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle" x="790.128" y="293.557422" transform="rotate(-0 790.128 293.557422)">6</text>
+     </g>
+    </g>
+    <g id="text_21">
+     <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #172b46" x="662.688" y="308.558281" transform="rotate(-0 662.688 308.558281)">Methods with ≥1 mapped test (%)</text>
+    </g>
+   </g>
+   <g id="matplotlib.axis_4">
+    <g id="ytick_3">
+     <g id="line2d_31"/>
+    </g>
+    <g id="ytick_4">
+     <g id="line2d_32"/>
+    </g>
+   </g>
+   <g id="patch_7">
+    <path d="M 535.248 129.78 
+L 697.755759 129.78 
+L 697.755759 176.58 
+L 535.248 176.58 
+z
+" clip-path="url(#p3e2a935287)" style="fill: #2864b7"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 535.248 223.38 
+L 723.163737 223.38 
+L 723.163737 270.18 
+L 535.248 270.18 
+z
+" clip-path="url(#p3e2a935287)" style="fill: #157f79"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 535.248 277.2 
+L 790.128 277.2 
+" style="fill: none; stroke: #d5dde7; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="text_22">
+    <text style="font-weight: 700; font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #172b46" x="702.853359" y="156.037422" transform="rotate(-0 702.853359 156.037422)">3.83%</text>
+   </g>
+   <g id="text_23">
+    <text style="font-weight: 700; font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #172b46" x="728.261337" y="249.637422" transform="rotate(-0 728.261337 249.637422)">4.42%</text>
+   </g>
+   <g id="text_24">
+    <text style="font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #172b46" x="535.248" y="106.76" transform="rotate(-0 535.248 106.76)">Equal-weight repository means</text>
+   </g>
+  </g>
+  <g id="text_25">
+   <text style="font-weight: 700; font-size: 17px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #172b46" x="55.224" y="32.717344" transform="rotate(-0 55.224 32.717344)">LLM-containing methods have fewer identified test correspondences</text>
+  </g>
+  <g id="text_26">
+   <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #586779" x="55.224" y="55.118437" transform="rotate(-0 55.224 55.118437)">Preliminary test-presence baseline: 571 repositories with both production-method groups</text>
+  </g>
+  <g id="text_27">
+   <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #172b46" x="55.224" y="328.68" transform="rotate(-0 55.224 328.68)">Pooled: 220/7,642 LLM-containing; 72,527/1,463,857 other methods</text>
+  </g>
+  <g id="text_28">
+   <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #586779" x="55.224" y="354.42" transform="rotate(-0 55.224 354.42)">Mean within-repository difference: -0.60 percentage points (LLM minus other).</text>
+  </g>
+  <g id="text_29">
+   <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #586779" x="55.224" y="378.18" transform="rotate(-0 55.224 378.18)">Heuristic correspondence only. These rates establish neither correctness checks nor execution coverage.</text>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p588cc05c14">
+   <rect x="203.904" y="122.76" width="254.88" height="154.44"/>
+  </clipPath>
+  <clipPath id="p3e2a935287">
+   <rect x="535.248" y="122.76" width="254.88" height="154.44"/>
+  </clipPath>
+ </defs>
+</svg>

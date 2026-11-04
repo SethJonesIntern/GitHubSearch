@@ -1,0 +1,2 @@
+# Synthetic core checks, including no-overwrite/input-consistency figure tests.
+pytest==8.4.2

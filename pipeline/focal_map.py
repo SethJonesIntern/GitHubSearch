@@ -1,3 +1,6 @@
+# PARTIAL ARCHIVE CANDIDATE ONLY: custom matcher superseded, but observed_tests()
+# remains an active dependency. Do not archive this module wholesale.
+# Review docs/archive-candidates.md before any future migration or removal.
 """Stage 8 — map each LLM test to the file/callable it appears to test.
 
 Follows the PyMethod2Test / Methods2Test practice: recover the *focal* unit of a

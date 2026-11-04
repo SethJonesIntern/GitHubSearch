@@ -29,7 +29,7 @@ jobs:
         with:
           python-version: "3.14"
       - name: Install test runner
-        run: python -m pip install pytest==8.4.2
+        run: python -m pip install -r requirements/ci.txt
       - name: Test method counts, slice filters, and evaluation frequency
-        run: python -m pytest pipeline/test_method_test_baseline.py pipeline/test_slice_repo_filter.py pipeline/test_eval_frequency.py -q
+        run: python -m pytest pipeline/test_method_test_baseline.py pipeline/test_slice_repo_filter.py pipeline/test_eval_frequency.py Applications/test_guardrail_figures.py -q
 

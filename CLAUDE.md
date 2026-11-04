@@ -5,6 +5,17 @@ from current `main` and merge through pull requests. See CONTRIBUTING.md for CI 
 the history-preserving consolidation. Do not merge old branch contents over the
 authoritative research tree merely to make branch names agree.
 
+Organization work (2026-11-04): docs/README.md maps documentation roles;
+docs/artifact-inventory.md records artifact lineage/storage, docs/commands.md details
+write/delete side effects, and docs/archive-candidates.md marks legacy candidates.
+No producer was rerun or artifact migrated as cleanup. Candidate code stays in place
+until another thorough data-PC/dependency/reproduction review and owner approval.
+requirements/README.md separates CI, figure dependencies and historical environment
+snapshots; analysis.in remains a draft, not a tested full-analysis lock.
+Applications/guardrail_figures.py builds a separate new figure set from saved inputs,
+refuses existing output directories, and records hashes. G1–G4 are existing evidence;
+G5–G6 are proposed RQs/check dimensions, not measured guardrail findings.
+
 Empirical software-mining study of **correctness guardrails in agentic applications**
 mined from GitHub (reframed by Seth, 2026-11-03). Discover agentic frameworks → search
 GitHub using framework import patterns → locate in-application framework LLM invocations

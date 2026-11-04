@@ -1,3 +1,5 @@
+# ARCHIVE CANDIDATE ONLY: see docs/archive-candidates.md. Do not delete or move
+# before reviewing data-PC callers and historical reproduction dependencies.
 import csv
 import os
 import re

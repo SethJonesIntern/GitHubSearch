@@ -1,5 +1,10 @@
 # GitHubSearch Pipeline
 
+> Historical design document. The old CURRENT STATE section below predates completed
+> runs and the guardrail reframing; it is not current operational guidance.
+> Start with README.md, docs/README.md, and docs/commands.md. Do not execute producers
+> as a repository setup or cleanup step.
+
 End-to-end plan for going from *"which agent frameworks exist on GitHub"* to
 *"per-variable program slices for every function that reaches an LLM call across
 applications that use those frameworks"* — built on a Joern CPG per repo. (Stage 5

@@ -1,0 +1,5 @@
+mapping_rule,group,mapped_methods,total_methods,pct
+Exact + fuzzy,llm,220,7642,2.878828
+Exact only,llm,59,7642,0.772049
+Exact + fuzzy,other,72527,1463857,4.954514
+Exact only,other,25118,1463857,1.715878

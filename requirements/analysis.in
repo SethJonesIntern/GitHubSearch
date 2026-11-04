@@ -1,0 +1,9 @@
+# Declared dependencies identified by static source inspection, NOT a validated lock.
+# Do not install or regenerate the corpus as repository cleanup.
+requests
+python-dotenv
+pandas
+matplotlib
+fuzzywuzzy~=0.18.0
+Levenshtein
+pyan3==2.6.0

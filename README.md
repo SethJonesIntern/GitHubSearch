@@ -14,6 +14,11 @@ invoke LLMs.
 changes. See [CONTRIBUTING.md](CONTRIBUTING.md) for the workflow, CI checks and data
 preservation rules, and [AGENTS.md](AGENTS.md) for agent guidance.
 
+The [documentation map](docs/README.md) links the [artifact inventory](docs/artifact-inventory.md),
+[command side effects](docs/commands.md), [archive candidates](docs/archive-candidates.md),
+and [dependency guide](requirements/README.md). Candidate legacy code remains in place
+pending a separate thorough review. Do not run research producers as repository cleanup.
+
 ## Contributions and their current status
 
 The paper has four contributions. Their status below distinguishes existing artifacts
@@ -97,6 +102,12 @@ Current work:
   their interventions. Test correspondence is an input to guardrail detection.
 - Review existing figures against the new questions. The initial review is in
   `METHODOLOGY_REVIEW.md`, section J. Existing figures are historical analyses.
+  [Proposed RQs and the replacement figure plan](docs/research-questions.md) separate
+  measured correspondence from unmeasured guardrail prevalence. New figures are built
+  by `Applications/guardrail_figures.py` into a new versioned directory; the old figures
+  and underlying research artifacts remain unchanged.
+  [View the reviewed guardrail figure set](pipeline/artifacts/guardrail_figures/2026-11-04-v1/FIGURES.md)
+  (PNG, SVG, CSV tables and a provenance manifest).
 
 ---
 
@@ -173,7 +184,10 @@ do not, by themselves, establish a guardrail.
 ## Requirements
 
 - **Python 3.14**, required: pyan3 2.6.0 (the call graph) does not work on older versions.
-- `py -3.14 -m pip install -r requirements.txt`, plus `pyan3==2.6.0`.
+- See [requirements/README.md](requirements/README.md) for dependency roles. Root
+  `requirements.txt` is a historical freeze; `requirements/analysis.in` is a draft
+  declaration pending verification against the working PC environment. Do not upgrade
+  the data-PC environment or regenerate research outputs as cleanup.
 - Focal mapping: `fuzzywuzzy~=0.18.0` and `Levenshtein`. pyMethods2Test pins
   `python-Levenshtein~=0.26.1`, which has no Python 3.14 wheel.
 - **Joern**: Stage 6 only. On Windows pass the `.bat`; the extension-less script fails
@@ -183,6 +197,14 @@ do not, by themselves, establish a guardrail.
   needs no token.
 
 ## Common commands
+
+These are intentional analysis operations, not a safe setup checklist. Read
+[command side effects](docs/commands.md) first. For the new figure builder, use a
+fresh output path (it refuses an existing directory):
+
+```powershell
+python Applications/guardrail_figures.py --output-dir pipeline/artifacts/guardrail_figures/YOUR_NEW_RUN
+```
 
 ```bash
 # the population waterfall: every drop, in order, with the pending review queues

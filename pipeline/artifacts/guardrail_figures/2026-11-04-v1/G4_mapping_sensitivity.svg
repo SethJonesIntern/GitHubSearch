@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="849.6pt" height="396pt" viewBox="0 0 849.6 396" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-11-04T12:21:50.314567</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 396 
+L 849.6 396 
+L 849.6 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 212.4 289.08 
+L 722.16 289.08 
+L 722.16 99 
+L 212.4 99 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="xtick_1">
+     <g id="line2d_1">
+      <path d="M 212.4 289.08 
+L 212.4 99 
+" clip-path="url(#p8a3fd9f538)" style="fill: none; stroke: #e8edf3; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_2"/>
+     <g id="text_1">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle" x="212.4" y="305.437422" transform="rotate(-0 212.4 305.437422)">0</text>
+     </g>
+    </g>
+    <g id="xtick_2">
+     <g id="line2d_3">
+      <path d="M 297.36 289.08 
+L 297.36 99 
+" clip-path="url(#p8a3fd9f538)" style="fill: none; stroke: #e8edf3; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_4"/>
+     <g id="text_2">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle" x="297.36" y="305.437422" transform="rotate(-0 297.36 305.437422)">1</text>
+     </g>
+    </g>
+    <g id="xtick_3">
+     <g id="line2d_5">
+      <path d="M 382.32 289.08 
+L 382.32 99 
+" clip-path="url(#p8a3fd9f538)" style="fill: none; stroke: #e8edf3; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_6"/>
+     <g id="text_3">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle" x="382.32" y="305.437422" transform="rotate(-0 382.32 305.437422)">2</text>
+     </g>
+    </g>
+    <g id="xtick_4">
+     <g id="line2d_7">
+      <path d="M 467.28 289.08 
+L 467.28 99 
+" clip-path="url(#p8a3fd9f538)" style="fill: none; stroke: #e8edf3; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_8"/>
+     <g id="text_4">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle" x="467.28" y="305.437422" transform="rotate(-0 467.28 305.437422)">3</text>
+     </g>
+    </g>
+    <g id="xtick_5">
+     <g id="line2d_9">
+      <path d="M 552.24 289.08 
+L 552.24 99 
+" clip-path="url(#p8a3fd9f538)" style="fill: none; stroke: #e8edf3; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_10"/>
+     <g id="text_5">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle" x="552.24" y="305.437422" transform="rotate(-0 552.24 305.437422)">4</text>
+     </g>
+    </g>
+    <g id="xtick_6">
+     <g id="line2d_11">
+      <path d="M 637.2 289.08 
+L 637.2 99 
+" clip-path="url(#p8a3fd9f538)" style="fill: none; stroke: #e8edf3; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_12"/>
+     <g id="text_6">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle" x="637.2" y="305.437422" transform="rotate(-0 637.2 305.437422)">5</text>
+     </g>
+    </g>
+    <g id="xtick_7">
+     <g id="line2d_13">
+      <path d="M 722.16 289.08 
+L 722.16 99 
+" clip-path="url(#p8a3fd9f538)" style="fill: none; stroke: #e8edf3; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_14"/>
+     <g id="text_7">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle" x="722.16" y="305.437422" transform="rotate(-0 722.16 305.437422)">6</text>
+     </g>
+    </g>
+    <g id="text_8">
+     <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #172b46" x="467.28" y="320.438281" transform="rotate(-0 467.28 320.438281)">Production methods with ≥1 mapped test (%)</text>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2">
+    <g id="ytick_1">
+     <g id="line2d_15"/>
+     <g id="text_9">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: end" x="204.4" y="145.213006" transform="rotate(-0 204.4 145.213006)">Exact + fuzzy</text>
+     </g>
+    </g>
+    <g id="ytick_2">
+     <g id="line2d_16"/>
+     <g id="text_10">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: end" x="204.4" y="251.225276" transform="rotate(-0 204.4 251.225276)">Exact only</text>
+     </g>
+    </g>
+   </g>
+   <g id="patch_3">
+    <path d="M 212.4 107.64 
+L 456.985227 107.64 
+L 456.985227 138.383558 
+L 212.4 138.383558 
+z
+" clip-path="url(#p8a3fd9f538)" style="fill: #2864b7"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 212.4 213.65227 
+L 277.993283 213.65227 
+L 277.993283 244.395828 
+L 212.4 244.395828 
+z
+" clip-path="url(#p8a3fd9f538)" style="fill: #2864b7"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 212.4 143.684172 
+L 633.335509 143.684172 
+L 633.335509 174.42773 
+L 212.4 174.42773 
+z
+" clip-path="url(#p8a3fd9f538)" style="fill: #157f79"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 212.4 249.696442 
+L 358.180995 249.696442 
+L 358.180995 280.44 
+L 212.4 280.44 
+z
+" clip-path="url(#p8a3fd9f538)" style="fill: #157f79"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 212.4 289.08 
+L 722.16 289.08 
+" style="fill: none; stroke: #d5dde7; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="text_11">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #172b46" x="465.481227" y="125.869201" transform="rotate(-0 465.481227 125.869201)">2.88%</text>
+   </g>
+   <g id="text_12">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #172b46" x="286.489283" y="231.881471" transform="rotate(-0 286.489283 231.881471)">0.77%</text>
+   </g>
+   <g id="text_13">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #172b46" x="641.831509" y="161.913373" transform="rotate(-0 641.831509 161.913373)">4.95%</text>
+   </g>
+   <g id="text_14">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #172b46" x="366.676995" y="267.925643" transform="rotate(-0 366.676995 267.925643)">1.72%</text>
+   </g>
+   <g id="legend_1">
+    <g id="patch_8">
+     <path d="M 597.90125 117.258281 
+L 619.90125 117.258281 
+L 619.90125 109.558281 
+L 597.90125 109.558281 
+z
+" style="fill: #2864b7"/>
+    </g>
+    <g id="text_15">
+     <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #172b46" x="628.70125" y="117.258281" transform="rotate(-0 628.70125 117.258281)">LLM-containing</text>
+    </g>
+    <g id="patch_9">
+     <path d="M 597.90125 133.759141 
+L 619.90125 133.759141 
+L 619.90125 126.059141 
+L 597.90125 126.059141 
+z
+" style="fill: #157f79"/>
+    </g>
+    <g id="text_16">
+     <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #172b46" x="628.70125" y="133.759141" transform="rotate(-0 628.70125 133.759141)">Other</text>
+    </g>
+   </g>
+  </g>
+  <g id="text_17">
+   <text style="font-weight: 700; font-size: 17px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #172b46" x="55.224" y="32.717344" transform="rotate(-0 55.224 32.717344)">The comparison depends on the focal-mapping rule</text>
+  </g>
+  <g id="text_18">
+   <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #586779" x="55.224" y="55.118437" transform="rotate(-0 55.224 55.118437)">Sensitivity analysis in the same paired repositories and production-method denominators</text>
+  </g>
+  <g id="text_19">
+   <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #586779" x="55.224" y="358.38" transform="rotate(-0 55.224 358.38)">Exact-only restricts the tool's naming heuristic. It does not establish mapping precision or a lower bound on true testing.</text>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p8a3fd9f538">
+   <rect x="212.4" y="99" width="509.76" height="190.08"/>
+  </clipPath>
+ </defs>
+</svg>

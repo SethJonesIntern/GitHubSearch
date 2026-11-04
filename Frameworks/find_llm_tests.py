@@ -1,3 +1,5 @@
+# ARCHIVE CANDIDATE ONLY: see docs/archive-candidates.md. Preserve until callers
+# and historical output/reproduction dependencies have been thoroughly reviewed.
 import ast
 import csv
 import re

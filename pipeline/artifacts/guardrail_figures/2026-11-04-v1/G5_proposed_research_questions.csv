@@ -1,0 +1,10 @@
+rq,question,evidence,role
+RQ1,"How often do methods have associated
+correctness checks in tests or at runtime?","Test correspondence measured
+Guardrail counts pending",Primary prevalence result
+RQ2,"How does test correspondence compare
+with other production methods?","Initial baseline available
+Mapping validation pending",Supporting comparison
+RQ3,"What properties do checks evaluate,
+and which mechanisms do they use?","Content inspection pending
+Categories are provisional",Exploratory characterization
