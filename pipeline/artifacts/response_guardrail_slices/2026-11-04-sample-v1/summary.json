@@ -1,0 +1,240 @@
+{
+  "by_code_kind": {
+    "production": {
+      "denominator": 35,
+      "with_evaluation_only_route": 0,
+      "with_parser_only_route": 0,
+      "with_response_slice_check": 5,
+      "with_runtime_intervention": 6,
+      "with_source_check": 6,
+      "with_validator_route": 0
+    },
+    "test": {
+      "denominator": 5,
+      "with_evaluation_only_route": 0,
+      "with_parser_only_route": 0,
+      "with_response_slice_check": 1,
+      "with_runtime_intervention": 0,
+      "with_source_check": 1,
+      "with_validator_route": 0
+    },
+    "test_support": {
+      "denominator": 2,
+      "with_evaluation_only_route": 0,
+      "with_parser_only_route": 0,
+      "with_response_slice_check": 0,
+      "with_runtime_intervention": 0,
+      "with_source_check": 0,
+      "with_validator_route": 0
+    }
+  },
+  "calls": {
+    "denominator": 42,
+    "with_evaluation_only_route": 0,
+    "with_parser_only_route": 0,
+    "with_response_slice_check": 6,
+    "with_runtime_intervention": 6,
+    "with_source_check": 7,
+    "with_validator_route": 0
+  },
+  "checks": {
+    "total": 7
+  },
+  "interventions": {
+    "assertion_failure": 5,
+    "raise": 1,
+    "replacement_return": 1
+  },
+  "joern_statuses": {
+    "no_joint_slice": 1,
+    "same_response_slice": 6
+  },
+  "limitations": [
+    "Bounded local source flow is incomplete; negative detections do not imply absent guardrails.",
+    "Builtin and receiver dispatch can remain unresolved; candidates require manual precision review.",
+    "Joint saved slice lines are not verified DDG/CDG paths; full per-edge paths were not persisted.",
+    "Original code_kind strata are retained even where original source has obvious test context.",
+    "Static invocation-site outputs, not runtime responses or validated guardrail prevalence.",
+    "Validator routes do not establish observed failure handling or protected/accepted output.",
+    "builtin_dispatch_unresolved",
+    "caller_flow_unassessed",
+    "container_response_flow_unassessed",
+    "nested_expression_flow_bounded",
+    "nonlocal_binding_unassessed",
+    "original_source_test_context:test_named_function:test_callback_records_on_async_invoke_through_binding",
+    "original_source_test_context:test_named_function:test_callback_records_on_sync_invoke",
+    "original_source_test_context:test_named_function:test_gpt52_interleaved_reasoning_during_tool_calls",
+    "original_source_test_context:test_named_function:test_kimi_api_connection",
+    "original_source_test_context:test_named_function:test_kimi_reasoning_enabled",
+    "receiver_dispatch_unresolved",
+    "runnable_chain_flow_unassessed",
+    "unknown_transform_or_callback:AIYapping",
+    "unknown_transform_or_callback:ToolMessage",
+    "unknown_transform_or_callback:_format_results",
+    "unknown_transform_or_callback:append",
+    "unknown_transform_or_callback:parse",
+    "unknown_transform_or_callback:select_pairs_by_indices",
+    "unknown_transform_or_callback:wait_for",
+    "unknown_transform_or_callback:zip",
+    "unsupported_comprehension_scope",
+    "unsupported_expression:FormattedValue",
+    "unsupported_expression:IfExp",
+    "unsupported_merge",
+    "unsupported_statement:Match",
+    "unsupported_with_exit_flow"
+  ],
+  "mechanisms": {
+    "deterministic_assert": 5,
+    "response_predicate": 2
+  },
+  "methods_by_code_kind": {
+    "production": {
+      "calls_without_enclosing_name": 0,
+      "with_response_slice_check": 5,
+      "with_saved_enclosing_name": 31,
+      "with_source_check": 6
+    },
+    "test": {
+      "calls_without_enclosing_name": 0,
+      "with_response_slice_check": 1,
+      "with_saved_enclosing_name": 5,
+      "with_source_check": 1
+    },
+    "test_support": {
+      "calls_without_enclosing_name": 0,
+      "with_response_slice_check": 0,
+      "with_saved_enclosing_name": 2,
+      "with_source_check": 0
+    }
+  },
+  "production_labelled_test_context": {
+    "calls": 0,
+    "runtime_intervention_candidates_without_obvious_test_context": 6,
+    "with_response_slice_check": 0,
+    "with_source_check": 0
+  },
+  "rates": {
+    "by_code_kind": {
+      "production": {
+        "with_evaluation_only_route": {
+          "denominator": 35,
+          "value": 0.0
+        },
+        "with_parser_only_route": {
+          "denominator": 35,
+          "value": 0.0
+        },
+        "with_response_slice_check": {
+          "denominator": 35,
+          "value": 0.14285714285714285
+        },
+        "with_runtime_intervention": {
+          "denominator": 35,
+          "value": 0.17142857142857143
+        },
+        "with_source_check": {
+          "denominator": 35,
+          "value": 0.17142857142857143
+        },
+        "with_validator_route": {
+          "denominator": 35,
+          "value": 0.0
+        }
+      },
+      "test": {
+        "with_evaluation_only_route": {
+          "denominator": 5,
+          "value": 0.0
+        },
+        "with_parser_only_route": {
+          "denominator": 5,
+          "value": 0.0
+        },
+        "with_response_slice_check": {
+          "denominator": 5,
+          "value": 0.2
+        },
+        "with_runtime_intervention": {
+          "denominator": 5,
+          "value": 0.0
+        },
+        "with_source_check": {
+          "denominator": 5,
+          "value": 0.2
+        },
+        "with_validator_route": {
+          "denominator": 5,
+          "value": 0.0
+        }
+      },
+      "test_support": {
+        "with_evaluation_only_route": {
+          "denominator": 2,
+          "value": 0.0
+        },
+        "with_parser_only_route": {
+          "denominator": 2,
+          "value": 0.0
+        },
+        "with_response_slice_check": {
+          "denominator": 2,
+          "value": 0.0
+        },
+        "with_runtime_intervention": {
+          "denominator": 2,
+          "value": 0.0
+        },
+        "with_source_check": {
+          "denominator": 2,
+          "value": 0.0
+        },
+        "with_validator_route": {
+          "denominator": 2,
+          "value": 0.0
+        }
+      }
+    },
+    "calls": {
+      "with_evaluation_only_route": {
+        "denominator": 42,
+        "value": 0.0
+      },
+      "with_parser_only_route": {
+        "denominator": 42,
+        "value": 0.0
+      },
+      "with_response_slice_check": {
+        "denominator": 42,
+        "value": 0.14285714285714285
+      },
+      "with_runtime_intervention": {
+        "denominator": 42,
+        "value": 0.14285714285714285
+      },
+      "with_source_check": {
+        "denominator": 42,
+        "value": 0.16666666666666666
+      },
+      "with_validator_route": {
+        "denominator": 42,
+        "value": 0.0
+      }
+    }
+  },
+  "runtime_intervention_calls_by_kind": {
+    "assertion_failure": 4,
+    "raise": 1,
+    "replacement_return": 1,
+    "retry_continue": 0
+  },
+  "saved_slices": {
+    "calls_with_hit": 41,
+    "distinct_slices": 145,
+    "selected_hit_rows": 150
+  },
+  "source_assessable_calls": 42,
+  "source_statuses": {
+    "ok": 42
+  },
+  "subset": true
+}

@@ -1,0 +1,86 @@
+{
+  "inputs": {
+    "pipeline/artifacts/.batch_progress.json": {
+      "sha256_after": "b9e993e90a67a38abdb64f84ddd01dcfc762c6e44f3589067b1d756086bf7fa8",
+      "sha256_before": "b9e993e90a67a38abdb64f84ddd01dcfc762c6e44f3589067b1d756086bf7fa8"
+    },
+    "pipeline/artifacts/application_audit.csv": {
+      "sha256_after": "73799a3d0493c326180b667c84d480ea66480bada3715693d67b59071c2d9142",
+      "sha256_before": "73799a3d0493c326180b667c84d480ea66480bada3715693d67b59071c2d9142"
+    },
+    "pipeline/artifacts/llm_calls_all.csv": {
+      "sha256_after": "a66866e676a67d37f96799f04a4560461e1229033aceda16d956806810a0f17a",
+      "sha256_before": "a66866e676a67d37f96799f04a4560461e1229033aceda16d956806810a0f17a"
+    },
+    "slice_call_hits.csv": {
+      "sha256_after": "c743a5e94be669828662bccc9d3b0e3dbef959157760061f1aca7efdf0afbc84",
+      "sha256_before": "c743a5e94be669828662bccc9d3b0e3dbef959157760061f1aca7efdf0afbc84"
+    },
+    "slice_calls_by_call.csv": {
+      "sha256_after": "afd6ef5147995d784cd05a9ea755274508c4d3ec652ede581f355453fe139ca7",
+      "sha256_before": "afd6ef5147995d784cd05a9ea755274508c4d3ec652ede581f355453fe139ca7"
+    },
+    "slice_index.csv": {
+      "sha256_after": "61ace44ed555c1c0f427072fbbadea71c83159ef6fe92c1bbb86d2c6b441d2c9",
+      "sha256_before": "61ace44ed555c1c0f427072fbbadea71c83159ef6fe92c1bbb86d2c6b441d2c9"
+    },
+    "slice_pdg_lines.csv.gz": {
+      "sha256_after": "fa7caa99a089177cc3a6d6b4c02ce13010af973adf9049cc18a375c156422d36",
+      "sha256_before": "fa7caa99a089177cc3a6d6b4c02ce13010af973adf9049cc18a375c156422d36"
+    }
+  },
+  "inspected_sources": {
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\0ca_BoxPwnr\\src\\boxpwnr\\core\\llm_manager.py": "966919d8977e49cca948a28a9e529eab588a42979835d0bfbb7b8d3a1c5154ba",
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\0ca_BoxPwnr\\src\\boxpwnr\\tools\\tools.py": "b77839cc8367b217126b5a5dd5f2d6b105c558cd381415d9b5a1a7d3b1de5ce1",
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\0ca_BoxPwnr\\tests\\core\\test_gpt52_models.py": "eab1173a71ce692058ba37182b1fced54e25f6528c30adaef950e551e11217f5",
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\0ca_BoxPwnr\\tests\\core\\test_llm_manager_kimi.py": "18a1013d880a62fbd21030afa0f20534a4a2bd3e133a07716c62870fbda37c87",
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\0ca_BoxPwnr\\tests\\e2e\\test_kilo_models.py": "ddb9902dd5bc9adbe89c874879e023e3df18890501b7cf12d287bcb114fd08fa",
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Certora_AIComposer\\analyzer\\analysis.py": "43901cb694f3e7e7e6f0aaedde7d332388c996a4ea808054ed236a84c319c46f",
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Certora_AIComposer\\composer\\console\\app.py": "aa0f949f5ca8c8944311e21c2b367d7e8a332aa2f1e29c3c87f2c592b093bcc3",
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Certora_AIComposer\\composer\\io\\context.py": "dc9b00c3a75d45295b82d6be3b6ce8a44d92b200388ed27073b1ec5e95030ab5",
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Certora_AIComposer\\composer\\io\\graph_runner.py": "92c3c330d2dd4149a9c0c11eef06089a7bec10fc53e2c17e6aab01a463c04dac",
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Certora_AIComposer\\composer\\natreq\\automation.py": "6b6d896478dde3222838f300d5d34e33b77785810c4d4ae060ca3dc0f982c1cb",
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Certora_AIComposer\\composer\\prover\\analysis.py": "1478630058ac3eba150ca52d19c76d30aa80df9f042bb64f04a197b8c854823d",
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Certora_AIComposer\\composer\\prover\\core.py": "7b3ac3793998c3fc2081819d933c1d4baf6a882adf054e544c4d34dc3e70a884",
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Certora_AIComposer\\composer\\spec\\refinement.py": "1eedf40fc095e07262fb5961d7bac98f302e631ad7d4705c07ac7369058e48a8",
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Certora_AIComposer\\composer\\spec\\source\\report\\grouping.py": "cd91326378308ff2ab83d124aaff66304f72dc829a42179792d693124dad60c7",
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Certora_AIComposer\\composer\\testing\\ui_harness_natspec.py": "51f7ab353691d6bb204748edd85a522530986463bb4a4f9c2d75dec438f8cc97",
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Certora_AIComposer\\composer\\workflow\\meta.py": "2231899a172916ac6448931718a667cd84162ca4b615b923d3e46020f1e805ac",
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Certora_AIComposer\\sanity_analyzer\\analysis.py": "083557cd7a69a3858d6d4802aea0051d35ff9cf1f78d70e4539d1de425b02945",
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Certora_AIComposer\\tests\\test_token_usage.py": "ba7da1d1890c1a4b10d351b01f5de9e1a954ead156680a7bc93360a0889c6fbb",
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\HKUDS_ViMax\\agent_runtime\\vimax_adapters.py": "ebeef1d637a570106e8b07332e6d7bd0bfe063a5649a00546bbc721d111fa588",
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\HKUDS_ViMax\\agents\\best_image_selector.py": "f2af10b0ace39c569144bbd556ec15e250460ef27f731902f845528cf5cfc811",
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\HKUDS_ViMax\\agents\\camera_image_generator.py": "f2ed1d2373785792615c7350a70830db58a7955ceaa267dc90179bf6b78f10c5",
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\HKUDS_ViMax\\agents\\character_extractor.py": "a8f04d3fdd010ca0333baeda95c82b420ffbbda82e3afdbd5ecc8d09720688b9",
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\HKUDS_ViMax\\agents\\event_extractor.py": "d6eb4f4c342db8dd96a0294634a6a8c12d1aafbb81bad14aa52e68a08f5b3e5f",
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\HKUDS_ViMax\\agents\\global_information_planner.py": "4a82aa94f1053e19bc15522af9fe1f6e8a4caf05be3480258f72dc6d7432d5ad",
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\HKUDS_ViMax\\agents\\novel_compressor.py": "47a62b84aa9ae85a0474a8daf017c333df4e373d126c7297362b87456bcb200e",
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\HKUDS_ViMax\\agents\\reference_image_selector.py": "4420063e9c3502330502660ae78cf9703d76eb895a76ca7c41d167dec76f3463",
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\HKUDS_ViMax\\agents\\scene_extractor.py": "aa79f27e45fc4d65bb712451e7220a9c78f35331673a505f136f06d82db4c649",
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\HKUDS_ViMax\\agents\\screenwriter.py": "ee7827752498da2129ebcbebdc06c6c351fb03545dc5816c12537d278bc665b4",
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\HKUDS_ViMax\\agents\\script_enhancer.py": "e358cdb6ca96532c00f33cb16116d134b06dc72432b5a327018e0a0fdb412379",
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\HKUDS_ViMax\\agents\\script_planner.py": "170aa856fcf701d6fdd8b3e638ef437ab3c5fb42dbfc448cbb5e2d805e3a5bb9",
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\HKUDS_ViMax\\agents\\storyboard_artist.py": "1cc6d06c9af260141c5c575daaff35ae6f8ab4bef714a03c007917a4cf88178d"
+  },
+  "module_sha256": "3d7ca16f6b13d3db9046ae06924015cef22b397d6d75730ec3aa650ee1aba8aa",
+  "options": {
+    "artifacts_dir": "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\artifacts",
+    "output_dir": "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\artifacts\\response_guardrail_slices\\2026-11-04-sample-v1",
+    "repos": [
+      "0ca/BoxPwnr",
+      "Certora/AIComposer",
+      "HKUDS/ViMax"
+    ],
+    "repos_dir": "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos"
+  },
+  "outputs": {
+    "REPORT.md": "a0bdfdfad47c287a79c68fba07c3825e74b7d8bc8c5d4fc9b641a89455390870",
+    "calls.csv": "e275f868bf72b490b6552ec974d0530a4575852787b8f4e41ea8344bcf9ca1d6",
+    "checks.csv": "284857c87b3472f3732b126f5bb2099ef2c68b21ce5a234f68e3d90596895a48",
+    "diagnostics.csv": "a9e2c1502292e5c94477f4d1b418f5b7b927bb9e5aceeae2ea42618a2d4e47e4",
+    "routes.csv": "277b6503e2c9216dd0358e7a3b2de656b3f946e20912515c929b4735998c39cc",
+    "summary.json": "b6091839dd196f56c47ef7afa799e6970c5c5c968434ca82fa57d6ec262417d1"
+  },
+  "python": "3.14.3 (tags/v3.14.3:323c59a, Feb  3 2026, 16:04:56) [MSC v.1944 64 bit (AMD64)]",
+  "revision": "e733860abb3d9cd1ab2076e4dbf7c5036191a0fb"
+}

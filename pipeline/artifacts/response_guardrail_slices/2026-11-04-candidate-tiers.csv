@@ -1,0 +1,4 @@
+"code_kind","call_sites","all_check_candidates","explicit_check_candidates","explicit_slice_supported","explicit_outside_obvious_test_context","explicit_slice_outside_obvious_test_context","weaker_only_candidates"
+"production","10922","205","175","106","150","84","30"
+"test","12519","5445","5445","4148","0","0","0"
+"test_support","549","37","37","29","34","26","0"
