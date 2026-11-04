@@ -1,0 +1,9 @@
+step,survivors,dropped,status
+search hits retrieved,7468,,final
+deduped across phrases,6038,1430,final
+not fork / archived / disabled,5988,50,final
+stars >= 10,402,5586,final
+language == Python,262,140,final
+contributors >= 2,187,75,final
+test files >= 1,,,pending
+confirmed eval framework (hand triage),,,pending

@@ -1,0 +1,63 @@
+{
+  "phase": "search",
+  "phrases": 8,
+  "per_query": [
+    {
+      "query": "LLM evaluation framework",
+      "total_count": 3407,
+      "retrieved": 1000,
+      "truncated": true
+    },
+    {
+      "query": "LLM eval framework",
+      "total_count": 1715,
+      "retrieved": 1000,
+      "truncated": true
+    },
+    {
+      "query": "evaluating LLM applications",
+      "total_count": 963,
+      "retrieved": 963,
+      "truncated": false
+    },
+    {
+      "query": "LLM testing framework",
+      "total_count": 1723,
+      "retrieved": 1000,
+      "truncated": true
+    },
+    {
+      "query": "LLM-as-a-judge",
+      "total_count": 2649,
+      "retrieved": 1000,
+      "truncated": true
+    },
+    {
+      "query": "LLM benchmarking framework",
+      "total_count": 996,
+      "retrieved": 996,
+      "truncated": false
+    },
+    {
+      "query": "LLM observability evaluation",
+      "total_count": 925,
+      "retrieved": 925,
+      "truncated": false
+    },
+    {
+      "query": "guardrails evaluation LLM",
+      "total_count": 584,
+      "retrieved": 584,
+      "truncated": false
+    }
+  ],
+  "retrieved": 7468,
+  "deduped": 6038,
+  "dropped_fork_archived": 50,
+  "dropped_stars": 5586,
+  "dropped_language": 140,
+  "kept_free": 262,
+  "confirmed": null,
+  "dropped_contributors": 75,
+  "kept_contributors": 187
+}
