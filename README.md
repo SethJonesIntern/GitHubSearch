@@ -10,6 +10,10 @@ GitHub code search uses framework import patterns to discover candidate applicat
 clone-side analysis checks their imports and locates uses of framework methods that
 invoke LLMs.
 
+`main` is the shared integration branch. Use feature branches and pull requests for
+changes. See [CONTRIBUTING.md](CONTRIBUTING.md) for the workflow, CI checks and data
+preservation rules, and [AGENTS.md](AGENTS.md) for agent guidance.
+
 ## Contributions and their current status
 
 The paper has four contributions. Their status below distinguishes existing artifacts

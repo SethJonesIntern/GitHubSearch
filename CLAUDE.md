@@ -1,5 +1,10 @@
 # GitHubSearch — project instructions
 
+Repository workflow: `main` is the shared integration branch; create feature branches
+from current `main` and merge through pull requests. See CONTRIBUTING.md for CI and
+the history-preserving consolidation. Do not merge old branch contents over the
+authoritative research tree merely to make branch names agree.
+
 Empirical software-mining study of **correctness guardrails in agentic applications**
 mined from GitHub (reframed by Seth, 2026-11-03). Discover agentic frameworks → search
 GitHub using framework import patterns → locate in-application framework LLM invocations

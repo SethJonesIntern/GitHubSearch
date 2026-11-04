@@ -3,6 +3,7 @@
 Read README.md for current scope and **Contributions and their current status**,
 then CLAUDE.md for the shared agent handoff and operational details. README.md's
 contribution statement supersedes older non-determinism-focused descriptions.
+Use CONTRIBUTING.md for the `main` / feature-branch / pull-request workflow and CI.
 
 Preserve these four contribution claims, with their maturity stated accurately:
 
