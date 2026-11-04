@@ -24,6 +24,19 @@ The new builder reads only saved results and source literals. It refuses an exis
 output directory. New outputs live under `pipeline/artifacts/guardrail_figures/`;
 old figures remain unchanged. G1–G4 report existing evidence; G5–G6 are conceptual.
 
+## Main narrative versus supporting material
+
+For the current story, use **G1** (invocation inventory) and **G3** (method-level test
+correspondence) as the existing-evidence figures. Future main figures should report
+validated test-suite/runtime guardrail prevalence and, if supported, check contents.
+
+**G2 belongs in methods or an appendix:** it documents baseline eligibility rather
+than the overarching guardrail contribution. **G4 is a supplementary sensitivity
+diagnostic:** its exact/fuzzy naming rules change which correspondences the tool
+accepts, not whether a test truly checks correctness. Neither is a primary finding
+about guardrails. G5/G6 support discussion of proposed scope and categories; they
+must not be presented as completed empirical results.
+
 Reviewed figure set: [2026-11-04-v1](../pipeline/artifacts/guardrail_figures/2026-11-04-v1/FIGURES.md).
 Each figure has PNG and editable SVG versions, a CSV table twin, and a caption/status
 in the manifest. G1 shows 19 currently scoped ecosystem groups, of which 18 have
