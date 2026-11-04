@@ -108,14 +108,14 @@ population, test, determinism-knob, and call-graph-health sections.
   silently and report a false "not found". Use `rg --no-ignore` on the clones.
 - To wipe kept clones: `py -3.14 -m pipeline.clean_clones` (`--dry-run` to preview).
 
-## Method-to-test baseline (branch codex/method-test-mapping-baseline)
+## Method-to-test baseline (available on main)
 
 Run on the PC holding `pipeline/repos/`, `pipeline/artifacts/pym2t_focal_tests.csv`
 and `pipeline/artifacts/pym2t_runs.csv` from the completed focal-mapping run:
 
 ```powershell
 git fetch origin
-git switch codex/method-test-mapping-baseline
+git switch main
 git pull --ff-only
 git lfs pull
 py -3.14 -m pipeline.method_test_baseline

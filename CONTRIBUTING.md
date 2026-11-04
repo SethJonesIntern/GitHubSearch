@@ -52,11 +52,14 @@ The authoritative research snapshot was `codex/method-test-mapping-baseline` at
 ancestor using Git's `ours` merge strategy, keeping that research tree unchanged.
 This records both histories without combining older file contents into the current
 implementation. The old `main` is also preserved on
-`archive/main-before-consolidation-2026-11-04`. Existing branches remain available.
+`archive/main-before-consolidation-2026-11-04`. Source histories remain available
+even when fully merged feature-branch names are retired.
 
 `PipelineB` and `slice-index` are already ancestors of the authoritative snapshot;
 their work requires no additional content merge. The separate evaluation-framework
 discovery branch/PR remains available for review and is not implicitly incorporated
-by this consolidation. Historical branches are retained until their owners explicitly
-approve retirement.
+by this consolidation. The owner approved removal of fully merged `PipelineB`,
+`slice-index`, the method baseline branch and the workflow/cache-cleanup branches
+after ancestry verification. The backup and unmerged evaluation work remain. Review
+ancestry and open PRs before retiring further branches.
 

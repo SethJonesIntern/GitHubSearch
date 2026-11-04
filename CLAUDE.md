@@ -142,7 +142,8 @@ statistic on the next run.**
 
 ## Focal mapping — pyMethods2Test
 
-Method-first comparison branch: `codex/method-test-mapping-baseline`.
+Method-first comparison is integrated into `main`; its original feature branch was
+retired after consolidation. Pull `main` on the data PC (see RUNBOOK.md).
 `py -3.14 -m pipeline.method_test_baseline` compares production methods with a
 direct observed framework call against other production methods in the same
 repos. Needs full focal CSVs + clones on the PC; see RUNBOOK.md's method-to-test
