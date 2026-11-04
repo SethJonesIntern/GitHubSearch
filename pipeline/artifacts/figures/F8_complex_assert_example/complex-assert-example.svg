@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="854" viewBox="0 0 1600 854" role="img" aria-label="LangSmith evaluation with an LLM correctness judge and a score-threshold assertion">
+<rect width="1600" height="854" fill="#212121"/>
+<rect x="8" y="8" width="1584" height="838" rx="19" fill="#1b1d20" stroke="#3f4248" stroke-width="2"/>
+<g font-family="Consolas, monospace">
+<text x="38" y="44" font-size="24" fill="#9ba4b0">Python</text>
+<rect x="96" y="431" width="1474" height="210" rx="5" fill="#293445"/>
+<rect x="96" y="431" width="4" height="210" fill="#83a9ce"/>
+<rect x="96" y="743" width="1474" height="54" rx="5" fill="#253831"/>
+<rect x="96" y="743" width="4" height="54" fill="#83b69b"/>
+<text x="70" y="106" text-anchor="end" font-size="24" fill="#737b87">1</text>
+<text x="70" y="158" text-anchor="end" font-size="24" fill="#737b87">2</text>
+<text x="70" y="210" text-anchor="end" font-size="24" fill="#737b87">3</text>
+<text x="70" y="262" text-anchor="end" font-size="24" fill="#737b87">4</text>
+<text x="70" y="314" text-anchor="end" font-size="24" fill="#737b87">5</text>
+<text x="70" y="366" text-anchor="end" font-size="24" fill="#737b87">6</text>
+<text x="70" y="418" text-anchor="end" font-size="24" fill="#737b87">7</text>
+<text x="70" y="470" text-anchor="end" font-size="24" fill="#737b87">8</text>
+<text x="70" y="522" text-anchor="end" font-size="24" fill="#737b87">9</text>
+<text x="70" y="574" text-anchor="end" font-size="24" fill="#737b87">10</text>
+<text x="70" y="626" text-anchor="end" font-size="24" fill="#737b87">11</text>
+<text x="70" y="678" text-anchor="end" font-size="24" fill="#737b87">12</text>
+<text x="70" y="730" text-anchor="end" font-size="24" fill="#737b87">13</text>
+<text x="70" y="782" text-anchor="end" font-size="24" fill="#737b87">14</text>
+<text x="116.000" y="106" font-size="38" font-weight="bold" fill="#c8a7ee" xml:space="preserve">from</text>
+<text x="221.000" y="106" font-size="38" font-weight="normal" fill="#e8edf2" xml:space="preserve">langsmith</text>
+<text x="431.000" y="106" font-size="38" font-weight="bold" fill="#c8a7ee" xml:space="preserve">import</text>
+<text x="578.000" y="106" font-size="38" font-weight="normal" fill="#8fc7ef" xml:space="preserve">evaluate</text>
+<text x="116.000" y="158" font-size="38" font-weight="bold" fill="#c8a7ee" xml:space="preserve">from</text>
+<text x="221.000" y="158" font-size="38" font-weight="normal" fill="#e8edf2" xml:space="preserve">openevals</text>
+<text x="410.000" y="158" font-size="38" font-weight="normal" fill="#cbd3dd" xml:space="preserve">.</text>
+<text x="431.000" y="158" font-size="38" font-weight="normal" fill="#e8edf2" xml:space="preserve">llm</text>
+<text x="515.000" y="158" font-size="38" font-weight="bold" fill="#c8a7ee" xml:space="preserve">import</text>
+<text x="662.000" y="158" font-size="38" font-weight="normal" fill="#8fc7ef" xml:space="preserve">create_llm_as_judge</text>
+<text x="116.000" y="210" font-size="38" font-weight="bold" fill="#c8a7ee" xml:space="preserve">from</text>
+<text x="221.000" y="210" font-size="38" font-weight="normal" fill="#e8edf2" xml:space="preserve">openevals</text>
+<text x="410.000" y="210" font-size="38" font-weight="normal" fill="#cbd3dd" xml:space="preserve">.</text>
+<text x="431.000" y="210" font-size="38" font-weight="normal" fill="#e8edf2" xml:space="preserve">prompts</text>
+<text x="599.000" y="210" font-size="38" font-weight="bold" fill="#c8a7ee" xml:space="preserve">import</text>
+<text x="746.000" y="210" font-size="38" font-weight="normal" fill="#e5c585" xml:space="preserve">CORRECTNESS_PROMPT</text>
+<text x="116.000" y="314" font-size="38" font-weight="normal" fill="#e8edf2" xml:space="preserve">judge</text>
+<text x="242.000" y="314" font-size="38" font-weight="normal" fill="#cbd3dd" xml:space="preserve">=</text>
+<text x="284.000" y="314" font-size="38" font-weight="normal" fill="#8fc7ef" xml:space="preserve">create_llm_as_judge</text>
+<text x="683.000" y="314" font-size="38" font-weight="normal" fill="#cbd3dd" xml:space="preserve">(</text>
+<text x="200.000" y="366" font-size="38" font-weight="normal" fill="#e8edf2" xml:space="preserve">prompt</text>
+<text x="326.000" y="366" font-size="38" font-weight="normal" fill="#cbd3dd" xml:space="preserve">=</text>
+<text x="347.000" y="366" font-size="38" font-weight="normal" fill="#e5c585" xml:space="preserve">CORRECTNESS_PROMPT</text>
+<text x="725.000" y="366" font-size="38" font-weight="normal" fill="#cbd3dd" xml:space="preserve">,</text>
+<text x="767.000" y="366" font-size="38" font-weight="normal" fill="#e8edf2" xml:space="preserve">model</text>
+<text x="872.000" y="366" font-size="38" font-weight="normal" fill="#cbd3dd" xml:space="preserve">=</text>
+<text x="893.000" y="366" font-size="38" font-weight="normal" fill="#b9d99a" xml:space="preserve">&quot;openai:o3-mini&quot;</text>
+<text x="116.000" y="418" font-size="38" font-weight="normal" fill="#cbd3dd" xml:space="preserve">)</text>
+<text x="116.000" y="470" font-size="38" font-weight="normal" fill="#e8edf2" xml:space="preserve">results</text>
+<text x="284.000" y="470" font-size="38" font-weight="normal" fill="#cbd3dd" xml:space="preserve">=</text>
+<text x="326.000" y="470" font-size="38" font-weight="normal" fill="#8fc7ef" xml:space="preserve">evaluate</text>
+<text x="494.000" y="470" font-size="38" font-weight="normal" fill="#cbd3dd" xml:space="preserve">(</text>
+<text x="200.000" y="522" font-size="38" font-weight="bold" fill="#c8a7ee" xml:space="preserve">lambda</text>
+<text x="347.000" y="522" font-size="38" font-weight="normal" fill="#e8edf2" xml:space="preserve">x</text>
+<text x="368.000" y="522" font-size="38" font-weight="normal" fill="#cbd3dd" xml:space="preserve">:</text>
+<text x="410.000" y="522" font-size="38" font-weight="normal" fill="#cbd3dd" xml:space="preserve">{</text>
+<text x="431.000" y="522" font-size="38" font-weight="normal" fill="#b9d99a" xml:space="preserve">&quot;answer&quot;</text>
+<text x="599.000" y="522" font-size="38" font-weight="normal" fill="#cbd3dd" xml:space="preserve">:</text>
+<text x="641.000" y="522" font-size="38" font-weight="normal" fill="#e8edf2" xml:space="preserve">agent</text>
+<text x="746.000" y="522" font-size="38" font-weight="normal" fill="#cbd3dd" xml:space="preserve">.</text>
+<text x="767.000" y="522" font-size="38" font-weight="normal" fill="#8fc7ef" xml:space="preserve">invoke</text>
+<text x="893.000" y="522" font-size="38" font-weight="normal" fill="#cbd3dd" xml:space="preserve">(</text>
+<text x="914.000" y="522" font-size="38" font-weight="normal" fill="#e8edf2" xml:space="preserve">x</text>
+<text x="935.000" y="522" font-size="38" font-weight="normal" fill="#cbd3dd" xml:space="preserve">[</text>
+<text x="956.000" y="522" font-size="38" font-weight="normal" fill="#b9d99a" xml:space="preserve">&quot;question&quot;</text>
+<text x="1166.000" y="522" font-size="38" font-weight="normal" fill="#cbd3dd" xml:space="preserve">]</text>
+<text x="1187.000" y="522" font-size="38" font-weight="normal" fill="#cbd3dd" xml:space="preserve">)</text>
+<text x="1208.000" y="522" font-size="38" font-weight="normal" fill="#cbd3dd" xml:space="preserve">.</text>
+<text x="1229.000" y="522" font-size="38" font-weight="normal" fill="#e8edf2" xml:space="preserve">content</text>
+<text x="1376.000" y="522" font-size="38" font-weight="normal" fill="#cbd3dd" xml:space="preserve">}</text>
+<text x="1397.000" y="522" font-size="38" font-weight="normal" fill="#cbd3dd" xml:space="preserve">,</text>
+<text x="200.000" y="574" font-size="38" font-weight="normal" fill="#e8edf2" xml:space="preserve">data</text>
+<text x="284.000" y="574" font-size="38" font-weight="normal" fill="#cbd3dd" xml:space="preserve">=</text>
+<text x="305.000" y="574" font-size="38" font-weight="normal" fill="#b9d99a" xml:space="preserve">&quot;capital-questions&quot;</text>
+<text x="704.000" y="574" font-size="38" font-weight="normal" fill="#cbd3dd" xml:space="preserve">,</text>
+<text x="746.000" y="574" font-size="38" font-weight="normal" fill="#e8edf2" xml:space="preserve">evaluators</text>
+<text x="956.000" y="574" font-size="38" font-weight="normal" fill="#cbd3dd" xml:space="preserve">=</text>
+<text x="977.000" y="574" font-size="38" font-weight="normal" fill="#cbd3dd" xml:space="preserve">[</text>
+<text x="998.000" y="574" font-size="38" font-weight="normal" fill="#e8edf2" xml:space="preserve">judge</text>
+<text x="1103.000" y="574" font-size="38" font-weight="normal" fill="#cbd3dd" xml:space="preserve">]</text>
+<text x="1124.000" y="574" font-size="38" font-weight="normal" fill="#cbd3dd" xml:space="preserve">,</text>
+<text x="116.000" y="626" font-size="38" font-weight="normal" fill="#cbd3dd" xml:space="preserve">)</text>
+<text x="116.000" y="678" font-size="38" font-weight="bold" fill="#c8a7ee" xml:space="preserve">for</text>
+<text x="200.000" y="678" font-size="38" font-weight="normal" fill="#e8edf2" xml:space="preserve">row</text>
+<text x="284.000" y="678" font-size="38" font-weight="bold" fill="#c8a7ee" xml:space="preserve">in</text>
+<text x="347.000" y="678" font-size="38" font-weight="normal" fill="#e8edf2" xml:space="preserve">results</text>
+<text x="494.000" y="678" font-size="38" font-weight="normal" fill="#cbd3dd" xml:space="preserve">:</text>
+<text x="200.000" y="730" font-size="38" font-weight="normal" fill="#e8edf2" xml:space="preserve">score</text>
+<text x="326.000" y="730" font-size="38" font-weight="normal" fill="#cbd3dd" xml:space="preserve">=</text>
+<text x="368.000" y="730" font-size="38" font-weight="normal" fill="#e8edf2" xml:space="preserve">row</text>
+<text x="431.000" y="730" font-size="38" font-weight="normal" fill="#cbd3dd" xml:space="preserve">[</text>
+<text x="452.000" y="730" font-size="38" font-weight="normal" fill="#b9d99a" xml:space="preserve">&quot;evaluation_results&quot;</text>
+<text x="872.000" y="730" font-size="38" font-weight="normal" fill="#cbd3dd" xml:space="preserve">]</text>
+<text x="893.000" y="730" font-size="38" font-weight="normal" fill="#cbd3dd" xml:space="preserve">[</text>
+<text x="914.000" y="730" font-size="38" font-weight="normal" fill="#b9d99a" xml:space="preserve">&quot;results&quot;</text>
+<text x="1103.000" y="730" font-size="38" font-weight="normal" fill="#cbd3dd" xml:space="preserve">]</text>
+<text x="1124.000" y="730" font-size="38" font-weight="normal" fill="#cbd3dd" xml:space="preserve">[</text>
+<text x="1145.000" y="730" font-size="38" font-weight="normal" fill="#e5c585" xml:space="preserve">0</text>
+<text x="1166.000" y="730" font-size="38" font-weight="normal" fill="#cbd3dd" xml:space="preserve">]</text>
+<text x="1187.000" y="730" font-size="38" font-weight="normal" fill="#cbd3dd" xml:space="preserve">.</text>
+<text x="1208.000" y="730" font-size="38" font-weight="normal" fill="#e8edf2" xml:space="preserve">score</text>
+<text x="200.000" y="782" font-size="38" font-weight="bold" fill="#c8a7ee" xml:space="preserve">assert</text>
+<text x="347.000" y="782" font-size="38" font-weight="normal" fill="#e8edf2" xml:space="preserve">score</text>
+<text x="473.000" y="782" font-size="38" font-weight="normal" fill="#cbd3dd" xml:space="preserve">&gt;=</text>
+<text x="536.000" y="782" font-size="38" font-weight="normal" fill="#e5c585" xml:space="preserve">0.8</text>
+</g>
+</svg>

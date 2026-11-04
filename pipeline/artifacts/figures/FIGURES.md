@@ -60,3 +60,11 @@ Illustrative response-presence and keyword checks for the simple-assert definiti
 ![F7: Python simple-assert example](F7_simple_assert_example/simple-assert-example.png)
 
 [Editable SVG](F7_simple_assert_example/simple-assert-example.svg) · [Example code](F7_simple_assert_example/example.txt) · [Caption](F7_simple_assert_example/CAPTION.md)
+
+## F8. Complex-assert code example
+
+Illustrative LangSmith evaluation with an LLM correctness judge and a final score-threshold assertion.
+
+![F8: LangSmith complex-assert example](F8_complex_assert_example/complex-assert-example.png)
+
+[Editable SVG](F8_complex_assert_example/complex-assert-example.svg) · [Example code](F8_complex_assert_example/example.txt) · [Caption and API sources](F8_complex_assert_example/CAPTION.md)

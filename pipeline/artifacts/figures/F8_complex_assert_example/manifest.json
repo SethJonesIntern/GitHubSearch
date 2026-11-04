@@ -1,0 +1,23 @@
+{
+  "purpose": "Illustrative code figure for complex assertion using LangSmith evaluation and an LLM judge",
+  "dimensions": [
+    1600,
+    854
+  ],
+  "background": "#212121",
+  "font": "Consolas",
+  "code": "from langsmith import evaluate\nfrom openevals.llm import create_llm_as_judge\nfrom openevals.prompts import CORRECTNESS_PROMPT\n\njudge = create_llm_as_judge(\n    prompt=CORRECTNESS_PROMPT, model=\"openai:o3-mini\"\n)\nresults = evaluate(\n    lambda x: {\"answer\": agent.invoke(x[\"question\"]).content},\n    data=\"capital-questions\", evaluators=[judge],\n)\nfor row in results:\n    score = row[\"evaluation_results\"][\"results\"][0].score\n    assert score >= 0.8\n",
+  "syntax_checked": true,
+  "executed": false,
+  "sources": [
+    "https://github.com/langchain-ai/docs/blob/main/src/langsmith/evaluation-quickstart.mdx",
+    "https://github.com/langchain-ai/langsmith-sdk/blob/main/python/langsmith/evaluation/_runner.py"
+  ],
+  "outputs": {
+    ".gitattributes": "705fd4d6451a31d36b3df7de96f83f30ac976c9b4a6d1e51671d8e2f33e2d0da",
+    "CAPTION.md": "ed8aeb3e0f1bc4536b0c4e18d450593237d26a24f933c3060f8d168fc381a052",
+    "complex-assert-example.png": "a5faefcfa975837a10431ab1797895a8eec757baf3c0a18da24789e982026a2d",
+    "complex-assert-example.svg": "cf56f9bd1b2540093afd00ec896099c7ebc9866c9ce509eac6ee7d36c51182ce",
+    "example.txt": "646d4563979237dd7f668f00ce88437297353874576f17ef1f40165d95a417a7"
+  }
+}

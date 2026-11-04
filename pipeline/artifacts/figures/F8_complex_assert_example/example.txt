@@ -1,0 +1,14 @@
+from langsmith import evaluate
+from openevals.llm import create_llm_as_judge
+from openevals.prompts import CORRECTNESS_PROMPT
+
+judge = create_llm_as_judge(
+    prompt=CORRECTNESS_PROMPT, model="openai:o3-mini"
+)
+results = evaluate(
+    lambda x: {"answer": agent.invoke(x["question"]).content},
+    data="capital-questions", evaluators=[judge],
+)
+for row in results:
+    score = row["evaluation_results"]["results"][0].score
+    assert score >= 0.8
