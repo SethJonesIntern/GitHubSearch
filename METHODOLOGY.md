@@ -1,5 +1,25 @@
 # Methodology — what we did
 
+## Current research scope and contribution claims (2026-11-04)
+
+The paper now studies correctness guardrails in agentic applications: associated
+test-suite checks and runtime checks that intervene before a result is accepted or
+acted upon. README.md's "Contributions and their current status" is the canonical
+statement: (1) the framework LLM invocation inventory, (2) empirical prevalence
+measurements, (3) exploratory characterization of check contents, potentially a
+taxonomy, and (4) the reproducible pipeline and dataset.
+
+The invocation inventory is the API/pattern registry in `Wrapper/FrameworkDict.py`,
+distinct from framework discovery and from observed application call sites. Its known
+detection limitations remain part of the method. Test correspondence has an initial
+production-method baseline in `pipeline/artifacts/method_test_baseline/`; guardrail
+prevalence and content classifications remain unmeasured/unvalidated. The primary
+denominator is eligible production application methods containing observed direct
+framework LLM calls. Do not substitute tests or call sites for this denominator.
+
+The remaining stage descriptions and historical results below document prior work;
+they do not establish that mapped tests or evaluator-library calls are guardrails.
+
 Skeleton for the Methods write-up. Each stage lists what was done and why. Where the
 reason isn't recorded in the code or the docs, the why is left blank for Seth to fill.
 

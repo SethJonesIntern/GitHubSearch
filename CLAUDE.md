@@ -10,6 +10,31 @@ Mapping establishes correspondence, not a correctness guardrail. Guardrail detec
 and prevalence results are pending; the historical analysis below is infrastructure.
 README.md describes the current story; METHODOLOGY_REVIEW.md section J reviews figures.
 
+## Contribution claims (confirmed by Seth, 2026-11-04)
+
+Use README.md's "Contributions and their current status" as the canonical public
+statement. Preserve all four contributions when describing the project:
+
+1. **Framework LLM invocation inventory**: the curated API/pattern list in
+   `Wrapper/FrameworkDict.py` is a separate research artifact, not merely an internal
+   helper or the list of discovered frameworks. Full versus scoped registry and
+   known false positives/exclusions must stay distinguishable. Do not claim exhaustive
+   API coverage or validated precision without evidence.
+2. **Prevalence measurements**: corresponding tests and correctness guardrails for
+   production methods containing direct observed framework calls. Initial test
+   correspondence exists; validated test-suite/runtime guardrail prevalence does not.
+3. **Check characterization**: possibly derive categories/definitions from inspected
+   check contents. This is exploratory; do not describe candidate categories as findings.
+4. **Reproducible pipeline and dataset**: the existing analysis infrastructure and
+   artifacts, with guardrail detection still to be developed and validated.
+
+Primary scope: existence/prevalence. Optional deeper scope: contents and taxonomy.
+Distinguish the property checked from the evaluation mechanism. An assertion may wrap
+an LLM judge; an evaluation library may perform a deterministic check. Neither tests,
+library adoption, invocation patterns nor determinism settings alone prove guardrails.
+Attribute pyMethods2Test to its authors; our integration/results are contributions,
+not the published mapper itself. Keep method denominators separate from call/test counts.
+
 The full Stage-5 run is done (1,033 of 1,055 processed). Current work: data quality, and
 test-to-code traceability. This file is the single handoff: keep it current instead of
 writing dated `HANDOFF_*.md` files.
@@ -27,7 +52,9 @@ writing dated `HANDOFF_*.md` files.
 | **direct ND tests** | **9,700 in 233 apps** |
 
 The paper's numbers use the observed scope: `make_figures.POP` / `.CALLS` and
-`focal_map.observed_tests`. Import those definitions; don't restate them. `analyze.py`
+`focal_map.observed_tests` for historical direct-test counts. For the method-first
+baseline use all identified tests; do not restrict it to `observed_tests`.
+Import the existing scope definitions; don't restate them. `analyze.py`
 covers the wider 753 and gives 9,701 ND tests in 234 apps. The extra one is
 `Portkey-AI/portkey-python-sdk`, whose only calls are false positives.
 
@@ -114,8 +141,16 @@ Method-first comparison branch: `codex/method-test-mapping-baseline`.
 `py -3.14 -m pipeline.method_test_baseline` compares production methods with a
 direct observed framework call against other production methods in the same
 repos. Needs full focal CSVs + clones on the PC; see RUNBOOK.md's method-to-test
-baseline section. Results pending a full PC run. Earlier 262/18,911 counts included
-test code and must not be presented as production-method test correspondence.
+baseline section. The full PC run is complete; tracked results are in
+`artifacts/method_test_baseline/summary.json` and `by_repo.csv` (relative to `pipeline/`).
+644 considered, 589 included, 571 with both method groups. Paired pooled rates:
+220/7,642 LLM-containing methods (2.88%) versus 72,527/1,463,857 other methods (4.95%).
+Equal-weight repo means: 3.83% versus 4.42%; mean paired difference -0.60 percentage
+points. 55 exclusions: 3 crashed runs, 48 source-parsing failures, 4 unmatched focal
+definitions. Whole-repo exclusions for template/example parse failures need review;
+these are preliminary correspondence results, not proven absence of tests/guardrails.
+Earlier 262/18,911 counts included test code and must not be presented as
+production-method test correspondence.
 
 **Decided 2026-09-15: focal mapping uses pyMethods2Test** (Abdelmadjid & Dyer, MSR 2025,
 Zenodo `14264519`, Apache 2.0), not our `pipeline/focal_map.py` (26.5% method-level match,

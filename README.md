@@ -10,6 +10,24 @@ GitHub code search uses framework import patterns to discover candidate applicat
 clone-side analysis checks their imports and locates uses of framework methods that
 invoke LLMs.
 
+## Contributions and their current status
+
+The paper has four contributions. Their status below distinguishes existing artifacts
+from measurements and interpretations that still require work (updated 2026-11-04).
+
+| Contribution | Deliverable | Current status |
+|---|---|---|
+| **1. Framework LLM invocation inventory** | A curated list of framework APIs/invocation patterns for locating LLM-related operations in application code. This is a research artifact in its own right, distinct from the framework discovery list. | Implemented in [`Wrapper/FrameworkDict.py`](Wrapper/FrameworkDict.py): `FRAMEWORK_CALLS` preserves the full registry and `SCOPED_FRAMEWORK_CALLS` selects the study's detection scope. Pattern precision and completeness remain subject to validation and documented exclusions. |
+| **2. Empirical prevalence measurements** | Method-level counts of corresponding tests and associated test-suite correctness checks, runtime guardrails, and their overlap. | Initial production-method test correspondence is measured. Correctness-check and runtime-guardrail prevalence are pending; a mapped test does not establish either. |
+| **3. Characterization of correctness checks** | Evidence of what checks evaluate and how they operate, potentially supporting definitions or a taxonomy of guardrail kinds. | Exploratory extension. Candidate categories are hypotheses for inspection, not observed findings or a validated taxonomy. |
+| **4. Reproducible pipeline and dataset** | Framework-based discovery, application invocation detection, test mapping, and traceable analysis artifacts; guardrail analysis will extend these. | Existing discovery, call inventory, focal mapping and baseline outputs are available. Guardrail detection and validation are not yet implemented as a completed analysis. |
+
+The primary empirical scope is **existence and prevalence**. Characterizing check
+contents and deriving a taxonomy is a possible second contribution to the empirical
+analysis. Neither the invocation inventory nor the analysis pipeline alone establishes
+that an application implements a correctness guardrail. We use the published
+pyMethods2Test tool with attribution; we do not claim that tool as our contribution.
+
 ## What counts as a guardrail?
 
 We distinguish two categories by when the correctness check operates:
@@ -28,6 +46,14 @@ denominators.
 A guardrail may live inside the method or in associated caller, validator, or downstream
 code. Establishing that association and identifying the checked property are part of the
 analysis; proximity or a matching library name alone is insufficient evidence.
+
+When inspecting contents, record **what is checked** separately from **how it is
+checked**. Candidate properties include response availability, required structure,
+expected content, behavioral constraints and semantic correctness. Mechanisms may
+include deterministic assertions/validators, metrics and model-based judgments.
+An `assert` can enforce a threshold on an LLM judge's score, and an evaluation framework
+can perform a simple deterministic check. Library use and code complexity therefore do
+not define mutually exclusive guardrail kinds. These are proposed dimensions for review.
 
 ---
 
@@ -50,10 +76,19 @@ analysis.
 
 Current work:
 
-- Compare the share of production LLM-containing methods with a corresponding test
-  against other production methods in the same applications. The runnable baseline is
-  `pipeline/method_test_baseline.py`; the full run needs saved clones and focal outputs
-  on the data PC. Results are pending.
+- Review the completed initial production-method test correspondence baseline from
+  `pipeline/method_test_baseline.py`. The run considered 644 apps, retained 589, and
+  compared both method groups within 571 apps. In those paired apps, **220/7,642
+  LLM-containing methods (2.88%)** and **72,527/1,463,857 other methods (4.95%)** have a
+  mapped test. Equal-weight per-repo means are 3.83% and 4.42%, respectively. These are
+  correspondence rates, not correctness-check or execution coverage rates. Results and
+  diagnostics: [`summary.json`](pipeline/artifacts/method_test_baseline/summary.json)
+  and [`by_repo.csv`](pipeline/artifacts/method_test_baseline/by_repo.csv).
+- Review the 55 baseline exclusions: 3 crashed mapping runs, 48 repositories with source
+  parsing errors, and 4 with unmatched focal definitions. The whole-repo parsing rule
+  is conservative and includes failures in templates/examples; exclusions may be
+  recoverable and may bias the sample. Eighteen retained apps lack both method groups
+  and are omitted only from the paired comparison.
 - Inspect corresponding tests for correctness checks, then identify runtime checks and
   their interventions. Test correspondence is an input to guardrail detection.
 - Review existing figures against the new questions. The initial review is in

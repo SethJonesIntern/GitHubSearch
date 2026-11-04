@@ -38,7 +38,10 @@ Candidate replacement sequence, with results still pending:
 2. Test correspondence: fraction of LLM-containing production methods with >=1 mapped
    test versus other production methods in the same repos. Report pooled and paired
    repo rates, exact-only sensitivity and excluded/missing data from
-   `pipeline.method_test_baseline`. No percentages until the PC run is reviewed.
+   `pipeline.method_test_baseline`. The full PC run now exists: paired pooled rates
+   2.88% versus 4.95%, equal-weight repo means 3.83% versus 4.42%. These are preliminary
+   correspondence findings; review the 55 exclusions and mapping precision before
+   interpreting them as a method testing gap. They do not measure guardrail existence.
 3. Test-suite guardrails: among eligible LLM-containing methods, which have an associated
    correctness check? Record the property checked and mapping/inspection evidence.
 4. Runtime guardrails: which methods have associated checks with intervention, including

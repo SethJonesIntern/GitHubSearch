@@ -3,7 +3,8 @@
 F1 is an evaluation-library proxy, F2 generation configuration, F3 population
 context, and F4/F5 heuristic correspondence diagnostics. None measures validated
 correctness guardrails. Production-method comparison lives in
-pipeline.method_test_baseline; its full results are pending the data-PC run.
+pipeline.method_test_baseline; its initial full-run outputs are tracked under
+pipeline/artifacts/method_test_baseline and still need exclusion/precision review.
 
 Three questions, asked of the observed population — applications in which a
 FRAMEWORK LLM call site was detected. Raw provider-SDK calls (openai/anthropic)
