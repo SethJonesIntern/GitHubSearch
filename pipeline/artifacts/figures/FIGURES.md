@@ -40,3 +40,15 @@ Table: [`F3_frameworks_called.csv`](figures/F3_frameworks_called.csv)
 ![F4](figures/F4_focal_mapping.png)
 
 Table: [`F4_focal_mapping.csv`](figures/F4_focal_mapping.csv)
+
+## F6. How do focal-method mappings compare with independent result-check evidence?
+
+**Over the same 18,961 direct invoker methods, PyMethods2Test identifies 262 focal-method mappings (1.38%); the independent analysis finds 359 return-to-check candidates (1.89%). The sets share 89 methods: 173 appear only in the focal mappings and 270 only in the independent set.**
+
+![F6: focal-method mappings and independent result-check evidence](F6_method_mapping_comparison/invoker-method-comparison.png)
+
+[Editable SVG](F6_method_mapping_comparison/invoker-method-comparison.svg) · [Rates](F6_method_mapping_comparison/rates.csv) · [Overlap](F6_method_mapping_comparison/overlap.csv)
+
+[Caption and interpretation notes](F6_method_mapping_comparison/CAPTION.md) · [Input/output provenance](F6_method_mapping_comparison/manifest.json)
+
+Reproduce F6 from the saved inputs with [build_figure.py](F6_method_mapping_comparison/build_figure.py), supplying a fresh output directory. Added 2026-11-04; prior figures are preserved.
