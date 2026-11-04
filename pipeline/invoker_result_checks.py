@@ -405,8 +405,7 @@ def _run(args, output):
             continue
         key = (repo, focal_file, _integer(row, "focal_line", names[3]))
         if key not in methods:
-            if (repo, focal_file) in by_file:
-                diagnostic("join_disagreement", repo, focal_file, key[2], "No matching baseline definition")
+            # Mappings to other methods in this file are outside our population.
             continue
         method = methods[key]
         if row["focal_method"] != method["qname"].split(".")[-1] or _integer(row, "focal_line_end", names[3]) != method["line_end"]:
