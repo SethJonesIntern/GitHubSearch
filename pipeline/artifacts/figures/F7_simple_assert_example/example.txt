@@ -1,0 +1,7 @@
+def test_capital(agent):
+    response = agent.invoke(
+        "What is France's capital?"
+    )
+
+    assert response is not None
+    assert "paris" in response.content.lower()

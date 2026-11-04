@@ -52,3 +52,11 @@ Table: [`F4_focal_mapping.csv`](figures/F4_focal_mapping.csv)
 [Caption and interpretation notes](F6_method_mapping_comparison/CAPTION.md) · [Input/output provenance](F6_method_mapping_comparison/manifest.json)
 
 Reproduce F6 from the saved inputs with [build_figure.py](F6_method_mapping_comparison/build_figure.py), supplying a fresh output directory. Added 2026-11-04; prior figures are preserved.
+
+## F7. Simple-assert code example
+
+Illustrative response-presence and keyword checks for the simple-assert definition.
+
+![F7: Python simple-assert example](F7_simple_assert_example/simple-assert-example.png)
+
+[Editable SVG](F7_simple_assert_example/simple-assert-example.svg) · [Example code](F7_simple_assert_example/example.txt) · [Caption](F7_simple_assert_example/CAPTION.md)

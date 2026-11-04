@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="552" viewBox="0 0 1280 552" role="img" aria-label="Python test with response presence and keyword assertions">
+<rect width="1280" height="552" fill="#212121"/>
+<rect x="8" y="8" width="1264" height="536" rx="19" fill="#1b1d20" stroke="#3f4248" stroke-width="2"/>
+<g font-family="Consolas, monospace">
+<text x="38" y="44" font-size="24" fill="#9ba4b0">Python</text>
+<rect x="96" y="372" width="1154" height="54" rx="5" fill="#253831"/>
+<rect x="96" y="372" width="4" height="54" fill="#83b69b"/>
+<rect x="96" y="433" width="1154" height="54" rx="5" fill="#253831"/>
+<rect x="96" y="433" width="4" height="54" fill="#83b69b"/>
+<text x="70" y="106" text-anchor="end" font-size="24" fill="#737b87">1</text>
+<text x="70" y="167" text-anchor="end" font-size="24" fill="#737b87">2</text>
+<text x="70" y="228" text-anchor="end" font-size="24" fill="#737b87">3</text>
+<text x="70" y="289" text-anchor="end" font-size="24" fill="#737b87">4</text>
+<text x="70" y="350" text-anchor="end" font-size="24" fill="#737b87">5</text>
+<text x="70" y="411" text-anchor="end" font-size="24" fill="#737b87">6</text>
+<text x="70" y="472" text-anchor="end" font-size="24" fill="#737b87">7</text>
+<text x="116.000" y="106" font-size="38" font-weight="bold" fill="#c8a7ee" xml:space="preserve">def</text>
+<text x="200.000" y="106" font-size="38" font-weight="normal" fill="#8fc7ef" xml:space="preserve">test_capital</text>
+<text x="452.000" y="106" font-size="38" font-weight="normal" fill="#cbd3dd" xml:space="preserve">(</text>
+<text x="473.000" y="106" font-size="38" font-weight="normal" fill="#e8edf2" xml:space="preserve">agent</text>
+<text x="578.000" y="106" font-size="38" font-weight="normal" fill="#cbd3dd" xml:space="preserve">)</text>
+<text x="599.000" y="106" font-size="38" font-weight="normal" fill="#cbd3dd" xml:space="preserve">:</text>
+<text x="200.000" y="167" font-size="38" font-weight="normal" fill="#e8edf2" xml:space="preserve">response</text>
+<text x="389.000" y="167" font-size="38" font-weight="normal" fill="#cbd3dd" xml:space="preserve">=</text>
+<text x="431.000" y="167" font-size="38" font-weight="normal" fill="#e8edf2" xml:space="preserve">agent</text>
+<text x="536.000" y="167" font-size="38" font-weight="normal" fill="#cbd3dd" xml:space="preserve">.</text>
+<text x="557.000" y="167" font-size="38" font-weight="normal" fill="#8fc7ef" xml:space="preserve">invoke</text>
+<text x="683.000" y="167" font-size="38" font-weight="normal" fill="#cbd3dd" xml:space="preserve">(</text>
+<text x="284.000" y="228" font-size="38" font-weight="normal" fill="#b9d99a" xml:space="preserve">&quot;What is France&#x27;s capital?&quot;</text>
+<text x="200.000" y="289" font-size="38" font-weight="normal" fill="#cbd3dd" xml:space="preserve">)</text>
+<text x="200.000" y="411" font-size="38" font-weight="bold" fill="#c8a7ee" xml:space="preserve">assert</text>
+<text x="347.000" y="411" font-size="38" font-weight="normal" fill="#e8edf2" xml:space="preserve">response</text>
+<text x="536.000" y="411" font-size="38" font-weight="bold" fill="#c8a7ee" xml:space="preserve">is</text>
+<text x="599.000" y="411" font-size="38" font-weight="bold" fill="#c8a7ee" xml:space="preserve">not</text>
+<text x="683.000" y="411" font-size="38" font-weight="normal" fill="#e5c585" xml:space="preserve">None</text>
+<text x="200.000" y="472" font-size="38" font-weight="bold" fill="#c8a7ee" xml:space="preserve">assert</text>
+<text x="347.000" y="472" font-size="38" font-weight="normal" fill="#b9d99a" xml:space="preserve">&quot;paris&quot;</text>
+<text x="515.000" y="472" font-size="38" font-weight="bold" fill="#c8a7ee" xml:space="preserve">in</text>
+<text x="578.000" y="472" font-size="38" font-weight="normal" fill="#e8edf2" xml:space="preserve">response</text>
+<text x="746.000" y="472" font-size="38" font-weight="normal" fill="#cbd3dd" xml:space="preserve">.</text>
+<text x="767.000" y="472" font-size="38" font-weight="normal" fill="#e8edf2" xml:space="preserve">content</text>
+<text x="914.000" y="472" font-size="38" font-weight="normal" fill="#cbd3dd" xml:space="preserve">.</text>
+<text x="935.000" y="472" font-size="38" font-weight="normal" fill="#8fc7ef" xml:space="preserve">lower</text>
+<text x="1040.000" y="472" font-size="38" font-weight="normal" fill="#cbd3dd" xml:space="preserve">(</text>
+<text x="1061.000" y="472" font-size="38" font-weight="normal" fill="#cbd3dd" xml:space="preserve">)</text>
+</g>
+</svg>

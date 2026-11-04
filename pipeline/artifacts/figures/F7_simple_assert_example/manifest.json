@@ -1,0 +1,17 @@
+{
+  "purpose": "Illustrative code figure for the simple assert definition",
+  "dimensions": [
+    1280,
+    552
+  ],
+  "background": "#212121",
+  "font": "Consolas",
+  "code": "def test_capital(agent):\n    response = agent.invoke(\n        \"What is France's capital?\"\n    )\n\n    assert response is not None\n    assert \"paris\" in response.content.lower()\n",
+  "outputs": {
+    ".gitattributes": "705fd4d6451a31d36b3df7de96f83f30ac976c9b4a6d1e51671d8e2f33e2d0da",
+    "CAPTION.md": "4f072d9282964f6b597b408940a93c11499b37458255cd4d00cac0c3e914e8e8",
+    "example.txt": "75deab2422d9904056315b564deb0062daa1d7363a8732d8d52d7900d4188d10",
+    "simple-assert-example.png": "4ad67f26e443492722f52156e775a248b19de0761c97258f72c0918b4a936607",
+    "simple-assert-example.svg": "4fc6904bff1de794913faf53d014cced4d2260f67e877e443d47c0498219e296"
+  }
+}
