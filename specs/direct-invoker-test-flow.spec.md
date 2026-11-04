@@ -115,3 +115,26 @@ A synthetic CLI success fixture may monkeypatch this module's public `load_direc
 For an isolated loader unit test, its canonical import boundary is `from Applications import make_figures as MF` executed **inside `load_direct_invokers`**. A test may install a fake `Applications.make_figures` module (including the package attribute, using monkeypatch) with `POP`, `RAW_SDKS`, and `AZ` fields. `AZ.drop_removed_patterns_invokers` accepts and returns an installed-pandas DataFrame, while `AZ.fw_from_reason` accepts one reason string and returns its framework or None. No new dependency is required beyond existing research pandas. Fake AZ functions can track that the existing filter boundary was called; fixture raw rows verify direct/POP/raw-SDK/dedup logic without real canonical population files. Canonical import failure must not trigger fallback reimplementation or artifact regeneration.
 
 Existing-output refusal is checked before calling the loader or reading corpus inputs. Synthetic fixtures with zero findings may complete successfully. No hidden artifacts directory enumeration for unrelated tables: provenance records actual relevant reads, not every file under ARTIFACTS_DIR.
+
+## Conservative receiver-owner conflict check
+
+Before a syntactic source call can qualify, `analyze_saved_test` must check for an explicit conflicting constructor binding. This guards against observed saved-pyan edges that identify the wrong same-named method. It does not add a general resolver.
+
+For a selected call of the form `receiver.method(...)` where receiver is a simple local name, inspect preceding straight-line statements in the exact test definition. If the latest supported receiver binding is `receiver = ExplicitClass(...)`, and the target qname names an owning class with a different short class name, abstain with **status `receiver_owner_mismatch`**, an empty checks list, and detail identifying the target owner and observed constructor. Preserve the saved test edge and emit a diagnostic of the same kind. Treat this as **unresolved target identification**, not proof the saved edge is false or that no test exists: inheritance could explain the relationship.
+
+An explicit constructor is a direct call whose final name starts with an uppercase letter, or a stable local import alias whose imported original class name starts uppercase. A qualified constructor such as `tools.ReadFileTool(...)` supplies short owner `ReadFileTool`. A `from tools import ReadFileTool as Reader` alias supplies `ReadFileTool`, not `Reader`. Only stable unshadowed syntactic aliases qualify for this check. The target owner is the qname component immediately before the final method name, and must itself look like a class (starts uppercase); otherwise this bounded check abstains from owner inference. Reassignment/unsupported control or receiver mutation invalidates earlier constructor knowledge. Do not infer runtime type from fixtures, annotations, factory results, helper returns, dynamic aliases, or global name uniqueness.
+
+When no explicit contradictory binding is established, existing saved-edge/syntactic-call candidates may remain eligible with their unverified-dispatch limitation. Matching short class names do not establish exact class identity. Do not infer inheritance or require additional source scans.
+
+Literal negative scenario (extends the existing focused ambiguity/resolution test, rather than requiring a broad new suite):
+
+```python
+def test_missing():
+    tool = ReadFileTool(mock_executor)
+    result = tool._run("missing.txt")
+    assert "not found" in result
+```
+
+With test_line `1` and target_qname `acme_app.tools.WebSearchTool._run`, the unique `_run` call at line `3` must yield `receiver_owner_mismatch` and zero checks. The same source with target owner `ReadFileTool` does not trigger this conflict guard, though its successful candidate remains dispatch-unverified. An imported alias to `ReadFileTool` has the same mismatch against `WebSearchTool`.
+
+At report level, `invokers.denominator`, saved edge counts and `invokers.with_saved_direct_test_edge` remain unchanged by this abstention; `with_result_check_candidate` and candidate check counts exclude the unresolved edge. Report receiver-owner mismatch counts separately. A refined corpus run must use a new exclusive output location; preserve earlier runs and reports unchanged.

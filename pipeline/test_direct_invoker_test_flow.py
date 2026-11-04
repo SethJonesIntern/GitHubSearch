@@ -164,6 +164,22 @@ class DirectInvokerTestFlowTests(unittest.TestCase):
         self.assertEqual(result["status"], "ok")
         self.assertEqual(len(result["checks"]), 1)
 
+        owner_source = ("def test_missing():\n"
+                        "    tool = ReadFileTool(mock_executor)\n"
+                        "    result = tool._run('missing.txt')\n"
+                        "    assert 'not found' in result\n")
+        conflict = flow.analyze_saved_test(
+            owner_source, 1, "acme_app.tools.WebSearchTool._run")
+        self.assertEqual(conflict["status"], "receiver_owner_mismatch")
+        self.assertEqual(conflict["checks"], [])
+        self.assertIn("WebSearchTool", conflict["detail"])
+        self.assertIn("ReadFileTool", conflict["detail"])
+        matching = flow.analyze_saved_test(
+            owner_source, 1, "acme_app.tools.ReadFileTool._run")
+        self.assertEqual(matching["status"], "ok")
+        self.assertEqual(len(matching["checks"]), 1)
+        self.assertIn(CAVEAT, matching["limitations"])
+
     def test_compound_reassignment_arbitrary_validator_and_caught_raise_abstain(self):
         cases = [
             "r = f()\n    if condition:\n        r = replacement\n    assert r",

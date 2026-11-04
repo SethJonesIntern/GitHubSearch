@@ -37,6 +37,7 @@ LIMITATIONS = [
     "Compound-flow binding merges, arbitrary validators, dynamic receivers, constructor aliases, fixtures and inheritance are unresolved.",
     "Strata are heuristic path/name classifications; this is a saved-edge candidate detection rate, not exhaustive prevalence or coverage.",
     "Controlled failure denotes a result-derived predicate with an immediate failure statement, not proof that the branch executes.",
+    "Explicit receiver-owner conflicts abstain as unresolved target identification; inheritance may explain different short class names, and matching names do not verify dispatch.",
 ]
 VALUE_ASSERTS = {
     "assertEqual": 2, "assertNotEqual": 2, "assertTrue": 1, "assertFalse": 1,
@@ -212,6 +213,78 @@ def _dotted(node):
     return ""
 
 
+def _receiver_owner_conflict(tree, function, seed, target_qname, bindings):
+    if not (isinstance(seed.func, ast.Attribute) and isinstance(seed.func.value, ast.Name)):
+        return None
+    components = target_qname.split(".")
+    if len(components) < 2 or not components[-2][0].isupper():
+        return None
+    owner = components[-2]
+    receiver = seed.func.value.id
+    constructors = {}
+    rebound = {a.arg for a in (*function.args.posonlyargs, *function.args.args, *function.args.kwonlyargs)}
+    rebound.update(a.arg for a in (function.args.vararg, function.args.kwarg) if a)
+    imported = set()
+    for scope in (tree, function):
+        for stmt in scope.body:
+            for node in _local_walk(stmt):
+                if isinstance(node, (ast.Import, ast.ImportFrom)):
+                    imported.update(a.asname or a.name.split(".")[0] for a in node.names)
+
+    def constructor(call):
+        if not isinstance(call, ast.Call):
+            return None
+        dotted = _dotted(call.func)
+        if not dotted:
+            return None
+        root, _, rest = dotted.partition(".")
+        if root in rebound or (root in imported and root not in bindings):
+            return None
+        resolved = bindings.get(root, root) + ("." + rest if rest else "")
+        short = resolved.rsplit(".", 1)[-1]
+        return short if short and short[0].isupper() else None
+
+    for stmt in function.body:
+        if any(node is seed for node in _local_walk(stmt)):
+            observed = constructors.get(receiver)
+            if not isinstance(stmt, (ast.Assign, ast.AnnAssign, ast.Expr, ast.Assert, ast.Return, ast.Raise)):
+                observed = None
+            if observed and observed != owner:
+                return (f"Saved target owner {owner!r} conflicts with explicit receiver constructor {observed!r}; "
+                        "target identification is unresolved (inheritance may explain the relationship).")
+            return None
+        writes = _bound_names(stmt)
+        if isinstance(stmt, (ast.If, ast.For, ast.AsyncFor, ast.While, ast.Try, ast.TryStar, ast.With, ast.AsyncWith, ast.Match)):
+            constructors.clear()
+        # Attribute/subscript writes and calls using an existing receiver may mutate it.
+        for node in _local_walk(stmt):
+            if isinstance(node, (ast.Attribute, ast.Subscript)) and isinstance(node.ctx, (ast.Store, ast.Del)):
+                base = node
+                while isinstance(base, (ast.Attribute, ast.Subscript)):
+                    base = base.value
+                if isinstance(base, ast.Name):
+                    writes.add(base.id)
+            if isinstance(node, ast.Call):
+                if (isinstance(node.func, ast.Attribute) and isinstance(node.func.value, ast.Name)
+                        and node.func.value.id in constructors):
+                    writes.add(node.func.value.id)
+                for arg in (*node.args, *(k.value for k in node.keywords)):
+                    writes.update(n.id for n in _local_walk(arg) if isinstance(n, ast.Name) and n.id in constructors)
+        for name in writes:
+            constructors.pop(name, None)
+        if isinstance(stmt, (ast.Assign, ast.AnnAssign)):
+            explicit = constructor(stmt.value)
+            targets = stmt.targets if isinstance(stmt, ast.Assign) else [stmt.target]
+            if explicit:
+                for target in targets:
+                    if isinstance(target, ast.Name):
+                        constructors[target.id] = explicit
+        if not isinstance(stmt, (ast.Import, ast.ImportFrom)):
+            rebound.update(writes)
+        if isinstance(stmt, (ast.Return, ast.Raise, ast.Break, ast.Continue)):
+            return None
+    return None
+
 def analyze_saved_test(source: str, test_line: int, target_qname: str) -> dict:
     if (not isinstance(target_qname, str) or not target_qname
             or not target_qname.rsplit(".", 1)[-1].isidentifier()
@@ -244,6 +317,11 @@ def analyze_saved_test(source: str, test_line: int, target_qname: str) -> dict:
                       detail=f"{len(matching)} syntactic calls match {target_qname}")
         return result
     seed = matching[0]
+    conflict = _receiver_owner_conflict(tree, function, seed, target_qname, bindings)
+    if conflict:
+        result.update(status="receiver_owner_mismatch", detail=conflict)
+        result["limitations"].append("Explicit receiver-owner conflicts abstain; inheritance and actual dispatch are unresolved.")
+        return result
     env = {}
 
     def merge(parts):
@@ -612,7 +690,8 @@ def main(argv: list[str] | None = None) -> int:
             test_edges=dict(selected=len(edges), source_assessed=sum(e["source_status"] == "ok" for e in edges),
                             with_result_check_candidate=sum(e["candidate_checks"] > 0 for e in edges),
                             direct_test_rows_without_target_edge=direct_rows,
-                            deferred_wrapper_edges=diagnostic_counts.get("deferred_wrapper_edge", 0)),
+                            deferred_wrapper_edges=diagnostic_counts.get("deferred_wrapper_edge", 0),
+                            receiver_owner_mismatches=diagnostic_counts.get("receiver_owner_mismatch", 0)),
             checks=dict(total=len(checks)), by_stratum=by_stratum, limitations=LIMITATIONS,
             diagnostic_counts=diagnostic_counts,
             source_status_counts=dict(sorted(Counter(e["source_status"] for e in edges).items())))
