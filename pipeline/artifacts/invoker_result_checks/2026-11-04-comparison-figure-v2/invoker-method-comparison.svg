@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="921.6pt" height="403.2pt" viewBox="0 0 921.6 403.2" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-11-04T15:08:39.760134</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.0, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 403.2 
+L 921.6 403.2 
+L 921.6 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 216.576 320.544 
+L 470.016 320.544 
+L 470.016 133.056 
+L 216.576 133.056 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="xtick_1">
+     <g id="line2d_1">
+      <path d="M 216.576 320.544 
+L 216.576 133.056 
+" clip-path="url(#pfbccd3040b)" style="fill: none; stroke: #dfe5eb; stroke-width: 0.7; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_2"/>
+     <g id="text_1">
+      <text style="font-size: 9.5px; font-family: 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #526274" x="216.576" y="335.46026" transform="rotate(-0 216.576 335.46026)">0%</text>
+     </g>
+    </g>
+    <g id="xtick_2">
+     <g id="line2d_3">
+      <path d="M 297.701616 320.544 
+L 297.701616 133.056 
+" clip-path="url(#pfbccd3040b)" style="fill: none; stroke: #dfe5eb; stroke-width: 0.7; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_4"/>
+     <g id="text_2">
+      <text style="font-size: 9.5px; font-family: 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #526274" x="297.701616" y="335.46026" transform="rotate(-0 297.701616 335.46026)">1%</text>
+     </g>
+    </g>
+    <g id="xtick_3">
+     <g id="line2d_5">
+      <path d="M 378.827231 320.544 
+L 378.827231 133.056 
+" clip-path="url(#pfbccd3040b)" style="fill: none; stroke: #dfe5eb; stroke-width: 0.7; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_6"/>
+     <g id="text_3">
+      <text style="font-size: 9.5px; font-family: 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #526274" x="378.827231" y="335.46026" transform="rotate(-0 378.827231 335.46026)">2%</text>
+     </g>
+    </g>
+    <g id="xtick_4">
+     <g id="line2d_7">
+      <path d="M 459.952847 320.544 
+L 459.952847 133.056 
+" clip-path="url(#pfbccd3040b)" style="fill: none; stroke: #dfe5eb; stroke-width: 0.7; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_8"/>
+     <g id="text_4">
+      <text style="font-size: 9.5px; font-family: 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #526274" x="459.952847" y="335.46026" transform="rotate(-0 459.952847 335.46026)">3%</text>
+     </g>
+    </g>
+    <g id="text_5">
+     <text style="font-size: 10px; font-family: 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #526274" x="343.296" y="357.739801" transform="rotate(-0 343.296 357.739801)">Share of all direct invokers</text>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2">
+    <g id="ytick_1">
+     <g id="line2d_9"/>
+     <g id="text_6">
+      <text style="font-size: 10.5px; font-family: 'Arial', 'DejaVu Sans', sans-serif; fill: #172b40" transform="translate(126.958031 182.690636)">PyMethods2Test</text>
+      <text style="font-size: 10.5px; font-family: 'Arial', 'DejaVu Sans', sans-serif; fill: #172b40" transform="translate(100.691625 194.11882)">focal-method mapping</text>
+     </g>
+    </g>
+    <g id="ytick_2">
+     <g id="line2d_10"/>
+     <g id="text_7">
+      <text style="font-size: 10.5px; font-family: 'Arial', 'DejaVu Sans', sans-serif; fill: #172b40" transform="translate(146.191078 267.912557)">Independent</text>
+      <text style="font-size: 10.5px; font-family: 'Arial', 'DejaVu Sans', sans-serif; fill: #172b40" transform="translate(89.028422 279.340536)">return-to-check evidence</text>
+     </g>
+    </g>
+   </g>
+   <g id="patch_3">
+    <path d="M 216.576 198.6768 
+L 328.67405 198.6768 
+L 328.67405 169.701382 
+L 216.576 169.701382 
+z
+" clip-path="url(#pfbccd3040b)" style="fill: #2877b8"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 216.576 283.898618 
+L 370.176 283.898618 
+L 370.176 254.9232 
+L 216.576 254.9232 
+z
+" clip-path="url(#pfbccd3040b)" style="fill: #d9822b"/>
+   </g>
+   <g id="text_8">
+    <text style="font-weight: 700; font-size: 11px; font-family: 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start; fill: #172b40" x="335.975356" y="187.035663" transform="rotate(-0 335.975356 187.035663)">262  |  1.38%</text>
+   </g>
+   <g id="text_9">
+    <text style="font-weight: 700; font-size: 11px; font-family: 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start; fill: #172b40" x="377.477305" y="272.257481" transform="rotate(-0 377.477305 272.257481)">359  |  1.89%</text>
+   </g>
+  </g>
+  <g id="axes_2">
+   <g id="patch_5">
+    <path d="M 646.935415 300.106802 
+C 667.17858 300.106802 686.595363 292.064107 700.909443 277.750028 
+C 715.223522 263.435948 723.266217 244.019165 723.266217 223.776 
+C 723.266217 203.532835 715.223522 184.116052 700.909443 169.801972 
+C 686.595363 155.487893 667.17858 147.445198 646.935415 147.445198 
+C 626.69225 147.445198 607.275467 155.487893 592.961388 169.801972 
+C 578.647308 184.116052 570.604613 203.532835 570.604613 223.776 
+C 570.604613 244.019165 578.647308 263.435948 592.961388 277.750028 
+C 607.275467 292.064107 626.69225 300.106802 646.935415 300.106802 
+z
+" clip-path="url(#p9203ab16c1)" style="fill: #2877b8; opacity: 0.35; stroke: #2877b8; stroke-width: 1.1; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 745.485007 313.12638 
+C 769.181005 313.12638 791.909666 303.71186 808.665266 286.956259 
+C 825.420867 270.200659 834.835387 247.471998 834.835387 223.776 
+C 834.835387 200.080002 825.420867 177.351341 808.665266 160.595741 
+C 791.909666 143.84014 769.181005 134.42562 745.485007 134.42562 
+C 721.789009 134.42562 699.060348 143.84014 682.304747 160.595741 
+C 665.549147 177.351341 656.134627 200.080002 656.134627 223.776 
+C 656.134627 247.471998 665.549147 270.200659 682.304747 286.956259 
+C 699.060348 303.71186 721.789009 313.12638 745.485007 313.12638 
+z
+" clip-path="url(#p9203ab16c1)" style="fill: #d9822b; opacity: 0.38; stroke: #d9822b; stroke-width: 1.1; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_10">
+    <text style="font-weight: 700; font-size: 22px; font-family: 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #172b40" x="613.36962" y="221.836279" transform="rotate(-0 613.36962 221.836279)">173</text>
+   </g>
+   <g id="text_11">
+    <text style="font-size: 9.3px; font-family: 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #172b40" x="613.36962" y="238.395576" transform="rotate(-0 613.36962 238.395576)">PyM only</text>
+   </g>
+   <g id="text_12">
+    <text style="font-weight: 700; font-size: 22px; font-family: 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #172b40" x="689.700422" y="221.836279" transform="rotate(-0 689.700422 221.836279)">89</text>
+   </g>
+   <g id="text_13">
+    <text style="font-size: 9.3px; font-family: 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #172b40" x="689.700422" y="238.395667" transform="rotate(-0 689.700422 238.395667)">Both</text>
+   </g>
+   <g id="text_14">
+    <text style="font-weight: 700; font-size: 22px; font-family: 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #172b40" x="779.050802" y="221.836279" transform="rotate(-0 779.050802 221.836279)">270</text>
+   </g>
+   <g id="text_15">
+    <text style="font-size: 9.3px; font-family: 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #172b40" x="779.050802" y="238.395576" transform="rotate(-0 779.050802 238.395576)">Independent only</text>
+   </g>
+  </g>
+  <g id="text_16">
+   <text style="font-weight: 700; font-size: 21px; font-family: 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start; fill: #172b40" x="41.472" y="24.192" transform="rotate(-0 41.472 24.192)">Focal mappings and result-check evidence</text>
+  </g>
+  <g id="text_17">
+   <text style="font-size: 11px; font-family: 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start; fill: #526274" x="41.472" y="46.368" transform="rotate(-0 41.472 46.368)">Common population: 18,961 direct invoker methods</text>
+  </g>
+  <g id="text_18">
+   <text style="font-weight: 700; font-size: 12px; font-family: 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start; fill: #172b40" x="41.472" y="94.752" transform="rotate(-0 41.472 94.752)">A  Share of all direct invokers</text>
+  </g>
+  <g id="text_19">
+   <text style="font-weight: 700; font-size: 12px; font-family: 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start; fill: #172b40" x="525.312" y="94.752" transform="rotate(-0 525.312 94.752)">B  Overlap of the detected method sets</text>
+  </g>
+  <g id="text_20">
+   <text style="font-size: 10.5px; font-family: 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #172b40" x="702.2592" y="344.736" transform="rotate(-0 702.2592 344.736)">Detected by either: 532 methods</text>
+  </g>
+  <g id="text_21">
+   <text style="font-size: 10px; font-family: 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #526274" x="702.2592" y="362.0736" transform="rotate(-0 702.2592 362.0736)">Outside both sets: 18,429 (97.19%)</text>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="pfbccd3040b">
+   <rect x="216.576" y="133.056" width="253.44" height="187.488"/>
+  </clipPath>
+  <clipPath id="p9203ab16c1">
+   <rect x="558.391685" y="122.976" width="288.65663" height="201.6"/>
+  </clipPath>
+ </defs>
+</svg>

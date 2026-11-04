@@ -1,0 +1,32 @@
+{
+  "counts": {
+    "both": 89,
+    "denominator": 18961,
+    "independent_candidate": 359,
+    "independent_only": 270,
+    "outside_both": 18429,
+    "pym_focal": 262,
+    "pym_only": 173
+  },
+  "inputs": {
+    "pipeline\\artifacts\\invoker_result_checks\\2026-11-04-independent-v2\\invokers.csv": {
+      "sha256_after": "26eeaaf76c73a9172486d97d9e9fdbc0921547a27f763815dad5cf28a34a95c9",
+      "sha256_before": "26eeaaf76c73a9172486d97d9e9fdbc0921547a27f763815dad5cf28a34a95c9"
+    },
+    "pipeline\\artifacts\\pym2t_focal_tests.csv": {
+      "sha256_after": "de53b0f8073d4c5f098f0e2c6607c4689876edca4cb4030bdcb8179e7d470097",
+      "sha256_before": "de53b0f8073d4c5f098f0e2c6607c4689876edca4cb4030bdcb8179e7d470097"
+    }
+  },
+  "matplotlib": "3.11.0",
+  "outputs": {
+    "CAPTION.md": "385bc4f4fb3cf28ca22d90e2711021f9913cd19bf82703df25aca99d67f2cf88",
+    "build_figure.py": "a71bf918131da775eba76acc91369e31d45b0a890e9bb56ce386bc739c4bf5af",
+    "invoker-method-comparison.png": "23c83598d7766b26628cfc939bd6038972195801b01f08f5642b00c7f7dacd48",
+    "invoker-method-comparison.svg": "71ad3835c841d0028685731eb5ab51c826a0992845ad9f4f7a7397feb856c5be",
+    "overlap.csv": "918ef66f3f2a55deb2fb5b27820666e63187d6b5931b75eef6f9b0a946d44693",
+    "rates.csv": "4f254d11fd6152f1119fd492b70c7cbb52b14b7d6262c97c17e666cd67af6190"
+  },
+  "python": "3.14.3",
+  "revision": "7c836f66c3695b843dd5b737831846737dac2498"
+}
