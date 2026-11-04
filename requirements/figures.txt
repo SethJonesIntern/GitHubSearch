@@ -1,0 +1,3 @@
+# New saved-input figure builder. Rendered locally with Python 3.12.14.
+# Full research analysis still targets Python 3.14.
+matplotlib==3.11.2

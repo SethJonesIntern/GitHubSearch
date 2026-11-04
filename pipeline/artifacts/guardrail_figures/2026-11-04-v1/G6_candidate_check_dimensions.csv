@@ -1,0 +1,13 @@
+dimension,examples,interpretation
+When,"Test suite
+Runtime","Runtime checks must intervene before
+acceptance or action to count as guardrails."
+What,"Availability / structure / expected content
+Behavioral constraints / semantic correctness","The property checked determines
+the claim the check can support."
+How,"Deterministic rules or assertions
+Metrics / model-based judgments","An assert can enforce a judge-score threshold.
+Library use does not determine check complexity."
+Response,"Fail test / reject / retry / correct
+Escalate for review","Record the action on failure.
+Logging alone establishes observation."

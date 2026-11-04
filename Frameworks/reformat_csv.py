@@ -1,3 +1,5 @@
+# ARCHIVE CANDIDATE ONLY: see docs/archive-candidates.md. This module performs
+# top-level file IO; inspect as text, do not import it to assess whether it is used.
 import csv
 
 INPUT_CSV = "github_agent_framework_candidates.csv"

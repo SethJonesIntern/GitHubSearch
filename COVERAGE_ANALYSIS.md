@@ -1,5 +1,9 @@
 # Framework Coverage — how much of the population do we measure?
 
+> Historical sampling analysis, retained for provenance. These framework/population
+> coverage measures do not measure test correspondence or correctness guardrails.
+> Current scope and results are in README.md; document roles are mapped in docs/README.md.
+
 *Last updated: 2026-08-18. Companion to `EXCLUSIONS.md` §9.*
 
 **Read the units carefully: every number on this page counts APPLICATIONS, not

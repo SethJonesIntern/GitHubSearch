@@ -1,0 +1,20 @@
+ecosystem,distinct_patterns,package_keys,observed_applications
+langchain,18,21,384
+autogen,14,4,64
+langgraph,8,1,233
+semantic_kernel,8,1,25
+pydantic_ai,7,1,95
+crewai,6,1,76
+agents,4,1,54
+agno,4,1,30
+astrbot,4,1,17
+graphrag,4,1,4
+agent_framework (MS),3,1,39
+camel,2,1,8
+dspy,2,1,21
+haystack,2,1,31
+mem0,2,1,70
+swarms,2,1,2
+notte,1,1,0
+smolagents,1,1,29
+swarm,1,1,8

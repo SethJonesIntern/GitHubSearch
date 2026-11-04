@@ -1,3 +1,6 @@
 pipeline/artifacts/llm_invokers_all.csv filter=lfs diff=lfs merge=lfs -text
 pipeline/artifacts/llm_tests_all.csv filter=lfs diff=lfs merge=lfs -text
 /pipeline/artifacts/llm_invokers_all.csv filter=lfs diff=lfs merge=lfs -text
+
+# Matplotlib-generated SVG path data includes insignificant trailing spaces.
+pipeline/artifacts/guardrail_figures/**/*.svg -whitespace

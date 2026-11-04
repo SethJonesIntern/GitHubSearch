@@ -22,8 +22,8 @@ commits to retain research history. Do not rewrite shared branch history or forc
 Use Python 3.14 for the supported research environment. In an isolated environment:
 
 ```powershell
-python -m pip install pytest==8.4.2
-python -m pytest pipeline/test_method_test_baseline.py pipeline/test_slice_repo_filter.py pipeline/test_eval_frequency.py -q
+python -m pip install -r requirements/ci.txt
+python -m pytest pipeline/test_method_test_baseline.py pipeline/test_slice_repo_filter.py pipeline/test_eval_frequency.py Applications/test_guardrail_figures.py -q
 ```
 
 These are the current Linux/Windows CI checks. They use synthetic data and need no
@@ -31,6 +31,9 @@ GitHub token, cloned corpus, Joern, LFS downloads, or full focal outputs. They d
 validate the entire discovery/call-graph pipeline. See RUNBOOK.md and CLAUDE.md for
 research commands, additional tests, runtime dependencies and the data-PC workflow.
 The root requirements.txt records an older environment; do not use it as the CI lockfile.
+See requirements/README.md for the figure dependency pin and draft analysis declaration.
+Figure tests validate refusal to overwrite and input consistency using synthetic files;
+CI does not render or regenerate the saved research corpus.
 
 ## Research artifacts and local data
 
@@ -44,6 +47,9 @@ clones, Joern slices, full focal outputs and generated method inventories may be
 gitignored and available only on the data PC. Never use `git clean`, destructive
 resets or forced checkouts to synchronize these machines. Normal CI intentionally
 skips downloading LFS payloads.
+Consult docs/artifact-inventory.md and docs/commands.md before any analysis run.
+Legacy candidates in docs/archive-candidates.md require another thorough dependency
+and reproduction review, plus owner approval, before any archive or deletion.
 
 ## Branch consolidation (2026-11-04)
 
