@@ -1,0 +1,49 @@
+{
+  "inputs": {
+    "pipeline/artifacts/.batch_progress.json": {
+      "sha256_after": "b9e993e90a67a38abdb64f84ddd01dcfc762c6e44f3589067b1d756086bf7fa8",
+      "sha256_before": "b9e993e90a67a38abdb64f84ddd01dcfc762c6e44f3589067b1d756086bf7fa8"
+    },
+    "pipeline/artifacts/application_audit.csv": {
+      "sha256_after": "73799a3d0493c326180b667c84d480ea66480bada3715693d67b59071c2d9142",
+      "sha256_before": "73799a3d0493c326180b667c84d480ea66480bada3715693d67b59071c2d9142"
+    },
+    "pipeline/artifacts/llm_calls_all.csv": {
+      "sha256_after": "a66866e676a67d37f96799f04a4560461e1229033aceda16d956806810a0f17a",
+      "sha256_before": "a66866e676a67d37f96799f04a4560461e1229033aceda16d956806810a0f17a"
+    },
+    "pipeline/artifacts/llm_invokers_all.csv": {
+      "sha256_after": "7bfdbd006fd43c6d86e74a020a390d542b2a8bb1ab0bbac1600a2e9103a86a50",
+      "sha256_before": "7bfdbd006fd43c6d86e74a020a390d542b2a8bb1ab0bbac1600a2e9103a86a50"
+    },
+    "pipeline/artifacts/llm_tests_all.csv": {
+      "sha256_after": "689a46c17cdd6f8e1aa416740b1995277a7f30eb94ed52e3a273e204126817b2",
+      "sha256_before": "689a46c17cdd6f8e1aa416740b1995277a7f30eb94ed52e3a273e204126817b2"
+    }
+  },
+  "inspected_source_hashes": {
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Aggregate-Intellect_sherpa\\src\\sherpa_ai\\actions\\planning.py": "6aa4cd471a2b142624a31c0d331ff5269c78d26be905a3bb9c02803f95980791",
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Aggregate-Intellect_sherpa\\src\\sherpa_ai\\tools.py": "bd170655e2b3d9240d3a295c57cdcd786672e64d6ca64563d234de9ab1c81dc0",
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Aggregate-Intellect_sherpa\\src\\sherpa_ai\\utils.py": "ea7e38e9150cd350f6b3687e3dc07653d28ebdc5fe4e4f8b5d5d34b32709cba9",
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Aggregate-Intellect_sherpa\\src\\tests\\unit_tests\\actions\\test_planning.py": "026d8a891a25f4ae9a2839b4b093d4685ee9a994c41fe2786737f575ecdd6470",
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Aggregate-Intellect_sherpa\\src\\tests\\unit_tests\\test_utils.py": "bc28d5bf1d39763c8ba3ae72d5c5171e27b6d287ec2fe5ba7f95d92a968bbbf9",
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Aggregate-Intellect_sherpa\\src\\tests\\unit_tests\\tools\\test_search_tool.py": "56c1d0d37d32a2bbb4aab53ef4a8e279197233285da043b090fee124d3f1d36f"
+  },
+  "options": {
+    "output_dir": "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\artifacts\\invoker_result_checks\\2026-11-04-independent-sherpa-v1",
+    "repos": [
+      "Aggregate-Intellect/sherpa"
+    ],
+    "repos_dir": "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos"
+  },
+  "outputs": {
+    "REPORT.md": "73807367790b0fe3001fe34bac35d3d4c346bb1f281fa9e94e56de8499ed1ebe",
+    "checks.csv": "6c539ee50d569dee9a03c3568235472db8281a013c9e466600a47f55ce3f5945",
+    "diagnostics.csv": "808ca1d02874c9793eb4b7f260cf331444a83c722c9ea709bbb064ffca0651a6",
+    "invokers.csv": "4f3489dfb8a80d3fc7e0e1331890b951619fec55c4db76520eb470dfe8e87ec5",
+    "summary.json": "cdd36094b0bb8ff0834e6e4ff9128d41197baca1ef8b368db36d3033bffdef7c",
+    "test_edges.csv": "1dc4473db71f08f4d0b2a89c6e87fea4c16528e5d1d1e3a8a0d78a504aec2307"
+  },
+  "python": "3.14.3 (tags/v3.14.3:323c59a, Feb  3 2026, 16:04:56) [MSC v.1944 64 bit (AMD64)]",
+  "revision": "b2c961354b7bd5d0c1bd10ec55ad47b883a0c36a"
+}

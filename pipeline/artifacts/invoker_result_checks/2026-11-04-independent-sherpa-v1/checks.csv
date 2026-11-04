@@ -1,0 +1,42 @@
+repo,invoker_file,invoker_line,invoker_qname,test_file,test_line,test_qname,call_line,check_line,failure_line,check_kind,evidence,call_source,check_source,trace_lines,variables
+Aggregate-Intellect/sherpa,Aggregate-Intellect_sherpa/src/sherpa_ai/actions/planning.py,234,Aggregate-Intellect_sherpa.src.sherpa_ai.actions.planning.TaskPlanning.execute,Aggregate-Intellect_sherpa/src/tests/unit_tests/actions/test_planning.py,8,Aggregate-Intellect_sherpa.src.tests.unit_tests.actions.test_planning.test_planning_succeeds,23,27,,assert,saved_pyan_edge_local_return_to_passfail_candidate,"task_planning.execute(task, agent_pool_description)",assert len(plan.steps) > 0,"[23, 27]","[""plan""]"
+Aggregate-Intellect/sherpa,Aggregate-Intellect_sherpa/src/sherpa_ai/utils.py,457,Aggregate-Intellect_sherpa.src.sherpa_ai.utils.chunk_and_summarize,Aggregate-Intellect_sherpa/src/tests/unit_tests/test_utils.py,861,Aggregate-Intellect_sherpa.src.tests.unit_tests.test_utils.test_chunk_and_summarize_with_completion_llm,866,872,,assert,saved_pyan_edge_local_return_to_passfail_candidate,"chunk_and_summarize(
+        text_data=""Some short text about the weather."",
+        question=""What is the weather?"",
+        link=""https://example.com"",
+        llm=llm,
+    )","assert result == ""summary of the page""","[866, 872]","[""result""]"
+Aggregate-Intellect/sherpa,Aggregate-Intellect_sherpa/src/sherpa_ai/utils.py,457,Aggregate-Intellect_sherpa.src.sherpa_ai.utils.chunk_and_summarize,Aggregate-Intellect_sherpa/src/tests/unit_tests/test_utils.py,875,Aggregate-Intellect_sherpa.src.tests.unit_tests.test_utils.test_chunk_and_summarize_with_chat_llm,879,885,,assert,saved_pyan_edge_local_return_to_passfail_candidate,"chunk_and_summarize(
+        text_data=""Some short text about the weather."",
+        question=""What is the weather?"",
+        link=""https://example.com"",
+        llm=llm,
+    )","assert isinstance(result, str)","[879, 885]","[""result""]"
+Aggregate-Intellect/sherpa,Aggregate-Intellect_sherpa/src/sherpa_ai/utils.py,457,Aggregate-Intellect_sherpa.src.sherpa_ai.utils.chunk_and_summarize,Aggregate-Intellect_sherpa/src/tests/unit_tests/test_utils.py,875,Aggregate-Intellect_sherpa.src.tests.unit_tests.test_utils.test_chunk_and_summarize_with_chat_llm,879,886,,assert,saved_pyan_edge_local_return_to_passfail_candidate,"chunk_and_summarize(
+        text_data=""Some short text about the weather."",
+        question=""What is the weather?"",
+        link=""https://example.com"",
+        llm=llm,
+    )","assert result == ""chat summary of the page""","[879, 886]","[""result""]"
+Aggregate-Intellect/sherpa,Aggregate-Intellect_sherpa/src/sherpa_ai/utils.py,510,Aggregate-Intellect_sherpa.src.sherpa_ai.utils.chunk_and_summarize_file,Aggregate-Intellect_sherpa/src/tests/unit_tests/test_utils.py,889,Aggregate-Intellect_sherpa.src.tests.unit_tests.test_utils.test_chunk_and_summarize_file_with_chat_llm,891,899,,assert,saved_pyan_edge_local_return_to_passfail_candidate,"chunk_and_summarize_file(
+        text_data=""Contents of a small file."",
+        question=""What is in the file?"",
+        file_name=""notes.txt"",
+        file_format=""txt"",
+        llm=llm,
+        title=""Notes"",
+    )","assert isinstance(result, str)","[891, 899]","[""result""]"
+Aggregate-Intellect/sherpa,Aggregate-Intellect_sherpa/src/sherpa_ai/utils.py,510,Aggregate-Intellect_sherpa.src.sherpa_ai.utils.chunk_and_summarize_file,Aggregate-Intellect_sherpa/src/tests/unit_tests/test_utils.py,889,Aggregate-Intellect_sherpa.src.tests.unit_tests.test_utils.test_chunk_and_summarize_file_with_chat_llm,891,900,,assert,saved_pyan_edge_local_return_to_passfail_candidate,"chunk_and_summarize_file(
+        text_data=""Contents of a small file."",
+        question=""What is in the file?"",
+        file_name=""notes.txt"",
+        file_format=""txt"",
+        llm=llm,
+        title=""Notes"",
+    )","assert result == ""file summary""","[891, 900]","[""result""]"
+Aggregate-Intellect/sherpa,Aggregate-Intellect_sherpa/src/sherpa_ai/tools.py,501,Aggregate-Intellect_sherpa.src.sherpa_ai.tools.ContextTool._run,Aggregate-Intellect_sherpa/src/tests/unit_tests/tools/test_search_tool.py,56,Aggregate-Intellect_sherpa.src.tests.unit_tests.tools.test_search_tool.test_search_query_includes_gsite_config,62,67,,assert,saved_pyan_edge_local_return_to_passfail_candidate,search_tool._run(query),"assert ""Google is a search engine"" in search_result","[62, 67]","[""search_result""]"
+Aggregate-Intellect/sherpa,Aggregate-Intellect_sherpa/src/sherpa_ai/tools.py,501,Aggregate-Intellect_sherpa.src.sherpa_ai.tools.ContextTool._run,Aggregate-Intellect_sherpa/src/tests/unit_tests/tools/test_search_tool.py,88,Aggregate-Intellect_sherpa.src.tests.unit_tests.tools.test_search_tool.test_search_returns_resources_for_citation,91,96,,assert,saved_pyan_edge_local_return_to_passfail_candidate,"search_tool._run(""What is the weather today?"", return_resources=True)","assert isinstance(resources, list)","[91, 96]","[""resources""]"
+Aggregate-Intellect/sherpa,Aggregate-Intellect_sherpa/src/sherpa_ai/tools.py,501,Aggregate-Intellect_sherpa.src.sherpa_ai.tools.ContextTool._run,Aggregate-Intellect_sherpa/src/tests/unit_tests/tools/test_search_tool.py,88,Aggregate-Intellect_sherpa.src.tests.unit_tests.tools.test_search_tool.test_search_returns_resources_for_citation,91,97,,assert,saved_pyan_edge_local_return_to_passfail_candidate,"search_tool._run(""What is the weather today?"", return_resources=True)",assert len(resources) == 1,"[91, 97]","[""resources""]"
+Aggregate-Intellect/sherpa,Aggregate-Intellect_sherpa/src/sherpa_ai/tools.py,501,Aggregate-Intellect_sherpa.src.sherpa_ai.tools.ContextTool._run,Aggregate-Intellect_sherpa/src/tests/unit_tests/tools/test_search_tool.py,88,Aggregate-Intellect_sherpa.src.tests.unit_tests.tools.test_search_tool.test_search_returns_resources_for_citation,91,98,,assert,saved_pyan_edge_local_return_to_passfail_candidate,"search_tool._run(""What is the weather today?"", return_resources=True)","assert resources[0][""Document""] == ""Description: GoogleGoogle is a search engine""","[91, 98]","[""resources""]"
+Aggregate-Intellect/sherpa,Aggregate-Intellect_sherpa/src/sherpa_ai/tools.py,501,Aggregate-Intellect_sherpa.src.sherpa_ai.tools.ContextTool._run,Aggregate-Intellect_sherpa/src/tests/unit_tests/tools/test_search_tool.py,88,Aggregate-Intellect_sherpa.src.tests.unit_tests.tools.test_search_tool.test_search_returns_resources_for_citation,91,99,,assert,saved_pyan_edge_local_return_to_passfail_candidate,"search_tool._run(""What is the weather today?"", return_resources=True)","assert resources[0][""Source""] == ""https://www.google.com""","[91, 99]","[""resources""]"
+Aggregate-Intellect/sherpa,Aggregate-Intellect_sherpa/src/sherpa_ai/tools.py,501,Aggregate-Intellect_sherpa.src.sherpa_ai.tools.ContextTool._run,Aggregate-Intellect_sherpa/src/tests/unit_tests/tools/test_search_tool.py,123,Aggregate-Intellect_sherpa.src.tests.unit_tests.tools.test_search_tool.test_search_query_includes_more_gsite_config_empty,129,131,,assert,saved_pyan_edge_local_return_to_passfail_candidate,search_tool._run(query),"assert ""Google is a search engine"" in search_result","[129, 131]","[""search_result""]"

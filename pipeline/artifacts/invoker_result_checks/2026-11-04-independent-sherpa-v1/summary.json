@@ -1,0 +1,52 @@
+{
+  "by_stratum": {
+    "production": {
+      "denominator": 27,
+      "with_result_check_candidate": 4
+    },
+    "test": {
+      "denominator": 6,
+      "with_result_check_candidate": 0
+    },
+    "test_support": {
+      "denominator": 0,
+      "with_result_check_candidate": 0
+    }
+  },
+  "checks": {
+    "total": 12
+  },
+  "diagnostic_counts": {
+    "deferred_wrapper_edge": 203,
+    "local_limitation": 31
+  },
+  "invokers": {
+    "denominator": 33,
+    "result_check_candidate_detection_rate": 0.12121212121212122,
+    "with_result_check_candidate": 4,
+    "with_saved_direct_test_edge": 4
+  },
+  "limitations": [
+    "Saved pyan target plus syntactic call match; dispatch and execution are unverified.",
+    "Independent of PyMethods2Test: no PyMethods2Test data or mappings are used.",
+    "The saved pyan first-BFS-edge forest contains only one chosen edge per transitive function.",
+    "Multi-hop wrappers and unrecorded outgoing edges are unassessed.",
+    "Direct-test rows with only framework-match reasons cannot identify their other target calls.",
+    "No candidate means no detection, rather than no test or no check.",
+    "Static local candidates establish neither actual invocation, mocking status, semantic correctness nor full interprocedural LLM-result flow.",
+    "Compound-flow binding merges, arbitrary validators, dynamic receivers, constructor aliases, fixtures and inheritance are unresolved.",
+    "Strata are heuristic path/name classifications; this is a saved-edge candidate detection rate, not exhaustive prevalence or coverage.",
+    "Controlled failure denotes a result-derived predicate with an immediate failure statement, not proof that the branch executes."
+  ],
+  "source_status_counts": {
+    "ok": 10
+  },
+  "subset": true,
+  "test_edges": {
+    "deferred_wrapper_edges": 203,
+    "direct_test_rows_without_target_edge": 6,
+    "selected": 10,
+    "source_assessed": 10,
+    "with_result_check_candidate": 7
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "by_stratum": {
+    "production": {
+      "denominator": 8840,
+      "with_result_check_candidate": 337
+    },
+    "test": {
+      "denominator": 9700,
+      "with_result_check_candidate": 0
+    },
+    "test_support": {
+      "denominator": 421,
+      "with_result_check_candidate": 22
+    }
+  },
+  "checks": {
+    "total": 2309
+  },
+  "diagnostic_counts": {
+    "ambiguous_call": 191,
+    "deferred_wrapper_edge": 124328,
+    "local_limitation": 15367,
+    "no_matching_call": 203,
+    "receiver_owner_mismatch": 105
+  },
+  "invokers": {
+    "denominator": 18961,
+    "result_check_candidate_detection_rate": 0.018933600548494276,
+    "with_result_check_candidate": 359,
+    "with_saved_direct_test_edge": 877
+  },
+  "limitations": [
+    "Saved pyan target plus syntactic call match; dispatch and execution are unverified.",
+    "Independent of PyMethods2Test: no PyMethods2Test data or mappings are used.",
+    "The saved pyan first-BFS-edge forest contains only one chosen edge per transitive function.",
+    "Multi-hop wrappers and unrecorded outgoing edges are unassessed.",
+    "Direct-test rows with only framework-match reasons cannot identify their other target calls.",
+    "No candidate means no detection, rather than no test or no check.",
+    "Static local candidates establish neither actual invocation, mocking status, semantic correctness nor full interprocedural LLM-result flow.",
+    "Compound-flow binding merges, arbitrary validators, dynamic receivers, constructor aliases, fixtures and inheritance are unresolved.",
+    "Strata are heuristic path/name classifications; this is a saved-edge candidate detection rate, not exhaustive prevalence or coverage.",
+    "Controlled failure denotes a result-derived predicate with an immediate failure statement, not proof that the branch executes.",
+    "Explicit receiver-owner conflicts abstain as unresolved target identification; inheritance may explain different short class names, and matching names do not verify dispatch."
+  ],
+  "source_status_counts": {
+    "ambiguous_call": 191,
+    "no_matching_call": 203,
+    "ok": 3688,
+    "receiver_owner_mismatch": 105
+  },
+  "subset": false,
+  "test_edges": {
+    "deferred_wrapper_edges": 124328,
+    "direct_test_rows_without_target_edge": 11614,
+    "receiver_owner_mismatches": 105,
+    "selected": 4187,
+    "source_assessed": 3688,
+    "with_result_check_candidate": 1305
+  }
+}
