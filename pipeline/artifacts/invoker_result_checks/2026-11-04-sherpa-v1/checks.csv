@@ -1,0 +1,36 @@
+side,repo,file,qname,line,line_end,test_file,test_method,test_line,test_line_end,method_rule,file_rule,call_id,call_line,call_source,check_line,check_kind,check_source,trace_lines,variables,evidence,callee_resolution,joern_status,slice_ids,shared_slice_ids,slice_variables,slice_parse_flags,limitations
+test,Aggregate-Intellect/sherpa,src/sherpa_ai/actions/planning.py,TaskPlanning.execute,234,274,src/tests/unit_tests/actions/test_planning.py,test_planning_succeeds,8,27,fuzzy,import,,23,"task_planning.execute(task, agent_pool_description)",27,assert,assert len(plan.steps) > 0,"[23, 27]","[""plan""]",syntactic_local_result_to_assert_candidate,name_only,not_assessed,[],[],[],[],"[""Builtin names may be shadowed; calls are not resolved."", ""Unassessed expression call at line 25"", ""Unsupported call-derived expression at line 11"", ""Unsupported call-derived expression at line 9""]"
+test,Aggregate-Intellect/sherpa,src/sherpa_ai/utils.py,chunk_and_summarize,457,507,src/tests/unit_tests/test_utils.py,test_chunk_and_summarize_with_completion_llm,861,872,fuzzy,import,,866,"chunk_and_summarize(
+        text_data=""Some short text about the weather."",
+        question=""What is the weather?"",
+        link=""https://example.com"",
+        llm=llm,
+    )",872,assert,"assert result == ""summary of the page""","[866, 872]","[""result""]",syntactic_local_result_to_assert_candidate,name_only,not_assessed,[],[],[],[],"[""Unsupported call-derived expression at line 865""]"
+test,Aggregate-Intellect/sherpa,src/sherpa_ai/utils.py,chunk_and_summarize,457,507,src/tests/unit_tests/test_utils.py,test_chunk_and_summarize_with_chat_llm,875,886,fuzzy,import,,879,"chunk_and_summarize(
+        text_data=""Some short text about the weather."",
+        question=""What is the weather?"",
+        link=""https://example.com"",
+        llm=llm,
+    )",885,assert,"assert isinstance(result, str)","[879, 885]","[""result""]",syntactic_local_result_to_assert_candidate,name_only,not_assessed,[],[],[],[],"[""Builtin names may be shadowed; calls are not resolved."", ""Unsupported call-derived expression at line 878""]"
+test,Aggregate-Intellect/sherpa,src/sherpa_ai/utils.py,chunk_and_summarize,457,507,src/tests/unit_tests/test_utils.py,test_chunk_and_summarize_with_chat_llm,875,886,fuzzy,import,,879,"chunk_and_summarize(
+        text_data=""Some short text about the weather."",
+        question=""What is the weather?"",
+        link=""https://example.com"",
+        llm=llm,
+    )",886,assert,"assert result == ""chat summary of the page""","[879, 886]","[""result""]",syntactic_local_result_to_assert_candidate,name_only,not_assessed,[],[],[],[],"[""Builtin names may be shadowed; calls are not resolved."", ""Unsupported call-derived expression at line 878""]"
+test,Aggregate-Intellect/sherpa,src/sherpa_ai/utils.py,chunk_and_summarize_file,510,572,src/tests/unit_tests/test_utils.py,test_chunk_and_summarize_file_with_chat_llm,889,900,fuzzy,import,,891,"chunk_and_summarize_file(
+        text_data=""Contents of a small file."",
+        question=""What is in the file?"",
+        file_name=""notes.txt"",
+        file_format=""txt"",
+        llm=llm,
+        title=""Notes"",
+    )",899,assert,"assert isinstance(result, str)","[891, 899]","[""result""]",syntactic_local_result_to_assert_candidate,name_only,not_assessed,[],[],[],[],"[""Builtin names may be shadowed; calls are not resolved."", ""Unsupported call-derived expression at line 890""]"
+test,Aggregate-Intellect/sherpa,src/sherpa_ai/utils.py,chunk_and_summarize_file,510,572,src/tests/unit_tests/test_utils.py,test_chunk_and_summarize_file_with_chat_llm,889,900,fuzzy,import,,891,"chunk_and_summarize_file(
+        text_data=""Contents of a small file."",
+        question=""What is in the file?"",
+        file_name=""notes.txt"",
+        file_format=""txt"",
+        llm=llm,
+        title=""Notes"",
+    )",900,assert,"assert result == ""file summary""","[891, 900]","[""result""]",syntactic_local_result_to_assert_candidate,name_only,not_assessed,[],[],[],[],"[""Builtin names may be shadowed; calls are not resolved."", ""Unsupported call-derived expression at line 890""]"

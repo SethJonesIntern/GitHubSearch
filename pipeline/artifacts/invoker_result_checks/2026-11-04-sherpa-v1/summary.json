@@ -1,0 +1,103 @@
+{
+  "assessment": {
+    "production_source_ok": 27,
+    "test_links": 4,
+    "test_source_ok_links": 4
+  },
+  "candidate_rows": 6,
+  "checks": {
+    "production": 0,
+    "production_same_slice": 0,
+    "test": 6
+  },
+  "exact_only_sensitivity": {
+    "candidate_methods": {
+      "denominator": 27,
+      "denominator_name": "selected_llm_baseline_methods",
+      "numerator": 0,
+      "rate": 0.0
+    },
+    "mapped_methods": {
+      "denominator": 27,
+      "denominator_name": "selected_llm_baseline_methods",
+      "numerator": 0,
+      "rate": 0.0
+    }
+  },
+  "full_baseline_methods": 7642,
+  "label": "subset",
+  "limitations": [
+    "Static candidates do not establish execution or correctness.",
+    "Test calls match final names only; dispatch, mocks and execution remain unresolved.",
+    "Only supported straight-line local return-value expressions and value assertions are assessed.",
+    "Saved Joern membership is corroboration only, not verified dependence; scaffolding is not evidence.",
+    "Production and test chains are separate; no cross-method value flow is established.",
+    "Absence of detection is not absence of checking; missing/invalid source remains unassessed."
+  ],
+  "methods": {
+    "denominator": 27,
+    "with_exact_mapped_test": 0,
+    "with_file_association": 9,
+    "with_import_file_association": 9,
+    "with_mapped_test": 3,
+    "with_production_candidate": 0,
+    "with_shared_slice_candidate": 0,
+    "with_test_candidate": 3
+  },
+  "missingness": {
+    "join_disagreement": 20,
+    "unsupported": 150
+  },
+  "population": "unique group=llm saved baseline methods",
+  "rates": {
+    "with_exact_mapped_test": {
+      "denominator": 27,
+      "denominator_name": "selected_llm_baseline_methods",
+      "numerator": 0,
+      "rate": 0.0
+    },
+    "with_file_association": {
+      "denominator": 27,
+      "denominator_name": "selected_llm_baseline_methods",
+      "numerator": 9,
+      "rate": 0.3333333333333333
+    },
+    "with_import_file_association": {
+      "denominator": 27,
+      "denominator_name": "selected_llm_baseline_methods",
+      "numerator": 9,
+      "rate": 0.3333333333333333
+    },
+    "with_mapped_test": {
+      "denominator": 27,
+      "denominator_name": "selected_llm_baseline_methods",
+      "numerator": 3,
+      "rate": 0.1111111111111111
+    },
+    "with_production_candidate": {
+      "denominator": 27,
+      "denominator_name": "selected_llm_baseline_methods",
+      "numerator": 0,
+      "rate": 0.0
+    },
+    "with_shared_slice_candidate": {
+      "denominator": 27,
+      "denominator_name": "selected_llm_baseline_methods",
+      "numerator": 0,
+      "rate": 0.0
+    },
+    "with_test_candidate": {
+      "denominator": 27,
+      "denominator_name": "selected_llm_baseline_methods",
+      "numerator": 3,
+      "rate": 0.1111111111111111
+    }
+  },
+  "source_statuses": {
+    "ok": 27
+  },
+  "subset": true,
+  "subset_repos": [
+    "Aggregate-Intellect/sherpa"
+  ]
+}

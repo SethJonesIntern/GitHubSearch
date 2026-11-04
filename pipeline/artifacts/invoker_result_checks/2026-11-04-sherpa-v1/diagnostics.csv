@@ -1,0 +1,171 @@
+repo,file,line,kind,detail
+Aggregate-Intellect/sherpa,demo/blueprint_parser_creator/blueprint_utils.py,865,unsupported,Builtin names may be shadowed; calls are not resolved.
+Aggregate-Intellect/sherpa,src/tests/unit_tests/actions/test_planning.py,8,unsupported,Builtin names may be shadowed; calls are not resolved.
+Aggregate-Intellect/sherpa,src/tests/unit_tests/test_utils.py,875,unsupported,Builtin names may be shadowed; calls are not resolved.
+Aggregate-Intellect/sherpa,src/tests/unit_tests/test_utils.py,889,unsupported,Builtin names may be shadowed; calls are not resolved.
+Aggregate-Intellect/sherpa,src/sherpa_ai/actions/utils/refinement.py,49,join_disagreement,No matching baseline definition
+Aggregate-Intellect/sherpa,src/sherpa_ai/policies/react_sm_policy.py,69,join_disagreement,No matching baseline definition
+Aggregate-Intellect/sherpa,src/sherpa_ai/tools.py,315,join_disagreement,No matching baseline definition
+Aggregate-Intellect/sherpa,src/sherpa_ai/utils.py,1016,join_disagreement,No matching baseline definition
+Aggregate-Intellect/sherpa,src/sherpa_ai/utils.py,1056,join_disagreement,No matching baseline definition
+Aggregate-Intellect/sherpa,src/sherpa_ai/utils.py,1167,join_disagreement,No matching baseline definition
+Aggregate-Intellect/sherpa,src/sherpa_ai/utils.py,1221,join_disagreement,No matching baseline definition
+Aggregate-Intellect/sherpa,src/sherpa_ai/utils.py,225,join_disagreement,No matching baseline definition
+Aggregate-Intellect/sherpa,src/sherpa_ai/utils.py,318,join_disagreement,No matching baseline definition
+Aggregate-Intellect/sherpa,src/sherpa_ai/utils.py,351,join_disagreement,No matching baseline definition
+Aggregate-Intellect/sherpa,src/sherpa_ai/utils.py,372,join_disagreement,No matching baseline definition
+Aggregate-Intellect/sherpa,src/sherpa_ai/utils.py,407,join_disagreement,No matching baseline definition
+Aggregate-Intellect/sherpa,src/sherpa_ai/utils.py,59,join_disagreement,No matching baseline definition
+Aggregate-Intellect/sherpa,src/sherpa_ai/utils.py,614,join_disagreement,No matching baseline definition
+Aggregate-Intellect/sherpa,src/sherpa_ai/utils.py,646,join_disagreement,No matching baseline definition
+Aggregate-Intellect/sherpa,src/sherpa_ai/utils.py,745,join_disagreement,No matching baseline definition
+Aggregate-Intellect/sherpa,src/sherpa_ai/utils.py,889,join_disagreement,No matching baseline definition
+Aggregate-Intellect/sherpa,src/sherpa_ai/utils.py,935,join_disagreement,No matching baseline definition
+Aggregate-Intellect/sherpa,src/sherpa_ai/utils.py,957,join_disagreement,No matching baseline definition
+Aggregate-Intellect/sherpa,src/sherpa_ai/utils.py,986,join_disagreement,No matching baseline definition
+Aggregate-Intellect/sherpa,demo/multi-agents/actions.py,94,unsupported,Unassessed expression call at line 115
+Aggregate-Intellect/sherpa,src/sherpa_ai/reflection.py,100,unsupported,Unassessed expression call at line 122
+Aggregate-Intellect/sherpa,src/sherpa_ai/policies/chat_sm_policy.py,117,unsupported,Unassessed expression call at line 124
+Aggregate-Intellect/sherpa,src/sherpa_ai/policies/chat_sm_policy.py,117,unsupported,Unassessed expression call at line 128
+Aggregate-Intellect/sherpa,demo/multi-agents/actions.py,94,unsupported,Unassessed expression call at line 130
+Aggregate-Intellect/sherpa,demo/multi-agents/actions.py,94,unsupported,Unassessed expression call at line 132
+Aggregate-Intellect/sherpa,src/sherpa_ai/models/chat_model_with_logging.py,108,unsupported,Unassessed expression call at line 132
+Aggregate-Intellect/sherpa,demo/multi-agents/actions.py,94,unsupported,Unassessed expression call at line 139
+Aggregate-Intellect/sherpa,src/sherpa_ai/policies/react_policy.py,89,unsupported,Unassessed expression call at line 141
+Aggregate-Intellect/sherpa,src/sherpa_ai/policies/react_policy.py,89,unsupported,Unassessed expression call at line 145
+Aggregate-Intellect/sherpa,src/sherpa_ai/policies/react_sm_policy.py,126,unsupported,Unassessed expression call at line 156
+Aggregate-Intellect/sherpa,src/sherpa_ai/policies/react_sm_policy.py,126,unsupported,Unassessed expression call at line 159
+Aggregate-Intellect/sherpa,demo/multi-agents/actions.py,157,unsupported,Unassessed expression call at line 172
+Aggregate-Intellect/sherpa,src/sherpa_ai/policies/react_sm_policy.py,172,unsupported,Unassessed expression call at line 201
+Aggregate-Intellect/sherpa,src/sherpa_ai/policies/react_sm_policy.py,172,unsupported,Unassessed expression call at line 204
+Aggregate-Intellect/sherpa,src/tests/unit_tests/actions/test_planning.py,8,unsupported,Unassessed expression call at line 25
+Aggregate-Intellect/sherpa,src/sherpa_ai/actions/planning.py,234,unsupported,Unassessed expression call at line 270
+Aggregate-Intellect/sherpa,demo/multi-agents/actions.py,42,unsupported,Unassessed expression call at line 51
+Aggregate-Intellect/sherpa,demo/multi-agents/actions.py,42,unsupported,Unassessed expression call at line 59
+Aggregate-Intellect/sherpa,demo/multi-agents/actions.py,42,unsupported,Unassessed expression call at line 63
+Aggregate-Intellect/sherpa,demo/blueprint_parser_creator/blueprint_utils.py,865,unsupported,Unassessed expression call at line 876
+Aggregate-Intellect/sherpa,src/sherpa_ai/actions/synthesize.py,63,unsupported,Unassessed expression call at line 98
+Aggregate-Intellect/sherpa,src/sherpa_ai/policies/chat_sm_policy.py,117,unsupported,Unsupported assignment target at line 130
+Aggregate-Intellect/sherpa,src/sherpa_ai/policies/react_policy.py,89,unsupported,Unsupported assignment target at line 147
+Aggregate-Intellect/sherpa,src/sherpa_ai/policies/react_sm_policy.py,126,unsupported,Unsupported assignment target at line 161
+Aggregate-Intellect/sherpa,src/sherpa_ai/policies/react_sm_policy.py,172,unsupported,Unsupported assignment target at line 206
+Aggregate-Intellect/sherpa,demo/blueprint_parser_creator/main.py,500,unsupported,Unsupported assignment target at line 509
+Aggregate-Intellect/sherpa,demo/multi-agents/actions.py,94,unsupported,Unsupported call-derived expression at line 100
+Aggregate-Intellect/sherpa,demo/multi-agents/actions.py,94,unsupported,Unsupported call-derived expression at line 102
+Aggregate-Intellect/sherpa,demo/multi-agents/actions.py,94,unsupported,Unsupported call-derived expression at line 109
+Aggregate-Intellect/sherpa,src/tests/unit_tests/actions/test_planning.py,8,unsupported,Unsupported call-derived expression at line 11
+Aggregate-Intellect/sherpa,src/sherpa_ai/actions/context_search.py,98,unsupported,Unsupported call-derived expression at line 110
+Aggregate-Intellect/sherpa,src/sherpa_ai/policies/react_policy.py,89,unsupported,Unsupported call-derived expression at line 114
+Aggregate-Intellect/sherpa,src/sherpa_ai/utils.py,1128,unsupported,Unsupported call-derived expression at line 1162
+Aggregate-Intellect/sherpa,src/sherpa_ai/policies/chat_sm_policy.py,117,unsupported,Unsupported call-derived expression at line 119
+Aggregate-Intellect/sherpa,src/sherpa_ai/policies/react_policy.py,89,unsupported,Unsupported call-derived expression at line 120
+Aggregate-Intellect/sherpa,src/sherpa_ai/policies/react_policy.py,89,unsupported,Unsupported call-derived expression at line 121
+Aggregate-Intellect/sherpa,src/sherpa_ai/policies/chat_sm_policy.py,117,unsupported,Unsupported call-derived expression at line 123
+Aggregate-Intellect/sherpa,src/sherpa_ai/policies/react_policy.py,89,unsupported,Unsupported call-derived expression at line 125
+Aggregate-Intellect/sherpa,src/sherpa_ai/policies/chat_sm_policy.py,117,unsupported,Unsupported call-derived expression at line 130
+Aggregate-Intellect/sherpa,demo/multi-agents/actions.py,94,unsupported,Unsupported call-derived expression at line 131
+Aggregate-Intellect/sherpa,src/sherpa_ai/policies/chat_sm_policy.py,117,unsupported,Unsupported call-derived expression at line 131
+Aggregate-Intellect/sherpa,demo/multi-agents/actions.py,94,unsupported,Unsupported call-derived expression at line 133
+Aggregate-Intellect/sherpa,src/sherpa_ai/policies/react_policy.py,89,unsupported,Unsupported call-derived expression at line 135
+Aggregate-Intellect/sherpa,demo/multi-agents/actions.py,94,unsupported,Unsupported call-derived expression at line 137
+Aggregate-Intellect/sherpa,src/sherpa_ai/policies/react_policy.py,89,unsupported,Unsupported call-derived expression at line 147
+Aggregate-Intellect/sherpa,src/sherpa_ai/policies/react_policy.py,89,unsupported,Unsupported call-derived expression at line 149
+Aggregate-Intellect/sherpa,src/sherpa_ai/policies/react_sm_policy.py,126,unsupported,Unsupported call-derived expression at line 151
+Aggregate-Intellect/sherpa,src/sherpa_ai/policies/react_sm_policy.py,126,unsupported,Unsupported call-derived expression at line 155
+Aggregate-Intellect/sherpa,demo/multi-agents/actions.py,157,unsupported,Unsupported call-derived expression at line 159
+Aggregate-Intellect/sherpa,demo/multi-agents/actions.py,157,unsupported,Unsupported call-derived expression at line 160
+Aggregate-Intellect/sherpa,src/sherpa_ai/policies/react_sm_policy.py,126,unsupported,Unsupported call-derived expression at line 161
+Aggregate-Intellect/sherpa,demo/multi-agents/actions.py,157,unsupported,Unsupported call-derived expression at line 162
+Aggregate-Intellect/sherpa,src/sherpa_ai/policies/react_sm_policy.py,126,unsupported,Unsupported call-derived expression at line 163
+Aggregate-Intellect/sherpa,src/sherpa_ai/policies/react_sm_policy.py,172,unsupported,Unsupported call-derived expression at line 196
+Aggregate-Intellect/sherpa,src/sherpa_ai/policies/react_sm_policy.py,172,unsupported,Unsupported call-derived expression at line 200
+Aggregate-Intellect/sherpa,src/sherpa_ai/policies/react_sm_policy.py,172,unsupported,Unsupported call-derived expression at line 206
+Aggregate-Intellect/sherpa,src/sherpa_ai/policies/react_sm_policy.py,172,unsupported,Unsupported call-derived expression at line 208
+Aggregate-Intellect/sherpa,demo/multi-agents/actions.py,42,unsupported,Unsupported call-derived expression at line 45
+Aggregate-Intellect/sherpa,src/sherpa_ai/utils.py,457,unsupported,Unsupported call-derived expression at line 487
+Aggregate-Intellect/sherpa,src/sherpa_ai/utils.py,457,unsupported,Unsupported call-derived expression at line 488
+Aggregate-Intellect/sherpa,demo/blueprint_parser_creator/main.py,500,unsupported,Unsupported call-derived expression at line 509
+Aggregate-Intellect/sherpa,demo/multi-agents/actions.py,42,unsupported,Unsupported call-derived expression at line 52
+Aggregate-Intellect/sherpa,src/sherpa_ai/utils.py,510,unsupported,Unsupported call-derived expression at line 553
+Aggregate-Intellect/sherpa,src/sherpa_ai/utils.py,510,unsupported,Unsupported call-derived expression at line 554
+Aggregate-Intellect/sherpa,demo/multi-agents/actions.py,42,unsupported,Unsupported call-derived expression at line 57
+Aggregate-Intellect/sherpa,demo/multi-agents/actions.py,42,unsupported,Unsupported call-derived expression at line 58
+Aggregate-Intellect/sherpa,demo/multi-agents/actions.py,42,unsupported,Unsupported call-derived expression at line 61
+Aggregate-Intellect/sherpa,src/sherpa_ai/actions/deliberation.py,61,unsupported,Unsupported call-derived expression at line 73
+Aggregate-Intellect/sherpa,demo/multi-agents/actions.py,82,unsupported,Unsupported call-derived expression at line 84
+Aggregate-Intellect/sherpa,src/tests/unit_tests/test_utils.py,861,unsupported,Unsupported call-derived expression at line 865
+Aggregate-Intellect/sherpa,src/tests/unit_tests/test_utils.py,875,unsupported,Unsupported call-derived expression at line 878
+Aggregate-Intellect/sherpa,demo/blueprint_parser_creator/blueprint_utils.py,865,unsupported,Unsupported call-derived expression at line 890
+Aggregate-Intellect/sherpa,src/tests/unit_tests/test_utils.py,889,unsupported,Unsupported call-derived expression at line 890
+Aggregate-Intellect/sherpa,src/tests/unit_tests/actions/test_planning.py,8,unsupported,Unsupported call-derived expression at line 9
+Aggregate-Intellect/sherpa,src/sherpa_ai/actions/arxiv_search.py,85,unsupported,Unsupported call-derived expression at line 97
+Aggregate-Intellect/sherpa,demo/multi-agents/actions.py,94,unsupported,Unsupported call-derived expression at line 99
+Aggregate-Intellect/sherpa,src/sherpa_ai/actions/synthesize.py,63,unsupported,Unsupported call-derived expression at line 99
+Aggregate-Intellect/sherpa,src/sherpa_ai/actions/synthesize.py,63,unsupported,Unsupported expression at line 106
+Aggregate-Intellect/sherpa,src/sherpa_ai/policies/react_policy.py,89,unsupported,Unsupported expression at line 144
+Aggregate-Intellect/sherpa,src/sherpa_ai/policies/react_sm_policy.py,126,unsupported,Unsupported expression at line 158
+Aggregate-Intellect/sherpa,src/sherpa_ai/policies/react_sm_policy.py,172,unsupported,Unsupported expression at line 203
+Aggregate-Intellect/sherpa,src/sherpa_ai/utils.py,510,unsupported,Unsupported expression at line 544
+Aggregate-Intellect/sherpa,demo/blueprint_parser_creator/blueprint_utils.py,865,unsupported,Unsupported expression at line 881
+Aggregate-Intellect/sherpa,demo/multi-agents/actions.py,94,unsupported,Unsupported statement/flow AugAssign at line 135
+Aggregate-Intellect/sherpa,demo/multi-agents/actions.py,94,unsupported,Unsupported statement/flow AugAssign at line 138
+Aggregate-Intellect/sherpa,demo/multi-agents/actions.py,94,unsupported,Unsupported statement/flow AugAssign at line 98
+Aggregate-Intellect/sherpa,src/sherpa_ai/reflection.py,100,unsupported,Unsupported statement/flow Expr at line 101
+Aggregate-Intellect/sherpa,src/sherpa_ai/utils.py,1128,unsupported,Unsupported statement/flow Expr at line 1136
+Aggregate-Intellect/sherpa,src/sherpa_ai/models/chat_model_with_logging.py,108,unsupported,Unsupported statement/flow Expr at line 115
+Aggregate-Intellect/sherpa,src/sherpa_ai/actions/utils/refinement.py,115,unsupported,Unsupported statement/flow Expr at line 116
+Aggregate-Intellect/sherpa,demo/multi-agents/actions.py,94,unsupported,Unsupported statement/flow Expr at line 117
+Aggregate-Intellect/sherpa,src/sherpa_ai/policies/chat_sm_policy.py,117,unsupported,Unsupported statement/flow Expr at line 118
+Aggregate-Intellect/sherpa,src/sherpa_ai/policies/react_sm_policy.py,126,unsupported,Unsupported statement/flow Expr at line 127
+Aggregate-Intellect/sherpa,demo/multi-agents/actions.py,157,unsupported,Unsupported statement/flow Expr at line 158
+Aggregate-Intellect/sherpa,src/sherpa_ai/policies/react_sm_policy.py,172,unsupported,Unsupported statement/flow Expr at line 173
+Aggregate-Intellect/sherpa,src/sherpa_ai/actions/planning.py,234,unsupported,Unsupported statement/flow Expr at line 241
+Aggregate-Intellect/sherpa,demo/blueprint_parser_creator/blueprint_utils.py,254,unsupported,Unsupported statement/flow Expr at line 255
+Aggregate-Intellect/sherpa,demo/blueprint_parser_creator/main.py,273,unsupported,Unsupported statement/flow Expr at line 274
+Aggregate-Intellect/sherpa,demo/blueprint_parser_creator/main.py,385,unsupported,Unsupported statement/flow Expr at line 386
+Aggregate-Intellect/sherpa,demo/multi-agents/actions.py,42,unsupported,Unsupported statement/flow Expr at line 43
+Aggregate-Intellect/sherpa,src/sherpa_ai/utils.py,457,unsupported,Unsupported statement/flow Expr at line 458
+Aggregate-Intellect/sherpa,demo/blueprint_parser_creator/main.py,500,unsupported,Unsupported statement/flow Expr at line 501
+Aggregate-Intellect/sherpa,src/sherpa_ai/tools.py,501,unsupported,Unsupported statement/flow Expr at line 504
+Aggregate-Intellect/sherpa,src/sherpa_ai/utils.py,510,unsupported,Unsupported statement/flow Expr at line 518
+Aggregate-Intellect/sherpa,src/sherpa_ai/actions/deliberation.py,61,unsupported,Unsupported statement/flow Expr at line 62
+Aggregate-Intellect/sherpa,demo/multi-agents/actions.py,42,unsupported,Unsupported statement/flow Expr at line 64
+Aggregate-Intellect/sherpa,src/sherpa_ai/actions/synthesize.py,63,unsupported,Unsupported statement/flow Expr at line 64
+Aggregate-Intellect/sherpa,src/sherpa_ai/actions/utils/refinement.py,73,unsupported,Unsupported statement/flow Expr at line 74
+Aggregate-Intellect/sherpa,demo/multi-agents/actions.py,82,unsupported,Unsupported statement/flow Expr at line 83
+Aggregate-Intellect/sherpa,src/sherpa_ai/actions/arxiv_search.py,85,unsupported,Unsupported statement/flow Expr at line 86
+Aggregate-Intellect/sherpa,demo/blueprint_parser_creator/blueprint_utils.py,865,unsupported,Unsupported statement/flow Expr at line 866
+Aggregate-Intellect/sherpa,src/sherpa_ai/policies/react_policy.py,89,unsupported,Unsupported statement/flow Expr at line 90
+Aggregate-Intellect/sherpa,demo/multi-agents/actions.py,94,unsupported,Unsupported statement/flow Expr at line 97
+Aggregate-Intellect/sherpa,src/sherpa_ai/actions/context_search.py,98,unsupported,Unsupported statement/flow Expr at line 99
+Aggregate-Intellect/sherpa,src/sherpa_ai/actions/utils/refinement.py,115,unsupported,Unsupported statement/flow For at line 129
+Aggregate-Intellect/sherpa,src/sherpa_ai/utils.py,457,unsupported,Unsupported statement/flow For at line 490
+Aggregate-Intellect/sherpa,src/sherpa_ai/tools.py,501,unsupported,Unsupported statement/flow For at line 524
+Aggregate-Intellect/sherpa,src/sherpa_ai/utils.py,510,unsupported,Unsupported statement/flow For at line 556
+Aggregate-Intellect/sherpa,src/sherpa_ai/actions/utils/refinement.py,73,unsupported,Unsupported statement/flow For at line 87
+Aggregate-Intellect/sherpa,demo/blueprint_parser_creator/blueprint_utils.py,865,unsupported,Unsupported statement/flow For at line 884
+Aggregate-Intellect/sherpa,demo/multi-agents/actions.py,94,unsupported,Unsupported statement/flow If at line 103
+Aggregate-Intellect/sherpa,src/sherpa_ai/policies/react_policy.py,89,unsupported,Unsupported statement/flow If at line 116
+Aggregate-Intellect/sherpa,src/sherpa_ai/policies/chat_sm_policy.py,117,unsupported,Unsupported statement/flow If at line 120
+Aggregate-Intellect/sherpa,src/sherpa_ai/reflection.py,100,unsupported,Unsupported statement/flow If at line 123
+Aggregate-Intellect/sherpa,src/sherpa_ai/policies/chat_sm_policy.py,117,unsupported,Unsupported statement/flow If at line 133
+Aggregate-Intellect/sherpa,src/sherpa_ai/policies/react_policy.py,89,unsupported,Unsupported statement/flow If at line 151
+Aggregate-Intellect/sherpa,src/sherpa_ai/policies/react_sm_policy.py,126,unsupported,Unsupported statement/flow If at line 152
+Aggregate-Intellect/sherpa,src/sherpa_ai/policies/react_sm_policy.py,126,unsupported,Unsupported statement/flow If at line 165
+Aggregate-Intellect/sherpa,src/sherpa_ai/policies/react_sm_policy.py,172,unsupported,Unsupported statement/flow If at line 197
+Aggregate-Intellect/sherpa,src/sherpa_ai/policies/react_sm_policy.py,172,unsupported,Unsupported statement/flow If at line 210
+Aggregate-Intellect/sherpa,src/sherpa_ai/actions/planning.py,234,unsupported,Unsupported statement/flow If at line 255
+Aggregate-Intellect/sherpa,demo/blueprint_parser_creator/main.py,385,unsupported,Unsupported statement/flow If at line 387
+Aggregate-Intellect/sherpa,demo/blueprint_parser_creator/main.py,385,unsupported,Unsupported statement/flow If at line 391
+Aggregate-Intellect/sherpa,demo/blueprint_parser_creator/main.py,500,unsupported,Unsupported statement/flow If at line 502
+Aggregate-Intellect/sherpa,src/sherpa_ai/tools.py,501,unsupported,Unsupported statement/flow If at line 540
+Aggregate-Intellect/sherpa,src/sherpa_ai/actions/synthesize.py,63,unsupported,Unsupported statement/flow If at line 77
+Aggregate-Intellect/sherpa,demo/blueprint_parser_creator/blueprint_utils.py,865,unsupported,Unsupported statement/flow If at line 878
+Aggregate-Intellect/sherpa,demo/blueprint_parser_creator/blueprint_utils.py,865,unsupported,Unsupported statement/flow If at line 892
+Aggregate-Intellect/sherpa,src/sherpa_ai/utils.py,457,unsupported,Unsupported statement/flow ImportFrom at line 479
+Aggregate-Intellect/sherpa,src/sherpa_ai/utils.py,510,unsupported,Unsupported statement/flow ImportFrom at line 542
+Aggregate-Intellect/sherpa,demo/blueprint_parser_creator/blueprint_utils.py,1626,unsupported,Unsupported statement/flow Try at line 1642
+Aggregate-Intellect/sherpa,demo/blueprint_parser_creator/blueprint_utils.py,254,unsupported,Unsupported statement/flow Try at line 271
+Aggregate-Intellect/sherpa,demo/blueprint_parser_creator/main.py,273,unsupported,Unsupported statement/flow Try at line 285
+Aggregate-Intellect/sherpa,demo/blueprint_parser_creator/main.py,385,unsupported,Unsupported statement/flow With at line 395
+Aggregate-Intellect/sherpa,demo/blueprint_parser_creator/main.py,500,unsupported,Unsupported statement/flow With at line 510

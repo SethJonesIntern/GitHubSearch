@@ -1,0 +1,102 @@
+{
+  "assessment": {
+    "production_source_ok": 7642,
+    "test_links": 461,
+    "test_source_ok_links": 461
+  },
+  "candidate_rows": 431,
+  "checks": {
+    "production": 65,
+    "production_same_slice": 47,
+    "test": 366
+  },
+  "exact_only_sensitivity": {
+    "candidate_methods": {
+      "denominator": 7642,
+      "denominator_name": "selected_llm_baseline_methods",
+      "numerator": 30,
+      "rate": 0.003925673907354096
+    },
+    "mapped_methods": {
+      "denominator": 7642,
+      "denominator_name": "selected_llm_baseline_methods",
+      "numerator": 59,
+      "rate": 0.007720492017796388
+    }
+  },
+  "full_baseline_methods": 7642,
+  "label": "full saved baseline",
+  "limitations": [
+    "Static candidates do not establish execution or correctness.",
+    "Test calls match final names only; dispatch, mocks and execution remain unresolved.",
+    "Only supported straight-line local return-value expressions and value assertions are assessed.",
+    "Saved Joern membership is corroboration only, not verified dependence; scaffolding is not evidence.",
+    "Production and test chains are separate; no cross-method value flow is established.",
+    "Absence of detection is not absence of checking; missing/invalid source remains unassessed."
+  ],
+  "methods": {
+    "denominator": 7642,
+    "with_exact_mapped_test": 59,
+    "with_file_association": 1225,
+    "with_import_file_association": 1026,
+    "with_mapped_test": 220,
+    "with_production_candidate": 38,
+    "with_shared_slice_candidate": 34,
+    "with_test_candidate": 105
+  },
+  "missingness": {
+    "ambiguous_seed": 1047,
+    "call_outside_body": 116,
+    "unsupported": 42220
+  },
+  "population": "unique group=llm saved baseline methods",
+  "rates": {
+    "with_exact_mapped_test": {
+      "denominator": 7642,
+      "denominator_name": "selected_llm_baseline_methods",
+      "numerator": 59,
+      "rate": 0.007720492017796388
+    },
+    "with_file_association": {
+      "denominator": 7642,
+      "denominator_name": "selected_llm_baseline_methods",
+      "numerator": 1225,
+      "rate": 0.1602983512169589
+    },
+    "with_import_file_association": {
+      "denominator": 7642,
+      "denominator_name": "selected_llm_baseline_methods",
+      "numerator": 1026,
+      "rate": 0.13425804763151009
+    },
+    "with_mapped_test": {
+      "denominator": 7642,
+      "denominator_name": "selected_llm_baseline_methods",
+      "numerator": 220,
+      "rate": 0.028788275320596704
+    },
+    "with_production_candidate": {
+      "denominator": 7642,
+      "denominator_name": "selected_llm_baseline_methods",
+      "numerator": 38,
+      "rate": 0.004972520282648521
+    },
+    "with_shared_slice_candidate": {
+      "denominator": 7642,
+      "denominator_name": "selected_llm_baseline_methods",
+      "numerator": 34,
+      "rate": 0.004449097095001309
+    },
+    "with_test_candidate": {
+      "denominator": 7642,
+      "denominator_name": "selected_llm_baseline_methods",
+      "numerator": 105,
+      "rate": 0.013739858675739335
+    }
+  },
+  "source_statuses": {
+    "ok": 7642
+  },
+  "subset": false,
+  "subset_repos": []
+}

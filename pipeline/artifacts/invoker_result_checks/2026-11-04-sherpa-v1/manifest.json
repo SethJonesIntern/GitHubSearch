@@ -1,0 +1,74 @@
+{
+  "inputs": {
+    "method_test_baseline/by_repo.csv": {
+      "sha256_after": "7a032368fe11f7aa9118bee8ba3b711be5256666ae737afafcc4959e769798e5",
+      "sha256_before": "7a032368fe11f7aa9118bee8ba3b711be5256666ae737afafcc4959e769798e5"
+    },
+    "method_test_baseline/methods.csv": {
+      "sha256_after": "8404f9480b9cce87eab691fb0063f2495853e42103c93f9329380f70eafd1882",
+      "sha256_before": "8404f9480b9cce87eab691fb0063f2495853e42103c93f9329380f70eafd1882"
+    },
+    "method_test_baseline/summary.json": {
+      "sha256_after": "3f448c545b2ccccee2ef9d3f832cfad4d23516363bb8bd4c414be56785c95bbd",
+      "sha256_before": "3f448c545b2ccccee2ef9d3f832cfad4d23516363bb8bd4c414be56785c95bbd"
+    },
+    "pym2t_focal_calls.csv": {
+      "sha256_after": "cb4533bcfe6523d322e5b16ae17f9810023e04a77e3d9c3f6c8ed8e370892b91",
+      "sha256_before": "cb4533bcfe6523d322e5b16ae17f9810023e04a77e3d9c3f6c8ed8e370892b91"
+    },
+    "pym2t_focal_tests.csv": {
+      "sha256_after": "de53b0f8073d4c5f098f0e2c6607c4689876edca4cb4030bdcb8179e7d470097",
+      "sha256_before": "de53b0f8073d4c5f098f0e2c6607c4689876edca4cb4030bdcb8179e7d470097"
+    },
+    "slice_call_hits.csv": {
+      "sha256_after": "c743a5e94be669828662bccc9d3b0e3dbef959157760061f1aca7efdf0afbc84",
+      "sha256_before": "c743a5e94be669828662bccc9d3b0e3dbef959157760061f1aca7efdf0afbc84"
+    },
+    "slice_index.csv": {
+      "sha256_after": "61ace44ed555c1c0f427072fbbadea71c83159ef6fe92c1bbb86d2c6b441d2c9",
+      "sha256_before": "61ace44ed555c1c0f427072fbbadea71c83159ef6fe92c1bbb86d2c6b441d2c9"
+    },
+    "slice_pdg_lines.csv.gz": {
+      "sha256_after": "fa7caa99a089177cc3a6d6b4c02ce13010af973adf9049cc18a375c156422d36",
+      "sha256_before": "fa7caa99a089177cc3a6d6b4c02ce13010af973adf9049cc18a375c156422d36"
+    }
+  },
+  "inspected_sources": {
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Aggregate-Intellect_sherpa\\demo\\blueprint_parser_creator\\blueprint_utils.py": "106fbb5d7dea1c7a6cf937bcf80353099522901e8a37d2d4a2963d230049cade",
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Aggregate-Intellect_sherpa\\demo\\blueprint_parser_creator\\main.py": "b279fa2044bcb54bd5ae1b194f5595ea5b5bb5bae034ff4789241d7bcaba9faf",
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Aggregate-Intellect_sherpa\\demo\\multi-agents\\actions.py": "d3ecc05e7249b877755025da3f2821ec255a6165efb3dec4afd5eef3fba15d66",
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Aggregate-Intellect_sherpa\\src\\sherpa_ai\\actions\\arxiv_search.py": "8d6efb28b6508e7005d4a0235a0138a862d9878fcb8c7617973be6ae52263148",
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Aggregate-Intellect_sherpa\\src\\sherpa_ai\\actions\\context_search.py": "3ac517ade577e21deaa0e72c7be3772b47fa925a27726e5e484f2b7fdf9b3f58",
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Aggregate-Intellect_sherpa\\src\\sherpa_ai\\actions\\deliberation.py": "39f453a1e73e839235a550a59c8467211c5331189a3df306208ff7192c461aec",
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Aggregate-Intellect_sherpa\\src\\sherpa_ai\\actions\\planning.py": "6aa4cd471a2b142624a31c0d331ff5269c78d26be905a3bb9c02803f95980791",
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Aggregate-Intellect_sherpa\\src\\sherpa_ai\\actions\\synthesize.py": "66e6c0e247b72d69f9c0cdabfa843145dc50643ad477df9988bfc665264ae743",
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Aggregate-Intellect_sherpa\\src\\sherpa_ai\\actions\\utils\\refinement.py": "8f3533cbe6070e40d550539414b161eb1dbb557f1c8c1497de08594996eed1bb",
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Aggregate-Intellect_sherpa\\src\\sherpa_ai\\models\\chat_model_with_logging.py": "9b2b61d2392aa55cced5cb6bed50ee9590ced53f138e90137579221474403f4d",
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Aggregate-Intellect_sherpa\\src\\sherpa_ai\\policies\\chat_sm_policy.py": "6ae8738c1abcb7e476f83405c20b37f85da87e0ea8562facb8cdab163925ad90",
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Aggregate-Intellect_sherpa\\src\\sherpa_ai\\policies\\react_policy.py": "533b41d5cb4164bbf41d754dbe161de2756b5fdc44fa4c352bd4fa2b9c52c4f8",
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Aggregate-Intellect_sherpa\\src\\sherpa_ai\\policies\\react_sm_policy.py": "81e29976842b6d4435e32a7ca6106e8ac33f4976e0808c5c29d3d639b5a96e69",
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Aggregate-Intellect_sherpa\\src\\sherpa_ai\\reflection.py": "9f84d82ccd6ef065ee90cb6e4c07a4532be5c7c4d809456a182df7c271233fe0",
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Aggregate-Intellect_sherpa\\src\\sherpa_ai\\tools.py": "bd170655e2b3d9240d3a295c57cdcd786672e64d6ca64563d234de9ab1c81dc0",
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Aggregate-Intellect_sherpa\\src\\sherpa_ai\\utils.py": "ea7e38e9150cd350f6b3687e3dc07653d28ebdc5fe4e4f8b5d5d34b32709cba9",
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Aggregate-Intellect_sherpa\\src\\tests\\unit_tests\\actions\\test_planning.py": "026d8a891a25f4ae9a2839b4b093d4685ee9a994c41fe2786737f575ecdd6470",
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Aggregate-Intellect_sherpa\\src\\tests\\unit_tests\\test_utils.py": "bc28d5bf1d39763c8ba3ae72d5c5171e27b6d287ec2fe5ba7f95d92a968bbbf9"
+  },
+  "options": {
+    "artifacts_dir": "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\artifacts",
+    "output_dir": "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\artifacts\\invoker_result_checks\\2026-11-04-sherpa-v1",
+    "repo": [
+      "Aggregate-Intellect/sherpa"
+    ],
+    "repos_dir": "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos"
+  },
+  "output_hashes": {
+    "REPORT.md": "a1cdd37283520c14f40c5c79230c5869d866b6c787d62355dcf3f846102a5a85",
+    "checks.csv": "e984912a341602c9505d82945e4be94a2c363750f2e0806aac71040df49596eb",
+    "diagnostics.csv": "26122005fbf579316378c537c929931bb4718e1885387c416840e36741bb7d35",
+    "methods.csv": "2ce224dbefdad529a5564a2f44fed805fddfb7a8e796dd65ee1e71815ba9370e",
+    "summary.json": "cdf28addd9ba2fcc7b22755565223d249de2be17071908b3594bbf70b05dade4",
+    "test_links.csv": "869a109d1583c4a856052edc25b3202f84de2fb511c1babb241fac0bd5ef38c2"
+  },
+  "python": "3.14.3 (tags/v3.14.3:323c59a, Feb  3 2026, 16:04:56) [MSC v.1944 64 bit (AMD64)]",
+  "revision": "f4525bba97ff033f097c5298d21a523e757cfad1"
+}
