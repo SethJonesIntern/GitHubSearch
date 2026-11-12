@@ -1,0 +1,682 @@
+{
+  "schema_version": "assistant-test-source-review-v1",
+  "reviewer": "assistant-source-review-2026-11-12",
+  "candidate_group_count": 70,
+  "candidate_assertion_count": 206,
+  "mapped_test_count": 126,
+  "source_positive_checks": 94,
+  "source_positive_methods": 46,
+  "source_positive_test_oracles": {
+    "simple": 94,
+    "complex": 0
+  },
+  "rejected_candidate_checks": 106,
+  "unresolved_candidate_checks": 6,
+  "unresolved_methods": [
+    "Haohao-end/openagent::api/internal/core/agent/agents/deep_thinking_agent.py::1565",
+    "deepset-ai/haystack-core-integrations::integrations/mem0/src/haystack_integrations/memory_stores/mem0/memory_store.py::70",
+    "hybroai/a2a-adapter::a2a_adapter/integrations/langgraph.py::698",
+    "mdhaarishussain/chaos-kitten::chaos_kitten/brain/attack_planner.py::191"
+  ],
+  "positive_input_modes": {
+    "fixture_configuration_not_fully_resolved": {
+      "checks": 1,
+      "methods": 1
+    },
+    "mocked_model_or_framework_response": {
+      "checks": 90,
+      "methods": 43
+    },
+    "live_model_configured_not_executed": {
+      "checks": 3,
+      "methods": 2
+    }
+  },
+  "evidence_hash_mapping_and_line_validation_failures": 0,
+  "limitations": [
+    "Purposive review of all 206 existing independent candidate check rows intersecting the focal mapping; not all 461 mapped tests or all assertions in the 126 reviewed tests.",
+    "Assistant source review only, not independent human validation, execution evidence or a completed population census.",
+    "Zero complex positives applies only to this candidate set; known complex-test detector misses and tests outside this mapping remain unresolved.",
+    "Mocked model/framework response contract checks are retained and labelled; they do not demonstrate live semantic quality.",
+    "Rejected candidates are not proof that a method has no test guardrail. No denominator/scope change.",
+    "Canonical output call IDs left blank; original method invocation-to-return association supported by original source ranges.",
+    "Three Mixseek standalone judge-result type assertions are auxiliary packaging; remaining authored expected-value assertions are primary simple client contracts."
+  ],
+  "groups": [
+    {
+      "index": 0,
+      "producer_method_id": "Aggregate-Intellect/sherpa::src/sherpa_ai/actions/planning.py::234",
+      "decisions": {
+        "guardrail": 1,
+        "not_guardrail": 0,
+        "unresolved": 0
+      }
+    },
+    {
+      "index": 1,
+      "producer_method_id": "Aggregate-Intellect/sherpa::src/sherpa_ai/utils.py::457",
+      "decisions": {
+        "guardrail": 3,
+        "not_guardrail": 0,
+        "unresolved": 0
+      }
+    },
+    {
+      "index": 2,
+      "producer_method_id": "Aggregate-Intellect/sherpa::src/sherpa_ai/utils.py::510",
+      "decisions": {
+        "guardrail": 2,
+        "not_guardrail": 0,
+        "unresolved": 0
+      }
+    },
+    {
+      "index": 3,
+      "producer_method_id": "ExtensionShield/ExtensionShield::src/extension_shield/core/report_view_model.py::1521",
+      "decisions": {
+        "guardrail": 0,
+        "not_guardrail": 1,
+        "unresolved": 0
+      }
+    },
+    {
+      "index": 4,
+      "producer_method_id": "Haohao-end/openagent::api/internal/core/agent/agents/deep_thinking_agent.py::1565",
+      "decisions": {
+        "guardrail": 0,
+        "not_guardrail": 2,
+        "unresolved": 3
+      }
+    },
+    {
+      "index": 5,
+      "producer_method_id": "MotleyAI/motleycrew::motleycrew/utils/image_utils.py::175",
+      "decisions": {
+        "guardrail": 4,
+        "not_guardrail": 0,
+        "unresolved": 0
+      }
+    },
+    {
+      "index": 6,
+      "producer_method_id": "NVIDIA-AI-Blueprints/aiq::src/aiq_agent/agents/chat_researcher/register.py::118",
+      "decisions": {
+        "guardrail": 1,
+        "not_guardrail": 0,
+        "unresolved": 0
+      }
+    },
+    {
+      "index": 7,
+      "producer_method_id": "Qredence/agentic-fleet::src/agentic_fleet/agents/base.py::159",
+      "decisions": {
+        "guardrail": 0,
+        "not_guardrail": 1,
+        "unresolved": 0
+      }
+    },
+    {
+      "index": 8,
+      "producer_method_id": "THUIR/MemoryBench::baselines/mem0/embedchain/embedchain/llm/base.py::178",
+      "decisions": {
+        "guardrail": 0,
+        "not_guardrail": 1,
+        "unresolved": 0
+      }
+    },
+    {
+      "index": 9,
+      "producer_method_id": "THUIR/MemoryBench::baselines/mem0/embedchain/embedchain/llm/llama2.py::39",
+      "decisions": {
+        "guardrail": 1,
+        "not_guardrail": 0,
+        "unresolved": 0
+      }
+    },
+    {
+      "index": 10,
+      "producer_method_id": "THUIR/MemoryBench::baselines/mem0/embedchain/embedchain/llm/vertex_ai.py::52",
+      "decisions": {
+        "guardrail": 1,
+        "not_guardrail": 0,
+        "unresolved": 0
+      }
+    },
+    {
+      "index": 11,
+      "producer_method_id": "THUIR/MemoryBench::baselines/mem0/mem0/llms/langchain.py::24",
+      "decisions": {
+        "guardrail": 1,
+        "not_guardrail": 0,
+        "unresolved": 0
+      }
+    },
+    {
+      "index": 12,
+      "producer_method_id": "VirtualPatientEngine/AIAgents4Pharma::aiagents4pharma/talk2scholars/tools/pdf/utils/generate_answer.py::62",
+      "decisions": {
+        "guardrail": 1,
+        "not_guardrail": 2,
+        "unresolved": 0
+      }
+    },
+    {
+      "index": 13,
+      "producer_method_id": "Yanyutin753/LambChat::src/infra/memory/compaction_agent.py::295",
+      "decisions": {
+        "guardrail": 0,
+        "not_guardrail": 5,
+        "unresolved": 0
+      }
+    },
+    {
+      "index": 14,
+      "producer_method_id": "ai-christianson/RA.Aid::ra_aid/fallback_handler.py::363",
+      "decisions": {
+        "guardrail": 0,
+        "not_guardrail": 1,
+        "unresolved": 0
+      }
+    },
+    {
+      "index": 15,
+      "producer_method_id": "ai-christianson/RA.Aid::ra_aid/tools/agent.py::55",
+      "decisions": {
+        "guardrail": 0,
+        "not_guardrail": 1,
+        "unresolved": 0
+      }
+    },
+    {
+      "index": 16,
+      "producer_method_id": "ai-christianson/RA.Aid::ra_aid/tools/write_file.py::17",
+      "decisions": {
+        "guardrail": 0,
+        "not_guardrail": 4,
+        "unresolved": 0
+      }
+    },
+    {
+      "index": 17,
+      "producer_method_id": "andrewbartels1/SolidworksMCP-python::src/solidworks_mcp/ui/local_llm.py::610",
+      "decisions": {
+        "guardrail": 2,
+        "not_guardrail": 5,
+        "unresolved": 0
+      }
+    },
+    {
+      "index": 18,
+      "producer_method_id": "arm/metis::src/metis/engine/model_tool_runner.py::58",
+      "decisions": {
+        "guardrail": 1,
+        "not_guardrail": 0,
+        "unresolved": 0
+      }
+    },
+    {
+      "index": 19,
+      "producer_method_id": "basnijholt/agent-cli::agent_cli/services/llm.py::108",
+      "decisions": {
+        "guardrail": 1,
+        "not_guardrail": 1,
+        "unresolved": 0
+      }
+    },
+    {
+      "index": 20,
+      "producer_method_id": "beatwad/LinkedIn-AI-Job-Applier-Ultimate::src/llm/llm_manager.py::1070",
+      "decisions": {
+        "guardrail": 3,
+        "not_guardrail": 0,
+        "unresolved": 0
+      }
+    },
+    {
+      "index": 21,
+      "producer_method_id": "beatwad/LinkedIn-AI-Job-Applier-Ultimate::src/llm/llm_manager.py::1164",
+      "decisions": {
+        "guardrail": 4,
+        "not_guardrail": 0,
+        "unresolved": 0
+      }
+    },
+    {
+      "index": 22,
+      "producer_method_id": "beatwad/LinkedIn-AI-Job-Applier-Ultimate::src/llm/llm_manager.py::1232",
+      "decisions": {
+        "guardrail": 1,
+        "not_guardrail": 0,
+        "unresolved": 0
+      }
+    },
+    {
+      "index": 23,
+      "producer_method_id": "beatwad/LinkedIn-AI-Job-Applier-Ultimate::src/llm/llm_manager.py::982",
+      "decisions": {
+        "guardrail": 2,
+        "not_guardrail": 0,
+        "unresolved": 0
+      }
+    },
+    {
+      "index": 24,
+      "producer_method_id": "beatwad/LinkedIn-AI-Job-Applier-Ultimate::src/llm/llm_manager.py::1138",
+      "decisions": {
+        "guardrail": 1,
+        "not_guardrail": 0,
+        "unresolved": 0
+      }
+    },
+    {
+      "index": 25,
+      "producer_method_id": "cvs-health/uqlm::uqlm/code/clusterer.py::199",
+      "decisions": {
+        "guardrail": 1,
+        "not_guardrail": 2,
+        "unresolved": 0
+      }
+    },
+    {
+      "index": 26,
+      "producer_method_id": "cvs-health/uqlm::uqlm/utils/response_generator.py::205",
+      "decisions": {
+        "guardrail": 2,
+        "not_guardrail": 1,
+        "unresolved": 0
+      }
+    },
+    {
+      "index": 27,
+      "producer_method_id": "cvs-health/uqlm::uqlm/utils/response_generator.py::236",
+      "decisions": {
+        "guardrail": 6,
+        "not_guardrail": 7,
+        "unresolved": 0
+      }
+    },
+    {
+      "index": 28,
+      "producer_method_id": "datastax/ragstack-ai::libs/knowledge-graph/ragstack_knowledge_graph/schema_inference.py::32",
+      "decisions": {
+        "guardrail": 1,
+        "not_guardrail": 0,
+        "unresolved": 0
+      }
+    },
+    {
+      "index": 29,
+      "producer_method_id": "deepset-ai/haystack-core-integrations::integrations/mem0/src/haystack_integrations/memory_stores/mem0/memory_store.py::70",
+      "decisions": {
+        "guardrail": 0,
+        "not_guardrail": 1,
+        "unresolved": 1
+      }
+    },
+    {
+      "index": 30,
+      "producer_method_id": "deepset-ai/haystack-core-integrations::integrations/mem0/src/haystack_integrations/memory_stores/mem0/memory_store.py::122",
+      "decisions": {
+        "guardrail": 0,
+        "not_guardrail": 4,
+        "unresolved": 0
+      }
+    },
+    {
+      "index": 31,
+      "producer_method_id": "ggozad/haiku.rag::haiku_rag_slim/haiku/rag/providers/picture_description.py::21",
+      "decisions": {
+        "guardrail": 2,
+        "not_guardrail": 1,
+        "unresolved": 0
+      }
+    },
+    {
+      "index": 32,
+      "producer_method_id": "gizmax/Sandcastle::src/sandcastle/engine/memory.py::362",
+      "decisions": {
+        "guardrail": 0,
+        "not_guardrail": 1,
+        "unresolved": 0
+      }
+    },
+    {
+      "index": 33,
+      "producer_method_id": "gizmax/Sandcastle::src/sandcastle/engine/memory.py::559",
+      "decisions": {
+        "guardrail": 0,
+        "not_guardrail": 2,
+        "unresolved": 0
+      }
+    },
+    {
+      "index": 34,
+      "producer_method_id": "goruck/home-generative-agent::custom_components/home_generative_agent/core/fallback.py::105",
+      "decisions": {
+        "guardrail": 1,
+        "not_guardrail": 0,
+        "unresolved": 0
+      }
+    },
+    {
+      "index": 35,
+      "producer_method_id": "goruck/home-generative-agent::custom_components/home_generative_agent/core/fallback.py::141",
+      "decisions": {
+        "guardrail": 1,
+        "not_guardrail": 0,
+        "unresolved": 0
+      }
+    },
+    {
+      "index": 36,
+      "producer_method_id": "hybroai/a2a-adapter::a2a_adapter/integrations/langgraph.py::698",
+      "decisions": {
+        "guardrail": 0,
+        "not_guardrail": 0,
+        "unresolved": 1
+      }
+    },
+    {
+      "index": 37,
+      "producer_method_id": "indexedlabs/pydantic-ai-gepa::src/pydantic_ai_gepa/gepa_graph/proposal/instruction.py::325",
+      "decisions": {
+        "guardrail": 1,
+        "not_guardrail": 0,
+        "unresolved": 0
+      }
+    },
+    {
+      "index": 38,
+      "producer_method_id": "langchain-ai/open-swe::agent/review/groups.py::161",
+      "decisions": {
+        "guardrail": 2,
+        "not_guardrail": 2,
+        "unresolved": 0
+      }
+    },
+    {
+      "index": 39,
+      "producer_method_id": "llm-workflow-engine/llm-workflow-engine::lwe/backends/api/request.py::361",
+      "decisions": {
+        "guardrail": 5,
+        "not_guardrail": 1,
+        "unresolved": 0
+      }
+    },
+    {
+      "index": 40,
+      "producer_method_id": "lxfight/astrbot_plugin_mnemosyne::core/memory_operations.py::1173",
+      "decisions": {
+        "guardrail": 1,
+        "not_guardrail": 0,
+        "unresolved": 0
+      }
+    },
+    {
+      "index": 41,
+      "producer_method_id": "marcgs/lob-agent-evaluation::evaluation/chatbot/simulation/termination_strategy.py::81",
+      "decisions": {
+        "guardrail": 2,
+        "not_guardrail": 0,
+        "unresolved": 0
+      }
+    },
+    {
+      "index": 42,
+      "producer_method_id": "maseval/MASEval::maseval/interface/agents/camel.py::775",
+      "decisions": {
+        "guardrail": 1,
+        "not_guardrail": 0,
+        "unresolved": 0
+      }
+    },
+    {
+      "index": 43,
+      "producer_method_id": "maseval/MASEval::maseval/interface/agents/camel.py::891",
+      "decisions": {
+        "guardrail": 1,
+        "not_guardrail": 0,
+        "unresolved": 0
+      }
+    },
+    {
+      "index": 44,
+      "producer_method_id": "mdhaarishussain/chaos-kitten::chaos_kitten/brain/attack_planner.py::191",
+      "decisions": {
+        "guardrail": 0,
+        "not_guardrail": 0,
+        "unresolved": 1
+      }
+    },
+    {
+      "index": 45,
+      "producer_method_id": "mdhaarishussain/chaos-kitten::chaos_kitten/brain/orchestrator.py::566",
+      "decisions": {
+        "guardrail": 0,
+        "not_guardrail": 4,
+        "unresolved": 0
+      }
+    },
+    {
+      "index": 46,
+      "producer_method_id": "minitap-ai/mobile-use::minitap/mobile_use/agents/outputter/outputter.py::18",
+      "decisions": {
+        "guardrail": 1,
+        "not_guardrail": 0,
+        "unresolved": 0
+      }
+    },
+    {
+      "index": 47,
+      "producer_method_id": "mixseek/mixseek-core::src/mixseek/round_controller/judgment_client.py::68",
+      "decisions": {
+        "guardrail": 10,
+        "not_guardrail": 0,
+        "unresolved": 0
+      }
+    },
+    {
+      "index": 48,
+      "producer_method_id": "nalamap/nalamap::backend/services/tools/attribute_tools.py::223",
+      "decisions": {
+        "guardrail": 0,
+        "not_guardrail": 12,
+        "unresolved": 0
+      }
+    },
+    {
+      "index": 49,
+      "producer_method_id": "nalamap/nalamap::backend/services/conversation_manager.py::102",
+      "decisions": {
+        "guardrail": 0,
+        "not_guardrail": 2,
+        "unresolved": 0
+      }
+    },
+    {
+      "index": 50,
+      "producer_method_id": "prebid/salesagent::src/services/ai/agents/naming_agent.py::107",
+      "decisions": {
+        "guardrail": 1,
+        "not_guardrail": 0,
+        "unresolved": 0
+      }
+    },
+    {
+      "index": 51,
+      "producer_method_id": "prospectio-ai/prospectio-api-mcp::prospectio_api_mcp/infrastructure/services/enrich_leads_agent/chains/enrich_chain.py::121",
+      "decisions": {
+        "guardrail": 0,
+        "not_guardrail": 2,
+        "unresolved": 0
+      }
+    },
+    {
+      "index": 52,
+      "producer_method_id": "prospectio-ai/prospectio-api-mcp::prospectio_api_mcp/infrastructure/services/enrich_leads_agent/chains/enrich_chain.py::182",
+      "decisions": {
+        "guardrail": 0,
+        "not_guardrail": 2,
+        "unresolved": 0
+      }
+    },
+    {
+      "index": 53,
+      "producer_method_id": "redis-applied-ai/redis-sre-agent::redis_sre_agent/core/llm_request_guard.py::563",
+      "decisions": {
+        "guardrail": 1,
+        "not_guardrail": 0,
+        "unresolved": 0
+      }
+    },
+    {
+      "index": 54,
+      "producer_method_id": "robertwhiffin/ai-slide-generator::src/api/services/session_naming.py::26",
+      "decisions": {
+        "guardrail": 1,
+        "not_guardrail": 0,
+        "unresolved": 0
+      }
+    },
+    {
+      "index": 55,
+      "producer_method_id": "rte-france/BERTrend::bertrend/llm_utils/agent_utils.py::119",
+      "decisions": {
+        "guardrail": 2,
+        "not_guardrail": 10,
+        "unresolved": 0
+      }
+    },
+    {
+      "index": 56,
+      "producer_method_id": "slimeslab/ComProScanner::src/comproscanner/extract_flow/main_extraction_flow.py::659",
+      "decisions": {
+        "guardrail": 2,
+        "not_guardrail": 0,
+        "unresolved": 0
+      }
+    },
+    {
+      "index": 57,
+      "producer_method_id": "slimeslab/ComProScanner::src/comproscanner/extract_flow/main_extraction_flow.py::745",
+      "decisions": {
+        "guardrail": 1,
+        "not_guardrail": 0,
+        "unresolved": 0
+      }
+    },
+    {
+      "index": 58,
+      "producer_method_id": "slimeslab/ComProScanner::src/comproscanner/extract_flow/main_extraction_flow.py::837",
+      "decisions": {
+        "guardrail": 1,
+        "not_guardrail": 2,
+        "unresolved": 0
+      }
+    },
+    {
+      "index": 59,
+      "producer_method_id": "sola-st/RepairAgent::repair_agent/autogpt/commands/defects4j.py::1077",
+      "decisions": {
+        "guardrail": 2,
+        "not_guardrail": 0,
+        "unresolved": 0
+      }
+    },
+    {
+      "index": 60,
+      "producer_method_id": "sola-st/RepairAgent::repair_agent/autogpt/commands/defects4j.py::1096",
+      "decisions": {
+        "guardrail": 1,
+        "not_guardrail": 0,
+        "unresolved": 0
+      }
+    },
+    {
+      "index": 61,
+      "producer_method_id": "sola-st/RepairAgent::repair_agent/autogpt/commands/defects4j.py::1360",
+      "decisions": {
+        "guardrail": 1,
+        "not_guardrail": 0,
+        "unresolved": 0
+      }
+    },
+    {
+      "index": 62,
+      "producer_method_id": "spyrae/kronos-agent-os::kronos/cron/skill_create.py::118",
+      "decisions": {
+        "guardrail": 2,
+        "not_guardrail": 0,
+        "unresolved": 0
+      }
+    },
+    {
+      "index": 63,
+      "producer_method_id": "ui-insight/vandalizer::backend/app/services/extraction_engine.py::955",
+      "decisions": {
+        "guardrail": 5,
+        "not_guardrail": 0,
+        "unresolved": 0
+      }
+    },
+    {
+      "index": 64,
+      "producer_method_id": "urstory/urstory-rag::backend/app/services/chunking/recursive.py::15",
+      "decisions": {
+        "guardrail": 0,
+        "not_guardrail": 3,
+        "unresolved": 0
+      }
+    },
+    {
+      "index": 65,
+      "producer_method_id": "vstorm-co/pydantic-deepagents::pydantic_deep/goal.py::351",
+      "decisions": {
+        "guardrail": 6,
+        "not_guardrail": 0,
+        "unresolved": 0
+      }
+    },
+    {
+      "index": 66,
+      "producer_method_id": "vstorm-co/pydantic-deepagents::pydantic_deep/features/improve/synthesizer.py::47",
+      "decisions": {
+        "guardrail": 0,
+        "not_guardrail": 1,
+        "unresolved": 0
+      }
+    },
+    {
+      "index": 67,
+      "producer_method_id": "yueguobin/gns3-copilot::src/gns3_copilot/tools_v2/config_tools_nornir.py::179",
+      "decisions": {
+        "guardrail": 0,
+        "not_guardrail": 8,
+        "unresolved": 0
+      }
+    },
+    {
+      "index": 68,
+      "producer_method_id": "yueguobin/gns3-copilot::src/gns3_copilot/tools_v2/display_tools_nornir.py::164",
+      "decisions": {
+        "guardrail": 0,
+        "not_guardrail": 8,
+        "unresolved": 0
+      }
+    },
+    {
+      "index": 69,
+      "producer_method_id": "yueguobin/gns3-copilot::src/gns3_copilot/tools_v2/linux_tools_nornir.py::271",
+      "decisions": {
+        "guardrail": 0,
+        "not_guardrail": 6,
+        "unresolved": 0
+      }
+    }
+  ],
+  "post_review_auxiliary_checks": 3,
+  "primary_simple_checks_after_auxiliary_adjudication": 91,
+  "adjudication": "Three ImprovementJudgment isinstance assertions are auxiliary verdict packaging; explicit authored expected-value contracts remain simple. Method count unchanged46.",
+  "auxiliary_schema_checks": 3,
+  "primary_source_positive_checks": 91
+}

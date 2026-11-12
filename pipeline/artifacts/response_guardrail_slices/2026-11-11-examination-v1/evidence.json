@@ -1,0 +1,1655 @@
+{
+  "date": "2026-11-11",
+  "reviewer": "assistant static inspection",
+  "selection": "Purposive mechanism/limitation sample, not random; no precision or prevalence estimate.",
+  "contexts": 21,
+  "repositories": 19,
+  "unique_source_files": 20,
+  "all_primary_sources_match_prior_manifest": true,
+  "candidate_tallies": {
+    "production": {
+      "assertion": {
+        "sites": 62,
+        "sliceSupported": 47
+      },
+      "rejection_branch": {
+        "sites": 106,
+        "sliceSupported": 52
+      },
+      "schema_validation": {
+        "sites": 7,
+        "sliceSupported": 7
+      },
+      "early_exit_candidate": {
+        "sites": 27,
+        "sliceSupported": 18
+      },
+      "retry_branch": {
+        "sites": 3,
+        "sliceSupported": 3
+      }
+    },
+    "test": {
+      "assertion": {
+        "sites": 5445,
+        "sliceSupported": 4148
+      },
+      "rejection_branch": {
+        "sites": 0,
+        "sliceSupported": 0
+      },
+      "schema_validation": {
+        "sites": 5,
+        "sliceSupported": 5
+      },
+      "early_exit_candidate": {
+        "sites": 0,
+        "sliceSupported": 0
+      },
+      "retry_branch": {
+        "sites": 0,
+        "sliceSupported": 0
+      }
+    },
+    "test_support": {
+      "assertion": {
+        "sites": 35,
+        "sliceSupported": 27
+      },
+      "rejection_branch": {
+        "sites": 2,
+        "sliceSupported": 2
+      },
+      "schema_validation": {
+        "sites": 0,
+        "sliceSupported": 0
+      },
+      "early_exit_candidate": {
+        "sites": 0,
+        "sliceSupported": 0
+      },
+      "retry_branch": {
+        "sites": 0,
+        "sliceSupported": 0
+      }
+    }
+  },
+  "reviewed": [
+    {
+      "repo": "seanchatmangpt/dslmodel",
+      "rel": "src/dslmodel/dspy_modules/tool_trigger_module.py",
+      "call": 45,
+      "checks": [
+        {
+          "sink": "46",
+          "kind": "rejection_branch",
+          "status": "same_response_slice"
+        }
+      ],
+      "slice": {
+        "file": "tool_trigger_module_tool_trigger_call_chosen_tool.py",
+        "var": "chosen_tool",
+        "pdg": [
+          42,
+          45,
+          46,
+          47
+        ],
+        "inserted": [
+          44
+        ],
+        "code": "def tool_trigger_call(prompt: str, tool_mixin: \"ToolMixin\", **kwargs):\n    tool_trigger = ToolTriggerModule()\n    chosen_tool = tool_trigger.forward(prompt=prompt, tool_mixin=tool_mixin)\n    if chosen_tool and hasattr(tool_mixin, chosen_tool):\n        action = getattr(tool_mixin, chosen_tool)\n",
+        "hits": [
+          {
+            "slice_id": "2528332",
+            "parses": "1",
+            "role": "binding",
+            "is_duplicate": "0"
+          }
+        ]
+      },
+      "source": "33:         )\r\n34: \r\n35:         # logger.info(text)\r\n36: \r\n37:         response = json_call(ChosenTool, text=text)\r\n38: \r\n39:         return response.chosen_tool\r\n40: \r\n41: \r\n42: def tool_trigger_call(prompt: str, tool_mixin: \"ToolMixin\", **kwargs):\r\n43:     \"\"\"Triggers the appropriate tool from ToolMixin based on the prompt.\"\"\"\r\n44:     tool_trigger = ToolTriggerModule()\r\n45:     chosen_tool = tool_trigger.forward(prompt=prompt, tool_mixin=tool_mixin)\r\n46:     if chosen_tool and hasattr(tool_mixin, chosen_tool):\r\n47:         action = getattr(tool_mixin, chosen_tool)\r\n48:         action(**kwargs)\r\n49:     else:\r\n50:         raise ValueError(f\"No valid tool for command '{prompt}' in the current tool set.\")\r\n51: ",
+      "source_sha256": "4f7f3c706168620aece726f16f6c8022b73c3e227f4b8ae13b2127eb96e2b72a",
+      "matches_prior_source_hash": true,
+      "category": "tool_selection_validity",
+      "assessment": "Selected tool must be nonempty and an attribute of tool_mixin; otherwise raises before dispatch. Existence check, not a security allowlist. Selected slice omits dispatch and rejection branch."
+    },
+    {
+      "repo": "HKUDS/ViMax",
+      "rel": "agents/event_extractor.py",
+      "call": 149,
+      "checks": [
+        {
+          "sink": "151",
+          "kind": "assertion",
+          "status": "same_response_slice"
+        }
+      ],
+      "slice": {
+        "file": "event_extractor_extract_next_event_event.py",
+        "var": "event",
+        "pdg": [
+          127,
+          149,
+          151,
+          153
+        ],
+        "inserted": [
+          133,
+          135,
+          136,
+          137,
+          138,
+          139,
+          140,
+          141,
+          142,
+          143,
+          144,
+          145,
+          147
+        ],
+        "code": "def extract_next_event(\n    extracted_events_str = \"\\n\\n\".join([str(e) for e in extracted_events])\n    messages = [\n        SystemMessage(\n            content=system_prompt_template_extract_events.format(format_instructions=self.parser.get_format_instructions()),\n        ),\n        HumanMessage(\n            content=human_prompt_template_extract_next_event.format(\n                novel_text=novel_text,\n                extracted_events=extracted_events_str,\n            )\n        )\n    ]\n    chain = self.chat_model | self.parser\n    event: Event = chain.invoke(messages)\n    assert event.index == len(extracted_events), f\"Extracted event index {event.index} does not match the expected index {len(extracted_events)}\"\n    return event\n",
+        "hits": [
+          {
+            "slice_id": "240220",
+            "parses": "0",
+            "role": "binding",
+            "is_duplicate": "0"
+          }
+        ]
+      },
+      "source": "137:                 content=system_prompt_template_extract_events.format(format_instructions=self.parser.get_format_instructions()),\r\n138:             ),\r\n139:             HumanMessage(\r\n140:                 content=human_prompt_template_extract_next_event.format(\r\n141:                     novel_text=novel_text,\r\n142:                     extracted_events=extracted_events_str,\r\n143:                 )\r\n144:             )\r\n145:         ]\r\n146: \r\n147:         chain = self.chat_model | self.parser\r\n148: \r\n149:         event: Event = chain.invoke(messages)\r\n150: \r\n151:         assert event.index == len(extracted_events), f\"Extracted event index {event.index} does not match the expected index {len(extracted_events)}\"\r\n152: \r\n153:         return event\r\n154: \r\n155: \r\n156: \r\n157: ",
+      "source_sha256": "d6eb4f4c342db8dd96a0294634a6a8c12d1aafbb81bad14aa52e68a08f5b3e5f",
+      "matches_prior_source_hash": true,
+      "category": "domain_invariant",
+      "assessment": "Generated event index must equal number of previously extracted events; assertion stops invalid sequence. Slice retains assertion, but multiline function signature is incomplete."
+    },
+    {
+      "repo": "FudanSELab/TripSphere",
+      "rel": "trip-itinerary-planner/src/itinerary_planner/agent/nodes.py",
+      "call": 153,
+      "checks": [
+        {
+          "sink": "154",
+          "kind": "schema_validation",
+          "status": "same_response_slice"
+        }
+      ],
+      "slice": {
+        "file": "nodes_research_and_plan_itinerary_plan.py",
+        "var": "itinerary_plan",
+        "pdg": [
+          42,
+          153,
+          154,
+          163,
+          180,
+          205,
+          211,
+          220,
+          248,
+          249
+        ],
+        "inserted": [
+          49,
+          50,
+          51,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62,
+          63,
+          64,
+          65,
+          67,
+          69,
+          70,
+          71,
+          72,
+          73,
+          75,
+          77,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87,
+          88,
+          89,
+          91,
+          92,
+          93,
+          95,
+          97,
+          120,
+          121,
+          122,
+          123,
+          124,
+          125,
+          126,
+          127,
+          128,
+          129,
+          131,
+          132,
+          135,
+          136,
+          138,
+          140,
+          141,
+          142,
+          143,
+          144,
+          145,
+          146,
+          147,
+          148,
+          149,
+          150,
+          152,
+          157,
+          158,
+          159,
+          162,
+          164,
+          165,
+          166,
+          167,
+          168,
+          169,
+          170,
+          171,
+          172,
+          173,
+          174,
+          175,
+          178,
+          179,
+          181,
+          182,
+          183,
+          184,
+          185,
+          186,
+          187,
+          188,
+          189,
+          190,
+          191,
+          193,
+          194,
+          195,
+          196,
+          197,
+          198,
+          199,
+          200,
+          201,
+          202,
+          203,
+          204,
+          206,
+          207,
+          208,
+          209,
+          210,
+          213,
+          215,
+          218,
+          219,
+          221,
+          222,
+          223,
+          224,
+          225,
+          227,
+          228,
+          229,
+          230,
+          231,
+          232,
+          233,
+          234,
+          235,
+          236,
+          238,
+          241,
+          242,
+          243,
+          244,
+          245,
+          246,
+          250,
+          251,
+          252,
+          253,
+          254,
+          255,
+          256
+        ],
+        "code": "async def research_and_plan(state: PlanningState) -> dict[str, Any]:\n    start = datetime.fromisoformat(state[\"start_date\"])\n    end = datetime.fromisoformat(state[\"end_date\"])\n    num_days = (end - start).days + 1\n    try:\n        geocode_result: GeocodeResult = await geocoding_tool.ainvoke(\n            {\n                \"address\": state[\"destination\"],\n                \"city\": state[\"destination\"],\n            }\n        )\n        destination_coords = {\n            \"longitude\": geocode_result.longitude,\n            \"latitude\": geocode_result.latitude,\n            \"address\": geocode_result.address,\n        }\n    except Exception as e:\n        destination_coords = {\n            \"longitude\": 121.4737,\n            \"latitude\": 31.2304,\n            \"address\": state[\"destination\"],\n        }\n    travel_interests = state.get(\"interests\", [])\n    tags = get_attraction_tags_for_interests(travel_interests)\n    try:\n        search_result = await search_attractions_nearby(\n            nacos_naming=state[\"nacos_naming\"],\n            center_longitude=float(destination_coords.get(\"longitude\") or 0),  # type: ignore[arg-type]\n            center_latitude=float(destination_coords.get(\"latitude\") or 0),  # type: ignore[arg-type]\n            radius_km=25.0,\n            tags=tags,\n            limit=35,\n        )\n        attractions: list[AttractionDetail] = random.sample(\n            search_result.attractions, 15\n        )\n    except Exception as e:\n        attractions = []\n    if len(attractions) > 0:\n        attractions_text = \"\\n\".join(\n            [\n                f\"- {attraction.name}: {attraction.description} \"\n                f\"(Tags: {', '.join(attraction.tags)})\"\n                for attraction in attractions[:10]\n            ]\n        )\n    else:\n        attractions_text = \"No specific attractions found - generate general activities\"\n    interests_str = \", \".join(state.get(\"interests\", [])) or \"general travel\"\n    pace = state.get(\"pace\", \"moderate\")\n    pace_activities = {\"relaxed\": 2, \"moderate\": 3, \"intense\": 4}\n    activities_per_day = pace_activities.get(pace, 3)\n    structured_llm = chat_model.with_structured_output(CompleteItineraryPlan)  # pyright: ignore\n    prompt = RESEARCH_AND_PLAN_PROMPT.format(\n        num_days=num_days,\n        destination=state[\"destination\"],\n        interests=interests_str,\n        pace=pace,\n        activities_per_day=activities_per_day,\n        start_date=state[\"start_date\"],\n        end_date=state[\"end_date\"],\n        additional_preferences=state.get(\"additional_preferences\", \"\"),\n        attractions=attractions_text,\n    )\n    try:\n        itinerary_plan = await structured_llm.ainvoke(prompt)  # pyright: ignore\n        itinerary_plan = CompleteItineraryPlan.model_validate(itinerary_plan)\n        attraction_details = {\n            attraction.name: attraction.model_dump() for attraction in attractions\n        }\n        daily_schedule = {}\n        for day_plan in itinerary_plan.day_plans:\n            daily_schedule[day_plan.day_number] = [\n                {\n                    \"name\": activity.name,\n                    \"start_time\": activity.start_time,\n                    \"end_time\": activity.end_time,\n                    \"description\": activity.description,\n                    \"category\": activity.category,\n                    \"location\": activity.name,  # Will be geocoded later\n                    \"estimated_cost\": activity.estimated_cost,\n                }\n                for activity in day_plan.activities\n            ]\n        lats: list[float] = []\n        lons: list[float] = []\n        for day_plan in itinerary_plan.day_plans:\n            for activity in day_plan.activities:\n                att = _find_matching_attraction(activity.name, attraction_details)\n                if att:\n                    lats.append(att[\"latitude\"])\n                    lons.append(att[\"longitude\"])\n        if lats and lons:\n            center_lat = sum(lats) / len(lats)\n            center_lon = sum(lons) / len(lons)\n        else:\n            center_lat = destination_coords[\"latitude\"]\n            center_lon = destination_coords[\"longitude\"]\n        hotel_limit = (\n            3 if num_days <= 4 else 5\n        )  # Short trip: one hotel; longer: multiple options\n        try:\n            hotel_result = await search_hotels_nearby(\n                nacos_naming=state[\"nacos_naming\"],\n                center_longitude=center_lon,\n                center_latitude=center_lat,\n                radius_km=12.0,\n                limit=hotel_limit,\n            )\n            hotel_details = [h.model_dump() for h in hotel_result.hotels]\n            logger.info(\n                \"Found %d hotels near attractions center (%.4f, %.4f)\",\n                len(hotel_details),\n                center_lat,\n                center_lon,\n            )\n        except Exception as e:\n            hotel_details = []\n    except Exception as e:\n        attraction_details = {}\n        daily_schedule = {}\n        itinerary_plan = CompleteItineraryPlan(\n            destination_info=f\"General information about {state['destination']}\",\n            day_plans=[],\n            highlights=[f\"Explore {state['destination']}\", \"Experience local culture\"],\n            total_estimated_cost=0.0,\n        )\n        try:\n            hotel_result = await search_hotels_nearby(\n                nacos_naming=state[\"nacos_naming\"],\n                center_longitude=destination_coords[\"longitude\"],\n                center_latitude=destination_coords[\"latitude\"],\n                radius_km=12.0,\n                limit=5,\n            )\n            hotel_details = [h.model_dump() for h in hotel_result.hotels]\n        except Exception as eh:\n            hotel_details = []\n    progress_event = PlanningProgressEvent(\n        progress_percentage=70,\n        status_message=f\"Planning {num_days}-day trip to {state['destination']}...\",\n        current_step=PlanningStep.RESEARCHING_DESTINATION,\n        itinerary=None,\n    )\n    return {\n        \"destination_info\": itinerary_plan.destination_info,\n        \"destination_coords\": destination_coords,\n        \"attraction_details\": attraction_details,\n        \"daily_schedule\": daily_schedule,\n        \"hotel_details\": hotel_details,\n        \"progress_percentage\": 70,\n        \"events\": [progress_event],\n    }\n",
+        "hits": [
+          {
+            "slice_id": "234237",
+            "parses": "1",
+            "role": "binding",
+            "is_duplicate": "1"
+          }
+        ]
+      },
+      "source": "141:         num_days=num_days,\r\n142:         destination=state[\"destination\"],\r\n143:         interests=interests_str,\r\n144:         pace=pace,\r\n145:         activities_per_day=activities_per_day,\r\n146:         start_date=state[\"start_date\"],\r\n147:         end_date=state[\"end_date\"],\r\n148:         additional_preferences=state.get(\"additional_preferences\", \"\"),\r\n149:         attractions=attractions_text,\r\n150:     )\r\n151: \r\n152:     try:\r\n153:         itinerary_plan = await structured_llm.ainvoke(prompt)  # pyright: ignore\r\n154:         itinerary_plan = CompleteItineraryPlan.model_validate(itinerary_plan)\r\n155: \r\n156:         # Store attraction details for coordinate lookup\r\n157:         attraction_details = {\r\n158:             attraction.name: attraction.model_dump() for attraction in attractions\r\n159:         }\r\n160: \r\n161:         # Convert to expected format\r\n162:         daily_schedule = {}\r\n163:         for day_plan in itinerary_plan.day_plans:\r\n164:             daily_schedule[day_plan.day_number] = [\r\n165:                 {\r\n166:                     \"name\": activity.name,\r",
+      "source_sha256": "208bf6a94f46c7d3eb2717839192198d4d627f3f98cc6bbb7a03ee118b2c8c82",
+      "matches_prior_source_hash": true,
+      "category": "schema_with_fallback",
+      "assessment": "CompleteItineraryPlan.model_validate before use; original enclosing exception handler builds an empty/default itinerary. Schema contract does not establish factual travel correctness."
+    },
+    {
+      "repo": "alibaba/loongsuite-python",
+      "rel": "examples/ecommerce-customer-service/workflow.py",
+      "call": 201,
+      "checks": [
+        {
+          "sink": "217",
+          "kind": "schema_validation",
+          "status": "same_response_slice"
+        }
+      ],
+      "slice": {
+        "file": "workflow__route_intent_raw_decision.py",
+        "var": "raw_decision",
+        "pdg": [
+          198,
+          201,
+          214,
+          215,
+          216,
+          217
+        ],
+        "inserted": [
+          199,
+          200,
+          202,
+          203,
+          204,
+          205,
+          206,
+          207,
+          208,
+          209,
+          210,
+          211,
+          212,
+          213,
+          218,
+          219
+        ],
+        "code": "def _route_intent(self, state: SupportState) -> SupportState:\n    question = state[\"question\"]\n    try:\n        raw_decision = self.classifier.invoke(\n            [\n                SystemMessage(\n                    content=(\n                        \"请将这个电商问题分类为 presales、aftersales 或 other。\"\n                        \"presales（售前）包括商品选择、规格和库存；\"\n                        \"aftersales（售后）包括已有订单、物流、退换、质保或\"\n                        \"商品问题。只判断意图，不要回答用户问题。\"\n                    )\n                ),\n                HumanMessage(content=question),\n            ]\n        )\n        decision = (\n            raw_decision\n            if isinstance(raw_decision, IntentDecision)\n            else IntentDecision.model_validate(raw_decision)\n        )\n    except Exception:  # noqa: BLE001 - an unavailable model must fail open\n",
+        "hits": [
+          {
+            "slice_id": "949651",
+            "parses": "0",
+            "role": "binding",
+            "is_duplicate": "0"
+          }
+        ]
+      },
+      "source": "189:                 \"clarify\": \"clarify\",\r\n190:             },\r\n191:         )\r\n192:         graph.add_edge(\"presales_agent\", \"response_review\")\r\n193:         graph.add_edge(\"aftersales_agent\", \"response_review\")\r\n194:         graph.add_edge(\"clarify\", \"response_review\")\r\n195:         graph.add_edge(\"response_review\", END)\r\n196:         return graph.compile()\r\n197: \r\n198:     def _route_intent(self, state: SupportState) -> SupportState:\r\n199:         question = state[\"question\"]\r\n200:         try:\r\n201:             raw_decision = self.classifier.invoke(\r\n202:                 [\r\n203:                     SystemMessage(\r\n204:                         content=(\r\n205:                             \"请将这个电商问题分类为 presales、aftersales 或 other。\"\r\n206:                             \"presales（售前）包括商品选择、规格和库存；\"\r\n207:                             \"aftersales（售后）包括已有订单、物流、退换、质保或\"\r\n208:                             \"商品问题。只判断意图，不要回答用户问题。\"\r\n209:                         )\r\n210:                     ),\r\n211:                     HumanMessage(content=question),\r\n212:                 ]\r\n213:             )\r\n214:             decision = (\r\n215:                 raw_decision\r\n216:                 if isinstance(raw_decision, IntentDecision)\r\n217:                 else IntentDecision.model_validate(raw_decision)\r\n218:             )\r\n219:         except Exception:  # noqa: BLE001 - an unavailable model must fail open\r\n220:             decision = IntentDecision(\r\n221:                 intent=\"other\",\r\n222:                 confidence=0,\r\n223:                 reason=\"意图识别暂时不可用\",\r\n224:             )\r\n225:         route = select_route(\r\n226:             {\"intent\": decision.intent, \"confidence\": decision.confidence},\r\n227:             self.confidence_threshold,\r\n228:         )\r\n229:         return {\r",
+      "source_sha256": "ee2c093997753697ece232ad35eaa3f5615b827da3853a98c2f393ed6c297c9b",
+      "matches_prior_source_hash": true,
+      "category": "schema_and_confidence_routing",
+      "assessment": "Intent is a restricted literal; confidence constrained to [0,1]; invalid/unavailable classification falls back to other/0, then select_route sends low-confidence cases to clarify. Caller/helper flow is outside selected raw_decision slice."
+    },
+    {
+      "repo": "splx-ai/agentic-radar",
+      "rel": "examples/openai-agents/agent_patterns/deterministic/deterministic.py",
+      "call": 54,
+      "checks": [
+        {
+          "sink": "60",
+          "kind": "assertion",
+          "status": "same_response_slice"
+        }
+      ],
+      "slice": {
+        "file": "deterministic_main_outline_checker_result.py",
+        "var": "outline_checker_result",
+        "pdg": [
+          41,
+          54,
+          60,
+          61,
+          65
+        ],
+        "inserted": [
+          42,
+          45,
+          47,
+          48,
+          49,
+          50,
+          55,
+          56,
+          57
+        ],
+        "code": "async def main():\n    input_prompt = input(\"What kind of story do you want? \")\n    with trace(\"Deterministic story flow\"):\n        outline_result = await Runner.run(\n            story_outline_agent,\n            input_prompt,\n        )\n        outline_checker_result = await Runner.run(\n            outline_checker_agent,\n            outline_result.final_output,\n        )\n        assert isinstance(outline_checker_result.final_output, OutlineCheckerOutput)\n        if not outline_checker_result.final_output.good_quality:\n            pass\n        if not outline_checker_result.final_output.is_scifi:\n            pass\n",
+        "hits": [
+          {
+            "slice_id": "2633382",
+            "parses": "1",
+            "role": "binding",
+            "is_duplicate": "0"
+          }
+        ]
+      },
+      "source": "34: story_agent = Agent(\r\n35:     name=\"story_agent\",\r\n36:     instructions=\"Write a short story based on the given outline.\",\r\n37:     output_type=str,\r\n38: )\r\n39: \r\n40: \r\n41: async def main():\r\n42:     input_prompt = input(\"What kind of story do you want? \")\r\n43: \r\n44:     # Ensure the entire workflow is a single trace\r\n45:     with trace(\"Deterministic story flow\"):\r\n46:         # 1. Generate an outline\r\n47:         outline_result = await Runner.run(\r\n48:             story_outline_agent,\r\n49:             input_prompt,\r\n50:         )\r\n51:         print(\"Outline generated\")\r\n52: \r\n53:         # 2. Check the outline\r\n54:         outline_checker_result = await Runner.run(\r\n55:             outline_checker_agent,\r\n56:             outline_result.final_output,\r\n57:         )\r\n58: \r\n59:         # 3. Add a gate to stop if the outline is not good quality or not a scifi story\r\n60:         assert isinstance(outline_checker_result.final_output, OutlineCheckerOutput)\r\n61:         if not outline_checker_result.final_output.good_quality:\r\n62:             print(\"Outline is not good quality, so we stop here.\")\r\n63:             exit(0)\r\n64: \r\n65:         if not outline_checker_result.final_output.is_scifi:\r\n66:             print(\"Outline is not a scifi story, so we stop here.\")\r\n67:             exit(0)\r\n68: \r\n69:         print(\"Outline is good quality and a scifi story, so we continue to write the story.\")\r\n70: \r\n71:         # 4. Write the story\r\n72:         story_result = await Runner.run(\r\n73:             story_agent,\r\n74:             outline_result.final_output,\r\n75:         )\r\n76:         print(f\"Story: {story_result.final_output}\")\r\n77: \r\n78: \r\n79: if __name__ == \"__main__\":\r\n80:     asyncio.run(main())\r",
+      "source_sha256": "0fd4f8b787307886b21ee3c1f565140147b4c5740809ef65c92670891cfef30e",
+      "matches_prior_source_hash": true,
+      "category": "llm_judge_gate",
+      "assessment": "A second agent judges outline good_quality/is_scifi. Original code exits on either failure before story generation. Selected slice contains predicates but replaces both exit branches with synthetic pass. Detector reports only type assertion."
+    },
+    {
+      "repo": "ikamensh/kodo",
+      "rel": "kodo/coach.py",
+      "call": 409,
+      "checks": [
+        {
+          "sink": "415",
+          "kind": "early_exit_candidate",
+          "status": "same_response_slice"
+        }
+      ],
+      "slice": {
+        "file": "coach__filter_message_result.py",
+        "var": "result",
+        "pdg": [
+          405,
+          409,
+          415,
+          417
+        ],
+        "inserted": [
+          407,
+          408,
+          410,
+          411,
+          412,
+          413,
+          414,
+          418
+        ],
+        "code": "def _filter_message(self, message: str) -> str | None:\n    try:\n        agent = self._get_filter_agent()\n        result = agent.run_sync(\n            _FILTER_PROMPT.format(\n                event=self._current_event[:2000],\n                message=message,\n            ),\n        )\n        if result.output.decision == \"pass\":\n            pass\n        return result.output.reason or \"Not relevant enough.\"\n    except Exception:\n        pass\n",
+        "hits": [
+          {
+            "slice_id": "1732459",
+            "parses": "1",
+            "role": "binding",
+            "is_duplicate": "0"
+          }
+        ]
+      },
+      "source": "387:         super().__init__(*args, **kwargs)\r\n388:         self._filter_model = filter_model\r\n389:         self._filter_agent = None\r\n390:         self._current_event = \"\"\r\n391: \r\n392:     def _get_filter_agent(self):\r\n393:         if self._filter_agent is None:\r\n394:             from pydantic_ai import Agent as PydanticAgent\r\n395: \r\n396:             from kodo.models import make_fresh_model\r\n397: \r\n398:             model_str = self._filter_model or _FILTER_DEFAULT_MODEL\r\n399:             self._filter_agent = PydanticAgent(\r\n400:                 make_fresh_model(model_str),\r\n401:                 output_type=FilterVerdict,\r\n402:             )\r\n403:         return self._filter_agent\r\n404: \r\n405:     def _filter_message(self, message: str) -> str | None:\r\n406:         \"\"\"Filter a proposed message. Returns None if accepted, reason string if blocked.\"\"\"\r\n407:         try:\r\n408:             agent = self._get_filter_agent()\r\n409:             result = agent.run_sync(\r\n410:                 _FILTER_PROMPT.format(\r\n411:                     event=self._current_event[:2000],\r\n412:                     message=message,\r\n413:                 ),\r\n414:             )\r\n415:             if result.output.decision == \"pass\":\r\n416:                 return None\r\n417:             return result.output.reason or \"Not relevant enough.\"\r\n418:         except Exception:\r\n419:             return None  # on error, let it through\r\n420: \r\n421:     def _get_agent(self):\r\n422:         \"\"\"Create coach agent where send_feedback goes through the filter.\"\"\"\r\n423:         if self._agent is None:\r\n424:             from pydantic_ai import Agent as PydanticAgent, Tool\r\n425: \r\n426:             from kodo.models import make_fresh_model, resolve_model\r\n427: \r\n428:             model_str = resolve_model(self._model) if self._model else _COACH_DEFAULT_MODEL\r\n429:             queue = self._queue\r\n430:             coach_self = self\r\n431: \r\n432:             def send_feedback(message: str, priority: str = \"warning\") -> str:\r\n433:                 \"\"\"Send feedback to the orchestrator. Only use when something is clearly wrong.\"\"\"\r\n434:                 if priority not in (\"info\", \"warning\", \"correction\"):\r\n435:                     priority = \"warning\"\r\n436:                 block_reason = coach_self._filter_message(message)\r\n437:                 if block_reason:\r",
+      "source_sha256": "7d0a6b44945a71154fbf870289bee6ac7e312cf2a86e879e5ffc3dd02da41e32",
+      "matches_prior_source_hash": true,
+      "category": "llm_judge_with_caller_enforcement",
+      "assessment": "LLM gates proposed coach message; caller suppresses queue.push when a blocking reason is returned. Model/filter errors return None and allow delivery. Selected slice loses pass-branch return and error return."
+    },
+    {
+      "repo": "baserow/baserow",
+      "rel": "enterprise/backend/src/baserow_enterprise/assistant/tools/database/tools.py",
+      "call": 921,
+      "checks": [
+        {
+          "sink": "930",
+          "kind": "rejection_branch",
+          "status": "no_joint_slice"
+        }
+      ],
+      "slice": {
+        "file": "tools_generate_formula_formula_toolset.py",
+        "var": "formula_toolset",
+        "pdg": [
+          860,
+          914,
+          921,
+          922,
+          923,
+          924,
+          925,
+          926
+        ],
+        "inserted": [
+          899,
+          900,
+          903,
+          904,
+          905,
+          906,
+          907,
+          908,
+          912,
+          913,
+          916,
+          917,
+          918,
+          920,
+          927
+        ],
+        "code": "def generate_formula(\n    user = ctx.deps.user\n    workspace = ctx.deps.workspace\n    database_tables = helpers.filter_tables(user, workspace).filter(\n        database_id=database_id\n    )\n    database_tables_schema = [\n        t.model_dump() for t in helpers.get_tables_schema(database_tables, True)\n    ]\n    formula_docs = get_formula_docs()\n    formula_type_tool = Tool(get_formula_type_tool(user, workspace))\n    formula_toolset = FunctionToolset([formula_type_tool])\n    prompt = format_formula_generation_prompt(\n        description, database_tables_schema, formula_docs\n    )\n    model = get_model_string()\n    agent_result = formula_generation_agent.run_sync(\n        prompt,\n        model=model,\n        model_settings=get_model_settings(model, UTILITY),\n        toolsets=[formula_toolset],\n        usage_limits=UsageLimits(request_limit=20),\n    )\n",
+        "hits": [
+          {
+            "slice_id": "1003110",
+            "parses": "0",
+            "role": "argument",
+            "is_duplicate": "0"
+          }
+        ]
+      },
+      "source": "907:         t.model_dump() for t in helpers.get_tables_schema(database_tables, True)\r\n908:     ]\r\n909: \r\n910:     tool_helpers.update_status(_(\"Generating formula...\"))\r\n911: \r\n912:     formula_docs = get_formula_docs()\r\n913:     formula_type_tool = Tool(get_formula_type_tool(user, workspace))\r\n914:     formula_toolset = FunctionToolset([formula_type_tool])\r\n915: \r\n916:     prompt = format_formula_generation_prompt(\r\n917:         description, database_tables_schema, formula_docs\r\n918:     )\r\n919: \r\n920:     model = get_model_string()\r\n921:     agent_result = formula_generation_agent.run_sync(\r\n922:         prompt,\r\n923:         model=model,\r\n924:         model_settings=get_model_settings(model, UTILITY),\r\n925:         toolsets=[formula_toolset],\r\n926:         usage_limits=UsageLimits(request_limit=20),\r\n927:     )\r\n928:     result = agent_result.output\r\n929: \r\n930:     if not result.is_formula_valid:\r\n931:         raise Exception(f\"Error generating formula: {result.error_message}\")\r\n932: \r\n933:     table = next((t for t in database_tables if t.id == result.table_id), None)\r\n934:     if table is None:\r\n935:         raise Exception(\r\n936:             \"The generated formula is intended for a different table \"\r\n937:             f\"than the current one. Table with ID {result.table_id} not found.\"\r\n938:         )\r\n939: \r\n940:     data = {\r\n941:         \"formula\": result.formula,\r\n942:         \"formula_type\": result.formula_type,\r\n943:     }\r\n944:     field_name = result.field_name\r",
+      "source_sha256": "f4337ed7d387477a6be0cc40fa7130ec449fb4246f78c1c035453f66912153bd",
+      "matches_prior_source_hash": true,
+      "category": "formula_validity_gate",
+      "assessment": "Checks model result.is_formula_valid and rejects before field creation; additionally rejects a table not in filtered tables. agent_result and result slices split call from check in PDG-selected lines, though result snippet inserts invocation as support code. Validity flag alone is not an independently proven formula checker."
+    },
+    {
+      "repo": "Certora/AIComposer",
+      "rel": "composer/spec/refinement.py",
+      "call": 97,
+      "checks": [
+        {
+          "sink": "98",
+          "kind": "assertion",
+          "status": "same_response_slice"
+        }
+      ],
+      "slice": {
+        "file": "refinement_refinement_loop_res.py",
+        "var": "res",
+        "pdg": [
+          72,
+          95,
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103,
+          104,
+          109,
+          118,
+          121,
+          122,
+          123,
+          174,
+          209,
+          210,
+          211,
+          212,
+          217
+        ],
+        "inserted": [
+          82,
+          83,
+          84,
+          85,
+          86,
+          87,
+          88,
+          89,
+          90,
+          91,
+          92,
+          93,
+          105,
+          112,
+          113,
+          114,
+          115,
+          116,
+          119,
+          120,
+          124,
+          125,
+          148,
+          149,
+          150,
+          152,
+          170,
+          171,
+          175,
+          176,
+          177,
+          178,
+          187,
+          188,
+          190,
+          191,
+          214
+        ],
+        "code": "async def refinement_loop[T](\n    graph = StateGraph(\n        state_schema=ConversationState,\n        context_schema=None,\n        input_schema=ConversationState,\n        output_schema=None\n    )\n    bound_llm = llm.bind_tools(tools)\n    init_state : ConversationState[T] = {\n        \"messages\": init_messages,\n        \"extra_data\": init_data,\n        \"state\": ConversationStateEnum.INIT\n    }\n    async def llm_echo(state: ConversationState[T]) -> dict[str, list[BaseMessage]]:\n        res = await bound_llm.ainvoke(state[\"messages\"])\n        assert isinstance(res, AIMessage)\n        if len(res.tool_calls):\n            if len(res.text) > 0:\n                client.progress_update(AIYapping(res.text))\n            client.progress_update(ToolBatch(calls=list(res.tool_calls)))\n        return {\n            \"messages\": [res]\n        }\n    async def chat_node(\n        payload_text = None\n        if state[\"state\"] != ConversationStateEnum.INIT:\n            msg = state[\"messages\"][-1]\n            if isinstance(msg, AIMessage):\n                payload_text = msg.text\n        res = interrupt(HumanPrompt(\n            payload_text\n        ))\n        assert isinstance(res, str)\n        return {\n            \"messages\": [HumanMessage(res)],\n            \"state\": ConversationStateEnum.CHAT\n        }\n    runner = graph.compile(\n        checkpointer=InMemorySaver()\n    )\n    tid = uniq_thread_id(\"refinement_conversation\")\n    graph_input : ConversationState[T] | Command | None = init_state\n    async with with_handler(\n        while graph_input:\n            human_question : str | None | Literal[False] = False\n            to_run = graph_input\n            graph_input = None\n            async for (ev, payload) in runner.astream(\n                if \"__interrupt__\" in payload:\n                    interrupt_data = payload[\"__interrupt__\"][0].value\n                    if not isinstance(interrupt_data, EndConversation):\n                        human_question = interrupt_data.ai_message\n            if human_question is not False:\n                while True:\n                    res = await client.human_turn(ai_response=human_question)\n                    if res.strip() == \"/list\" and state_renderer is not None:\n                        human_question = None\n                graph_input = Command(resume=res)\n",
+        "hits": [
+          {
+            "slice_id": "82043",
+            "parses": "0",
+            "role": "binding",
+            "is_duplicate": "0"
+          }
+        ]
+      },
+      "source": "90:         \"messages\": init_messages,\r\n91:         \"extra_data\": init_data,\r\n92:         \"state\": ConversationStateEnum.INIT\r\n93:     }\r\n94: \r\n95:     async def llm_echo(state: ConversationState[T]) -> dict[str, list[BaseMessage]]:\r\n96:         client.progress_update(ThinkingStart())\r\n97:         res = await bound_llm.ainvoke(state[\"messages\"])\r\n98:         assert isinstance(res, AIMessage)\r\n99:         if len(res.tool_calls):\r\n100:             if len(res.text) > 0:\r\n101:                 client.progress_update(AIYapping(res.text))\r\n102:             client.progress_update(ToolBatch(calls=list(res.tool_calls)))\r\n103:         return {\r\n104:             \"messages\": [res]\r\n105:         }\r",
+      "source_sha256": "1eedf40fc095e07262fb5961d7bac98f302e631ad7d4705c07ac7369058e48a8",
+      "matches_prior_source_hash": true,
+      "category": "response_type_contract",
+      "assessment": "Assert AIMessage before consuming tool calls/text. Slice also includes a different res variable in nested human-input code; lexical name recurrence is not one response dataflow."
+    },
+    {
+      "repo": "Shubhamsaboo/awesome-llm-apps",
+      "rel": "advanced_ai_agents/autonomous_game_playing_agent_apps/ai_tic_tac_toe_agent/app.py",
+      "call": 222,
+      "checks": [],
+      "slice": {
+        "file": "app_main_current_agent.py",
+        "var": "current_agent",
+        "pdg": [
+          34,
+          174,
+          203,
+          217,
+          222,
+          223,
+          238,
+          267,
+          268
+        ],
+        "inserted": [
+          60,
+          61,
+          62,
+          63,
+          65,
+          67,
+          68,
+          69,
+          70,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          80,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87,
+          88,
+          89,
+          90,
+          91,
+          124,
+          125,
+          126,
+          127,
+          128,
+          129,
+          130,
+          131,
+          132,
+          133,
+          134,
+          135,
+          136,
+          137,
+          139,
+          140,
+          141,
+          142,
+          145,
+          147,
+          148,
+          149,
+          150,
+          151,
+          152,
+          153,
+          154,
+          155,
+          156,
+          157,
+          158,
+          159,
+          175,
+          180,
+          190,
+          192,
+          193,
+          194,
+          215,
+          218,
+          219,
+          220,
+          221,
+          224,
+          225,
+          226,
+          227,
+          228,
+          229,
+          231,
+          234,
+          235,
+          236,
+          239,
+          240,
+          241,
+          242,
+          243,
+          244,
+          245,
+          246,
+          256,
+          257,
+          263,
+          265,
+          269,
+          270,
+          271,
+          272,
+          273,
+          274,
+          275,
+          276
+        ],
+        "code": "def main():\n    if \"game_started\" not in st.session_state:\n        st.session_state.game_started = False\n        st.session_state.game_paused = False\n        st.session_state.move_history = []\n    with st.sidebar:\n        model_options = {\n            \"gpt-4o\": \"openai:gpt-4o\",\n            \"o3-mini\": \"openai:o3-mini\",\n            \"claude-3.5\": \"anthropic:claude-3-5-sonnet\",\n            \"claude-3.7\": \"anthropic:claude-3-7-sonnet\",\n            \"claude-3.7-thinking\": \"anthropic:claude-3-7-sonnet-thinking\",\n            \"gemini-flash\": \"google:gemini-2.0-flash\",\n            \"gemini-pro\": \"google:gemini-2.0-pro-exp-02-05\",\n            \"llama-3.3\": \"groq:llama-3.3-70b-versatile\",\n        }\n        selected_p_x = st.selectbox(\n            \"Select Player X\",\n            list(model_options.keys()),\n            index=list(model_options.keys()).index(\"claude-3.7-thinking\"),\n            key=\"model_p1\",\n        )\n        selected_p_o = st.selectbox(\n            \"Select Player O\",\n            list(model_options.keys()),\n            index=list(model_options.keys()).index(\"o3-mini\"),\n            key=\"model_p2\",\n        )\n        with col1:\n            if not st.session_state.game_started:\n                if st.button(\"▶️ Start Game\", disabled=bool(missing_keys)):\n                    st.session_state.player_x, st.session_state.player_o = (\n                        get_tic_tac_toe_players(\n                            model_x=model_options[selected_p_x],\n                            model_o=model_options[selected_p_o],\n                            debug_mode=True,\n                        )\n                    )\n                    st.session_state.game_board = TicTacToeBoard()\n                    st.session_state.game_started = True\n                    st.session_state.game_paused = False\n                    st.session_state.move_history = []\n            else:\n                game_over, _ = st.session_state.game_board.get_game_state()\n                if not game_over:\n                    if st.button(\n                        st.session_state.game_paused = not st.session_state.game_paused\n        with col2:\n            if st.session_state.game_started:\n                if st.button(\"🔄 New Game\"):\n                    st.session_state.player_x, st.session_state.player_o = (\n                        get_tic_tac_toe_players(\n                            model_x=model_options[selected_p_x],\n                            model_o=model_options[selected_p_o],\n                            debug_mode=True,\n                        )\n                    )\n                    st.session_state.game_board = TicTacToeBoard()\n                    st.session_state.game_paused = False\n                    st.session_state.move_history = []\n    if st.session_state.game_started:\n        game_over, status = st.session_state.game_board.get_game_state()\n        if game_over:\n            pass\n        else:\n            current_player = st.session_state.game_board.current_player\n            player_num = \"1\" if current_player == \"X\" else \"2\"\n            current_model_name = selected_p_x if current_player == \"X\" else selected_p_o\n        if not st.session_state.game_paused and not game_over:\n            valid_moves = st.session_state.game_board.get_valid_moves()\n            current_agent = (\n                st.session_state.player_x\n                if current_player == \"X\"\n                else st.session_state.player_o\n            )\n            response: RunOutput = current_agent.run(\n                f\"\"\"\\\nCurrent board state:\\n{st.session_state.game_board.get_board_state()}\\n\nAvailable valid moves (row, col): {valid_moves}\\n\nChoose your next move from the valid moves above.\nRespond with ONLY two numbers for row and column, e.g. \"1 2\".\"\"\",\n                stream=False,\n            )\n            try:\n                numbers = re.findall(r\"\\d+\", response.content if response else \"\")\n                row, col = map(int, numbers[:2])\n                success, message = st.session_state.game_board.make_move(row, col)\n                if success:\n                    move_number = len(st.session_state.move_history) + 1\n                    st.session_state.move_history.append(\n                        {\n                            \"number\": move_number,\n                            \"player\": f\"Player {player_num} ({current_model_name})\",\n                            \"move\": f\"{row},{col}\",\n                        }\n                    )\n                    game_over, status = st.session_state.game_board.get_game_state()\n                    if game_over:\n                        st.session_state.game_paused = True\n                else:\n                    response: RunOutput = current_agent.run(\n                        f\"\"\"\\\nInvalid move: {message}\nCurrent board state:\\n{st.session_state.game_board.get_board_state()}\\n\nAvailable valid moves (row, col): {valid_moves}\\n\nPlease choose a valid move from the list above.\nRespond with ONLY two numbers for row and column, e.g. \"1 2\".\"\"\",\n                        stream=False,\n                    )\n",
+        "hits": [
+          {
+            "slice_id": "602267",
+            "parses": "0",
+            "role": "receiver",
+            "is_duplicate": "0"
+          }
+        ]
+      },
+      "source": "195: \r\n196:             show_agent_status(\r\n197:                 f\"Player {player_num} ({current_model_name})\",\r\n198:                 \"It's your turn\",\r\n199:             )\r\n200: \r\n201:         display_move_history()\r\n202: \r\n203:         if not st.session_state.game_paused and not game_over:\r\n204:             # Thinking indicator\r\n205:             st.markdown(\r\n206:                 f\"\"\"<div class=\"thinking-container\">\r\n207:                     <div class=\"agent-thinking\">\r\n208:                         <div style=\"margin-right: 10px; display: inline-block;\">🔄</div>\r\n209:                         Player {player_num} ({current_model_name}) is thinking...\r\n210:                     </div>\r\n211:                 </div>\"\"\",\r\n212:                 unsafe_allow_html=True,\r\n213:             )\r\n214: \r\n215:             valid_moves = st.session_state.game_board.get_valid_moves()\r\n216: \r\n217:             current_agent = (\r\n218:                 st.session_state.player_x\r\n219:                 if current_player == \"X\"\r\n220:                 else st.session_state.player_o\r\n221:             )\r\n222:             response: RunOutput = current_agent.run(\r\n223:                 f\"\"\"\\\r\n224: Current board state:\\n{st.session_state.game_board.get_board_state()}\\n\r\n225: Available valid moves (row, col): {valid_moves}\\n\r\n226: Choose your next move from the valid moves above.\r\n227: Respond with ONLY two numbers for row and column, e.g. \"1 2\".\"\"\",\r\n228:                 stream=False,\r\n229:             )\r\n230: \r\n231:             try:\r\n232:                 import re\r\n233: \r\n234:                 numbers = re.findall(r\"\\d+\", response.content if response else \"\")\r\n235:                 row, col = map(int, numbers[:2])\r\n236:                 success, message = st.session_state.game_board.make_move(row, col)\r\n237: \r\n238:                 if success:\r\n239:                     move_number = len(st.session_state.move_history) + 1\r\n240:                     st.session_state.move_history.append(\r\n241:                         {\r\n242:                             \"number\": move_number,\r\n243:                             \"player\": f\"Player {player_num} ({current_model_name})\",\r\n244:                             \"move\": f\"{row},{col}\",\r\n245:                         }\r\n246:                     )\r\n247: \r\n248:                     logger.info(\r\n249:                         f\"Move {move_number}: Player {player_num} ({current_model_name}) placed at position ({row}, {col})\"\r",
+      "source_sha256": "6eb1a3a16dba4e19350d4b1b58daed79e3a147fc63bc911fd8873337e63973e8",
+      "matches_prior_source_hash": true,
+      "category": "domain_validation_and_corrective_call",
+      "assessment": "make_move rejects out-of-bounds/occupied cells before board mutation; invalid result triggers a corrective model call. Existing detector records zero checks. Corrective response is discarded before st.rerun; no proven successful repair."
+    },
+    {
+      "repo": "Arize-ai/openinference",
+      "rel": "python/instrumentation/openinference-instrumentation-haystack/tests/openinference/haystack/test_instrumentor.py",
+      "call": 617,
+      "checks": [
+        {
+          "sink": "628",
+          "kind": "assertion",
+          "status": "same_response_slice"
+        }
+      ],
+      "slice": {
+        "file": "test_instrumentor_test_openai_chat_generator_llm_span_has_expected_attributes_response.py",
+        "var": "response",
+        "pdg": [
+          609,
+          617,
+          628
+        ],
+        "inserted": [
+          614,
+          618,
+          619,
+          620,
+          621,
+          622,
+          623,
+          624,
+          625,
+          626,
+          627
+        ],
+        "code": "def test_openai_chat_generator_llm_span_has_expected_attributes(\n    pipe = Pipeline()\n    response = pipe.run(\n        {\n            \"llm\": {\n                \"messages\": [\n                    ChatMessage.from_system(\"Answer user questions succinctly\"),\n                    ChatMessage.from_assistant(\"What can I help you with?\"),\n                    ChatMessage.from_user(\"Who won the World Cup in 2022? Answer in one word.\"),\n                ]\n            }\n        }\n    )\n    assert \"argentina\" in response[\"llm\"][\"replies\"][0].text.lower()\n",
+        "hits": [
+          {
+            "slice_id": "21093",
+            "parses": "0",
+            "role": "binding",
+            "is_duplicate": "0"
+          }
+        ]
+      },
+      "source": "603:     assert not hasattr(AsyncPipeline.run_async, \"__wrapped__\")\r\n604:     assert not hasattr(AsyncPipeline.run_async_generator, \"__wrapped__\")\r\n605:     assert not hasattr(AsyncPipeline._run_component_async, \"__wrapped__\")\r\n606: \r\n607: \r\n608: @pytest.mark.vcr\r\n609: def test_openai_chat_generator_llm_span_has_expected_attributes(\r\n610:     openai_api_key: str,\r\n611:     in_memory_span_exporter: InMemorySpanExporter,\r\n612:     setup_haystack_instrumentation: Any,\r\n613: ) -> None:\r\n614:     pipe = Pipeline()\r\n615:     llm = OpenAIChatGenerator(model=\"gpt-4o\")\r\n616:     pipe.add_component(\"llm\", llm)\r\n617:     response = pipe.run(\r\n618:         {\r\n619:             \"llm\": {\r\n620:                 \"messages\": [\r\n621:                     ChatMessage.from_system(\"Answer user questions succinctly\"),\r\n622:                     ChatMessage.from_assistant(\"What can I help you with?\"),\r\n623:                     ChatMessage.from_user(\"Who won the World Cup in 2022? Answer in one word.\"),\r\n624:                 ]\r\n625:             }\r\n626:         }\r\n627:     )\r\n628:     assert \"argentina\" in response[\"llm\"][\"replies\"][0].text.lower()\r\n629:     spans = in_memory_span_exporter.get_finished_spans()\r\n630:     assert len(spans) == 2\r\n631:     span = spans[0]\r\n632:     assert span.status.is_ok\r\n633:     assert not span.events\r\n634:     assert span.name == \"OpenAIChatGenerator.run\"\r\n635:     attributes = dict(span.attributes or {})\r\n636:     assert attributes.pop(OPENINFERENCE_SPAN_KIND) == \"LLM\"\r\n637:     assert (\r\n638:         attributes.pop(f\"{LLM_INPUT_MESSAGES}.0.{MESSAGE_CONTENT}\")\r\n639:         == \"Answer user questions succinctly\"\r\n640:     )\r\n641:     assert attributes.pop(f\"{LLM_INPUT_MESSAGES}.0.{MESSAGE_ROLE}\") == \"system\"\r\n642:     assert (\r",
+      "source_sha256": "ee505fb231177452d4f5915ba7c1885d9b3d20d2d49e2070b1949f28590b853a",
+      "matches_prior_source_hash": true,
+      "category": "test_expected_answer",
+      "assessment": "Test asks World Cup 2022 winner and asserts argentina in generated response. VCR-marked test may replay recorded traffic; do not report it as fresh live model execution."
+    },
+    {
+      "repo": "Aggregate-Intellect/sherpa",
+      "rel": "src/tests/unit_tests/models/test_sherpa_models.py",
+      "call": 56,
+      "checks": [
+        {
+          "sink": "58",
+          "kind": "assertion",
+          "status": "same_response_slice"
+        }
+      ],
+      "slice": {
+        "file": "test_sherpa_models_test_sherpa_base_chat_model_returns_result_without_user_id_result.py",
+        "var": "result",
+        "pdg": [
+          53,
+          56,
+          58
+        ],
+        "inserted": [
+          54
+        ],
+        "code": "def test_sherpa_base_chat_model_returns_result_without_user_id():\n    model = FakeSherpaChatModel(responses=[\"fake answer\"])\n    result = model.invoke([HumanMessage(content=\"question\")])\n    assert result.content == \"fake answer\"\n",
+        "hits": [
+          {
+            "slice_id": "16432",
+            "parses": "1",
+            "role": "binding",
+            "is_duplicate": "0"
+          }
+        ]
+      },
+      "source": "44: \r\n45:     # Exactly one structured log entry with the input/output/llm name\r\n46:     assert len(records) == 1\r\n47:     log = json.loads(str(records[0]))\r\n48:     assert log[\"output\"] == \"logged response\"\r\n49:     assert log[\"input\"] == [{\"text\": \"hello\\\\nworld\", \"agent\": \"human\"}]\r\n50:     assert log[\"llm_name\"] == inner._llm_type\r\n51: \r\n52: \r\n53: def test_sherpa_base_chat_model_returns_result_without_user_id():\r\n54:     model = FakeSherpaChatModel(responses=[\"fake answer\"])\r\n55: \r\n56:     result = model.invoke([HumanMessage(content=\"question\")])\r\n57: \r\n58:     assert result.content == \"fake answer\"\r\n59: \r\n60: \r\n61: def test_sherpa_base_chat_model_tracks_usage_for_user():\r\n62:     model = FakeSherpaChatModel(responses=[\"tracked answer\"], user_id=\"user-42\")\r\n63: \r\n64:     with mock.patch(\r\n65:         \"sherpa_ai.models.sherpa_base_chat_model.UserUsageTracker\"\r\n66:     ) as mock_tracker:\r\n67:         result = model.invoke([HumanMessage(content=\"question\")])\r\n68: \r\n69:     assert result.content == \"tracked answer\"\r\n70:     # Usage must be recorded exactly once for the user and the DB closed\r",
+      "source_sha256": "8d2d7dffd14a9643190ac6b27b91ed339c82c8f4271076a31a5a31b987d53e44",
+      "matches_prior_source_hash": true,
+      "category": "test_mocked_contract",
+      "assessment": "FakeSherpaChatModel supplies fake answer; assert equality tests wrapper contract rather than real generation quality."
+    },
+    {
+      "repo": "datastax/ragstack-ai",
+      "rel": "libs/e2e-tests/e2e_tests/langchain/nemo_guardrails.py",
+      "call": 100,
+      "checks": [
+        {
+          "sink": "108",
+          "kind": "assertion",
+          "status": "same_response_slice"
+        }
+      ],
+      "slice": {
+        "file": "nemo_guardrails__try_runnable_rails_response.py",
+        "var": "response",
+        "pdg": [
+          84,
+          90,
+          98,
+          100,
+          108
+        ],
+        "inserted": [
+          86,
+          91,
+          92,
+          93,
+          94,
+          95,
+          96,
+          97,
+          101,
+          102,
+          103,
+          104,
+          105,
+          106,
+          107
+        ],
+        "code": "def _try_runnable_rails(config: RailsConfig, retriever: BaseRetriever) -> None:\n    rails = LLMRails(config)\n    response = rails.generate(\n        messages=[\n            {\n                \"role\": \"user\",\n                \"content\": \"Hi, how are you?\",\n            }\n        ]\n    )\n    assert \"Hello! I hope to answer all your questions\" in response[\"content\"]\n    response = rails.generate(\n        messages=[\n            {\n                \"role\": \"user\",\n                \"content\": \"When was MyFakeProductForTesting first released?\",\n            }\n        ]\n    )\n    assert \"2020\" in response[\"content\"]\n",
+        "hits": [
+          {
+            "slice_id": "1409710",
+            "parses": "1",
+            "role": "binding",
+            "is_duplicate": "0"
+          }
+        ]
+      },
+      "source": "86:     rails = LLMRails(config)\r\n87:     processor = NeMoRag(retriever)\r\n88:     processor.init(rails)\r\n89: \r\n90:     response = rails.generate(\r\n91:         messages=[\r\n92:             {\r\n93:                 \"role\": \"user\",\r\n94:                 \"content\": \"Hi, how are you?\",\r\n95:             }\r\n96:         ]\r\n97:     )\r\n98:     assert \"Hello! I hope to answer all your questions\" in response[\"content\"]\r\n99: \r\n100:     response = rails.generate(\r\n101:         messages=[\r\n102:             {\r\n103:                 \"role\": \"user\",\r\n104:                 \"content\": \"When was MyFakeProductForTesting first released?\",\r\n105:             }\r\n106:         ]\r\n107:     )\r\n108:     assert \"2020\" in response[\"content\"]\r\n109: \r\n110: \r\n111: def run_nemo_guardrails(vector_store: VectorStore, config: dict[str, str]) -> None:\r\n112:     vector_store.add_texts(SAMPLE_DATA)\r\n113:     retriever = vector_store.as_retriever()\r\n114: \r\n115:     model_config = _config(config[\"engine\"], config[\"model\"])\r\n116:     rails_config = RailsConfig.from_content(\r\n117:         yaml_content=model_config, colang_content=_colang()\r\n118:     )\r\n119:     _try_runnable_rails(config=rails_config, retriever=retriever)\r\n120: ",
+      "source_sha256": "302b11334f6ab8a7e8e1716979342f9282a1e39bc989475994c5112f30d1c2e5",
+      "matches_prior_source_hash": true,
+      "category": "test_expected_answer_mislabelled_production",
+      "assessment": "E2E helper asserts known release year and canned greeting. Saved code_kind production is misleading for this test context."
+    },
+    {
+      "repo": "crestalnetwork/intentkit",
+      "rel": "intentkit/tools/aerodrome/get_positions.py",
+      "call": 95,
+      "checks": [
+        {
+          "sink": "98",
+          "kind": "retry_branch",
+          "status": "same_response_slice"
+        }
+      ],
+      "slice": {
+        "file": "get_positions__arun_is_staked.py",
+        "var": "is_staked",
+        "pdg": [
+          48,
+          82,
+          84,
+          87,
+          95,
+          98
+        ],
+        "inserted": [
+          49,
+          52,
+          53,
+          57,
+          58,
+          60,
+          61,
+          62,
+          63,
+          66,
+          69,
+          70,
+          71,
+          72,
+          73,
+          79,
+          80,
+          81,
+          83,
+          85,
+          86,
+          90,
+          91,
+          92,
+          93,
+          96,
+          97,
+          114,
+          123
+        ],
+        "code": "async def _arun(self, wallet_address: str, **kwargs: Any) -> str:\n    try:\n        team_wallet = await self.resolve_wallet(wallet_address)\n        network_id = team_wallet.network\n        w3 = get_async_web3_client(network_id)\n        checksum_wallet = Web3.to_checksum_address(wallet_address)\n        pm = w3.eth.contract(\n            address=Web3.to_checksum_address(POSITION_MANAGER_ADDRESS),\n            abi=POSITION_MANAGER_ABI,\n        )\n        balance = await pm.functions.balanceOf(checksum_wallet).call()\n        count = min(balance, MAX_POSITIONS)\n        for i in range(count):\n            token_id = await pm.functions.tokenOfOwnerByIndex(\n                checksum_wallet, i\n            ).call()\n        staked_data = await self.get_agent_tool_data_raw(\n            TOOL_DATA_NAMESPACE, staked_data_key(wallet_address)\n        )\n        if staked_data and \"token_ids\" in staked_data:\n            gauges = staked_data.get(\"gauges\", {})\n            for token_id in staked_data[\"token_ids\"][:MAX_POSITIONS]:\n                try:\n                    gauge_address = gauges.get(str(token_id))\n                    if not gauge_address:\n                        pass\n                    checksum_gauge = Web3.to_checksum_address(gauge_address)\n                    gauge = w3.eth.contract(\n                        address=checksum_gauge, abi=CL_GAUGE_ABI\n                    )\n                    is_staked = await gauge.functions.stakedContains(\n                        checksum_wallet, token_id\n                    ).call()\n                    if not is_staked:\n                        pass\n                except Exception:  # noqa: S112 - expected miss while probing candidates\n    except ToolException:\n        pass\n",
+        "hits": [
+          {
+            "slice_id": "1308352",
+            "parses": "0",
+            "role": "binding",
+            "is_duplicate": "0"
+          }
+        ]
+      },
+      "source": "85:                     try:\r\n86:                         gauge_address = gauges.get(str(token_id))\r\n87:                         if not gauge_address:\r\n88:                             continue\r\n89: \r\n90:                         checksum_gauge = Web3.to_checksum_address(gauge_address)\r\n91:                         gauge = w3.eth.contract(\r\n92:                             address=checksum_gauge, abi=CL_GAUGE_ABI\r\n93:                         )\r\n94: \r\n95:                         is_staked = await gauge.functions.stakedContains(\r\n96:                             checksum_wallet, token_id\r\n97:                         ).call()\r\n98:                         if not is_staked:\r\n99:                             continue\r\n100: \r\n101:                         pos_info = await pm.functions.positions(token_id).call()\r\n102:                         pending_aero = await gauge.functions.earned(\r\n103:                             checksum_wallet, token_id\r\n104:                         ).call()\r\n105:                         entry = await _format_position(\r\n106:                             w3,\r\n107:                             token_id,\r\n108:                             pos_info,\r",
+      "source_sha256": "0c9808720ab6803589c754daf6c22e0de45a0f5c2a7235abe811908a34b596c5",
+      "matches_prior_source_hash": true,
+      "category": "non_llm_blockchain_filter",
+      "assessment": "Web3 gauge.functions.stakedContains(...).call(), not an LLM. continue skips unstaked position; not corrective retry."
+    },
+    {
+      "repo": "codemie-ai/codemie",
+      "rel": "src/codemie_tools/data_management/code_executor/session_factory.py",
+      "call": 213,
+      "checks": [
+        {
+          "sink": "215",
+          "kind": "rejection_branch",
+          "status": "same_response_slice"
+        },
+        {
+          "sink": "218",
+          "kind": "rejection_branch",
+          "status": "same_response_slice"
+        }
+      ],
+      "slice": {
+        "file": "session_factory__health_check_session_result.py",
+        "var": "result",
+        "pdg": [
+          201,
+          213,
+          215,
+          216,
+          218,
+          219
+        ],
+        "inserted": [
+          212,
+          223
+        ],
+        "code": "def _health_check_session(self, session: SandboxSession, pod_name: str) -> None:\n    try:\n        result = session.run(\"print('health_check_ok')\")\n        if result.exit_code != 0:\n            raise ToolException(f\"Health check failed with exit code {result.exit_code}. Stderr: {result.stderr}\")\n        if \"health_check_ok\" not in result.stdout:\n            raise ToolException(f\"Health check returned unexpected output: {result.stdout}\")\n    except ToolException:\n        pass\n",
+        "hits": [
+          {
+            "slice_id": "1295757",
+            "parses": "1",
+            "role": "binding",
+            "is_duplicate": "0"
+          }
+        ]
+      },
+      "source": "201:     def _health_check_session(self, session: SandboxSession, pod_name: str) -> None:\n202:         \"\"\"\n203:         Perform health check on session.\n204: \n205:         Args:\n206:             session: The sandbox session to check\n207:             pod_name: Name of the pod\n208: \n209:         Raises:\n210:             ToolException: If health check fails\n211:         \"\"\"\n212:         try:\n213:             result = session.run(\"print('health_check_ok')\")\n214: \n215:             if result.exit_code != 0:\n216:                 raise ToolException(f\"Health check failed with exit code {result.exit_code}. Stderr: {result.stderr}\")\n217: \n218:             if \"health_check_ok\" not in result.stdout:\n219:                 raise ToolException(f\"Health check returned unexpected output: {result.stdout}\")\n220: \n221:             logger.debug(f\"Health check passed for pod: {pod_name}\")\n222: \n223:         except ToolException:\n224:             raise\n225:         except Exception as e:\n226:             error_type = type(e).__name__\n227:             logger.error(\n228:                 f\"Health check failed for pod {pod_name}: {error_type}: {e}\",\n229:                 exc_info=True,\n230:             )",
+      "source_sha256": "8aea6e87544b845163edd88a07cd4b60931a47edba86e6ed277afe50759e3af1",
+      "matches_prior_source_hash": true,
+      "category": "non_llm_execution_health",
+      "assessment": "session.run executes a fixed print command; checks shell exit code/stdout. Not an LLM response guardrail. Slice also replaces original bare re-raise with pass."
+    },
+    {
+      "repo": "swarm-ai-research/swarm",
+      "rel": "swarm/analysis/autoresearch.py",
+      "call": 203,
+      "checks": [
+        {
+          "sink": "204",
+          "kind": "retry_branch",
+          "status": "same_response_slice"
+        }
+      ],
+      "slice": {
+        "file": "autoresearch_evaluate_candidate_history.py",
+        "var": "history",
+        "pdg": [
+          175,
+          194,
+          203,
+          204,
+          206
+        ],
+        "inserted": [
+          195,
+          196,
+          197,
+          198,
+          199,
+          200,
+          202
+        ],
+        "code": "def evaluate_candidate(\n    for seed in seeds:\n        scenario_copy = copy.deepcopy(scenario)\n        scenario_copy.orchestrator_config.seed = seed\n        scenario_copy.orchestrator_config.n_epochs = eval_epochs\n        scenario_copy.orchestrator_config.steps_per_epoch = eval_steps\n        scenario_copy.orchestrator_config.log_path = None\n        scenario_copy.orchestrator_config.log_events = False\n        orchestrator = build_orchestrator(scenario_copy)\n        history = orchestrator.run()\n        if not history:\n            pass\n        final = history[-1]\n",
+        "hits": [
+          {
+            "slice_id": "2649069",
+            "parses": "0",
+            "role": "binding",
+            "is_duplicate": "0"
+          }
+        ]
+      },
+      "source": "194:     for seed in seeds:\r\n195:         scenario_copy = copy.deepcopy(scenario)\r\n196:         scenario_copy.orchestrator_config.seed = seed\r\n197:         scenario_copy.orchestrator_config.n_epochs = eval_epochs\r\n198:         scenario_copy.orchestrator_config.steps_per_epoch = eval_steps\r\n199:         scenario_copy.orchestrator_config.log_path = None\r\n200:         scenario_copy.orchestrator_config.log_events = False\r\n201: \r\n202:         orchestrator = build_orchestrator(scenario_copy)\r\n203:         history = orchestrator.run()\r\n204:         if not history:\r\n205:             continue\r\n206:         final = history[-1]\r\n207:         data = final.to_dict()\r\n208:         for metric in metric_names:\r\n209:             acc[metric] += float(data.get(metric, 0.0))\r\n210: \r\n211:     n = float(len(seeds))\r\n212:     averaged = {k: v / n for k, v in acc.items()}\r\n213:     return EvalSummary(primary_metric=objective.primary_metric, metrics=averaged)\r",
+      "source_sha256": "4c6d59b4fd053e4a52f0b7e29c3f6c819f6e9ba142ca304067dc64f91bc076bd",
+      "matches_prior_source_hash": true,
+      "category": "simulation_iteration_filter",
+      "assessment": "orchestrator.run returns simulation history; continue skips empty history. No demonstrated LLM-response validation or corrective reinvocation."
+    },
+    {
+      "repo": "sourangshupal/Agentic-RAG-project",
+      "rel": "src/services/agents/nodes/rewrite_query_node.py",
+      "call": 89,
+      "checks": [
+        {
+          "sink": "92",
+          "kind": "rejection_branch",
+          "status": "same_response_slice"
+        },
+        {
+          "sink": "96",
+          "kind": "rejection_branch",
+          "status": "no_joint_slice"
+        }
+      ],
+      "slice": {
+        "file": "rewrite_query_node_ainvoke_rewrite_query_step_result.py",
+        "var": "result",
+        "pdg": [
+          30,
+          89,
+          92,
+          95,
+          99
+        ],
+        "inserted": [
+          47,
+          74,
+          76,
+          77,
+          78,
+          79,
+          80,
+          83,
+          108
+        ],
+        "code": "async def ainvoke_rewrite_query_step(\n    original_question = state.get(\"original_query\") or state[\"messages\"][0].content\n    try:\n        llm = runtime.context.llm_client.get_langchain_model(\n            model=runtime.context.model_name,\n            temperature=0.3,  # Lower temperature for more focused rewriting\n        )\n        structured_llm = llm.with_structured_output(QueryRewriteOutput)\n        prompt = REWRITE_PROMPT.format(question=original_question)\n        result: QueryRewriteOutput = await structured_llm.ainvoke(prompt)\n        if not result or not result.rewritten_query:\n            pass\n        rewritten_query = result.rewritten_query.strip()\n        reasoning = result.reasoning\n    except Exception as e:\n        pass\n",
+        "hits": [
+          {
+            "slice_id": "2633083",
+            "parses": "0",
+            "role": "binding",
+            "is_duplicate": "0"
+          }
+        ]
+      },
+      "source": "77:             model=runtime.context.model_name,\r\n78:             temperature=0.3,  # Lower temperature for more focused rewriting\r\n79:         )\r\n80:         structured_llm = llm.with_structured_output(QueryRewriteOutput)\r\n81: \r\n82:         # Format prompt with original question\r\n83:         prompt = REWRITE_PROMPT.format(question=original_question)\r\n84: \r\n85:         logger.debug(f\"Invoking LLM for query rewriting (model: {runtime.context.model_name})\")\r\n86:         llm_start = time.time()\r\n87: \r\n88:         # Get rewritten query from LLM\r\n89:         result: QueryRewriteOutput = await structured_llm.ainvoke(prompt)\r\n90: \r\n91:         # Validate LLM output\r\n92:         if not result or not result.rewritten_query:\r\n93:             raise ValueError(\"LLM failed to return valid structured output for query rewriting\")\r\n94: \r\n95:         rewritten_query = result.rewritten_query.strip()\r\n96:         if not rewritten_query:\r\n97:             raise ValueError(\"LLM returned empty rewritten query\")\r\n98: \r\n99:         reasoning = result.reasoning\r\n100: \r\n101:         llm_duration = time.time() - llm_start\r\n102:         logger.info(\r\n103:             f\"Query rewritten in {llm_duration:.2f}s: \"\r\n104:             f\"'{original_question[:50]}...' -> '{rewritten_query[:50]}...'\"\r\n105:         )\r\n106:         logger.debug(f\"Rewriting reasoning: {reasoning}\")\r\n107: \r\n108:     except Exception as e:\r",
+      "source_sha256": "bb1cf19003854b21e5f3a2cad69d65cb03ff09478751977672a72b3941c2dc6e",
+      "matches_prior_source_hash": true,
+      "category": "presence_check_with_fallback",
+      "assessment": "Reject missing/blank rewritten query, then exception handler substitutes keyword-expanded original question. Selected result slice keeps predicate but drops raise and fallback. Alias rewritten_query check has no joint slice."
+    },
+    {
+      "repo": "BjornMelin/docmind-ai-llm",
+      "rel": "src/agents/tools/memory.py",
+      "call": 878,
+      "checks": [
+        {
+          "sink": "882",
+          "kind": "schema_validation",
+          "status": "same_response_slice"
+        }
+      ],
+      "slice": {
+        "file": "memory__invoke_extraction_llm_response.py",
+        "var": "response",
+        "pdg": [
+          859,
+          877,
+          878,
+          879,
+          880,
+          881,
+          882,
+          885,
+          886
+        ],
+        "inserted": [
+          865,
+          866,
+          867,
+          868,
+          869,
+          870,
+          875
+        ],
+        "code": "def _invoke_extraction_llm(\n    invoke_kwargs = {\"timeout\": timeout_s} if timeout_s is not None else {}\n    structured_llm: Any | None = None\n    if hasattr(llm, \"with_structured_output\"):\n        try:\n            structured_llm = llm.with_structured_output(MemoryExtractionResult)\n        except Exception as exc:\n            structured_llm = None\n    if structured_llm is not None:\n        response = structured_llm.invoke(prompt, **invoke_kwargs)\n        if isinstance(response, MemoryExtractionResult):\n            return response\n        if isinstance(response, dict):\n            return MemoryExtractionResult.model_validate(response)\n    response = llm.invoke(prompt, **invoke_kwargs)\n    content = getattr(response, \"content\", str(response))\n",
+        "hits": [
+          {
+            "slice_id": "80004",
+            "parses": "0",
+            "role": "binding",
+            "is_duplicate": "0"
+          }
+        ]
+      },
+      "source": "864: ) -> MemoryExtractionResult | None:\r\n865:     invoke_kwargs = {\"timeout\": timeout_s} if timeout_s is not None else {}\r\n866:     structured_llm: Any | None = None\r\n867:     if hasattr(llm, \"with_structured_output\"):\r\n868:         try:\r\n869:             structured_llm = llm.with_structured_output(MemoryExtractionResult)\r\n870:         except Exception as exc:\r\n871:             logger.debug(\r\n872:                 \"Structured output unavailable for memory extraction: {}\",\r\n873:                 type(exc).__name__,\r\n874:             )\r\n875:             structured_llm = None\r\n876: \r\n877:     if structured_llm is not None:\r\n878:         response = structured_llm.invoke(prompt, **invoke_kwargs)\r\n879:         if isinstance(response, MemoryExtractionResult):\r\n880:             return response\r\n881:         if isinstance(response, dict):\r\n882:             return MemoryExtractionResult.model_validate(response)\r\n883:         return None\r\n884: \r\n885:     response = llm.invoke(prompt, **invoke_kwargs)\r\n886:     content = getattr(response, \"content\", str(response))\r\n887:     try:\r\n888:         payload = json.loads(_strip_code_fences(str(content)))\r\n889:     except json.JSONDecodeError as exc:\r\n890:         logger.debug(\"Memory extraction JSON parse failed: {}\", type(exc).__name__)\r\n891:         return None\r\n892:     if isinstance(payload, dict):\r\n893:         payload = payload.get(\"memories\", [])\r\n894:     return MemoryExtractionResult.model_validate({\"memories\": payload})\r\n895: \r\n896: \r",
+      "source_sha256": "747b8c6930d9ec05ce56f078c3b816d76f9888277b74971eaf063f449f1da0a0",
+      "matches_prior_source_hash": true,
+      "category": "schema_contract",
+      "assessment": "MemoryExtractionResult.model_validate for dict structured response; other source path parses JSON then validates. Parsing rejection and schema validation are distinct; caller handling not fully audited."
+    },
+    {
+      "repo": "0ca/BoxPwnr",
+      "rel": "src/boxpwnr/core/llm_manager.py",
+      "call": 1512,
+      "checks": [],
+      "slice": {
+        "file": "llm_manager__invoke_with_retry_retry_secs.py",
+        "var": "retry_secs",
+        "pdg": [
+          1397,
+          1512,
+          1519,
+          1521,
+          1522,
+          1523,
+          1529
+        ],
+        "inserted": [
+          1503,
+          1511,
+          1513,
+          1515,
+          1516,
+          1517,
+          1520,
+          1528,
+          1530
+        ],
+        "code": "def _invoke_with_retry(self, model, messages):\n    def _call_model():\n        try:\n            return model.invoke(messages)\n        except Exception as e:\n            retry_after = None\n            if hasattr(e, 'response') and e.response is not None:\n                retry_after = e.response.headers.get('retry-after') or e.response.headers.get('Retry-After')\n            if retry_after:\n                try:\n                    retry_secs = int(retry_after)\n                    if retry_secs > 300:  # More than 5 minutes\n                        mins = retry_secs // 60\n                    else:\n                        self.logger.debug(f\"Rate limited: Retry-After {retry_secs}s\")\n                except ValueError:\n                    pass\n",
+        "hits": [
+          {
+            "slice_id": "30",
+            "parses": "1",
+            "role": "binding",
+            "is_duplicate": "0"
+          }
+        ]
+      },
+      "source": "1495:         retry_strategy_server = Retrying(\r\n1496:             retry=retry_if_exception(self._should_retry_limited),\r\n1497:             stop=server_error_stop,\r\n1498:             wait=_smart_wait,\r\n1499:             before_sleep=_pause_deadline_before_sleep,\r\n1500:             reraise=True\r\n1501:         )\r\n1502: \r\n1503:         def _call_model():\r\n1504:             \"\"\"Execute the model invocation, checking the deadline first.\"\"\"\r\n1505:             # Check deadline before each API call attempt to fail fast\r\n1506:             if self.deadline and self.deadline.expired:\r\n1507:                 raise DeadlineExceeded(\r\n1508:                     f\"Deadline expired before API call \"\r\n1509:                     f\"({self.deadline.elapsed / 60:.1f}m elapsed)\"\r\n1510:                 )\r\n1511:             try:\r\n1512:                 return model.invoke(messages)\r\n1513:             except Exception as e:\r\n1514:                 # Extract Retry-After header if available (e.g., from OpenCode free tier)\r\n1515:                 retry_after = None\r\n1516:                 if hasattr(e, 'response') and e.response is not None:\r\n1517:                     retry_after = e.response.headers.get('retry-after') or e.response.headers.get('Retry-After')\r\n1518: \r\n1519:                 if retry_after:\r\n1520:                     try:\r\n1521:                         retry_secs = int(retry_after)\r\n1522:                         if retry_secs > 300:  # More than 5 minutes\r\n1523:                             mins = retry_secs // 60\r\n1524:                             self.logger.warning(\r\n1525:                                 f\"Rate limited: retry available in {mins}m. \"\r\n1526:                                 f\"Free tier limits may be too restrictive for multi-turn use.\"\r\n1527:                             )\r\n1528:                         else:\r\n1529:                             self.logger.debug(f\"Rate limited: Retry-After {retry_secs}s\")\r",
+      "source_sha256": "966919d8977e49cca948a28a9e529eab588a42979835d0bfbb7b8d3a1c5154ba",
+      "matches_prior_source_hash": true,
+      "category": "transport_retry",
+      "assessment": "Retry-After/rate-limit and server-error handling around model invocation; availability control, not semantic response correctness."
+    },
+    {
+      "repo": "alibaba/loongsuite-python",
+      "rel": "examples/ecommerce-customer-service/workflow.py",
+      "call": 269,
+      "checks": [],
+      "slice": {
+        "file": "workflow__review_response_response.py",
+        "var": "response",
+        "pdg": [
+          267,
+          269,
+          275
+        ],
+        "inserted": [
+          268,
+          270,
+          271,
+          272,
+          273,
+          274,
+          278
+        ],
+        "code": "def _review_response(self, state: SupportState) -> SupportState:\n    try:\n        response = self.model.invoke(\n            [\n                SystemMessage(content=REVIEW_PROMPT),\n                HumanMessage(content=build_review_input(state)),\n            ]\n        )\n        final_response = _content_to_text(response.content).strip()\n    except Exception:  # noqa: BLE001 - review failure returns the safe draft\n",
+        "hits": [
+          {
+            "slice_id": "949663",
+            "parses": "0",
+            "role": "binding",
+            "is_duplicate": "0"
+          }
+        ]
+      },
+      "source": "259:         return {\r\n260:             \"draft_response\": (\r\n261:                 \"请问你想咨询商品选择、规格或库存，还是想查询已有订单、\"\r\n262:                 \"物流或退换货问题？\"\r\n263:             ),\r\n264:             \"tool_evidence\": [],\r\n265:         }\r\n266: \r\n267:     def _review_response(self, state: SupportState) -> SupportState:\r\n268:         try:\r\n269:             response = self.model.invoke(\r\n270:                 [\r\n271:                     SystemMessage(content=REVIEW_PROMPT),\r\n272:                     HumanMessage(content=build_review_input(state)),\r\n273:                 ]\r\n274:             )\r\n275:             final_response = _content_to_text(response.content).strip()\r\n276:             if not final_response:\r\n277:                 raise ValueError(\"回复审核员返回了空内容\")\r\n278:         except Exception:  # noqa: BLE001 - review failure returns the safe draft\r\n279:             final_response = state.get(\"draft_response\") or (\r",
+      "source_sha256": "ee2c093997753697ece232ad35eaa3f5615b827da3853a98c2f393ed6c297c9b",
+      "matches_prior_source_hash": true,
+      "category": "reviewer_response_and_presence_fallback",
+      "assessment": "Review model transforms draft; original helper conversion followed by blank-response check and draft fallback. Existing detector records zero checks because helper-return flow is not followed. Prompt-directed review is not independent verification."
+    },
+    {
+      "repo": "HKUDS/ViMax",
+      "rel": "agents/camera_image_generator.py",
+      "call": 147,
+      "checks": [
+        {
+          "sink": "149",
+          "kind": "rejection_branch",
+          "status": "no_joint_slice"
+        }
+      ],
+      "slice": {
+        "file": "camera_image_generator_construct_camera_tree_chain.py",
+        "var": "chain",
+        "pdg": [
+          122,
+          146,
+          147
+        ],
+        "inserted": [
+          127,
+          128,
+          130,
+          131,
+          132,
+          133,
+          134,
+          137,
+          138,
+          139,
+          141,
+          142,
+          143,
+          144
+        ],
+        "code": "async def construct_camera_tree(\n    parser = PydanticOutputParser(pydantic_object=CameraTreeResponse)\n    shot_desc_by_idx = {shot.idx: shot for shot in shot_descs}\n    camera_seq_str = \"<CAMERA_SEQ>\\n\"\n    for cam in cameras:\n        camera_seq_str += f\"<CAMERA_{cam.idx}>\\n\"\n        for shot_idx in cam.active_shot_idxs:\n            shot_desc = shot_desc_by_idx.get(shot_idx)\n            camera_seq_str += f\"Shot {shot_idx}: {shot_desc.visual_desc}\\n\"\n        camera_seq_str += f\"</CAMERA_{cam.idx}>\\n\"\n    camera_seq_str += \"</CAMERA_SEQ>\"\n    messages = [\n        SystemMessage(content=system_prompt_template_select_reference_camera.format(format_instructions=parser.get_format_instructions())),\n        HumanMessage(content=human_prompt_template_select_reference_camera.format(camera_seq_str=camera_seq_str)),\n    ]\n    chain = self.chat_model | parser\n    response: CameraTreeResponse = await chain.ainvoke(messages)\n",
+        "hits": [
+          {
+            "slice_id": "240194",
+            "parses": "0",
+            "role": "receiver",
+            "is_duplicate": "0"
+          }
+        ]
+      },
+      "source": "135:                 if shot_desc is None:\r\n136:                     raise ValueError(f\"Camera {cam.idx} references missing shot {shot_idx}\")\r\n137:                 camera_seq_str += f\"Shot {shot_idx}: {shot_desc.visual_desc}\\n\"\r\n138:             camera_seq_str += f\"</CAMERA_{cam.idx}>\\n\"\r\n139:         camera_seq_str += \"</CAMERA_SEQ>\"\r\n140: \r\n141:         messages = [\r\n142:             SystemMessage(content=system_prompt_template_select_reference_camera.format(format_instructions=parser.get_format_instructions())),\r\n143:             HumanMessage(content=human_prompt_template_select_reference_camera.format(camera_seq_str=camera_seq_str)),\r\n144:         ]\r\n145: \r\n146:         chain = self.chat_model | parser\r\n147:         response: CameraTreeResponse = await chain.ainvoke(messages)\r\n148:         parent_items = response.camera_parent_items\r\n149:         if len(parent_items) != len(cameras):\r\n150:             raise ValueError(f\"Camera tree response length mismatch: expected {len(cameras)}, got {len(parent_items)}\")\r\n151: \r\n152:         valid_camera_idxs = {cam.idx for cam in cameras}\r\n153:         valid_shot_idxs = set(shot_desc_by_idx)\r\n154:         parent_by_camera = {}\r\n155:         for cam, parent_cam_item in zip(cameras, parent_items):\r\n156:             parent_cam_idx = parent_cam_item.parent_cam_idx if parent_cam_item is not None else None\r\n157:             parent_shot_idx = parent_cam_item.parent_shot_idx if parent_cam_item is not None else None\r\n158:             if parent_cam_idx is not None and parent_cam_idx not in valid_camera_idxs:\r\n159:                 raise ValueError(f\"Camera {cam.idx} has invalid parent camera {parent_cam_idx}\")\r\n160:             if parent_cam_idx == cam.idx:\r\n161:                 raise ValueError(f\"Camera {cam.idx} cannot be its own parent\")\r",
+      "source_sha256": "f2ed1d2373785792615c7350a70830db58a7955ceaa267dc90179bf6b78f10c5",
+      "matches_prior_source_hash": true,
+      "category": "domain_graph_validation_split_slices",
+      "assessment": "Source validates camera count, reference IDs, self-parenting and cycles before applying generated relationships. response slice stops at parent_items alias; parent_items slice contains length rejection but invocation is only inserted support."
+    },
+    {
+      "repo": "datamllab/ltsm",
+      "rel": "multi_agents_pipeline/agents/Planning_Agent.py",
+      "call": 32,
+      "checks": [
+        {
+          "sink": "36",
+          "kind": "rejection_branch",
+          "status": "same_response_slice"
+        }
+      ],
+      "slice": {
+        "file": "Planning_Agent_send_message_to_openai_response.py",
+        "var": "response",
+        "pdg": [
+          23,
+          32,
+          36,
+          37
+        ],
+        "inserted": [
+          33,
+          34,
+          35
+        ],
+        "code": "async def send_message_to_openai(self, messages: List[SystemMessage], ctx: MessageContext, json_output: Optional[bool | BaseModel] = False) -> str:\n    response = await self._model_client.create(\n        messages=self._system_messages + messages,\n        cancellation_token=ctx.cancellation_token,  \n        json_output=json_output)\n    if isinstance(response.content, str):\n        return response.content\n",
+        "hits": [
+          {
+            "slice_id": "1408416",
+            "parses": "1",
+            "role": "binding",
+            "is_duplicate": "0"
+          }
+        ]
+      },
+      "source": "22: \r\n23:     async def send_message_to_openai(self, messages: List[SystemMessage], ctx: MessageContext, json_output: Optional[bool | BaseModel] = False) -> str:\r\n24:         \"\"\"Sends messages to OpenAI and returns the response content.\r\n25: \r\n26:         Args:\r\n27:             messages (List[SystemMessage]): The list of messages to send to OpenAI.\r\n28: \r\n29:         Returns:\r\n30:             str: The response content from OpenAI.\r\n31:         \"\"\"\r\n32:         response = await self._model_client.create(\r\n33:             messages=self._system_messages + messages,\r\n34:             cancellation_token=ctx.cancellation_token,  \r\n35:             json_output=json_output)\r\n36:         if isinstance(response.content, str):\r\n37:             return response.content\r\n38:         else:\r\n39:             raise ValueError(\"Response content is not a valid JSON string\")\r\n40:         \r\n41:     async def generate_ts_task(self, original_message: TSTaskMessage, ctx: MessageContext) -> TSMessage:\r\n42:         \"\"\"Generates a time series task message based on the original message.\r\n43: \r\n44:         Args:\r\n45:             original_message (TSTaskMessage): The original message containing the task description and filepath.\r\n46: \r",
+      "source_sha256": "6cb287d907fe05c747442553fbddf9bfa709b035b27397ae1735df7a65607253",
+      "matches_prior_source_hash": true,
+      "category": "response_type_only",
+      "assessment": "isinstance(response.content,str), despite error text claiming valid JSON. No JSON parsing at this check. Slice drops else/raise."
+    }
+  ],
+  "additional_slices": [
+    {
+      "repo": "HKUDS/ViMax",
+      "rel": "agents/camera_image_generator.py",
+      "line": 147,
+      "slices": [
+        {
+          "variable": "response",
+          "pdg": [
+            122,
+            147,
+            148
+          ],
+          "inserted": [
+            127,
+            128,
+            130,
+            131,
+            132,
+            133,
+            134,
+            137,
+            138,
+            139,
+            141,
+            142,
+            143,
+            144,
+            146
+          ],
+          "code": "async def construct_camera_tree(\n    parser = PydanticOutputParser(pydantic_object=CameraTreeResponse)\n    shot_desc_by_idx = {shot.idx: shot for shot in shot_descs}\n    camera_seq_str = \"<CAMERA_SEQ>\\n\"\n    for cam in cameras:\n        camera_seq_str += f\"<CAMERA_{cam.idx}>\\n\"\n        for shot_idx in cam.active_shot_idxs:\n            shot_desc = shot_desc_by_idx.get(shot_idx)\n            camera_seq_str += f\"Shot {shot_idx}: {shot_desc.visual_desc}\\n\"\n        camera_seq_str += f\"</CAMERA_{cam.idx}>\\n\"\n    camera_seq_str += \"</CAMERA_SEQ>\"\n    messages = [\n        SystemMessage(content=system_prompt_template_select_reference_camera.format(format_instructions=parser.get_format_instructions())),\n        HumanMessage(content=human_prompt_template_select_reference_camera.format(camera_seq_str=camera_seq_str)),\n    ]\n    chain = self.chat_model | parser\n    response: CameraTreeResponse = await chain.ainvoke(messages)\n    parent_items = response.camera_parent_items\n"
+        }
+      ]
+    },
+    {
+      "repo": "baserow/baserow",
+      "rel": "enterprise/backend/src/baserow_enterprise/assistant/tools/database/tools.py",
+      "line": 921,
+      "slices": [
+        {
+          "variable": "agent_result",
+          "pdg": [
+            860,
+            921,
+            928
+          ],
+          "inserted": [
+            899,
+            900,
+            903,
+            904,
+            905,
+            906,
+            907,
+            908,
+            912,
+            913,
+            914,
+            916,
+            917,
+            918,
+            920,
+            922,
+            923,
+            924,
+            925,
+            926,
+            927
+          ],
+          "code": "def generate_formula(\n    user = ctx.deps.user\n    workspace = ctx.deps.workspace\n    database_tables = helpers.filter_tables(user, workspace).filter(\n        database_id=database_id\n    )\n    database_tables_schema = [\n        t.model_dump() for t in helpers.get_tables_schema(database_tables, True)\n    ]\n    formula_docs = get_formula_docs()\n    formula_type_tool = Tool(get_formula_type_tool(user, workspace))\n    formula_toolset = FunctionToolset([formula_type_tool])\n    prompt = format_formula_generation_prompt(\n        description, database_tables_schema, formula_docs\n    )\n    model = get_model_string()\n    agent_result = formula_generation_agent.run_sync(\n        prompt,\n        model=model,\n        model_settings=get_model_settings(model, UTILITY),\n        toolsets=[formula_toolset],\n        usage_limits=UsageLimits(request_limit=20),\n    )\n    result = agent_result.output\n"
+        }
+      ]
+    },
+    {
+      "repo": "Shubhamsaboo/awesome-llm-apps",
+      "rel": "advanced_ai_agents/autonomous_game_playing_agent_apps/ai_tic_tac_toe_agent/app.py",
+      "line": 222,
+      "slices": [
+        {
+          "variable": "response",
+          "pdg": [
+            34,
+            174,
+            203,
+            222,
+            234,
+            238,
+            267
+          ],
+          "inserted": [
+            60,
+            61,
+            62,
+            63,
+            65,
+            67,
+            68,
+            69,
+            70,
+            71,
+            72,
+            73,
+            74,
+            75,
+            76,
+            80,
+            81,
+            82,
+            83,
+            84,
+            85,
+            86,
+            87,
+            88,
+            89,
+            90,
+            91,
+            124,
+            125,
+            126,
+            127,
+            128,
+            129,
+            130,
+            131,
+            132,
+            133,
+            134,
+            135,
+            136,
+            137,
+            139,
+            140,
+            141,
+            142,
+            145,
+            147,
+            148,
+            149,
+            150,
+            151,
+            152,
+            153,
+            154,
+            155,
+            156,
+            157,
+            158,
+            159,
+            175,
+            180,
+            190,
+            192,
+            193,
+            194,
+            215,
+            217,
+            218,
+            219,
+            220,
+            221,
+            223,
+            224,
+            225,
+            226,
+            227,
+            228,
+            229,
+            231,
+            235,
+            236,
+            239,
+            240,
+            241,
+            242,
+            243,
+            244,
+            245,
+            246,
+            256,
+            257,
+            263,
+            265,
+            268,
+            269,
+            270,
+            271,
+            272,
+            273,
+            274,
+            275,
+            276
+          ],
+          "code": "def main():\n    if \"game_started\" not in st.session_state:\n        st.session_state.game_started = False\n        st.session_state.game_paused = False\n        st.session_state.move_history = []\n    with st.sidebar:\n        model_options = {\n            \"gpt-4o\": \"openai:gpt-4o\",\n            \"o3-mini\": \"openai:o3-mini\",\n            \"claude-3.5\": \"anthropic:claude-3-5-sonnet\",\n            \"claude-3.7\": \"anthropic:claude-3-7-sonnet\",\n            \"claude-3.7-thinking\": \"anthropic:claude-3-7-sonnet-thinking\",\n            \"gemini-flash\": \"google:gemini-2.0-flash\",\n            \"gemini-pro\": \"google:gemini-2.0-pro-exp-02-05\",\n            \"llama-3.3\": \"groq:llama-3.3-70b-versatile\",\n        }\n        selected_p_x = st.selectbox(\n            \"Select Player X\",\n            list(model_options.keys()),\n            index=list(model_options.keys()).index(\"claude-3.7-thinking\"),\n            key=\"model_p1\",\n        )\n        selected_p_o = st.selectbox(\n            \"Select Player O\",\n            list(model_options.keys()),\n            index=list(model_options.keys()).index(\"o3-mini\"),\n            key=\"model_p2\",\n        )\n        with col1:\n            if not st.session_state.game_started:\n                if st.button(\"▶️ Start Game\", disabled=bool(missing_keys)):\n                    st.session_state.player_x, st.session_state.player_o = (\n                        get_tic_tac_toe_players(\n                            model_x=model_options[selected_p_x],\n                            model_o=model_options[selected_p_o],\n                            debug_mode=True,\n                        )\n                    )\n                    st.session_state.game_board = TicTacToeBoard()\n                    st.session_state.game_started = True\n                    st.session_state.game_paused = False\n                    st.session_state.move_history = []\n            else:\n                game_over, _ = st.session_state.game_board.get_game_state()\n                if not game_over:\n                    if st.button(\n                        st.session_state.game_paused = not st.session_state.game_paused\n        with col2:\n            if st.session_state.game_started:\n                if st.button(\"🔄 New Game\"):\n                    st.session_state.player_x, st.session_state.player_o = (\n                        get_tic_tac_toe_players(\n                            model_x=model_options[selected_p_x],\n                            model_o=model_options[selected_p_o],\n                            debug_mode=True,\n                        )\n                    )\n                    st.session_state.game_board = TicTacToeBoard()\n                    st.session_state.game_paused = False\n                    st.session_state.move_history = []\n    if st.session_state.game_started:\n        game_over, status = st.session_state.game_board.get_game_state()\n        if game_over:\n            pass\n        else:\n            current_player = st.session_state.game_board.current_player\n            player_num = \"1\" if current_player == \"X\" else \"2\"\n            current_model_name = selected_p_x if current_player == \"X\" else selected_p_o\n        if not st.session_state.game_paused and not game_over:\n            valid_moves = st.session_state.game_board.get_valid_moves()\n            current_agent = (\n                st.session_state.player_x\n                if current_player == \"X\"\n                else st.session_state.player_o\n            )\n            response: RunOutput = current_agent.run(\n                f\"\"\"\\\nCurrent board state:\\n{st.session_state.game_board.get_board_state()}\\n\nAvailable valid moves (row, col): {valid_moves}\\n\nChoose your next move from the valid moves above.\nRespond with ONLY two numbers for row and column, e.g. \"1 2\".\"\"\",\n                stream=False,\n            )\n            try:\n                numbers = re.findall(r\"\\d+\", response.content if response else \"\")\n                row, col = map(int, numbers[:2])\n                success, message = st.session_state.game_board.make_move(row, col)\n                if success:\n                    move_number = len(st.session_state.move_history) + 1\n                    st.session_state.move_history.append(\n                        {\n                            \"number\": move_number,\n                            \"player\": f\"Player {player_num} ({current_model_name})\",\n                            \"move\": f\"{row},{col}\",\n                        }\n                    )\n                    game_over, status = st.session_state.game_board.get_game_state()\n                    if game_over:\n                        st.session_state.game_paused = True\n                else:\n                    response: RunOutput = current_agent.run(\n                        f\"\"\"\\\nInvalid move: {message}\nCurrent board state:\\n{st.session_state.game_board.get_board_state()}\\n\nAvailable valid moves (row, col): {valid_moves}\\n\nPlease choose a valid move from the list above.\nRespond with ONLY two numbers for row and column, e.g. \"1 2\".\"\"\",\n                        stream=False,\n                    )\n"
+        }
+      ]
+    }
+  ],
+  "additional_source_windows": [
+    {
+      "repo": "Shubhamsaboo/awesome-llm-apps",
+      "rel": "advanced_ai_agents/autonomous_game_playing_agent_apps/ai_tic_tac_toe_agent/utils.py",
+      "lo": 17,
+      "hi": 48,
+      "source": "17:     def make_move(self, row: int, col: int) -> Tuple[bool, str]:\r\n18:         \"\"\"\r\n19:         Make a move on the board.\r\n20: \r\n21:         Args:\r\n22:             row (int): Row index (0-2)\r\n23:             col (int): Column index (0-2)\r\n24: \r\n25:         Returns:\r\n26:             Tuple[bool, str]: (Success status, Message with current board state or error)\r\n27:         \"\"\"\r\n28:         # Validate move coordinates\r\n29:         if not (0 <= row <= 2 and 0 <= col <= 2):\r\n30:             return (\r\n31:                 False,\r\n32:                 \"Invalid move: Position out of bounds. Please choose row and column between 0 and 2.\",\r\n33:             )\r\n34: \r\n35:         # Check if position is already occupied\r\n36:         if self.board[row][col] != EMPTY:\r\n37:             return False, f\"Invalid move: Position ({row}, {col}) is already occupied.\"\r\n38: \r\n39:         # Make the move\r\n40:         self.board[row][col] = self.current_player\r\n41: \r\n42:         # Get board state\r\n43:         board_state = self.get_board_state()\r\n44: \r\n45:         # Switch player\r\n46:         self.current_player = O_PLAYER if self.current_player == X_PLAYER else X_PLAYER\r\n47: \r\n48:         return True, f\"Move successful!\\n{board_state}\"\r"
+    },
+    {
+      "repo": "Shubhamsaboo/awesome-llm-apps",
+      "rel": "advanced_ai_agents/autonomous_game_playing_agent_apps/ai_tic_tac_toe_agent/app.py",
+      "lo": 265,
+      "hi": 282,
+      "source": "265:                 else:\r\n266:                     logger.error(f\"Invalid move attempt: {message}\")\r\n267:                     response: RunOutput = current_agent.run(\r\n268:                         f\"\"\"\\\r\n269: Invalid move: {message}\r\n270: \r\n271: Current board state:\\n{st.session_state.game_board.get_board_state()}\\n\r\n272: Available valid moves (row, col): {valid_moves}\\n\r\n273: Please choose a valid move from the list above.\r\n274: Respond with ONLY two numbers for row and column, e.g. \"1 2\".\"\"\",\r\n275:                         stream=False,\r\n276:                     )\r\n277:                     st.rerun()\r\n278: \r\n279:             except Exception as e:\r\n280:                 logger.error(f\"Error processing move: {str(e)}\")\r\n281:                 st.error(f\"Error processing move: {str(e)}\")\r\n282:                 st.rerun()\r"
+    },
+    {
+      "repo": "ikamensh/kodo",
+      "rel": "kodo/coach.py",
+      "lo": 353,
+      "hi": 375,
+      "source": "353: _FILTER_PROMPT = \"\"\"\\\r\n354: Gate this coach→orchestrator message.\r\n355: \r\n356: Event: {event}\r\n357: Proposed: {message}\r\n358: \r\n359: BLOCK if:\r\n360: - About truncated output, formatting, or prompt length issues\r\n361: - Just praises, summarizes, or restates what already happened\r\n362: - Orchestrator can already see this from the agent output\r\n363: \r\n364: PASS if it suggests a different DIRECTION or flags a strategic gap. \\\r\n365: Mentioning tools or approaches by name is fine — that's direction, not micromanagement.\r\n366: \"\"\"\r\n367: \r\n368: _FILTER_DEFAULT_MODEL = \"anthropic:claude-haiku-4-5-20251001\"\r\n369: \r\n370: \r\n371: class FilterVerdict(BaseModel):\r\n372:     \"\"\"Filter's decision on proposed coach feedback.\"\"\"\r\n373: \r\n374:     decision: Literal[\"pass\", \"block\"]\r\n375:     reason: str = \"\"\r"
+    },
+    {
+      "repo": "ikamensh/kodo",
+      "rel": "kodo/coach.py",
+      "lo": 432,
+      "hi": 441,
+      "source": "432:             def send_feedback(message: str, priority: str = \"warning\") -> str:\r\n433:                 \"\"\"Send feedback to the orchestrator. Only use when something is clearly wrong.\"\"\"\r\n434:                 if priority not in (\"info\", \"warning\", \"correction\"):\r\n435:                     priority = \"warning\"\r\n436:                 block_reason = coach_self._filter_message(message)\r\n437:                 if block_reason:\r\n438:                     log.emit(\"coach_filtered\", reason=block_reason[:200])\r\n439:                     return f\"Not delivered. Reason: {block_reason}\"\r\n440:                 queue.push(message, source=\"coach\", priority=priority)\r\n441:                 return \"Delivered.\"\r"
+    },
+    {
+      "repo": "sourangshupal/Agentic-RAG-project",
+      "rel": "src/services/agents/nodes/rewrite_query_node.py",
+      "lo": 108,
+      "hi": 113,
+      "source": "108:     except Exception as e:\r\n109:         logger.error(f\"Failed to rewrite query using LLM: {e}\")\r\n110:         logger.warning(\"Falling back to simple keyword expansion\")\r\n111:         # Fallback to simple expansion if LLM fails\r\n112:         rewritten_query = f\"{original_question} research paper arxiv machine learning\"\r\n113:         reasoning = \"Fallback: Simple keyword expansion due to LLM error\"\r"
+    },
+    {
+      "repo": "HKUDS/ViMax",
+      "rel": "agents/camera_image_generator.py",
+      "lo": 148,
+      "hi": 181,
+      "source": "148:         parent_items = response.camera_parent_items\r\n149:         if len(parent_items) != len(cameras):\r\n150:             raise ValueError(f\"Camera tree response length mismatch: expected {len(cameras)}, got {len(parent_items)}\")\r\n151: \r\n152:         valid_camera_idxs = {cam.idx for cam in cameras}\r\n153:         valid_shot_idxs = set(shot_desc_by_idx)\r\n154:         parent_by_camera = {}\r\n155:         for cam, parent_cam_item in zip(cameras, parent_items):\r\n156:             parent_cam_idx = parent_cam_item.parent_cam_idx if parent_cam_item is not None else None\r\n157:             parent_shot_idx = parent_cam_item.parent_shot_idx if parent_cam_item is not None else None\r\n158:             if parent_cam_idx is not None and parent_cam_idx not in valid_camera_idxs:\r\n159:                 raise ValueError(f\"Camera {cam.idx} has invalid parent camera {parent_cam_idx}\")\r\n160:             if parent_cam_idx == cam.idx:\r\n161:                 raise ValueError(f\"Camera {cam.idx} cannot be its own parent\")\r\n162:             if parent_shot_idx is not None and parent_shot_idx not in valid_shot_idxs:\r\n163:                 raise ValueError(f\"Camera {cam.idx} has invalid parent shot {parent_shot_idx}\")\r\n164:             parent_by_camera[cam.idx] = parent_cam_idx\r\n165: \r\n166:         for cam in cameras:\r\n167:             seen = set()\r\n168:             current = cam.idx\r\n169:             while parent_by_camera.get(current) is not None:\r\n170:                 current = parent_by_camera[current]\r\n171:                 if current in seen:\r\n172:                     raise ValueError(f\"Camera tree contains a cycle involving camera {cam.idx}\")\r\n173:                 seen.add(current)\r\n174: \r\n175:         for cam, parent_cam_item in zip(cameras, parent_items):\r\n176:             cam.parent_cam_idx = parent_cam_item.parent_cam_idx if parent_cam_item is not None else None\r\n177:             cam.parent_shot_idx = parent_cam_item.parent_shot_idx if parent_cam_item is not None else None\r\n178:             cam.reason = parent_cam_item.reason if parent_cam_item is not None else None\r\n179:             cam.is_parent_fully_covers_child = parent_cam_item.is_parent_fully_covers_child if parent_cam_item is not None else None\r\n180:             cam.missing_info = parent_cam_item.missing_info if parent_cam_item is not None else None\r\n181:         return cameras\r"
+    },
+    {
+      "repo": "alibaba/loongsuite-python",
+      "rel": "examples/ecommerce-customer-service/workflow.py",
+      "lo": 37,
+      "hi": 42,
+      "source": "37: class IntentDecision(BaseModel):\r\n38:     \"\"\"Structured result produced by the intent router.\"\"\"\r\n39: \r\n40:     intent: Literal[\"presales\", \"aftersales\", \"other\"]\r\n41:     confidence: float = Field(ge=0, le=1)\r\n42:     reason: str\r"
+    },
+    {
+      "repo": "alibaba/loongsuite-python",
+      "rel": "examples/ecommerce-customer-service/workflow.py",
+      "lo": 88,
+      "hi": 99,
+      "source": "88: def select_route(\r\n89:     state: SupportState, confidence_threshold: float = 0.6\r\n90: ) -> Route:\r\n91:     \"\"\"Map the structured decision to an explicit graph branch.\"\"\"\r\n92:     if state.get(\"confidence\", 0) < confidence_threshold:\r\n93:         return \"clarify\"\r\n94:     intent = state.get(\"intent\")\r\n95:     if intent == \"presales\":\r\n96:         return \"presales\"\r\n97:     if intent == \"aftersales\":\r\n98:         return \"aftersales\"\r\n99:     return \"clarify\"\r"
+    },
+    {
+      "repo": "alibaba/loongsuite-python",
+      "rel": "examples/ecommerce-customer-service/workflow.py",
+      "lo": 214,
+      "hi": 229,
+      "source": "214:             decision = (\r\n215:                 raw_decision\r\n216:                 if isinstance(raw_decision, IntentDecision)\r\n217:                 else IntentDecision.model_validate(raw_decision)\r\n218:             )\r\n219:         except Exception:  # noqa: BLE001 - an unavailable model must fail open\r\n220:             decision = IntentDecision(\r\n221:                 intent=\"other\",\r\n222:                 confidence=0,\r\n223:                 reason=\"意图识别暂时不可用\",\r\n224:             )\r\n225:         route = select_route(\r\n226:             {\"intent\": decision.intent, \"confidence\": decision.confidence},\r\n227:             self.confidence_threshold,\r\n228:         )\r\n229:         return {\r"
+    },
+    {
+      "repo": "alibaba/loongsuite-python",
+      "rel": "examples/ecommerce-customer-service/workflow.py",
+      "lo": 267,
+      "hi": 282,
+      "source": "267:     def _review_response(self, state: SupportState) -> SupportState:\r\n268:         try:\r\n269:             response = self.model.invoke(\r\n270:                 [\r\n271:                     SystemMessage(content=REVIEW_PROMPT),\r\n272:                     HumanMessage(content=build_review_input(state)),\r\n273:                 ]\r\n274:             )\r\n275:             final_response = _content_to_text(response.content).strip()\r\n276:             if not final_response:\r\n277:                 raise ValueError(\"回复审核员返回了空内容\")\r\n278:         except Exception:  # noqa: BLE001 - review failure returns the safe draft\r\n279:             final_response = state.get(\"draft_response\") or (\r\n280:                 \"暂时无法生成回复，请稍后重试。\"\r\n281:             )\r\n282:         return {\"final_response\": final_response}\r"
+    },
+    {
+      "repo": "FudanSELab/TripSphere",
+      "rel": "trip-itinerary-planner/src/itinerary_planner/agent/nodes.py",
+      "lo": 198,
+      "hi": 224,
+      "source": "198:                 nacos_naming=state[\"nacos_naming\"],\r\n199:                 center_longitude=center_lon,\r\n200:                 center_latitude=center_lat,\r\n201:                 radius_km=12.0,\r\n202:                 limit=hotel_limit,\r\n203:             )\r\n204:             hotel_details = [h.model_dump() for h in hotel_result.hotels]\r\n205:             logger.info(\r\n206:                 \"Found %d hotels near attractions center (%.4f, %.4f)\",\r\n207:                 len(hotel_details),\r\n208:                 center_lat,\r\n209:                 center_lon,\r\n210:             )\r\n211:         except Exception as e:\r\n212:             logger.error(\"Hotel search failed: %s\", e)\r\n213:             hotel_details = []\r\n214: \r\n215:     except Exception as e:\r\n216:         logger.error(f\"LLM planning failed: {e}\")\r\n217:         # Create fallback plan\r\n218:         attraction_details = {}\r\n219:         daily_schedule = {}\r\n220:         itinerary_plan = CompleteItineraryPlan(\r\n221:             destination_info=f\"General information about {state['destination']}\",\r\n222:             day_plans=[],\r\n223:             highlights=[f\"Explore {state['destination']}\", \"Experience local culture\"],\r\n224:             total_estimated_cost=0.0,\r"
+    },
+    {
+      "repo": "splx-ai/agentic-radar",
+      "rel": "examples/openai-agents/agent_patterns/deterministic/deterministic.py",
+      "lo": 23,
+      "hi": 31,
+      "source": "23: class OutlineCheckerOutput(BaseModel):\r\n24:     good_quality: bool\r\n25:     is_scifi: bool\r\n26: \r\n27: \r\n28: outline_checker_agent = Agent(\r\n29:     name=\"outline_checker_agent\",\r\n30:     instructions=\"Read the given story outline, and judge the quality. Also, determine if it is a scifi story.\",\r\n31:     output_type=OutlineCheckerOutput,\r"
+    }
+  ]
+}

@@ -3,6 +3,7 @@
 No models, applications, validators or graph tools are executed. Slice membership
 corroborates joint source lines, not a saved dependence path. Negative results
 are deliberately incomplete; unsupported flow is retained in diagnostics.
+Unknown callbacks retain explicitly uncertain review routes, never confirmed checks.
 """
 from __future__ import annotations
 
@@ -29,7 +30,7 @@ HIT_HEADERS = 'slice_id call_id call_repo repo rel_path code_kind call_line vari
 INDEX_HEADERS = 'slice_id repo rel_path code_kind method variable parses'.split()
 CALL_OUTPUT = 'call_id repo rel_path code_kind framework pattern call_line call_col source_status output_form response_variables source_check_count slice_supported_check_count route_count'.split()
 CHECK_OUTPUT = 'call_id repo rel_path code_kind call_line sink_line check_kind mechanism intervention resolution sink_source response_variables trace_lines joern_status slice_ids shared_slice_ids response_slice_ids slice_variables slice_parse_flags'.split()
-ROUTE_OUTPUT = 'call_id repo rel_path code_kind call_line sink_line route_kind sink_source response_variables'.split()
+ROUTE_OUTPUT = 'call_id repo rel_path code_kind call_line sink_line route_kind sink_source response_variables trace_lines uncertainty_sources'.split()
 DIAGNOSTIC_OUTPUT = 'call_id repo rel_path kind detail'.split()
 _CANONICAL_INPUT_HASHES = {}
 
@@ -127,6 +128,7 @@ def load_calls(artifacts_dir: Path | None = None) -> list[dict]:
 class _Flow:
     variables: frozenset = frozenset()
     lines: frozenset = frozenset()
+    uncertainty: frozenset = frozenset()
 
     def __bool__(self):
         return bool(self.lines)
@@ -134,7 +136,8 @@ class _Flow:
 
 def _join(*flows):
     return _Flow(frozenset().union(*(f.variables for f in flows)),
-                 frozenset().union(*(f.lines for f in flows)))
+                 frozenset().union(*(f.lines for f in flows)),
+                 frozenset().union(*(f.uncertainty for f in flows)))
 
 
 def _terminal(node):
@@ -208,6 +211,7 @@ class _Local:
         self.seen = set()
         self.seed_seen = False
         self.invalidated_events = []
+        self.uncertain_calls = []
 
     def limit(self, message):
         self.limitations.add(message)
@@ -223,6 +227,14 @@ class _Local:
     def sink(self, node, flow, kind, intervention='', resolution='source_local', route=False):
         if not flow:
             return
+        # Expressions are evaluated left to right. An unknown callback later in
+        # the same predicate can invalidate an earlier operand's captured flow.
+        affected = [event for event in self.uncertain_calls if event.variables & flow.variables]
+        flow = _join(flow, *affected)
+        if flow.uncertainty:
+            # Retain a review lead, never a confirmed check or purity claim.
+            kind = 'uncertain_flow_' + kind + '_candidate'
+            route = True
         key = (route, node.lineno, node.col_offset, kind)
         if key in self.seen:
             return
@@ -232,6 +244,7 @@ class _Local:
                    response_variables=sorted(flow.variables), trace_lines=sorted(flow.lines | {node.lineno}))
         if route:
             row['route_kind'] = kind
+            row['uncertainty_sources'] = sorted(flow.uncertainty)
             self.routes.append(row)
         else:
             row.update(check_kind=kind, mechanism=('deterministic_assert' if kind == 'assertion' else
@@ -265,7 +278,7 @@ class _Local:
             self.env.pop(target.id, None)
             self.symbols.pop(target.id, None)
             if flow:
-                tagged = _Flow(flow.variables | {target.id}, flow.lines | {line})
+                tagged = _Flow(flow.variables | {target.id}, flow.lines | {line}, flow.uncertainty)
                 self.env[target.id] = tagged
                 self.response_variables.update(tagged.variables)
         else:
@@ -390,13 +403,29 @@ class _Local:
             if receiver:
                 self.limit('receiver_dispatch_unresolved')
             return receiver
+        # A container's truth is not a response check, but an unknown helper
+        # receiving it can still mutate response objects stored inside it.
+        carriers = []
+        for argument in [*node.args, *(keyword.value for keyword in node.keywords)]:
+            if isinstance(argument, (ast.List, ast.Tuple, ast.Set, ast.Dict)):
+                carriers.extend(self.env[n.id] for n in ast.walk(argument)
+                                if isinstance(n, ast.Name) and isinstance(n.ctx, ast.Load)
+                                and n.id in self.env)
+        combined = _join(combined, *carriers)
         if combined:
             self.limit('unknown_transform_or_callback:' + (name or '<dynamic>'))
-            # Unknown helpers can mutate arguments or receivers: do not keep stale aliases.
+            reason = 'uncertain_flow_after_unknown_call:' + (name or '<dynamic>') + ':' + str(node.lineno)
+            self.limit(reason)
+            # Unknown helpers can mutate arguments or receivers. Preserve only
+            # uncertain provenance on existing aliases so later checks remain
+            # discoverable for review without being counted as guardrails.
             touched = set(combined.variables)
+            event = _Flow(frozenset(touched), combined.lines | {node.lineno},
+                          combined.uncertainty | {reason})
+            self.uncertain_calls.append(event)
             for key, flow in list(self.env.items()):
                 if flow.variables & touched:
-                    self.env.pop(key, None)
+                    self.env[key] = _join(flow, event)
                     self.invalidated_events.append(key)
         if any(isinstance(n, ast.Lambda) for n in node.args):
             self.limit('evaluation_flow_unassessed')
@@ -831,6 +860,14 @@ def _summary(calls, checks, routes, results, subset, hits):
                          'calls_without_enclosing_name': sum(not c.get('enclosing_qname') for c in selected)}
     test_context = {c['call_id'] for c in calls if c.get('source_test_context')}
     mislabeled = test_context & {c['call_id'] for c in calls if c['code_kind'] == 'production'}
+    uncertain_rows = [r for r in routes if r['route_kind'].startswith('uncertain_flow_')]
+    uncertain_ids = {r['call_id'] for r in uncertain_rows}
+    review_test_ids = test_context | {c['call_id'] for c in calls
+                                      if c['code_kind'] in {'test', 'test_support'}}
+    uncertain_review = dict(rows=len(uncertain_rows), calls=len(uncertain_ids),
+                            test_context_calls=len(uncertain_ids & review_test_ids),
+                            by_route_kind=dict(sorted(Counter(r['route_kind'] for r in uncertain_rows).items())),
+                            excluded_from_check_counts=True)
     limitations = sorted({item for result in results for item in result['limitations']} | {
         'Static invocation-site outputs, not runtime responses or validated guardrail prevalence.',
         'Joint saved slice lines are not verified DDG/CDG paths; full per-edge paths were not persisted.',
@@ -839,6 +876,7 @@ def _summary(calls, checks, routes, results, subset, hits):
         'Original code_kind strata are retained even where original source has obvious test context.',
         'Builtin and receiver dispatch can remain unresolved; candidates require manual precision review.'})
     return dict(subset=bool(subset), calls=totals, checks={'total': len(checks)},
+                uncertain_review_candidates=uncertain_review,
                 by_code_kind=strata, rates={'calls': rates(totals), 'by_code_kind': {k: rates(v) for k, v in strata.items()}},
                 source_statuses=dict(sorted(Counter(c['source_status'] for c in calls).items())),
                 joern_statuses=dict(sorted(Counter(r['joern_status'] for r in checks).items())),
@@ -857,6 +895,7 @@ def _summary(calls, checks, routes, results, subset, hits):
 
 def _report(summary, calls, checks, routes):
     n = summary['calls']['denominator']
+    review = summary['uncertain_review_candidates']
     def fraction(num, denominator=n):
         return f'{num}/{denominator}' + (f' ({100 * num / denominator:.2f}%)' if denominator else ' (rate unavailable)')
     lines = ['# Response-check candidates', '',
@@ -882,10 +921,15 @@ def _report(summary, calls, checks, routes):
               'Canonical production labels with obvious test context (sensitivity): ' + json.dumps(summary['production_labelled_test_context'], sort_keys=True) + '.',
               'Canonical code_kind is unchanged. Unconventional tests.py files can be misclassified; these flags use the innermost function/class source context.', '',
               'Saved enclosing-method counts (exclude blank names, no new method-eligibility rule): ' + json.dumps(summary['methods_by_code_kind'], sort_keys=True) + '.', '',
+              '## Review-pending uncertain-flow candidates', '',
+              f"{review['rows']} candidate rows across {review['calls']} invocation sites; "
+              f"{review['test_context_calls']} sites have original-source test context or saved test/test-support labels.",
+              'Unknown callbacks may mutate the output. These leads require source review and are excluded from all check and guardrail counts.',
+              'Candidate route kinds: ' + json.dumps(review['by_route_kind'], sort_keys=True) + '.', '',
               '## Unresolved evidence', '',
               'Source statuses: ' + json.dumps(summary['source_statuses'], sort_keys=True) + '.',
               'Joern statuses: ' + json.dumps(summary['joern_statuses'], sort_keys=True) + '.',
-              f'Nonqualifying parser/evaluation/unresolved routes: {len(routes)} rows.', '',
+              f"Other nonqualifying parser/evaluation/unresolved routes: {len(routes) - review['rows']} rows.", '',
               *['- ' + value for value in summary['limitations']], '',
               '## Deterministic review sample', '',
               'Manual review must establish precision and the property being checked before any guardrail-prevalence claim.', '']

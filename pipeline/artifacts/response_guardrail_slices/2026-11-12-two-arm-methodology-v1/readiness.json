@@ -1,0 +1,28 @@
+{
+  "frame": "Existing complete-case production-method baseline; preliminary assessment frame, not final corrected population",
+  "methods": 7642,
+  "repos": 571,
+  "methods_with_mapped_tests": 220,
+  "methods_with_exact_mappings": 59,
+  "mapped_test_method_rows": 461,
+  "unique_tests": 461,
+  "mapping_count_mismatches": 0,
+  "baseline_repos_excluded": 55,
+  "baseline_exclusion_reasons": {
+    "inventory_or_snapshot_mismatch": 52,
+    "incomplete_mapping_run": 3
+  },
+  "mapping_strata": {
+    "import|fuzzy": 294,
+    "basename|fuzzy": 98,
+    "basename|exact": 20,
+    "import|exact": 49
+  },
+  "frame_methods_with_existing_production_labelled_call_rows": 7642,
+  "old_explicit_slice_candidate_methods_in_frame": 92,
+  "semantic_composition": {
+    "test_suite": "not_estimated",
+    "runtime": "not_estimated",
+    "reason": "Syntax-based candidates and purposive source examples do not supply validated and consistently ascertained simple/complex labels."
+  }
+}

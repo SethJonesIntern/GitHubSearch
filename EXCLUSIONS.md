@@ -666,4 +666,23 @@ concept. Transitive rows stay in the raw CSVs; this is a filter, not a deletion.
 
 ---
 
-*Last updated: 2026-09-18. Add new exclusions as rows above, dated, with the enforcing code location.*
+## 19. Guardrail evidence adjudication (2026-11-12) — candidate filters, no corpus cuts
+
+| Evidence excluded from guardrail numerator | Reason | Enforced in |
+|---|---|---|
+| Syntax/API matches, focal correspondence or slice membership without verified output/check/consequence | Candidate discovery does not establish a guardrail | `pipeline/guardrail_prevalence_audit.mjs:215`; source annotations in `pipeline/artifacts/response_guardrail_slices/2026-11-12-prevalence-source-audit-v1/` |
+| Shell/blockchain/retrieval false positives, inputs, diagnostics, test helpers and wrong target mappings | Original-source review does not support the claimed protected LLM output association; annotation rejection is not a population cut | Same annotations, `decision=not_guardrail`; ambiguous cases `unresolved` |
+| Schema/presence merely packaging a judge verdict | Auxiliary evaluator plumbing, not an extra simple guard on the underlying generation | `auxiliary=1`, adjudication.json, aggregator line215 |
+| Unknown-callback provenance at a later check | Retain as `uncertain_flow_*_candidate` review route, not a confirmed check; mutation cannot be presumed absent | `pipeline/response_guardrail_slices.py`, separate `uncertain_review_candidates` summary lane |
+| Unmapped semantic test examples | No verified eligible producer-method mapping in the frozen primary test arm | Separately catalogued in `2026-11-12-test-complex-checks-v1/`; not silently added to primary numerator |
+
+The frozen preliminary complete-case denominator is retained, including known detector
+false positives and production/test boundary problems. No `in_scope` edits, deletions,
+raw-provider additions, or canonical count changes were made. Fixed mocked-value
+assertions on a mapped client return remain labelled simple contract tests; they do
+not establish live semantic output quality. Identified rates are discovery-conditioned,
+not estimates of true population coverage or simple/complex composition.
+
+---
+
+*Last updated: 2026-11-12. Add new exclusions as rows above, dated, with the enforcing code location.*

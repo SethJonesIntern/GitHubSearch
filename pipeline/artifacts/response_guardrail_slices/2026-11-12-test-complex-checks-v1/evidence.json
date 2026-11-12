@@ -1,0 +1,515 @@
+{
+  "date": "2026-11-12",
+  "scan": {
+    "saved_test_or_support_call_source_files": 1674,
+    "read": 1674,
+    "read_errors": [],
+    "lexical_candidate_files": 209,
+    "scope_note": "Only files with saved canonical test/test_support calls, plus targeted tutorial inspection; not all mapped tests or all test files in observed repositories."
+  },
+  "cases": [
+    {
+      "repo": "GenseeAI/open_deep_research",
+      "rel": "src/legacy/tests/test_report_quality.py",
+      "classification": "complex_semantic_pytest_assertion",
+      "verdict": "LLM judges report quality; assert eval_result.grade fails pytest on negative grade.",
+      "caveat": "Static source verification; not executed. Old detector has zero checks although saved eval_result slice includes call line240 and assertion294.",
+      "ranges": [
+        [
+          26,
+          47
+        ],
+        [
+          49,
+          81
+        ],
+        [
+          139,
+          144
+        ],
+        [
+          236,
+          243
+        ],
+        [
+          276,
+          294
+        ]
+      ],
+      "source_sha256": "76cbeb84c923a69bbc9081e5fc41995b0c6b4204ac7b329293eeca43125a5ec8",
+      "excerpts": [
+        {
+          "lo": 26,
+          "hi": 47,
+          "source": "26: class CriteriaGrade(BaseModel):\r\n27:     \"\"\"Score the response against specific criteria.\"\"\"\r\n28:     grade: bool = Field(description=\"Does the response meet the provided criteria?\")\r\n29:     justification: str = Field(description=\"The justification for the grade and score, including specific examples from the response.\")\r\n30: \r\n31: # Function to create evaluation LLM at test time\r\n32: def get_evaluation_llm(eval_model=None):\r\n33:     \"\"\"Create and return an evaluation LLM.\r\n34:     \r\n35:     Args:\r\n36:         eval_model: Model identifier to use for evaluation\r\n37:                     Format: \"provider:model_name\" (e.g., \"anthropic:claude-3-7-sonnet-latest\")\r\n38:                     If None, it will use environment variable or default\r\n39:     \r\n40:     Returns:\r\n41:         Structured LLM for generating evaluation grades\r\n42:     \"\"\"\r\n43:     # Use provided model, then environment variable, then default\r\n44:     model_to_use = eval_model or os.environ.get(\"EVAL_MODEL\", \"anthropic:claude-3-7-sonnet-latest\")\r\n45:     \r\n46:     criteria_eval_llm = init_chat_model(model_to_use)\r\n47:     return criteria_eval_llm.with_structured_output(CriteriaGrade)\r"
+        },
+        {
+          "lo": 49,
+          "hi": 81,
+          "source": "49: RESPONSE_CRITERIA_SYSTEM_PROMPT = \"\"\"\r\n50: You are evaluating the quality of a research report. Please assess the report against the following criteria, being especially strict about section relevance.\r\n51: \r\n52: 1. Topic Relevance (Overall): Does the report directly address the user's input topic thoroughly?\r\n53: \r\n54: 2. Section Relevance (Critical): CAREFULLY assess each individual section for relevance to the main topic:\r\n55:    - Identify each section by its ## header\r\n56:    - For each section, determine if it is directly relevant to the primary topic\r\n57:    - Flag any sections that seem tangential, off-topic, or only loosely connected to the main topic\r\n58:    - A high-quality report should have NO irrelevant sections\r\n59: \r\n60: 3. Structure and Flow: Do the sections flow logically from one to the next, creating a cohesive narrative?\r\n61: \r\n62: 4. Introduction Quality: Does the introduction effectively provide context and set up the scope of the report?\r\n63: \r\n64: 5. Conclusion Quality: Does the conclusion meaningfully summarize key findings and insights from the report?\r\n65: \r\n66: 6. Structural Elements: Does the report use structural elements (e.g., tables, lists) to effectively convey information?\r\n67: \r\n68: 7. Section Headers: Are section headers properly formatted with Markdown (# for title, ## for sections, ### for subsections)?\r\n69: \r\n70: 8. Citations: Does the report properly cite sources in each main body section?\r\n71: \r\n72: 9. Overall Quality: Is the report well-researched, accurate, and professionally written?\r\n73: \r\n74: Evaluation Instructions:\r\n75: - Be STRICT about section relevance - ALL sections must clearly connect to the primary topic\r\n76: - A report with even ONE irrelevant section should be considered flawed\r\n77: - You must individually mention each section by name and assess its relevance\r\n78: - Provide specific examples from the report to justify your evaluation for each criterion\r\n79: - The report fails if any sections are irrelevant to the main topic, regardless of other qualities\r\n80: \"\"\" \r\n81: \r"
+        },
+        {
+          "lo": 139,
+          "hi": 144,
+          "source": "139: @pytest.mark.langsmith\r\n140: def test_response_criteria_evaluation(research_agent, search_api, models, eval_model):\r\n141:     \"\"\"Test if a report meets the specified quality criteria.\"\"\"\r\n142:     console.print(Panel.fit(\r\n143:         f\"[bold blue]Testing {research_agent} report generation with {search_api} search[/bold blue]\",\r\n144:         title=\"Test Configuration\"\r"
+        },
+        {
+          "lo": 236,
+          "hi": 243,
+          "source": "236:     # Get evaluation LLM using the specified model\r\n237:     criteria_eval_structured_llm = get_evaluation_llm(eval_model)\r\n238:     \r\n239:     # Evaluate the report against our quality criteria\r\n240:     eval_result = criteria_eval_structured_llm.invoke([\r\n241:         {\"role\": \"system\", \"content\": RESPONSE_CRITERIA_SYSTEM_PROMPT},\r\n242:         {\"role\": \"user\", \"content\": f\"\"\"\\n\\n Report: \\n\\n{report}\\n\\nEvaluate whether the report meets the criteria and provide detailed justification for your evaluation.\"\"\"}\r\n243:     ])\r"
+        },
+        {
+          "lo": 276,
+          "hi": 294,
+          "source": "276:     # Display justification in a panel\r\n277:     console.print(Panel(\r\n278:         eval_result.justification,\r\n279:         title=\"Evaluation Justification\",\r\n280:         border_style=\"yellow\"\r\n281:     ))\r\n282:     \r\n283:     # Log outputs to LangSmith\r\n284:     t.log_outputs({\r\n285:         \"report\": report,\r\n286:         \"evaluation_result\": eval_result.grade,\r\n287:         \"justification\": eval_result.justification,\r\n288:         \"report_length\": len(report),\r\n289:         \"section_count\": len(section_headers),\r\n290:         \"section_headers\": section_headers,\r\n291:     })\r\n292:     \r\n293:     # Test passes if the evaluation criteria are met\r\n294:     assert eval_result.grade"
+        }
+      ]
+    },
+    {
+      "repo": "5zjk5/prompt-engineering",
+      "rel": "Skill/lang_chain&graphy_skill/resources/测试/llm_as_judge_evaluator.py",
+      "classification": "complex_trajectory_test_tutorial",
+      "verdict": "AgentEvals LLM trajectory judge supplies boolean used in assert evaluation[score] is True.",
+      "caveat": "Tutorial test function manually invoked; file not conventionally named test_*.py and no pytest import. Canonical code_kind production. Reference uses San Francisco while input asks Seattle.",
+      "ranges": [
+        [
+          40,
+          75
+        ]
+      ],
+      "source_sha256": "ee766f5aa0747e223d57c97a28c28c5037cd145a8cd35d89b7381724884bc677",
+      "excerpts": [
+        {
+          "lo": 40,
+          "hi": 75,
+          "source": "40: agent = create_agent(model, tools=[get_weather])\r\n41: \r\n42: evaluator = create_trajectory_llm_as_judge(  \r\n43:     judge=model,  \r\n44:     prompt=TRAJECTORY_ACCURACY_PROMPT_WITH_REFERENCE,  # 提示词可以自定义，必须传入 outputs，reference_outputs\r\n45: )  \r\n46: \r\n47: \r\n48: def test_trajectory_quality():\r\n49:     result = agent.invoke({\r\n50:         \"messages\": [HumanMessage(content=\"What's the weather in Seattle?\")]\r\n51:     })\r\n52: \r\n53:     # 设定参考轨迹\r\n54:     reference_trajectory = [\r\n55:         HumanMessage(content=\"What's the weather in San Francisco?\"),\r\n56:         AIMessage(content=\"\", tool_calls=[\r\n57:             {\"id\": \"call_1\", \"name\": \"get_weather\", \"args\": {\"city\": \"San Francisco\"}}\r\n58:         ]),\r\n59:         ToolMessage(content=\"It's 75 degrees and sunny in San Francisco.\", tool_call_id=\"call_1\"),\r\n60:         AIMessage(content=\"The weather in San Francisco is 75 degrees and sunny.\"),\r\n61:     ]\r\n62: \r\n63:     evaluation = evaluator(\r\n64:         outputs=result[\"messages\"],  # 必选输出 messages\r\n65:         reference_outputs=reference_trajectory,  # 参考轨迹\r\n66:     )\r\n67:     # {\r\n68:     #     'key': 'trajectory_accuracy',\r\n69:     #     'score': True,\r\n70:     #     'comment': 'The provided agent trajectory is reasonable...'  # 理由\r\n71:     # }\r\n72:     assert evaluation[\"score\"] is True\r\n73: \r\n74: \r\n75: test_trajectory_quality()\r"
+        }
+      ]
+    },
+    {
+      "repo": "deepset-ai/haystack-core-integrations",
+      "rel": "integrations/ragas/tests/test_evaluator.py",
+      "classification": "mocked_evaluator_contract_not_complex_quality_gate",
+      "verdict": "Fixed mocked faithfulness/answer_relevancy scores checked for equality.",
+      "caveat": "These tests test evaluator integration contracts, not semantic quality of generated outputs. Other tests in file may exercise real backends.",
+      "ranges": [
+        [
+          44,
+          57
+        ],
+        [
+          95,
+          115
+        ]
+      ],
+      "source_sha256": "e2b73d56d8eca8828f3a1d9858e7a375c1061c6928e3f88a32992f32090b9369",
+      "excerpts": [
+        {
+          "lo": 44,
+          "hi": 57,
+          "source": "44:     \"\"\"Create a mock SimpleBaseMetric with a concrete ascore signature for inspect.signature.\"\"\"\r\n45:     metric = MagicMock(spec=SimpleBaseMetric)\r\n46:     metric.name = name\r\n47:     metric.score.return_value = MetricResult(value=score, reason=reason)\r\n48: \r\n49:     async def ascore(user_input: str, response: str, retrieved_contexts: list) -> MetricResult:\r\n50:         return MetricResult(value=score, reason=reason)\r\n51: \r\n52:     metric.ascore = ascore\r\n53:     return metric\r\n54: \r\n55: \r\n56: def make_metric_async(name: str, score: float = 0.8, reason: str = \"test reason\") -> MagicMock:\r\n57:     \"\"\"Create a mock SimpleBaseMetric with a concrete ascore signature for inspect.signature.\"\"\"\r"
+        },
+        {
+          "lo": 95,
+          "hi": 115,
+          "source": "95:     def test_run_returns_result_by_metric_name(self, monkeypatch):\r\n96:         metric = make_metric(\"faithfulness\", score=0.9)\r\n97:         evaluator = RagasEvaluator(ragas_metrics=[metric])\r\n98:         output = evaluator.run(\r\n99:             query=\"Which is the most popular global sport?\",\r\n100:             response=\"Football is the most popular sport.\",\r\n101:             documents=[\"Football is undoubtedly the world's most popular sport.\"],\r\n102:         )\r\n103:         assert \"result\" in output\r\n104:         assert \"faithfulness\" in output[\"result\"]\r\n105:         result = output[\"result\"][\"faithfulness\"]\r\n106:         assert isinstance(result, MetricResult)\r\n107:         assert result.value == 0.9\r\n108: \r\n109:     def test_run_scores_all_metrics(self):\r\n110:         metrics = [make_metric(\"faithfulness\", 0.9), make_metric(\"answer_relevancy\", 0.7)]\r\n111:         evaluator = RagasEvaluator(ragas_metrics=metrics)\r\n112:         output = evaluator.run(query=\"test?\", response=\"answer\", documents=[\"doc\"])\r\n113:         assert set(output[\"result\"].keys()) == {\"faithfulness\", \"answer_relevancy\"}\r\n114:         assert output[\"result\"][\"faithfulness\"].value == 0.9\r\n115:         assert output[\"result\"][\"answer_relevancy\"].value == 0.7\r"
+        }
+      ]
+    },
+    {
+      "repo": "deepset-ai/haystack-core-integrations",
+      "rel": "integrations/deepeval/tests/test_evaluator.py",
+      "classification": "evaluator_integration_shape_test_not_semantic_acceptance",
+      "verdict": "Live-backend test checks output dictionary shape and number of results rather than minimum semantic score.",
+      "caveat": "Real evaluator execution alone is not a test quality gate. Backend-mocked output tests also exist.",
+      "ranges": [],
+      "source_sha256": "343f1bf839c9fc138bc292d9bc33fa56ca4b8534fa7907e12cc1af044a67b6ca",
+      "excerpts": [
+        {
+          "lo": 332,
+          "hi": 344,
+          "source": "332: def test_integration_run(metric, inputs, metric_params):\r\n333:     init_params = {\r\n334:         \"metric\": metric,\r\n335:         \"metric_params\": metric_params,\r\n336:     }\r\n337:     evaluator = DeepEvalEvaluator(**init_params)\r\n338:     output = evaluator.run(**inputs)\r\n339: \r\n340:     assert isinstance(output, dict)\r\n341:     assert len(output) == 1\r\n342:     assert \"results\" in output\r\n343:     assert len(output[\"results\"]) == len(next(iter(inputs.values())))\r\n344: "
+        }
+      ]
+    },
+    {
+      "repo": "tigergraph/graphrag",
+      "rel": "graphrag/tests/regression/evaluator.py",
+      "classification": "semantic_evaluation_report_not_score_threshold_gate",
+      "verdict": "GEval answer correctness scores are measured/reported; script exit depends on errors, answered_question and metric_errors rather than correctness threshold.",
+      "caveat": "Separate evaluation evidence from test pass/fail quality enforcement.",
+      "ranges": [
+        [
+          253,
+          287
+        ],
+        [
+          309,
+          315
+        ],
+        [
+          672,
+          684
+        ],
+        [
+          786,
+          798
+        ]
+      ],
+      "source_sha256": "0559dc97fdb08e1b7a9d24bb6b8cb915a398fdb885f1730b340def6b2236d825",
+      "excerpts": [
+        {
+          "lo": 253,
+          "hi": 287,
+          "source": "253: def answer_correctness(\r\n254:     question: str,\r\n255:     generated_answer: str,\r\n256:     ground_truth: str,\r\n257: ) -> Tuple[Optional[float], Optional[str], Optional[str]]:\r\n258:     \"\"\"Returns (score 0–1, reason, error). score/reason are None on failure.\"\"\"\r\n259:     if not ground_truth:\r\n260:         return None, None, \"no ground truth provided\"\r\n261: \r\n262:     try:\r\n263:         import asyncio\r\n264:         from deepeval.metrics import GEval\r\n265:         from deepeval.test_case import LLMTestCase, LLMTestCaseParams\r\n266:     except ImportError as e:\r\n267:         return None, None, f\"deepeval not installed: {e}\"\r\n268: \r\n269:     try:\r\n270:         judge = _build_deepeval_llm()\r\n271:     except Exception as e:\r\n272:         return None, None, f\"judge init failed: {e}\"\r\n273: \r\n274:     metric = GEval(\r\n275:         name=\"Answer Correctness\",\r\n276:         model=judge,\r\n277:         evaluation_steps=_EVALUATION_STEPS,\r\n278:         evaluation_params=[\r\n279:             LLMTestCaseParams.INPUT,\r\n280:             LLMTestCaseParams.ACTUAL_OUTPUT,\r\n281:             LLMTestCaseParams.EXPECTED_OUTPUT,\r\n282:         ],\r\n283:     )\r\n284:     test_case = LLMTestCase(\r\n285:         input=question,\r\n286:         actual_output=generated_answer,\r\n287:         expected_output=ground_truth,\r"
+        },
+        {
+          "lo": 309,
+          "hi": 315,
+          "source": "309:     if last_err is not None:\r\n310:         return None, None, f\"{type(last_err).__name__}: {last_err}\"\r\n311: \r\n312:     return (\r\n313:         float(metric.score)  if metric.score  is not None else None,\r\n314:         str(metric.reason).strip() if metric.reason else None,\r\n315:         None,\r"
+        },
+        {
+          "lo": 672,
+          "hi": 684,
+          "source": "672:     if avg_corr is not None:\r\n673:         col = _G if avg_corr >= 0.75 else _Y if avg_corr >= 0.5 else _R\r\n674:         print(f\"  {_C}Avg Answer Correctness{_X}  : {col}{avg_corr * 100:.1f}%{_X}\")\r\n675:     elif not any(r.ground_truth for r in results):\r\n676:         print(f\"  Avg Answer Correctness  : — (no ground truth / answers.csv)\")\r\n677:     else:\r\n678:         print(f\"  Avg Answer Correctness  : — (metric errors, check deepeval install)\")\r\n679: \r\n680:     if hal_rate is not None:\r\n681:         col = _R if hal_rate > 0.2 else _G\r\n682:         print(f\"  {_C}Hallucination Rate{_X}      : {col}{hal_rate * 100:.1f}%{_X}\")\r\n683:     else:\r\n684:         print(f\"  Hallucination Rate      : — (check failed or no context)\")\r"
+        },
+        {
+          "lo": 786,
+          "hi": 798,
+          "source": "786:     )\r\n787:     write_results(results, output_dir, detailed=args.detailed)\r\n788: \r\n789:     # os._exit skips the interpreter shutdown phase, which otherwise emits\r\n790:     # destructor/asyncio noise (\"ImportError: sys.meta_path is None …\") from\r\n791:     # the GraphRAG embedding-store and LLM clients after our output is done.\r\n792:     sys.stdout.flush()\r\n793:     sys.stderr.flush()\r\n794:     exit_code = 1 if any(\r\n795:         r.error or not r.answered_question or r.metric_errors\r\n796:         for r in results\r\n797:     ) else 0\r\n798:     os._exit(exit_code)\r"
+        }
+      ]
+    }
+  ],
+  "gensee_saved_calls": [
+    {
+      "call_id": "GenseeAI_open_deep_research/src/legacy/tests/test_report_quality.py::191::20",
+      "repo": "GenseeAI/open_deep_research",
+      "rel_path": "src/legacy/tests/test_report_quality.py",
+      "code_kind": "test",
+      "framework": "langgraph",
+      "pattern": ".ainvoke",
+      "call_line": "191",
+      "call_col": "20",
+      "source_status": "ok",
+      "output_form": "nested_expression",
+      "response_variables": "[]",
+      "source_check_count": "0",
+      "slice_supported_check_count": "0",
+      "route_count": "0",
+      "enclosing_qname": "GenseeAI_open_deep_research.src.legacy.tests.test_report_quality.test_response_criteria_evaluation",
+      "source_test_context": "[\"test_named_function:test_response_criteria_evaluation\"]"
+    },
+    {
+      "call_id": "GenseeAI_open_deep_research/src/legacy/tests/test_report_quality.py::220::31",
+      "repo": "GenseeAI/open_deep_research",
+      "rel_path": "src/legacy/tests/test_report_quality.py",
+      "code_kind": "test",
+      "framework": "langgraph",
+      "pattern": ".astream",
+      "call_line": "220",
+      "call_col": "31",
+      "source_status": "ok",
+      "output_form": "nested_expression",
+      "response_variables": "[]",
+      "source_check_count": "0",
+      "slice_supported_check_count": "0",
+      "route_count": "0",
+      "enclosing_qname": "GenseeAI_open_deep_research.src.legacy.tests.test_report_quality.test_response_criteria_evaluation",
+      "source_test_context": "[\"test_named_function:test_response_criteria_evaluation\"]"
+    },
+    {
+      "call_id": "GenseeAI_open_deep_research/src/legacy/tests/test_report_quality.py::225::31",
+      "repo": "GenseeAI/open_deep_research",
+      "rel_path": "src/legacy/tests/test_report_quality.py",
+      "code_kind": "test",
+      "framework": "langgraph",
+      "pattern": ".astream",
+      "call_line": "225",
+      "call_col": "31",
+      "source_status": "ok",
+      "output_form": "nested_expression",
+      "response_variables": "[]",
+      "source_check_count": "0",
+      "slice_supported_check_count": "0",
+      "route_count": "0",
+      "enclosing_qname": "GenseeAI_open_deep_research.src.legacy.tests.test_report_quality.test_response_criteria_evaluation",
+      "source_test_context": "[\"test_named_function:test_response_criteria_evaluation\"]"
+    },
+    {
+      "call_id": "GenseeAI_open_deep_research/src/legacy/tests/test_report_quality.py::240::18",
+      "repo": "GenseeAI/open_deep_research",
+      "rel_path": "src/legacy/tests/test_report_quality.py",
+      "code_kind": "test",
+      "framework": "langgraph",
+      "pattern": ".invoke",
+      "call_line": "240",
+      "call_col": "18",
+      "source_status": "ok",
+      "output_form": "assigned",
+      "response_variables": "[\"eval_result\"]",
+      "source_check_count": "0",
+      "slice_supported_check_count": "0",
+      "route_count": "0",
+      "enclosing_qname": "GenseeAI_open_deep_research.src.legacy.tests.test_report_quality.test_response_criteria_evaluation",
+      "source_test_context": "[\"test_named_function:test_response_criteria_evaluation\"]"
+    }
+  ],
+  "gensee_existing_check_rows": [],
+  "gensee_diagnostics": [
+    {
+      "call_id": "GenseeAI_open_deep_research/src/legacy/tests/test_report_quality.py::191::20",
+      "repo": "GenseeAI/open_deep_research",
+      "rel_path": "src/legacy/tests/test_report_quality.py",
+      "kind": "builtin_dispatch_unresolved",
+      "detail": "builtin_dispatch_unresolved"
+    },
+    {
+      "call_id": "GenseeAI_open_deep_research/src/legacy/tests/test_report_quality.py::191::20",
+      "repo": "GenseeAI/open_deep_research",
+      "rel_path": "src/legacy/tests/test_report_quality.py",
+      "kind": "container_response_flow_unassessed",
+      "detail": "container_response_flow_unassessed"
+    },
+    {
+      "call_id": "GenseeAI_open_deep_research/src/legacy/tests/test_report_quality.py::191::20",
+      "repo": "GenseeAI/open_deep_research",
+      "rel_path": "src/legacy/tests/test_report_quality.py",
+      "kind": "nested_expression_flow_bounded",
+      "detail": "nested_expression_flow_bounded"
+    },
+    {
+      "call_id": "GenseeAI_open_deep_research/src/legacy/tests/test_report_quality.py::191::20",
+      "repo": "GenseeAI/open_deep_research",
+      "rel_path": "src/legacy/tests/test_report_quality.py",
+      "kind": "original_source_test_context",
+      "detail": "original_source_test_context:test_named_function:test_response_criteria_evaluation"
+    },
+    {
+      "call_id": "GenseeAI_open_deep_research/src/legacy/tests/test_report_quality.py::191::20",
+      "repo": "GenseeAI/open_deep_research",
+      "rel_path": "src/legacy/tests/test_report_quality.py",
+      "kind": "unknown_transform_or_callback",
+      "detail": "unknown_transform_or_callback:run"
+    },
+    {
+      "call_id": "GenseeAI_open_deep_research/src/legacy/tests/test_report_quality.py::191::20",
+      "repo": "GenseeAI/open_deep_research",
+      "rel_path": "src/legacy/tests/test_report_quality.py",
+      "kind": "unsupported_merge",
+      "detail": "unsupported_merge"
+    },
+    {
+      "call_id": "GenseeAI_open_deep_research/src/legacy/tests/test_report_quality.py::220::31",
+      "repo": "GenseeAI/open_deep_research",
+      "rel_path": "src/legacy/tests/test_report_quality.py",
+      "kind": "nested_expression_flow_bounded",
+      "detail": "nested_expression_flow_bounded"
+    },
+    {
+      "call_id": "GenseeAI_open_deep_research/src/legacy/tests/test_report_quality.py::220::31",
+      "repo": "GenseeAI/open_deep_research",
+      "rel_path": "src/legacy/tests/test_report_quality.py",
+      "kind": "original_source_test_context",
+      "detail": "original_source_test_context:test_named_function:test_response_criteria_evaluation"
+    },
+    {
+      "call_id": "GenseeAI_open_deep_research/src/legacy/tests/test_report_quality.py::220::31",
+      "repo": "GenseeAI/open_deep_research",
+      "rel_path": "src/legacy/tests/test_report_quality.py",
+      "kind": "unsupported_merge",
+      "detail": "unsupported_merge"
+    },
+    {
+      "call_id": "GenseeAI_open_deep_research/src/legacy/tests/test_report_quality.py::225::31",
+      "repo": "GenseeAI/open_deep_research",
+      "rel_path": "src/legacy/tests/test_report_quality.py",
+      "kind": "container_response_flow_unassessed",
+      "detail": "container_response_flow_unassessed"
+    },
+    {
+      "call_id": "GenseeAI_open_deep_research/src/legacy/tests/test_report_quality.py::225::31",
+      "repo": "GenseeAI/open_deep_research",
+      "rel_path": "src/legacy/tests/test_report_quality.py",
+      "kind": "nested_expression_flow_bounded",
+      "detail": "nested_expression_flow_bounded"
+    },
+    {
+      "call_id": "GenseeAI_open_deep_research/src/legacy/tests/test_report_quality.py::225::31",
+      "repo": "GenseeAI/open_deep_research",
+      "rel_path": "src/legacy/tests/test_report_quality.py",
+      "kind": "original_source_test_context",
+      "detail": "original_source_test_context:test_named_function:test_response_criteria_evaluation"
+    },
+    {
+      "call_id": "GenseeAI_open_deep_research/src/legacy/tests/test_report_quality.py::225::31",
+      "repo": "GenseeAI/open_deep_research",
+      "rel_path": "src/legacy/tests/test_report_quality.py",
+      "kind": "unsupported_merge",
+      "detail": "unsupported_merge"
+    },
+    {
+      "call_id": "GenseeAI_open_deep_research/src/legacy/tests/test_report_quality.py::240::18",
+      "repo": "GenseeAI/open_deep_research",
+      "rel_path": "src/legacy/tests/test_report_quality.py",
+      "kind": "builtin_dispatch_unresolved",
+      "detail": "builtin_dispatch_unresolved"
+    },
+    {
+      "call_id": "GenseeAI_open_deep_research/src/legacy/tests/test_report_quality.py::240::18",
+      "repo": "GenseeAI/open_deep_research",
+      "rel_path": "src/legacy/tests/test_report_quality.py",
+      "kind": "container_response_flow_unassessed",
+      "detail": "container_response_flow_unassessed"
+    },
+    {
+      "call_id": "GenseeAI_open_deep_research/src/legacy/tests/test_report_quality.py::240::18",
+      "repo": "GenseeAI/open_deep_research",
+      "rel_path": "src/legacy/tests/test_report_quality.py",
+      "kind": "original_source_test_context",
+      "detail": "original_source_test_context:test_named_function:test_response_criteria_evaluation"
+    },
+    {
+      "call_id": "GenseeAI_open_deep_research/src/legacy/tests/test_report_quality.py::240::18",
+      "repo": "GenseeAI/open_deep_research",
+      "rel_path": "src/legacy/tests/test_report_quality.py",
+      "kind": "receiver_dispatch_unresolved",
+      "detail": "receiver_dispatch_unresolved"
+    },
+    {
+      "call_id": "GenseeAI_open_deep_research/src/legacy/tests/test_report_quality.py::240::18",
+      "repo": "GenseeAI/open_deep_research",
+      "rel_path": "src/legacy/tests/test_report_quality.py",
+      "kind": "unknown_transform_or_callback",
+      "detail": "unknown_transform_or_callback:Panel"
+    },
+    {
+      "call_id": "GenseeAI_open_deep_research/src/legacy/tests/test_report_quality.py::240::18",
+      "repo": "GenseeAI/open_deep_research",
+      "rel_path": "src/legacy/tests/test_report_quality.py",
+      "kind": "unsupported_expression",
+      "detail": "unsupported_expression:IfExp"
+    },
+    {
+      "call_id": "GenseeAI_open_deep_research/src/legacy/tests/test_report_quality.py::240::18",
+      "repo": "GenseeAI/open_deep_research",
+      "rel_path": "src/legacy/tests/test_report_quality.py",
+      "kind": "unsupported_merge",
+      "detail": "unsupported_merge"
+    }
+  ],
+  "gensee_eval_result_slices": [
+    {
+      "variable": "eval_result",
+      "pdg": [
+        140,
+        240,
+        257,
+        258,
+        277,
+        278,
+        284,
+        286,
+        287,
+        294
+      ],
+      "inserted": [
+        169,
+        175,
+        176,
+        179,
+        180,
+        181,
+        182,
+        183,
+        184,
+        185,
+        186,
+        188,
+        194,
+        195,
+        198,
+        204,
+        205,
+        208,
+        209,
+        210,
+        211,
+        212,
+        213,
+        214,
+        215,
+        216,
+        218,
+        230,
+        231,
+        234,
+        237,
+        241,
+        242,
+        243,
+        247,
+        279,
+        280,
+        281,
+        285,
+        288,
+        289,
+        290,
+        291
+      ],
+      "code": "def test_response_criteria_evaluation(research_agent, search_api, models, eval_model):\n    if research_agent == \"multi_agent\":\n        checkpointer = MemorySaver()\n        graph = supervisor_builder.compile(checkpointer=checkpointer)\n        config = {\n            \"thread_id\": str(uuid.uuid4()),\n            \"search_api\": search_api,\n            \"supervisor_model\": models.get(\"supervisor_model\"),\n            \"researcher_model\": models.get(\"researcher_model\"),\n            \"ask_for_clarification\": False, # Don't ask for clarification from the user and proceed to write the report\n            \"process_search_results\": \"summarize\", # Optionally summarize \n        }\n        thread_config = {\"configurable\": config}\n        final_state = graph.get_state(thread_config)\n        report = final_state.values.get('final_report', \"No report generated\")\n    elif research_agent == \"graph\":\n        checkpointer = MemorySaver()\n        graph = builder.compile(checkpointer=checkpointer)\n        thread = {\"configurable\": {\n            \"thread_id\": str(uuid.uuid4()),\n            \"search_api\": search_api,\n            \"planner_provider\": models.get(\"planner_provider\", \"anthropic\"),\n            \"planner_model\": models.get(\"planner_model\", \"claude-3-7-sonnet-latest\"),\n            \"writer_provider\": models.get(\"writer_provider\", \"anthropic\"),\n            \"writer_model\": models.get(\"writer_model\", \"claude-3-5-sonnet-latest\"),\n            \"max_search_depth\": models.get(\"max_search_depth\", 2),\n        }}\n        async def run_graph_agent(thread):    \n            final_state = graph.get_state(thread)\n            report = final_state.values.get('final_report', \"No report generated\")\n        report = asyncio.run(run_graph_agent(thread))\n    criteria_eval_structured_llm = get_evaluation_llm(eval_model)\n    eval_result = criteria_eval_structured_llm.invoke([\n        {\"role\": \"system\", \"content\": RESPONSE_CRITERIA_SYSTEM_PROMPT},\n        {\"role\": \"user\", \"content\": f\"\"\"\\n\\n Report: \\n\\n{report}\\n\\nEvaluate whether the report meets the criteria and provide detailed justification for your evaluation.\"\"\"}\n    ])\n    section_headers = re.findall(r'##\\s+([^\\n]+)', report)\n    result_color = \"green\" if eval_result.grade else \"red\"\n    result_text = \"PASSED\" if eval_result.grade else \"FAILED\"\n    console.print(Panel(\n        eval_result.justification,\n        title=\"Evaluation Justification\",\n        border_style=\"yellow\"\n    ))\n    t.log_outputs({\n        \"report\": report,\n        \"evaluation_result\": eval_result.grade,\n        \"justification\": eval_result.justification,\n        \"report_length\": len(report),\n        \"section_count\": len(section_headers),\n        \"section_headers\": section_headers,\n    })\n    assert eval_result.grade\n"
+    }
+  ],
+  "gensee_hit_rows": [
+    {
+      "slice_id": "235262",
+      "repo": "GenseeAI_open_deep_research",
+      "rel_path": "src/legacy/tests/test_report_quality.py",
+      "code_kind": "test",
+      "method": "test_response_criteria_evaluation",
+      "variable": "criteria_eval_structured_llm",
+      "is_duplicate": "0",
+      "parses": "1",
+      "n_pdg": "3",
+      "n_criterion": "1",
+      "criterion_first": "240",
+      "criterion_last": "240",
+      "criterion_exact": "1",
+      "call_id": "GenseeAI_open_deep_research/src/legacy/tests/test_report_quality.py::240::18",
+      "call_repo": "GenseeAI/open_deep_research",
+      "call_code_kind": "test",
+      "framework": "langgraph",
+      "pattern": ".invoke",
+      "call_line": "240",
+      "enclosing_qname": "GenseeAI_open_deep_research.src.legacy.tests.test_report_quality.test_response_criteria_evaluation",
+      "relation": "call_at_last_use",
+      "role": "receiver"
+    },
+    {
+      "slice_id": "235264",
+      "repo": "GenseeAI_open_deep_research",
+      "rel_path": "src/legacy/tests/test_report_quality.py",
+      "code_kind": "test",
+      "method": "test_response_criteria_evaluation",
+      "variable": "eval_result",
+      "is_duplicate": "0",
+      "parses": "1",
+      "n_pdg": "10",
+      "n_criterion": "1",
+      "criterion_first": "294",
+      "criterion_last": "294",
+      "criterion_exact": "1",
+      "call_id": "GenseeAI_open_deep_research/src/legacy/tests/test_report_quality.py::240::18",
+      "call_repo": "GenseeAI/open_deep_research",
+      "call_code_kind": "test",
+      "framework": "langgraph",
+      "pattern": ".invoke",
+      "call_line": "240",
+      "enclosing_qname": "GenseeAI_open_deep_research.src.legacy.tests.test_report_quality.test_response_criteria_evaluation",
+      "relation": "call_before_last_use",
+      "role": "binding"
+    }
+  ],
+  "method_finding": "Complexity belongs to semantic oracle, not assertion syntax. Follow application output -> evaluator input -> verdict -> test assertion; preserve context and mocking status. Unknown helpers can conservatively invalidate local source origins even when original saved slice contains the judge and assertion."
+}

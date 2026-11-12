@@ -1,0 +1,13 @@
+{
+  "date": "2026-11-12",
+  "source_scope": "Saved production-labelled canonical call-source files only; lexical candidates not cuts or classified prevalence",
+  "outputs": {
+    "catalog.csv": "70c8922f49c1f24d55371ce31d76bf92f5151b8fb6fc5bb9084ff73e1b630088",
+    "evidence.json": "82bfa90dcb15fac34536dd9d8abd231b10ba085304d5d2e60fd1664d4377b5b9",
+    "search_candidates.csv": "5436c355bb0e390f33db0b6213ccbe820acf79fd77a3a89833de291727837bd7"
+  },
+  "inputs": {
+    "response_guardrail_slices/2026-11-04-v1/calls.csv": "403a11c2b0fa6ec357b8d86e49db7dfc01624c25481946db0e0394986216f929",
+    "slice_call_hits.csv": "c743a5e94be669828662bccc9d3b0e3dbef959157760061f1aca7efdf0afbc84"
+  }
+}

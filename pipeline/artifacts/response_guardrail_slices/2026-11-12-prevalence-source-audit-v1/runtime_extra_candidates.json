@@ -1,0 +1,3832 @@
+[
+  {
+    "method_id": "Certora/AIComposer::composer/prover/analysis.py::9",
+    "method": {
+      "repo": "Certora/AIComposer",
+      "file": "composer/prover/analysis.py",
+      "qname": "analyze_cex_raw",
+      "line": "9",
+      "line_end": "38",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "Certora_AIComposer/composer/prover/analysis.py::35::16",
+        "repo": "Certora/AIComposer",
+        "rel_path": "composer/prover/analysis.py",
+        "code_kind": "production",
+        "call_line": "35",
+        "sink_line": "36",
+        "check_kind": "early_exit_candidate",
+        "mechanism": "response_predicate",
+        "intervention": "replacement_return",
+        "resolution": "source_local",
+        "sink_source": "if not isinstance(res, AIMessage):\r\n        return None",
+        "response_variables": "[\"res\"]",
+        "trace_lines": "[35, 36]",
+        "joern_status": "same_response_slice",
+        "slice_ids": "[81763, 81765, 81766]",
+        "shared_slice_ids": "[81766]",
+        "response_slice_ids": "[81766]",
+        "slice_variables": "[\"llm\", \"new_messages\", \"res\"]",
+        "slice_parse_flags": "[{\"parses\": [\"0\"], \"slice_id\": 81763}, {\"parses\": [\"0\"], \"slice_id\": 81765}, {\"parses\": [\"0\"], \"slice_id\": 81766}]"
+      }
+    ],
+    "index": 0
+  },
+  {
+    "method_id": "Grigorij-Dudnik/Clean-Coder-AI::src/agents/frontend_feedback.py::40",
+    "method": {
+      "repo": "Grigorij-Dudnik/Clean-Coder-AI",
+      "file": "src/agents/frontend_feedback.py",
+      "qname": "write_screenshot_codes",
+      "line": "40",
+      "line_end": "82",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "Grigorij-Dudnik_Clean-Coder-AI/src/agents/frontend_feedback.py::53::15",
+        "repo": "Grigorij-Dudnik/Clean-Coder-AI",
+        "rel_path": "src/agents/frontend_feedback.py",
+        "code_kind": "production",
+        "call_line": "53",
+        "sink_line": "55",
+        "check_kind": "early_exit_candidate",
+        "mechanism": "response_predicate",
+        "intervention": "replacement_return",
+        "resolution": "source_local",
+        "sink_source": "if response.screenshot_code == \"No screenshot needed\":\r\n        return None",
+        "response_variables": "[\"response\"]",
+        "trace_lines": "[53, 55]",
+        "joern_status": "same_response_slice",
+        "slice_ids": "[239907, 239911, 239913]",
+        "shared_slice_ids": "[239913]",
+        "response_slice_ids": "[239913]",
+        "slice_variables": "[\"llm_ff\", \"prompt\", \"response\"]",
+        "slice_parse_flags": "[{\"parses\": [\"1\"], \"slice_id\": 239907}, {\"parses\": [\"1\"], \"slice_id\": 239911}, {\"parses\": [\"1\"], \"slice_id\": 239913}]"
+      }
+    ],
+    "index": 1
+  },
+  {
+    "method_id": "HKUDS/ViMax::agents/camera_image_generator.py::122",
+    "method": {
+      "repo": "HKUDS/ViMax",
+      "file": "agents/camera_image_generator.py",
+      "qname": "CameraImageGenerator.construct_camera_tree",
+      "line": "122",
+      "line_end": "181",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "HKUDS_ViMax/agents/camera_image_generator.py::147::45",
+        "repo": "HKUDS/ViMax",
+        "rel_path": "agents/camera_image_generator.py",
+        "code_kind": "production",
+        "call_line": "147",
+        "sink_line": "149",
+        "check_kind": "rejection_branch",
+        "mechanism": "response_predicate",
+        "intervention": "raise",
+        "resolution": "source_local",
+        "sink_source": "if len(parent_items) != len(cameras):\r\n            raise ValueError(f\"Camera tree response length mismatch: expected {len(cameras)}, got {len(parent_items)}\")",
+        "response_variables": "[\"parent_items\", \"response\"]",
+        "trace_lines": "[147, 148, 149]",
+        "joern_status": "no_joint_slice",
+        "slice_ids": "[240194, 240196, 240203]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[\"chain\", \"messages\", \"response\"]",
+        "slice_parse_flags": "[{\"parses\": [\"0\"], \"slice_id\": 240194}, {\"parses\": [\"0\"], \"slice_id\": 240196}, {\"parses\": [\"0\"], \"slice_id\": 240203}]"
+      }
+    ],
+    "index": 2
+  },
+  {
+    "method_id": "Insight-Services-APAC/ingenious::ingenious/models/ag_agents.py::74",
+    "method": {
+      "repo": "Insight-Services-APAC/ingenious",
+      "file": "ingenious/models/ag_agents.py",
+      "qname": "RoutedAssistantAgent.handle_my_message_type",
+      "line": "74",
+      "line_end": "141",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "Insight-Services-APAC_ingenious/ingenious/models/ag_agents.py::129::34",
+        "repo": "Insight-Services-APAC/ingenious",
+        "rel_path": "ingenious/models/ag_agents.py",
+        "code_kind": "production",
+        "call_line": "129",
+        "sink_line": "133",
+        "check_kind": "assertion",
+        "mechanism": "deterministic_assert",
+        "intervention": "assertion_failure",
+        "resolution": "source_local",
+        "sink_source": "assert isinstance(create_result.content, str)",
+        "response_variables": "[\"create_result\"]",
+        "trace_lines": "[129, 133]",
+        "joern_status": "no_saved_slice",
+        "slice_ids": "[]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[]",
+        "slice_parse_flags": "[]"
+      }
+    ],
+    "index": 3
+  },
+  {
+    "method_id": "InternScience/InternAgent::internagent/mas/agents/dr_agents/camel/agents/role_assignment_agent.py::61",
+    "method": {
+      "repo": "InternScience/InternAgent",
+      "file": "internagent/mas/agents/dr_agents/camel/agents/role_assignment_agent.py",
+      "qname": "RoleAssignmentAgent.run",
+      "line": "61",
+      "line_end": "141",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/agents/role_assignment_agent.py::105::19",
+        "repo": "InternScience/InternAgent",
+        "rel_path": "internagent/mas/agents/dr_agents/camel/agents/role_assignment_agent.py",
+        "code_kind": "production",
+        "call_line": "105",
+        "sink_line": "133",
+        "check_kind": "rejection_branch",
+        "mechanism": "response_predicate",
+        "intervention": "raise",
+        "resolution": "source_local",
+        "sink_source": "if terminated:\r\n            raise RuntimeError(\"Role assignment failed.\")",
+        "response_variables": "[\"response\", \"terminated\"]",
+        "trace_lines": "[105, 108, 133]",
+        "joern_status": "no_joint_slice",
+        "slice_ids": "[287599, 287601]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[\"response\", \"role_assignment_generation_msg\"]",
+        "slice_parse_flags": "[{\"parses\": [\"0\"], \"slice_id\": 287599}, {\"parses\": [\"0\"], \"slice_id\": 287601}]"
+      }
+    ],
+    "index": 4
+  },
+  {
+    "method_id": "InternScience/InternAgent::internagent/mas/agents/dr_agents/camel/agents/search_agent.py::108",
+    "method": {
+      "repo": "InternScience/InternAgent",
+      "file": "internagent/mas/agents/dr_agents/camel/agents/search_agent.py",
+      "qname": "SearchAgent.continue_search",
+      "line": "108",
+      "line_end": "133",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/agents/search_agent.py::130::19",
+        "repo": "InternScience/InternAgent",
+        "rel_path": "internagent/mas/agents/dr_agents/camel/agents/search_agent.py",
+        "code_kind": "production",
+        "call_line": "130",
+        "sink_line": "131",
+        "check_kind": "early_exit_candidate",
+        "mechanism": "response_predicate",
+        "intervention": "replacement_return",
+        "resolution": "source_local",
+        "sink_source": "if \"yes\" in str(response).lower():\r\n            return False",
+        "response_variables": "[\"response\"]",
+        "trace_lines": "[130, 131]",
+        "joern_status": "same_response_slice",
+        "slice_ids": "[287626, 287627]",
+        "shared_slice_ids": "[287626]",
+        "response_slice_ids": "[287626]",
+        "slice_variables": "[\"response\", \"user_msg\"]",
+        "slice_parse_flags": "[{\"parses\": [\"1\"], \"slice_id\": 287626}, {\"parses\": [\"1\"], \"slice_id\": 287627}]"
+      }
+    ],
+    "index": 5
+  },
+  {
+    "method_id": "InternScience/InternAgent::internagent/mas/agents/dr_agents/camel/agents/task_agent.py::93",
+    "method": {
+      "repo": "InternScience/InternAgent",
+      "file": "internagent/mas/agents/dr_agents/camel/agents/task_agent.py",
+      "qname": "TaskSpecifyAgent.run",
+      "line": "93",
+      "line_end": "127",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/agents/task_agent.py::118::29",
+        "repo": "InternScience/InternAgent",
+        "rel_path": "internagent/mas/agents/dr_agents/camel/agents/task_agent.py",
+        "code_kind": "production",
+        "call_line": "118",
+        "sink_line": "120",
+        "check_kind": "rejection_branch",
+        "mechanism": "response_predicate",
+        "intervention": "raise",
+        "resolution": "source_local",
+        "sink_source": "if specifier_response.terminated:\r\n            raise RuntimeError(\"Task specification failed.\")",
+        "response_variables": "[\"specifier_response\"]",
+        "trace_lines": "[118, 120]",
+        "joern_status": "no_saved_slice",
+        "slice_ids": "[]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[]",
+        "slice_parse_flags": "[]"
+      },
+      {
+        "call_id": "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/agents/task_agent.py::118::29",
+        "repo": "InternScience/InternAgent",
+        "rel_path": "internagent/mas/agents/dr_agents/camel/agents/task_agent.py",
+        "code_kind": "production",
+        "call_line": "118",
+        "sink_line": "122",
+        "check_kind": "rejection_branch",
+        "mechanism": "response_predicate",
+        "intervention": "raise",
+        "resolution": "source_local",
+        "sink_source": "if len(specifier_response.msgs) == 0:\r\n            raise RuntimeError(\"Got no specification message.\")",
+        "response_variables": "[\"specifier_response\"]",
+        "trace_lines": "[118, 122]",
+        "joern_status": "no_saved_slice",
+        "slice_ids": "[]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[]",
+        "slice_parse_flags": "[]"
+      }
+    ],
+    "index": 6
+  },
+  {
+    "method_id": "InternScience/InternAgent::internagent/mas/agents/dr_agents/camel/agents/task_agent.py::168",
+    "method": {
+      "repo": "InternScience/InternAgent",
+      "file": "internagent/mas/agents/dr_agents/camel/agents/task_agent.py",
+      "qname": "TaskPlannerAgent.run",
+      "line": "168",
+      "line_end": "197",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/agents/task_agent.py::189::24",
+        "repo": "InternScience/InternAgent",
+        "rel_path": "internagent/mas/agents/dr_agents/camel/agents/task_agent.py",
+        "code_kind": "production",
+        "call_line": "189",
+        "sink_line": "191",
+        "check_kind": "rejection_branch",
+        "mechanism": "response_predicate",
+        "intervention": "raise",
+        "resolution": "source_local",
+        "sink_source": "if task_response.terminated:\r\n            raise RuntimeError(\"Task planning failed.\")",
+        "response_variables": "[\"task_response\"]",
+        "trace_lines": "[189, 191]",
+        "joern_status": "no_saved_slice",
+        "slice_ids": "[]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[]",
+        "slice_parse_flags": "[]"
+      },
+      {
+        "call_id": "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/agents/task_agent.py::189::24",
+        "repo": "InternScience/InternAgent",
+        "rel_path": "internagent/mas/agents/dr_agents/camel/agents/task_agent.py",
+        "code_kind": "production",
+        "call_line": "189",
+        "sink_line": "193",
+        "check_kind": "rejection_branch",
+        "mechanism": "response_predicate",
+        "intervention": "raise",
+        "resolution": "source_local",
+        "sink_source": "if len(task_response.msgs) == 0:\r\n            raise RuntimeError(\"Got no task planning message.\")",
+        "response_variables": "[\"task_response\"]",
+        "trace_lines": "[189, 193]",
+        "joern_status": "no_saved_slice",
+        "slice_ids": "[]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[]",
+        "slice_parse_flags": "[]"
+      }
+    ],
+    "index": 7
+  },
+  {
+    "method_id": "InternScience/InternAgent::internagent/mas/agents/dr_agents/camel/agents/task_agent.py::277",
+    "method": {
+      "repo": "InternScience/InternAgent",
+      "file": "internagent/mas/agents/dr_agents/camel/agents/task_agent.py",
+      "qname": "TaskCreationAgent.run",
+      "line": "277",
+      "line_end": "312",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/agents/task_agent.py::304::24",
+        "repo": "InternScience/InternAgent",
+        "rel_path": "internagent/mas/agents/dr_agents/camel/agents/task_agent.py",
+        "code_kind": "production",
+        "call_line": "304",
+        "sink_line": "306",
+        "check_kind": "rejection_branch",
+        "mechanism": "response_predicate",
+        "intervention": "raise",
+        "resolution": "source_local",
+        "sink_source": "if task_response.terminated:\r\n            raise RuntimeError(\"Task creation failed.\")",
+        "response_variables": "[\"task_response\"]",
+        "trace_lines": "[304, 306]",
+        "joern_status": "no_saved_slice",
+        "slice_ids": "[]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[]",
+        "slice_parse_flags": "[]"
+      },
+      {
+        "call_id": "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/agents/task_agent.py::304::24",
+        "repo": "InternScience/InternAgent",
+        "rel_path": "internagent/mas/agents/dr_agents/camel/agents/task_agent.py",
+        "code_kind": "production",
+        "call_line": "304",
+        "sink_line": "308",
+        "check_kind": "rejection_branch",
+        "mechanism": "response_predicate",
+        "intervention": "raise",
+        "resolution": "source_local",
+        "sink_source": "if len(task_response.msgs) == 0:\r\n            raise RuntimeError(\"Got no task creation message.\")",
+        "response_variables": "[\"task_response\"]",
+        "trace_lines": "[304, 308]",
+        "joern_status": "no_saved_slice",
+        "slice_ids": "[]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[]",
+        "slice_parse_flags": "[]"
+      }
+    ],
+    "index": 8
+  },
+  {
+    "method_id": "InternScience/InternAgent::internagent/mas/agents/dr_agents/camel/datasets/few_shot_generator.py::123",
+    "method": {
+      "repo": "InternScience/InternAgent",
+      "file": "internagent/mas/agents/dr_agents/camel/datasets/few_shot_generator.py",
+      "qname": "FewShotGenerator.generate_new",
+      "line": "123",
+      "line_end": "282",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/datasets/few_shot_generator.py::195::24",
+        "repo": "InternScience/InternAgent",
+        "rel_path": "internagent/mas/agents/dr_agents/camel/datasets/few_shot_generator.py",
+        "code_kind": "production",
+        "call_line": "195",
+        "sink_line": "202",
+        "check_kind": "assertion",
+        "mechanism": "deterministic_assert",
+        "intervention": "assertion_failure",
+        "resolution": "source_local",
+        "sink_source": "assert isinstance(agent_output, DataPointSimplified)",
+        "response_variables": "[\"agent_output\"]",
+        "trace_lines": "[194, 195, 202]",
+        "joern_status": "no_joint_slice",
+        "slice_ids": "[288499]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[\"prompt\"]",
+        "slice_parse_flags": "[{\"parses\": [\"0\"], \"slice_id\": 288499}]"
+      }
+    ],
+    "index": 9
+  },
+  {
+    "method_id": "Kasma-Inc/Sagi::src/Sagi/workflows/planning_html/planning_html_orchestrator.py::191",
+    "method": {
+      "repo": "Kasma-Inc/Sagi",
+      "file": "src/Sagi/workflows/planning_html/planning_html_orchestrator.py",
+      "qname": "PlanningHtmlOrchestrator._stream_from_model",
+      "line": "191",
+      "line_end": "231",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "Kasma-Inc_Sagi/src/Sagi/workflows/planning_html/planning_html_orchestrator.py::207::17",
+        "repo": "Kasma-Inc/Sagi",
+        "rel_path": "src/Sagi/workflows/planning_html/planning_html_orchestrator.py",
+        "code_kind": "production",
+        "call_line": "207",
+        "sink_line": "214",
+        "check_kind": "early_exit_candidate",
+        "mechanism": "response_predicate",
+        "intervention": "replacement_return",
+        "resolution": "source_local",
+        "sink_source": "if stream is None:\r\n            return \"\"",
+        "response_variables": "[\"stream\"]",
+        "trace_lines": "[207, 214]",
+        "joern_status": "same_response_slice",
+        "slice_ids": "[332879, 332883, 332884, 332887]",
+        "shared_slice_ids": "[332887]",
+        "response_slice_ids": "[332887]",
+        "slice_variables": "[\"cancellation_token\", \"messages\", \"model_client\", \"stream\"]",
+        "slice_parse_flags": "[{\"parses\": [\"0\"], \"slice_id\": 332879}, {\"parses\": [\"0\"], \"slice_id\": 332883}, {\"parses\": [\"0\"], \"slice_id\": 332884}, {\"parses\": [\"0\"], \"slice_id\": 332887}]"
+      }
+    ],
+    "index": 10
+  },
+  {
+    "method_id": "PostHog/posthog::ee/hogai/chat_agent/query_planner/nodes.py::95",
+    "method": {
+      "repo": "PostHog/posthog",
+      "file": "ee/hogai/chat_agent/query_planner/nodes.py",
+      "qname": "QueryPlannerNode.run",
+      "line": "95",
+      "line_end": "139",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "PostHog_posthog/ee/hogai/chat_agent/query_planner/nodes.py::105::25",
+        "repo": "PostHog/posthog",
+        "rel_path": "ee/hogai/chat_agent/query_planner/nodes.py",
+        "code_kind": "production",
+        "call_line": "105",
+        "sink_line": "129",
+        "check_kind": "rejection_branch",
+        "mechanism": "response_predicate",
+        "intervention": "raise",
+        "resolution": "source_local",
+        "sink_source": "if not output_message.tool_calls:\r\n            raise ValueError(\"No tool calls found in the output message.\")",
+        "response_variables": "[\"output_message\"]",
+        "trace_lines": "[105, 129]",
+        "joern_status": "no_saved_slice",
+        "slice_ids": "[]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[]",
+        "slice_parse_flags": "[]"
+      }
+    ],
+    "index": 11
+  },
+  {
+    "method_id": "PostHog/posthog::ee/hogai/chat_agent/rag/nodes.py::64",
+    "method": {
+      "repo": "PostHog/posthog",
+      "file": "ee/hogai/chat_agent/rag/nodes.py",
+      "qname": "InsightRagContextNode.run",
+      "line": "64",
+      "line_end": "95",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "PostHog_posthog/ee/hogai/chat_agent/rag/nodes.py::90::22",
+        "repo": "PostHog/posthog",
+        "rel_path": "ee/hogai/chat_agent/rag/nodes.py",
+        "code_kind": "production",
+        "call_line": "90",
+        "sink_line": "92",
+        "check_kind": "early_exit_candidate",
+        "mechanism": "response_predicate",
+        "intervention": "replacement_return",
+        "resolution": "source_local",
+        "sink_source": "if not rag_context:\r\n            return None",
+        "response_variables": "[\"rag_context\"]",
+        "trace_lines": "[90, 92]",
+        "joern_status": "no_saved_slice",
+        "slice_ids": "[]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[]",
+        "slice_parse_flags": "[]"
+      }
+    ],
+    "index": 12
+  },
+  {
+    "method_id": "PostHog/posthog::ee/hogai/chat_agent/taxonomy/nodes.py::117",
+    "method": {
+      "repo": "PostHog/posthog",
+      "file": "ee/hogai/chat_agent/taxonomy/nodes.py",
+      "qname": "TaxonomyAgentNode.run",
+      "line": "117",
+      "line_end": "159",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "PostHog_posthog/ee/hogai/chat_agent/taxonomy/nodes.py::129::25",
+        "repo": "PostHog/posthog",
+        "rel_path": "ee/hogai/chat_agent/taxonomy/nodes.py",
+        "code_kind": "production",
+        "call_line": "129",
+        "sink_line": "137",
+        "check_kind": "rejection_branch",
+        "mechanism": "response_predicate",
+        "intervention": "raise",
+        "resolution": "source_local",
+        "sink_source": "if not output_message.tool_calls:\r\n            raise ValueError(\"No tool calls found in the output message.\")",
+        "response_variables": "[\"output_message\"]",
+        "trace_lines": "[129, 137]",
+        "joern_status": "no_saved_slice",
+        "slice_ids": "[]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[]",
+        "slice_parse_flags": "[]"
+      }
+    ],
+    "index": 13
+  },
+  {
+    "method_id": "PostHog/posthog::ee/hogai/utils/helpers.py::201",
+    "method": {
+      "repo": "PostHog/posthog",
+      "file": "ee/hogai/utils/helpers.py",
+      "qname": "_process_events_data",
+      "line": "201",
+      "line_end": "271",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "PostHog_posthog/ee/hogai/utils/helpers.py::211::15",
+        "repo": "PostHog/posthog",
+        "rel_path": "ee/hogai/utils/helpers.py",
+        "code_kind": "production",
+        "call_line": "211",
+        "sink_line": "217",
+        "check_kind": "rejection_branch",
+        "mechanism": "response_predicate",
+        "intervention": "raise",
+        "resolution": "source_local",
+        "sink_source": "if not isinstance(response, CachedTeamTaxonomyQueryResponse):\r\n        raise ValueError(\"Failed to generate events prompt.\")",
+        "response_variables": "[\"response\"]",
+        "trace_lines": "[211, 217]",
+        "joern_status": "no_saved_slice",
+        "slice_ids": "[]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[]",
+        "slice_parse_flags": "[]"
+      }
+    ],
+    "index": 14
+  },
+  {
+    "method_id": "PostHog/posthog::products/cdp/backend/max_tools.py::164",
+    "method": {
+      "repo": "PostHog/posthog",
+      "file": "products/cdp/backend/max_tools.py",
+      "qname": "CreateHogFunctionFiltersTool._run_impl",
+      "line": "164",
+      "line_end": "209",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "PostHog_posthog/products/cdp/backend/max_tools.py::193::25",
+        "repo": "PostHog/posthog",
+        "rel_path": "products/cdp/backend/max_tools.py",
+        "code_kind": "production",
+        "call_line": "193",
+        "sink_line": "194",
+        "check_kind": "assertion",
+        "mechanism": "deterministic_assert",
+        "intervention": "assertion_failure",
+        "resolution": "source_local",
+        "sink_source": "assert isinstance(result.content, str)",
+        "response_variables": "[\"result\"]",
+        "trace_lines": "[193, 194]",
+        "joern_status": "no_saved_slice",
+        "slice_ids": "[]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[]",
+        "slice_parse_flags": "[]"
+      }
+    ],
+    "index": 15
+  },
+  {
+    "method_id": "PostHog/posthog::products/cdp/backend/max_tools.py::261",
+    "method": {
+      "repo": "PostHog/posthog",
+      "file": "products/cdp/backend/max_tools.py",
+      "qname": "CreateHogFunctionInputsTool._run_impl",
+      "line": "261",
+      "line_end": "297",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "PostHog_posthog/products/cdp/backend/max_tools.py::281::25",
+        "repo": "PostHog/posthog",
+        "rel_path": "products/cdp/backend/max_tools.py",
+        "code_kind": "production",
+        "call_line": "281",
+        "sink_line": "282",
+        "check_kind": "assertion",
+        "mechanism": "deterministic_assert",
+        "intervention": "assertion_failure",
+        "resolution": "source_local",
+        "sink_source": "assert isinstance(result.content, str)",
+        "response_variables": "[\"result\"]",
+        "trace_lines": "[281, 282]",
+        "joern_status": "no_saved_slice",
+        "slice_ids": "[]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[]",
+        "slice_parse_flags": "[]"
+      }
+    ],
+    "index": 16
+  },
+  {
+    "method_id": "PostHog/posthog::products/cdp/backend/max_tools.py::68",
+    "method": {
+      "repo": "PostHog/posthog",
+      "file": "products/cdp/backend/max_tools.py",
+      "qname": "CreateHogTransformationFunctionTool._run_impl",
+      "line": "68",
+      "line_end": "108",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "PostHog_posthog/products/cdp/backend/max_tools.py::95::25",
+        "repo": "PostHog/posthog",
+        "rel_path": "products/cdp/backend/max_tools.py",
+        "code_kind": "production",
+        "call_line": "95",
+        "sink_line": "96",
+        "check_kind": "assertion",
+        "mechanism": "deterministic_assert",
+        "intervention": "assertion_failure",
+        "resolution": "source_local",
+        "sink_source": "assert isinstance(result.content, str)",
+        "response_variables": "[\"result\"]",
+        "trace_lines": "[95, 96]",
+        "joern_status": "no_saved_slice",
+        "slice_ids": "[]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[]",
+        "slice_parse_flags": "[]"
+      }
+    ],
+    "index": 17
+  },
+  {
+    "method_id": "RenqiChen/Virtual-Scientists-v2::camel-master/camel/agents/role_assignment_agent.py::61",
+    "method": {
+      "repo": "RenqiChen/Virtual-Scientists-v2",
+      "file": "camel-master/camel/agents/role_assignment_agent.py",
+      "qname": "RoleAssignmentAgent.run",
+      "line": "61",
+      "line_end": "141",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "RenqiChen_Virtual-Scientists-v2/camel-master/camel/agents/role_assignment_agent.py::105::19",
+        "repo": "RenqiChen/Virtual-Scientists-v2",
+        "rel_path": "camel-master/camel/agents/role_assignment_agent.py",
+        "code_kind": "production",
+        "call_line": "105",
+        "sink_line": "133",
+        "check_kind": "rejection_branch",
+        "mechanism": "response_predicate",
+        "intervention": "raise",
+        "resolution": "source_local",
+        "sink_source": "if terminated:\r\n            raise RuntimeError(\"Role assignment failed.\")",
+        "response_variables": "[\"response\", \"terminated\"]",
+        "trace_lines": "[105, 108, 133]",
+        "joern_status": "no_joint_slice",
+        "slice_ids": "[563855, 563857]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[\"response\", \"role_assignment_generation_msg\"]",
+        "slice_parse_flags": "[{\"parses\": [\"0\"], \"slice_id\": 563855}, {\"parses\": [\"0\"], \"slice_id\": 563857}]"
+      }
+    ],
+    "index": 18
+  },
+  {
+    "method_id": "RenqiChen/Virtual-Scientists-v2::camel-master/camel/agents/search_agent.py::108",
+    "method": {
+      "repo": "RenqiChen/Virtual-Scientists-v2",
+      "file": "camel-master/camel/agents/search_agent.py",
+      "qname": "SearchAgent.continue_search",
+      "line": "108",
+      "line_end": "133",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "RenqiChen_Virtual-Scientists-v2/camel-master/camel/agents/search_agent.py::130::19",
+        "repo": "RenqiChen/Virtual-Scientists-v2",
+        "rel_path": "camel-master/camel/agents/search_agent.py",
+        "code_kind": "production",
+        "call_line": "130",
+        "sink_line": "131",
+        "check_kind": "early_exit_candidate",
+        "mechanism": "response_predicate",
+        "intervention": "replacement_return",
+        "resolution": "source_local",
+        "sink_source": "if \"yes\" in str(response).lower():\r\n            return False",
+        "response_variables": "[\"response\"]",
+        "trace_lines": "[130, 131]",
+        "joern_status": "same_response_slice",
+        "slice_ids": "[563996, 563997]",
+        "shared_slice_ids": "[563996]",
+        "response_slice_ids": "[563996]",
+        "slice_variables": "[\"response\", \"user_msg\"]",
+        "slice_parse_flags": "[{\"parses\": [\"1\"], \"slice_id\": 563996}, {\"parses\": [\"1\"], \"slice_id\": 563997}]"
+      }
+    ],
+    "index": 19
+  },
+  {
+    "method_id": "RenqiChen/Virtual-Scientists-v2::camel-master/camel/agents/task_agent.py::93",
+    "method": {
+      "repo": "RenqiChen/Virtual-Scientists-v2",
+      "file": "camel-master/camel/agents/task_agent.py",
+      "qname": "TaskSpecifyAgent.run",
+      "line": "93",
+      "line_end": "127",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "RenqiChen_Virtual-Scientists-v2/camel-master/camel/agents/task_agent.py::118::29",
+        "repo": "RenqiChen/Virtual-Scientists-v2",
+        "rel_path": "camel-master/camel/agents/task_agent.py",
+        "code_kind": "production",
+        "call_line": "118",
+        "sink_line": "120",
+        "check_kind": "rejection_branch",
+        "mechanism": "response_predicate",
+        "intervention": "raise",
+        "resolution": "source_local",
+        "sink_source": "if specifier_response.terminated:\r\n            raise RuntimeError(\"Task specification failed.\")",
+        "response_variables": "[\"specifier_response\"]",
+        "trace_lines": "[118, 120]",
+        "joern_status": "no_saved_slice",
+        "slice_ids": "[]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[]",
+        "slice_parse_flags": "[]"
+      },
+      {
+        "call_id": "RenqiChen_Virtual-Scientists-v2/camel-master/camel/agents/task_agent.py::118::29",
+        "repo": "RenqiChen/Virtual-Scientists-v2",
+        "rel_path": "camel-master/camel/agents/task_agent.py",
+        "code_kind": "production",
+        "call_line": "118",
+        "sink_line": "122",
+        "check_kind": "rejection_branch",
+        "mechanism": "response_predicate",
+        "intervention": "raise",
+        "resolution": "source_local",
+        "sink_source": "if len(specifier_response.msgs) == 0:\r\n            raise RuntimeError(\"Got no specification message.\")",
+        "response_variables": "[\"specifier_response\"]",
+        "trace_lines": "[118, 122]",
+        "joern_status": "no_saved_slice",
+        "slice_ids": "[]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[]",
+        "slice_parse_flags": "[]"
+      }
+    ],
+    "index": 20
+  },
+  {
+    "method_id": "RenqiChen/Virtual-Scientists-v2::camel-master/camel/agents/task_agent.py::168",
+    "method": {
+      "repo": "RenqiChen/Virtual-Scientists-v2",
+      "file": "camel-master/camel/agents/task_agent.py",
+      "qname": "TaskPlannerAgent.run",
+      "line": "168",
+      "line_end": "197",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "RenqiChen_Virtual-Scientists-v2/camel-master/camel/agents/task_agent.py::189::24",
+        "repo": "RenqiChen/Virtual-Scientists-v2",
+        "rel_path": "camel-master/camel/agents/task_agent.py",
+        "code_kind": "production",
+        "call_line": "189",
+        "sink_line": "191",
+        "check_kind": "rejection_branch",
+        "mechanism": "response_predicate",
+        "intervention": "raise",
+        "resolution": "source_local",
+        "sink_source": "if task_response.terminated:\r\n            raise RuntimeError(\"Task planning failed.\")",
+        "response_variables": "[\"task_response\"]",
+        "trace_lines": "[189, 191]",
+        "joern_status": "no_saved_slice",
+        "slice_ids": "[]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[]",
+        "slice_parse_flags": "[]"
+      },
+      {
+        "call_id": "RenqiChen_Virtual-Scientists-v2/camel-master/camel/agents/task_agent.py::189::24",
+        "repo": "RenqiChen/Virtual-Scientists-v2",
+        "rel_path": "camel-master/camel/agents/task_agent.py",
+        "code_kind": "production",
+        "call_line": "189",
+        "sink_line": "193",
+        "check_kind": "rejection_branch",
+        "mechanism": "response_predicate",
+        "intervention": "raise",
+        "resolution": "source_local",
+        "sink_source": "if len(task_response.msgs) == 0:\r\n            raise RuntimeError(\"Got no task planning message.\")",
+        "response_variables": "[\"task_response\"]",
+        "trace_lines": "[189, 193]",
+        "joern_status": "no_saved_slice",
+        "slice_ids": "[]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[]",
+        "slice_parse_flags": "[]"
+      }
+    ],
+    "index": 21
+  },
+  {
+    "method_id": "RenqiChen/Virtual-Scientists-v2::camel-master/camel/agents/task_agent.py::277",
+    "method": {
+      "repo": "RenqiChen/Virtual-Scientists-v2",
+      "file": "camel-master/camel/agents/task_agent.py",
+      "qname": "TaskCreationAgent.run",
+      "line": "277",
+      "line_end": "312",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "RenqiChen_Virtual-Scientists-v2/camel-master/camel/agents/task_agent.py::304::24",
+        "repo": "RenqiChen/Virtual-Scientists-v2",
+        "rel_path": "camel-master/camel/agents/task_agent.py",
+        "code_kind": "production",
+        "call_line": "304",
+        "sink_line": "306",
+        "check_kind": "rejection_branch",
+        "mechanism": "response_predicate",
+        "intervention": "raise",
+        "resolution": "source_local",
+        "sink_source": "if task_response.terminated:\r\n            raise RuntimeError(\"Task creation failed.\")",
+        "response_variables": "[\"task_response\"]",
+        "trace_lines": "[304, 306]",
+        "joern_status": "no_saved_slice",
+        "slice_ids": "[]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[]",
+        "slice_parse_flags": "[]"
+      },
+      {
+        "call_id": "RenqiChen_Virtual-Scientists-v2/camel-master/camel/agents/task_agent.py::304::24",
+        "repo": "RenqiChen/Virtual-Scientists-v2",
+        "rel_path": "camel-master/camel/agents/task_agent.py",
+        "code_kind": "production",
+        "call_line": "304",
+        "sink_line": "308",
+        "check_kind": "rejection_branch",
+        "mechanism": "response_predicate",
+        "intervention": "raise",
+        "resolution": "source_local",
+        "sink_source": "if len(task_response.msgs) == 0:\r\n            raise RuntimeError(\"Got no task creation message.\")",
+        "response_variables": "[\"task_response\"]",
+        "trace_lines": "[304, 308]",
+        "joern_status": "no_saved_slice",
+        "slice_ids": "[]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[]",
+        "slice_parse_flags": "[]"
+      }
+    ],
+    "index": 22
+  },
+  {
+    "method_id": "Rvosy/Sakura::third_party/mem0/mem0/vector_stores/opensearch.py::317",
+    "method": {
+      "repo": "Rvosy/Sakura",
+      "file": "third_party/mem0/mem0/vector_stores/opensearch.py",
+      "qname": "OpenSearchDB.get",
+      "line": "317",
+      "line_end": "331",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "Rvosy_Sakura/third_party/mem0/mem0/vector_stores/opensearch.py::321::23",
+        "repo": "Rvosy/Sakura",
+        "rel_path": "third_party/mem0/mem0/vector_stores/opensearch.py",
+        "code_kind": "production",
+        "call_line": "321",
+        "sink_line": "325",
+        "check_kind": "early_exit_candidate",
+        "mechanism": "response_predicate",
+        "intervention": "replacement_return",
+        "resolution": "source_local",
+        "sink_source": "if not hits:\r\n                return None",
+        "response_variables": "[\"hits\", \"response\"]",
+        "trace_lines": "[321, 323, 325]",
+        "joern_status": "no_joint_slice",
+        "slice_ids": "[587615, 587616]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[\"response\", \"search_query\"]",
+        "slice_parse_flags": "[{\"parses\": [\"1\"], \"slice_id\": 587615}, {\"parses\": [\"1\"], \"slice_id\": 587616}]"
+      }
+    ],
+    "index": 23
+  },
+  {
+    "method_id": "THUIR/MemoryBench::baselines/mem0/mem0/vector_stores/opensearch.py::213",
+    "method": {
+      "repo": "THUIR/MemoryBench",
+      "file": "baselines/mem0/mem0/vector_stores/opensearch.py",
+      "qname": "OpenSearchDB.get",
+      "line": "213",
+      "line_end": "233",
+      "group": "llm",
+      "mapped_tests": "1",
+      "exact_mapped_tests": "1"
+    },
+    "checks": [
+      {
+        "call_id": "THUIR_MemoryBench/baselines/mem0/mem0/vector_stores/opensearch.py::223::23",
+        "repo": "THUIR/MemoryBench",
+        "rel_path": "baselines/mem0/mem0/vector_stores/opensearch.py",
+        "code_kind": "production",
+        "call_line": "223",
+        "sink_line": "227",
+        "check_kind": "early_exit_candidate",
+        "mechanism": "response_predicate",
+        "intervention": "replacement_return",
+        "resolution": "source_local",
+        "sink_source": "if not hits:\r\n                return None",
+        "response_variables": "[\"hits\", \"response\"]",
+        "trace_lines": "[223, 225, 227]",
+        "joern_status": "no_joint_slice",
+        "slice_ids": "[670928, 670929]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[\"response\", \"search_query\"]",
+        "slice_parse_flags": "[{\"parses\": [\"1\"], \"slice_id\": 670928}, {\"parses\": [\"1\"], \"slice_id\": 670929}]"
+      }
+    ],
+    "index": 24
+  },
+  {
+    "method_id": "XAIHT/Tlamatini::Tlamatini/agent/rag/interface.py::368",
+    "method": {
+      "repo": "XAIHT/Tlamatini",
+      "file": "Tlamatini/agent/rag/interface.py",
+      "qname": "_acces_aimed_prompt",
+      "line": "368",
+      "line_end": "411",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "XAIHT_Tlamatini/Tlamatini/agent/rag/interface.py::399::19",
+        "repo": "XAIHT/Tlamatini",
+        "rel_path": "Tlamatini/agent/rag/interface.py",
+        "code_kind": "production",
+        "call_line": "399",
+        "sink_line": "403",
+        "check_kind": "early_exit_candidate",
+        "mechanism": "response_predicate",
+        "intervention": "replacement_return",
+        "resolution": "source_local",
+        "sink_source": "if \"NOT-INTENT\" in output or \"NOT INTENT\" in output:\r\n            return False",
+        "response_variables": "[\"output\", \"response\"]",
+        "trace_lines": "[399, 400, 403]",
+        "joern_status": "no_joint_slice",
+        "slice_ids": "[792835, 792836, 792839]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[\"classification_prompt\", \"llm\", \"response\"]",
+        "slice_parse_flags": "[{\"parses\": [\"1\"], \"slice_id\": 792835}, {\"parses\": [\"1\"], \"slice_id\": 792836}, {\"parses\": [\"1\"], \"slice_id\": 792839}]"
+      }
+    ],
+    "index": 25
+  },
+  {
+    "method_id": "XAIHT/Tlamatini::Tlamatini/agent/rag/interface.py::414",
+    "method": {
+      "repo": "XAIHT/Tlamatini",
+      "file": "Tlamatini/agent/rag/interface.py",
+      "qname": "_indirect_file_access_prompt",
+      "line": "414",
+      "line_end": "499",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "XAIHT_Tlamatini/Tlamatini/agent/rag/interface.py::487::19",
+        "repo": "XAIHT/Tlamatini",
+        "rel_path": "Tlamatini/agent/rag/interface.py",
+        "code_kind": "production",
+        "call_line": "487",
+        "sink_line": "491",
+        "check_kind": "early_exit_candidate",
+        "mechanism": "response_predicate",
+        "intervention": "replacement_return",
+        "resolution": "source_local",
+        "sink_source": "if output.startswith(\"NO\") or (\"NO\" in output and \"YES\" not in output):\r\n            return False",
+        "response_variables": "[\"output\", \"response\"]",
+        "trace_lines": "[487, 488, 491]",
+        "joern_status": "no_joint_slice",
+        "slice_ids": "[792840, 792841, 792844]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[\"classification_prompt\", \"llm\", \"response\"]",
+        "slice_parse_flags": "[{\"parses\": [\"1\"], \"slice_id\": 792840}, {\"parses\": [\"1\"], \"slice_id\": 792841}, {\"parses\": [\"1\"], \"slice_id\": 792844}]"
+      }
+    ],
+    "index": 26
+  },
+  {
+    "method_id": "XAIHT/Tlamatini::Tlamatini/agent/tests.py::987",
+    "method": {
+      "repo": "XAIHT/Tlamatini",
+      "file": "Tlamatini/agent/tests.py",
+      "qname": "ExecReportCaptureTests.test_acpx_and_skill_tools_are_captured_with_correct_keys_and_commands",
+      "line": "987",
+      "line_end": "1072",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::1053::17",
+        "repo": "XAIHT/Tlamatini",
+        "rel_path": "Tlamatini/agent/tests.py",
+        "code_kind": "production",
+        "call_line": "1053",
+        "sink_line": "1057",
+        "check_kind": "assertion",
+        "mechanism": "deterministic_assert",
+        "intervention": "assertion_failure",
+        "resolution": "source_local",
+        "sink_source": "self.assertEqual(len(entries), 4)",
+        "response_variables": "[\"entries\", \"result\"]",
+        "trace_lines": "[1053, 1054, 1057]",
+        "joern_status": "no_joint_slice",
+        "slice_ids": "[799526, 799529]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[\"exe\", \"result\"]",
+        "slice_parse_flags": "[{\"parses\": [\"1\"], \"slice_id\": 799526}, {\"parses\": [\"1\"], \"slice_id\": 799529}]"
+      }
+    ],
+    "index": 27
+  },
+  {
+    "method_id": "XAIHT/Tlamatini::Tlamatini/agent/tests.py::1074",
+    "method": {
+      "repo": "XAIHT/Tlamatini",
+      "file": "Tlamatini/agent/tests.py",
+      "qname": "ExecReportCaptureTests.test_acpx_failure_and_skill_failure_are_captured_with_success_false",
+      "line": "1074",
+      "line_end": "1118",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::1109::17",
+        "repo": "XAIHT/Tlamatini",
+        "rel_path": "Tlamatini/agent/tests.py",
+        "code_kind": "production",
+        "call_line": "1109",
+        "sink_line": "1112",
+        "check_kind": "assertion",
+        "mechanism": "deterministic_assert",
+        "intervention": "assertion_failure",
+        "resolution": "source_local",
+        "sink_source": "self.assertEqual(len(entries), 2)",
+        "response_variables": "[\"entries\", \"result\"]",
+        "trace_lines": "[1109, 1110, 1112]",
+        "joern_status": "no_joint_slice",
+        "slice_ids": "[799533, 799534]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[\"exe\", \"result\"]",
+        "slice_parse_flags": "[{\"parses\": [\"1\"], \"slice_id\": 799533}, {\"parses\": [\"1\"], \"slice_id\": 799534}]"
+      },
+      {
+        "call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::1109::17",
+        "repo": "XAIHT/Tlamatini",
+        "rel_path": "Tlamatini/agent/tests.py",
+        "code_kind": "production",
+        "call_line": "1109",
+        "sink_line": "1113",
+        "check_kind": "assertion",
+        "mechanism": "deterministic_assert",
+        "intervention": "assertion_failure",
+        "resolution": "source_local",
+        "sink_source": "self.assertEqual(entries[0]['agent_key'], 'acpx')",
+        "response_variables": "[\"entries\", \"result\"]",
+        "trace_lines": "[1109, 1110, 1113]",
+        "joern_status": "no_joint_slice",
+        "slice_ids": "[799533, 799534]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[\"exe\", \"result\"]",
+        "slice_parse_flags": "[{\"parses\": [\"1\"], \"slice_id\": 799533}, {\"parses\": [\"1\"], \"slice_id\": 799534}]"
+      }
+    ],
+    "index": 28
+  },
+  {
+    "method_id": "XAIHT/Tlamatini::Tlamatini/agent/tests.py::821",
+    "method": {
+      "repo": "XAIHT/Tlamatini",
+      "file": "Tlamatini/agent/tests.py",
+      "qname": "ExecReportCaptureTests.test_direct_executer_and_pythonxer_are_captured_with_correct_agent_keys",
+      "line": "821",
+      "line_end": "850",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::841::17",
+        "repo": "XAIHT/Tlamatini",
+        "rel_path": "Tlamatini/agent/tests.py",
+        "code_kind": "production",
+        "call_line": "841",
+        "sink_line": "844",
+        "check_kind": "assertion",
+        "mechanism": "deterministic_assert",
+        "intervention": "assertion_failure",
+        "resolution": "source_local",
+        "sink_source": "self.assertEqual(len(entries), 2)",
+        "response_variables": "[\"entries\", \"result\"]",
+        "trace_lines": "[841, 843, 844]",
+        "joern_status": "no_joint_slice",
+        "slice_ids": "[799504, 799505]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[\"exe\", \"result\"]",
+        "slice_parse_flags": "[{\"parses\": [\"1\"], \"slice_id\": 799504}, {\"parses\": [\"1\"], \"slice_id\": 799505}]"
+      },
+      {
+        "call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::841::17",
+        "repo": "XAIHT/Tlamatini",
+        "rel_path": "Tlamatini/agent/tests.py",
+        "code_kind": "production",
+        "call_line": "841",
+        "sink_line": "845",
+        "check_kind": "assertion",
+        "mechanism": "deterministic_assert",
+        "intervention": "assertion_failure",
+        "resolution": "source_local",
+        "sink_source": "self.assertEqual(entries[0]['agent_key'], 'executer')",
+        "response_variables": "[\"entries\", \"result\"]",
+        "trace_lines": "[841, 843, 845]",
+        "joern_status": "no_joint_slice",
+        "slice_ids": "[799504, 799505]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[\"exe\", \"result\"]",
+        "slice_parse_flags": "[{\"parses\": [\"1\"], \"slice_id\": 799504}, {\"parses\": [\"1\"], \"slice_id\": 799505}]"
+      },
+      {
+        "call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::841::17",
+        "repo": "XAIHT/Tlamatini",
+        "rel_path": "Tlamatini/agent/tests.py",
+        "code_kind": "production",
+        "call_line": "841",
+        "sink_line": "846",
+        "check_kind": "assertion",
+        "mechanism": "deterministic_assert",
+        "intervention": "assertion_failure",
+        "resolution": "source_local",
+        "sink_source": "self.assertEqual(entries[0]['agent_display'], 'Executer')",
+        "response_variables": "[\"entries\", \"result\"]",
+        "trace_lines": "[841, 843, 846]",
+        "joern_status": "no_joint_slice",
+        "slice_ids": "[799504, 799505]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[\"exe\", \"result\"]",
+        "slice_parse_flags": "[{\"parses\": [\"1\"], \"slice_id\": 799504}, {\"parses\": [\"1\"], \"slice_id\": 799505}]"
+      },
+      {
+        "call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::841::17",
+        "repo": "XAIHT/Tlamatini",
+        "rel_path": "Tlamatini/agent/tests.py",
+        "code_kind": "production",
+        "call_line": "841",
+        "sink_line": "847",
+        "check_kind": "assertion",
+        "mechanism": "deterministic_assert",
+        "intervention": "assertion_failure",
+        "resolution": "source_local",
+        "sink_source": "self.assertEqual(entries[0]['command'], 'git status')",
+        "response_variables": "[\"entries\", \"result\"]",
+        "trace_lines": "[841, 843, 847]",
+        "joern_status": "no_joint_slice",
+        "slice_ids": "[799504, 799505]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[\"exe\", \"result\"]",
+        "slice_parse_flags": "[{\"parses\": [\"1\"], \"slice_id\": 799504}, {\"parses\": [\"1\"], \"slice_id\": 799505}]"
+      },
+      {
+        "call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::841::17",
+        "repo": "XAIHT/Tlamatini",
+        "rel_path": "Tlamatini/agent/tests.py",
+        "code_kind": "production",
+        "call_line": "841",
+        "sink_line": "848",
+        "check_kind": "assertion",
+        "mechanism": "deterministic_assert",
+        "intervention": "assertion_failure",
+        "resolution": "source_local",
+        "sink_source": "self.assertTrue(entries[0]['success'])",
+        "response_variables": "[\"entries\", \"result\"]",
+        "trace_lines": "[841, 843, 848]",
+        "joern_status": "no_joint_slice",
+        "slice_ids": "[799504, 799505]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[\"exe\", \"result\"]",
+        "slice_parse_flags": "[{\"parses\": [\"1\"], \"slice_id\": 799504}, {\"parses\": [\"1\"], \"slice_id\": 799505}]"
+      },
+      {
+        "call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::841::17",
+        "repo": "XAIHT/Tlamatini",
+        "rel_path": "Tlamatini/agent/tests.py",
+        "code_kind": "production",
+        "call_line": "841",
+        "sink_line": "849",
+        "check_kind": "assertion",
+        "mechanism": "deterministic_assert",
+        "intervention": "assertion_failure",
+        "resolution": "source_local",
+        "sink_source": "self.assertEqual(entries[1]['agent_key'], 'pythonxer')",
+        "response_variables": "[\"entries\", \"result\"]",
+        "trace_lines": "[841, 843, 849]",
+        "joern_status": "no_joint_slice",
+        "slice_ids": "[799504, 799505]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[\"exe\", \"result\"]",
+        "slice_parse_flags": "[{\"parses\": [\"1\"], \"slice_id\": 799504}, {\"parses\": [\"1\"], \"slice_id\": 799505}]"
+      },
+      {
+        "call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::841::17",
+        "repo": "XAIHT/Tlamatini",
+        "rel_path": "Tlamatini/agent/tests.py",
+        "code_kind": "production",
+        "call_line": "841",
+        "sink_line": "850",
+        "check_kind": "assertion",
+        "mechanism": "deterministic_assert",
+        "intervention": "assertion_failure",
+        "resolution": "source_local",
+        "sink_source": "self.assertEqual(entries[1]['agent_display'], 'Pythonxer')",
+        "response_variables": "[\"entries\", \"result\"]",
+        "trace_lines": "[841, 843, 850]",
+        "joern_status": "no_joint_slice",
+        "slice_ids": "[799504, 799505]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[\"exe\", \"result\"]",
+        "slice_parse_flags": "[{\"parses\": [\"1\"], \"slice_id\": 799504}, {\"parses\": [\"1\"], \"slice_id\": 799505}]"
+      }
+    ],
+    "index": 29
+  },
+  {
+    "method_id": "baserow/baserow::enterprise/backend/src/baserow_enterprise/assistant/tools/database/tools.py::860",
+    "method": {
+      "repo": "baserow/baserow",
+      "file": "enterprise/backend/src/baserow_enterprise/assistant/tools/database/tools.py",
+      "qname": "generate_formula",
+      "line": "860",
+      "line_end": "994",
+      "group": "llm",
+      "mapped_tests": "4",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "baserow_baserow/enterprise/backend/src/baserow_enterprise/assistant/tools/database/tools.py::921::19",
+        "repo": "baserow/baserow",
+        "rel_path": "enterprise/backend/src/baserow_enterprise/assistant/tools/database/tools.py",
+        "code_kind": "production",
+        "call_line": "921",
+        "sink_line": "930",
+        "check_kind": "rejection_branch",
+        "mechanism": "response_predicate",
+        "intervention": "raise",
+        "resolution": "source_local",
+        "sink_source": "if not result.is_formula_valid:\r\n        raise Exception(f\"Error generating formula: {result.error_message}\")",
+        "response_variables": "[\"agent_result\", \"result\"]",
+        "trace_lines": "[921, 928, 930]",
+        "joern_status": "no_joint_slice",
+        "slice_ids": "[1003100, 1003110, 1003112, 1003114]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[\"agent_result\", \"formula_toolset\", \"model\", \"prompt\"]",
+        "slice_parse_flags": "[{\"parses\": [\"0\"], \"slice_id\": 1003100}, {\"parses\": [\"0\"], \"slice_id\": 1003110}, {\"parses\": [\"0\"], \"slice_id\": 1003112}, {\"parses\": [\"0\"], \"slice_id\": 1003114}]"
+      }
+    ],
+    "index": 30
+  },
+  {
+    "method_id": "codemie-ai/codemie::src/codemie/chains/kb_sources_selector_chain.py::37",
+    "method": {
+      "repo": "codemie-ai/codemie",
+      "file": "src/codemie/chains/kb_sources_selector_chain.py",
+      "qname": "KBSourcesSelectorChain.generate",
+      "line": "37",
+      "line_end": "48",
+      "group": "llm",
+      "mapped_tests": "1",
+      "exact_mapped_tests": "1"
+    },
+    "checks": [
+      {
+        "call_id": "codemie-ai_codemie/src/codemie/chains/kb_sources_selector_chain.py::38::17",
+        "repo": "codemie-ai/codemie",
+        "rel_path": "src/codemie/chains/kb_sources_selector_chain.py",
+        "code_kind": "production",
+        "call_line": "38",
+        "sink_line": "45",
+        "check_kind": "early_exit_candidate",
+        "mechanism": "response_predicate",
+        "intervention": "replacement_return",
+        "resolution": "source_local",
+        "sink_source": "if result == NONE_RESPONSE:\n            return []",
+        "response_variables": "[\"result\"]",
+        "trace_lines": "[38, 45]",
+        "joern_status": "same_response_slice",
+        "slice_ids": "[1295573]",
+        "shared_slice_ids": "[1295573]",
+        "response_slice_ids": "[1295573]",
+        "slice_variables": "[\"result\"]",
+        "slice_parse_flags": "[{\"parses\": [\"1\"], \"slice_id\": 1295573}]"
+      }
+    ],
+    "index": 31
+  },
+  {
+    "method_id": "crestalnetwork/intentkit::intentkit/core/summarization.py::392",
+    "method": {
+      "repo": "crestalnetwork/intentkit",
+      "file": "intentkit/core/summarization.py",
+      "qname": "SummarizationMiddleware._summarize_once",
+      "line": "392",
+      "line_end": "401",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "crestalnetwork_intentkit/intentkit/core/summarization.py::394::25",
+        "repo": "crestalnetwork/intentkit",
+        "rel_path": "intentkit/core/summarization.py",
+        "code_kind": "production",
+        "call_line": "394",
+        "sink_line": "399",
+        "check_kind": "rejection_branch",
+        "mechanism": "response_predicate",
+        "intervention": "raise",
+        "resolution": "source_local",
+        "sink_source": "if not text:\r\n            raise ValueError(\"summarizer returned empty text\")",
+        "response_variables": "[\"response\", \"text\"]",
+        "trace_lines": "[394, 398, 399]",
+        "joern_status": "no_joint_slice",
+        "slice_ids": "[1308056, 1308058]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[\"formatted\", \"response\"]",
+        "slice_parse_flags": "[{\"parses\": [\"1\"], \"slice_id\": 1308056}, {\"parses\": [\"1\"], \"slice_id\": 1308058}]"
+      }
+    ],
+    "index": 32
+  },
+  {
+    "method_id": "crestalnetwork/intentkit::intentkit/tools/aave_v3/utils.py::47",
+    "method": {
+      "repo": "crestalnetwork/intentkit",
+      "file": "intentkit/tools/aave_v3/utils.py",
+      "qname": "ensure_allowance",
+      "line": "47",
+      "line_end": "81",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "crestalnetwork_intentkit/intentkit/tools/aave_v3/utils.py::62::20",
+        "repo": "crestalnetwork/intentkit",
+        "rel_path": "intentkit/tools/aave_v3/utils.py",
+        "code_kind": "production",
+        "call_line": "62",
+        "sink_line": "67",
+        "check_kind": "early_exit_candidate",
+        "mechanism": "response_predicate",
+        "intervention": "replacement_return",
+        "resolution": "source_local",
+        "sink_source": "if current >= amount:\r\n        return",
+        "response_variables": "[\"current\"]",
+        "trace_lines": "[62, 67]",
+        "joern_status": "same_response_slice",
+        "slice_ids": "[1308255, 1308256]",
+        "shared_slice_ids": "[1308255, 1308256]",
+        "response_slice_ids": "[1308256]",
+        "slice_variables": "[\"contract\", \"current\"]",
+        "slice_parse_flags": "[{\"parses\": [\"0\"], \"slice_id\": 1308255}, {\"parses\": [\"0\"], \"slice_id\": 1308256}]"
+      }
+    ],
+    "index": 33
+  },
+  {
+    "method_id": "crestalnetwork/intentkit::intentkit/tools/aerodrome/add_liquidity.py::232",
+    "method": {
+      "repo": "crestalnetwork/intentkit",
+      "file": "intentkit/tools/aerodrome/add_liquidity.py",
+      "qname": "AerodromeAddLiquidity._lookup_gauge",
+      "line": "232",
+      "line_end": "246",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "crestalnetwork_intentkit/intentkit/tools/aerodrome/add_liquidity.py::239::34",
+        "repo": "crestalnetwork/intentkit",
+        "rel_path": "intentkit/tools/aerodrome/add_liquidity.py",
+        "code_kind": "production",
+        "call_line": "239",
+        "sink_line": "242",
+        "check_kind": "early_exit_candidate",
+        "mechanism": "response_predicate",
+        "intervention": "replacement_return",
+        "resolution": "source_local",
+        "sink_source": "if gauge_address == \"0x0000000000000000000000000000000000000000\":\r\n                return None",
+        "response_variables": "[\"gauge_address\"]",
+        "trace_lines": "[239, 242]",
+        "joern_status": "same_response_slice",
+        "slice_ids": "[1308338, 1308339, 1308340]",
+        "shared_slice_ids": "[1308338]",
+        "response_slice_ids": "[1308338]",
+        "slice_variables": "[\"gauge_address\", \"pool_address\", \"voter\"]",
+        "slice_parse_flags": "[{\"parses\": [\"1\"], \"slice_id\": 1308338}, {\"parses\": [\"1\"], \"slice_id\": 1308339}, {\"parses\": [\"1\"], \"slice_id\": 1308340}]"
+      }
+    ],
+    "index": 34
+  },
+  {
+    "method_id": "crestalnetwork/intentkit::intentkit/tools/aerodrome/get_positions.py::48",
+    "method": {
+      "repo": "crestalnetwork/intentkit",
+      "file": "intentkit/tools/aerodrome/get_positions.py",
+      "qname": "AerodromeGetPositions._arun",
+      "line": "48",
+      "line_end": "126",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "crestalnetwork_intentkit/intentkit/tools/aerodrome/get_positions.py::95::42",
+        "repo": "crestalnetwork/intentkit",
+        "rel_path": "intentkit/tools/aerodrome/get_positions.py",
+        "code_kind": "production",
+        "call_line": "95",
+        "sink_line": "98",
+        "check_kind": "retry_branch",
+        "mechanism": "response_predicate",
+        "intervention": "retry_continue",
+        "resolution": "source_local",
+        "sink_source": "if not is_staked:\r\n                            continue",
+        "response_variables": "[\"is_staked\"]",
+        "trace_lines": "[95, 98]",
+        "joern_status": "same_response_slice",
+        "slice_ids": "[1308344, 1308347, 1308352, 1308361]",
+        "shared_slice_ids": "[1308344, 1308347, 1308352, 1308361]",
+        "response_slice_ids": "[1308352]",
+        "slice_variables": "[\"checksum_wallet\", \"gauge\", \"is_staked\", \"token_id\"]",
+        "slice_parse_flags": "[{\"parses\": [\"0\"], \"slice_id\": 1308344}, {\"parses\": [\"0\"], \"slice_id\": 1308347}, {\"parses\": [\"0\"], \"slice_id\": 1308352}, {\"parses\": [\"0\"], \"slice_id\": 1308361}]"
+      }
+    ],
+    "index": 35
+  },
+  {
+    "method_id": "crestalnetwork/intentkit::intentkit/tools/aerodrome/remove_liquidity.py::60",
+    "method": {
+      "repo": "crestalnetwork/intentkit",
+      "file": "intentkit/tools/aerodrome/remove_liquidity.py",
+      "qname": "AerodromeRemoveLiquidity._arun",
+      "line": "60",
+      "line_end": "199",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "crestalnetwork_intentkit/intentkit/tools/aerodrome/remove_liquidity.py::120::29",
+        "repo": "crestalnetwork/intentkit",
+        "rel_path": "intentkit/tools/aerodrome/remove_liquidity.py",
+        "code_kind": "production",
+        "call_line": "120",
+        "sink_line": "126",
+        "check_kind": "rejection_branch",
+        "mechanism": "response_predicate",
+        "intervention": "raise",
+        "resolution": "source_local",
+        "sink_source": "if liquidity == 0:\r\n                raise ToolException(f\"Position {token_id} has no liquidity to remove\")",
+        "response_variables": "[\"liquidity\", \"pos_info\"]",
+        "trace_lines": "[120, 121, 126]",
+        "joern_status": "no_joint_slice",
+        "slice_ids": "[1308425, 1308427]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[\"pm\", \"pos_info\"]",
+        "slice_parse_flags": "[{\"parses\": [\"0\"], \"slice_id\": 1308425}, {\"parses\": [\"0\"], \"slice_id\": 1308427}]"
+      }
+    ],
+    "index": 36
+  },
+  {
+    "method_id": "crestalnetwork/intentkit::intentkit/tools/aerodrome/utils.py::69",
+    "method": {
+      "repo": "crestalnetwork/intentkit",
+      "file": "intentkit/tools/aerodrome/utils.py",
+      "qname": "ensure_allowance",
+      "line": "69",
+      "line_end": "94",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "crestalnetwork_intentkit/intentkit/tools/aerodrome/utils.py::81::20",
+        "repo": "crestalnetwork/intentkit",
+        "rel_path": "intentkit/tools/aerodrome/utils.py",
+        "code_kind": "production",
+        "call_line": "81",
+        "sink_line": "86",
+        "check_kind": "early_exit_candidate",
+        "mechanism": "response_predicate",
+        "intervention": "replacement_return",
+        "resolution": "source_local",
+        "sink_source": "if current >= amount:\r\n        return",
+        "response_variables": "[\"current\"]",
+        "trace_lines": "[81, 86]",
+        "joern_status": "same_response_slice",
+        "slice_ids": "[1308486, 1308487]",
+        "shared_slice_ids": "[1308486, 1308487]",
+        "response_slice_ids": "[1308487]",
+        "slice_variables": "[\"contract\", \"current\"]",
+        "slice_parse_flags": "[{\"parses\": [\"0\"], \"slice_id\": 1308486}, {\"parses\": [\"0\"], \"slice_id\": 1308487}]"
+      }
+    ],
+    "index": 37
+  },
+  {
+    "method_id": "crestalnetwork/intentkit::intentkit/tools/opensea/onchain_base.py::63",
+    "method": {
+      "repo": "crestalnetwork/intentkit",
+      "file": "intentkit/tools/opensea/onchain_base.py",
+      "qname": "OpenSeaOnChainBaseTool._ensure_nft_approval",
+      "line": "63",
+      "line_end": "97",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "crestalnetwork_intentkit/intentkit/tools/opensea/onchain_base.py::78::28",
+        "repo": "crestalnetwork/intentkit",
+        "rel_path": "intentkit/tools/opensea/onchain_base.py",
+        "code_kind": "production",
+        "call_line": "78",
+        "sink_line": "83",
+        "check_kind": "early_exit_candidate",
+        "mechanism": "response_predicate",
+        "intervention": "replacement_return",
+        "resolution": "source_local",
+        "sink_source": "if is_approved:\r\n            return None",
+        "response_variables": "[\"is_approved\"]",
+        "trace_lines": "[78, 83]",
+        "joern_status": "same_response_slice",
+        "slice_ids": "[1308830, 1308831, 1308836]",
+        "shared_slice_ids": "[1308830, 1308831]",
+        "response_slice_ids": "[1308830]",
+        "slice_variables": "[\"is_approved\", \"nft_contract\", \"wallet_address\"]",
+        "slice_parse_flags": "[{\"parses\": [\"0\"], \"slice_id\": 1308830}, {\"parses\": [\"0\"], \"slice_id\": 1308831}, {\"parses\": [\"0\"], \"slice_id\": 1308836}]"
+      }
+    ],
+    "index": 38
+  },
+  {
+    "method_id": "crestalnetwork/intentkit::intentkit/tools/pancakeswap/get_positions.py::44",
+    "method": {
+      "repo": "crestalnetwork/intentkit",
+      "file": "intentkit/tools/pancakeswap/get_positions.py",
+      "qname": "PancakeSwapGetPositions._arun",
+      "line": "44",
+      "line_end": "122",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "crestalnetwork_intentkit/intentkit/tools/pancakeswap/get_positions.py::90::46",
+        "repo": "crestalnetwork/intentkit",
+        "rel_path": "intentkit/tools/pancakeswap/get_positions.py",
+        "code_kind": "production",
+        "call_line": "90",
+        "sink_line": "94",
+        "check_kind": "retry_branch",
+        "mechanism": "response_predicate",
+        "intervention": "retry_continue",
+        "resolution": "source_local",
+        "sink_source": "if user_info[6].lower() != wallet_address.lower():\r\n                                continue",
+        "response_variables": "[\"user_info\"]",
+        "trace_lines": "[90, 94]",
+        "joern_status": "same_response_slice",
+        "slice_ids": "[1308923, 1308931, 1308932]",
+        "shared_slice_ids": "[1308923, 1308931, 1308932]",
+        "response_slice_ids": "[1308932]",
+        "slice_variables": "[\"mc\", \"token_id\", \"user_info\"]",
+        "slice_parse_flags": "[{\"parses\": [\"0\"], \"slice_id\": 1308923}, {\"parses\": [\"0\"], \"slice_id\": 1308931}, {\"parses\": [\"0\"], \"slice_id\": 1308932}]"
+      }
+    ],
+    "index": 39
+  },
+  {
+    "method_id": "crestalnetwork/intentkit::intentkit/tools/pancakeswap/remove_liquidity.py::59",
+    "method": {
+      "repo": "crestalnetwork/intentkit",
+      "file": "intentkit/tools/pancakeswap/remove_liquidity.py",
+      "qname": "PancakeSwapRemoveLiquidity._arun",
+      "line": "59",
+      "line_end": "199",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "crestalnetwork_intentkit/intentkit/tools/pancakeswap/remove_liquidity.py::119::29",
+        "repo": "crestalnetwork/intentkit",
+        "rel_path": "intentkit/tools/pancakeswap/remove_liquidity.py",
+        "code_kind": "production",
+        "call_line": "119",
+        "sink_line": "125",
+        "check_kind": "rejection_branch",
+        "mechanism": "response_predicate",
+        "intervention": "raise",
+        "resolution": "source_local",
+        "sink_source": "if liquidity == 0:\r\n                raise ToolException(f\"Position {token_id} has no liquidity to remove\")",
+        "response_variables": "[\"liquidity\", \"pos_info\"]",
+        "trace_lines": "[119, 120, 125]",
+        "joern_status": "no_joint_slice",
+        "slice_ids": "[1309002, 1309004]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[\"pm\", \"pos_info\"]",
+        "slice_parse_flags": "[{\"parses\": [\"0\"], \"slice_id\": 1309002}, {\"parses\": [\"0\"], \"slice_id\": 1309004}]"
+      }
+    ],
+    "index": 40
+  },
+  {
+    "method_id": "crestalnetwork/intentkit::intentkit/tools/pancakeswap/utils.py::64",
+    "method": {
+      "repo": "crestalnetwork/intentkit",
+      "file": "intentkit/tools/pancakeswap/utils.py",
+      "qname": "ensure_allowance",
+      "line": "64",
+      "line_end": "89",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "crestalnetwork_intentkit/intentkit/tools/pancakeswap/utils.py::76::20",
+        "repo": "crestalnetwork/intentkit",
+        "rel_path": "intentkit/tools/pancakeswap/utils.py",
+        "code_kind": "production",
+        "call_line": "76",
+        "sink_line": "81",
+        "check_kind": "early_exit_candidate",
+        "mechanism": "response_predicate",
+        "intervention": "replacement_return",
+        "resolution": "source_local",
+        "sink_source": "if current >= amount:\r\n        return",
+        "response_variables": "[\"current\"]",
+        "trace_lines": "[76, 81]",
+        "joern_status": "same_response_slice",
+        "slice_ids": "[1309068, 1309069]",
+        "shared_slice_ids": "[1309068, 1309069]",
+        "response_slice_ids": "[1309069]",
+        "slice_variables": "[\"contract\", \"current\"]",
+        "slice_parse_flags": "[{\"parses\": [\"0\"], \"slice_id\": 1309068}, {\"parses\": [\"0\"], \"slice_id\": 1309069}]"
+      }
+    ],
+    "index": 41
+  },
+  {
+    "method_id": "crestalnetwork/intentkit::intentkit/tools/uniswap/remove_liquidity.py::49",
+    "method": {
+      "repo": "crestalnetwork/intentkit",
+      "file": "intentkit/tools/uniswap/remove_liquidity.py",
+      "qname": "UniswapRemoveLiquidity._arun",
+      "line": "49",
+      "line_end": "151",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "crestalnetwork_intentkit/intentkit/tools/uniswap/remove_liquidity.py::74::29",
+        "repo": "crestalnetwork/intentkit",
+        "rel_path": "intentkit/tools/uniswap/remove_liquidity.py",
+        "code_kind": "production",
+        "call_line": "74",
+        "sink_line": "80",
+        "check_kind": "rejection_branch",
+        "mechanism": "response_predicate",
+        "intervention": "raise",
+        "resolution": "source_local",
+        "sink_source": "if liquidity == 0:\r\n                raise ToolException(f\"Position {token_id} has no liquidity to remove\")",
+        "response_variables": "[\"liquidity\", \"pos_info\"]",
+        "trace_lines": "[74, 75, 80]",
+        "joern_status": "no_joint_slice",
+        "slice_ids": "[1309211, 1309213]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[\"pm\", \"pos_info\"]",
+        "slice_parse_flags": "[{\"parses\": [\"0\"], \"slice_id\": 1309211}, {\"parses\": [\"0\"], \"slice_id\": 1309213}]"
+      }
+    ],
+    "index": 42
+  },
+  {
+    "method_id": "crestalnetwork/intentkit::intentkit/tools/uniswap/utils.py::65",
+    "method": {
+      "repo": "crestalnetwork/intentkit",
+      "file": "intentkit/tools/uniswap/utils.py",
+      "qname": "ensure_allowance",
+      "line": "65",
+      "line_end": "90",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "crestalnetwork_intentkit/intentkit/tools/uniswap/utils.py::77::20",
+        "repo": "crestalnetwork/intentkit",
+        "rel_path": "intentkit/tools/uniswap/utils.py",
+        "code_kind": "production",
+        "call_line": "77",
+        "sink_line": "82",
+        "check_kind": "early_exit_candidate",
+        "mechanism": "response_predicate",
+        "intervention": "replacement_return",
+        "resolution": "source_local",
+        "sink_source": "if current >= amount:\r\n        return",
+        "response_variables": "[\"current\"]",
+        "trace_lines": "[77, 82]",
+        "joern_status": "same_response_slice",
+        "slice_ids": "[1309274, 1309275]",
+        "shared_slice_ids": "[1309274, 1309275]",
+        "response_slice_ids": "[1309275]",
+        "slice_variables": "[\"contract\", \"current\"]",
+        "slice_parse_flags": "[{\"parses\": [\"0\"], \"slice_id\": 1309274}, {\"parses\": [\"0\"], \"slice_id\": 1309275}]"
+      }
+    ],
+    "index": 43
+  },
+  {
+    "method_id": "ericjiang18/Agent-Q-Mix::agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_code_executor_agent.py::515",
+    "method": {
+      "repo": "ericjiang18/Agent-Q-Mix",
+      "file": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_code_executor_agent.py",
+      "qname": "CodeExecutorAgent.on_messages_stream",
+      "line": "515",
+      "line_end": "675",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_code_executor_agent.py::648::29",
+        "repo": "ericjiang18/Agent-Q-Mix",
+        "rel_path": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_code_executor_agent.py",
+        "code_kind": "production",
+        "call_line": "648",
+        "sink_line": "650",
+        "check_kind": "assertion",
+        "mechanism": "deterministic_assert",
+        "intervention": "assertion_failure",
+        "resolution": "source_local",
+        "sink_source": "assert isinstance(\n                response.content, str\n            ), \"Expected structured response for retry decision to be of type str.\"",
+        "response_variables": "[\"response\"]",
+        "trace_lines": "[648, 650]",
+        "joern_status": "no_joint_slice",
+        "slice_ids": "[1501967, 1501981]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[\"chat_context\", \"response\"]",
+        "slice_parse_flags": "[{\"parses\": [\"0\"], \"slice_id\": 1501967}, {\"parses\": [\"0\"], \"slice_id\": 1501981}]"
+      }
+    ],
+    "index": 44
+  },
+  {
+    "method_id": "ikamensh/kodo::kodo/coach.py::405",
+    "method": {
+      "repo": "ikamensh/kodo",
+      "file": "kodo/coach.py",
+      "qname": "FilteredCoach._filter_message",
+      "line": "405",
+      "line_end": "419",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "ikamensh_kodo/kodo/coach.py::409::21",
+        "repo": "ikamensh/kodo",
+        "rel_path": "kodo/coach.py",
+        "code_kind": "production",
+        "call_line": "409",
+        "sink_line": "415",
+        "check_kind": "early_exit_candidate",
+        "mechanism": "response_predicate",
+        "intervention": "replacement_return",
+        "resolution": "source_local",
+        "sink_source": "if result.output.decision == \"pass\":\r\n                return None",
+        "response_variables": "[\"result\"]",
+        "trace_lines": "[409, 415]",
+        "joern_status": "same_response_slice",
+        "slice_ids": "[1732457, 1732458, 1732459]",
+        "shared_slice_ids": "[1732459]",
+        "response_slice_ids": "[1732459]",
+        "slice_variables": "[\"agent\", \"message\", \"result\"]",
+        "slice_parse_flags": "[{\"parses\": [\"1\"], \"slice_id\": 1732457}, {\"parses\": [\"1\"], \"slice_id\": 1732458}, {\"parses\": [\"1\"], \"slice_id\": 1732459}]"
+      }
+    ],
+    "index": 45
+  },
+  {
+    "method_id": "itbench-hub/ITBench-CISO-CAA-Agent::src/ciso_agent/agents/kubernetes_kyverno.py::71",
+    "method": {
+      "repo": "itbench-hub/ITBench-CISO-CAA-Agent",
+      "file": "src/ciso_agent/agents/kubernetes_kyverno.py",
+      "qname": "KubernetesKyvernoCrew.run_scenario",
+      "line": "71",
+      "line_end": "167",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "itbench-hub_ITBench-CISO-CAA-Agent/src/ciso_agent/agents/kubernetes_kyverno.py::144::17",
+        "repo": "itbench-hub/ITBench-CISO-CAA-Agent",
+        "rel_path": "src/ciso_agent/agents/kubernetes_kyverno.py",
+        "code_kind": "production",
+        "call_line": "144",
+        "sink_line": "146",
+        "check_kind": "rejection_branch",
+        "mechanism": "response_predicate",
+        "intervention": "raise",
+        "resolution": "source_local",
+        "sink_source": "if not result_str:\r\n            raise ValueError(\"crew agent returned an empty string.\")",
+        "response_variables": "[\"output\", \"result_str\"]",
+        "trace_lines": "[144, 145, 146]",
+        "joern_status": "no_joint_slice",
+        "slice_ids": "[1740942, 1740945, 1740950]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[\"crew\", \"inputs\", \"output\"]",
+        "slice_parse_flags": "[{\"parses\": [\"1\"], \"slice_id\": 1740942}, {\"parses\": [\"1\"], \"slice_id\": 1740945}, {\"parses\": [\"1\"], \"slice_id\": 1740950}]"
+      }
+    ],
+    "index": 46
+  },
+  {
+    "method_id": "itbench-hub/ITBench-CISO-CAA-Agent::src/ciso_agent/agents/kubernetes_kyverno_update.py::82",
+    "method": {
+      "repo": "itbench-hub/ITBench-CISO-CAA-Agent",
+      "file": "src/ciso_agent/agents/kubernetes_kyverno_update.py",
+      "qname": "KubernetesKyvernoUpdateCrew.run_scenario",
+      "line": "82",
+      "line_end": "175",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "itbench-hub_ITBench-CISO-CAA-Agent/src/ciso_agent/agents/kubernetes_kyverno_update.py::152::17",
+        "repo": "itbench-hub/ITBench-CISO-CAA-Agent",
+        "rel_path": "src/ciso_agent/agents/kubernetes_kyverno_update.py",
+        "code_kind": "production",
+        "call_line": "152",
+        "sink_line": "154",
+        "check_kind": "rejection_branch",
+        "mechanism": "response_predicate",
+        "intervention": "raise",
+        "resolution": "source_local",
+        "sink_source": "if not result_str:\r\n            raise ValueError(\"crew agent returned an empty string.\")",
+        "response_variables": "[\"output\", \"result_str\"]",
+        "trace_lines": "[152, 153, 154]",
+        "joern_status": "no_joint_slice",
+        "slice_ids": "[1740959, 1740962, 1740967]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[\"crew\", \"inputs\", \"output\"]",
+        "slice_parse_flags": "[{\"parses\": [\"1\"], \"slice_id\": 1740959}, {\"parses\": [\"1\"], \"slice_id\": 1740962}, {\"parses\": [\"1\"], \"slice_id\": 1740967}]"
+      }
+    ],
+    "index": 47
+  },
+  {
+    "method_id": "julienlucas/agentic-rag-multiagent::backend/retriever/contextual_compression.py::59",
+    "method": {
+      "repo": "julienlucas/agentic-rag-multiagent",
+      "file": "backend/retriever/contextual_compression.py",
+      "qname": "ContextualCompressionRetriever._extract_relevant_content",
+      "line": "59",
+      "line_end": "101",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "julienlucas_agentic-rag-multiagent/backend/retriever/contextual_compression.py::76::23",
+        "repo": "julienlucas/agentic-rag-multiagent",
+        "rel_path": "backend/retriever/contextual_compression.py",
+        "code_kind": "production",
+        "call_line": "76",
+        "sink_line": "80",
+        "check_kind": "early_exit_candidate",
+        "mechanism": "response_predicate",
+        "intervention": "replacement_return",
+        "resolution": "source_local",
+        "sink_source": "if (\r\n                extracted.upper() == \"AUCUN\"\r\n                or len(extracted) < self.min_relevance_length\r\n                or \"aucun passage\" in extracted.lower()\r\n            ):\r\n                return None",
+        "response_variables": "[\"extracted\", \"response\"]",
+        "trace_lines": "[76, 77, 80]",
+        "joern_status": "no_joint_slice",
+        "slice_ids": "[1745181, 1745182, 1745184]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[\"llm\", \"prompt\", \"response\"]",
+        "slice_parse_flags": "[{\"parses\": [\"1\"], \"slice_id\": 1745181}, {\"parses\": [\"1\"], \"slice_id\": 1745182}, {\"parses\": [\"1\"], \"slice_id\": 1745184}]"
+      }
+    ],
+    "index": 48
+  },
+  {
+    "method_id": "michaelalbada/BuildingApplicationsWithAIAgents::src/frameworks/langgraph_agents/supply_chain/ray_supply_chain_multi_agent.py::227",
+    "method": {
+      "repo": "michaelalbada/BuildingApplicationsWithAIAgents",
+      "file": "src/frameworks/langgraph_agents/supply_chain/ray_supply_chain_multi_agent.py",
+      "qname": "supervisor_invoke",
+      "line": "227",
+      "line_end": "259",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "michaelalbada_BuildingApplicationsWithAIAgents/src/frameworks/langgraph_agents/supply_chain/ray_supply_chain_multi_agent.py::244::15",
+        "repo": "michaelalbada/BuildingApplicationsWithAIAgents",
+        "rel_path": "src/frameworks/langgraph_agents/supply_chain/ray_supply_chain_multi_agent.py",
+        "code_kind": "production",
+        "call_line": "244",
+        "sink_line": "247",
+        "check_kind": "rejection_branch",
+        "mechanism": "response_predicate",
+        "intervention": "raise",
+        "resolution": "source_local",
+        "sink_source": "if agent_name not in llms:\r\n        raise ValueError(f\"Unknown agent: {agent_name}\")",
+        "response_variables": "[\"agent_name\", \"response\"]",
+        "trace_lines": "[244, 245, 247]",
+        "joern_status": "no_joint_slice",
+        "slice_ids": "[2110281, 2110288]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[\"full\", \"response\"]",
+        "slice_parse_flags": "[{\"parses\": [\"1\"], \"slice_id\": 2110281}, {\"parses\": [\"1\"], \"slice_id\": 2110288}]"
+      }
+    ],
+    "index": 49
+  },
+  {
+    "method_id": "ob-labs/agentseek-api::examples/run_sample_graphs.py::28",
+    "method": {
+      "repo": "ob-labs/agentseek-api",
+      "file": "examples/run_sample_graphs.py",
+      "qname": "_run_stress_test",
+      "line": "28",
+      "line_end": "35",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "ob-labs_agentseek-api/examples/run_sample_graphs.py::29::19",
+        "repo": "ob-labs/agentseek-api",
+        "rel_path": "examples/run_sample_graphs.py",
+        "code_kind": "production",
+        "call_line": "29",
+        "sink_line": "33",
+        "check_kind": "assertion",
+        "mechanism": "deterministic_assert",
+        "intervention": "assertion_failure",
+        "resolution": "source_local",
+        "sink_source": "assert payload[\"status\"] == \"completed\"",
+        "response_variables": "[\"payload\", \"result\"]",
+        "trace_lines": "[29, 32, 33]",
+        "joern_status": "no_joint_slice",
+        "slice_ids": "[2333489]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[\"result\"]",
+        "slice_parse_flags": "[{\"parses\": [\"1\"], \"slice_id\": 2333489}]"
+      },
+      {
+        "call_id": "ob-labs_agentseek-api/examples/run_sample_graphs.py::29::19",
+        "repo": "ob-labs/agentseek-api",
+        "rel_path": "examples/run_sample_graphs.py",
+        "code_kind": "production",
+        "call_line": "29",
+        "sink_line": "34",
+        "check_kind": "assertion",
+        "mechanism": "deterministic_assert",
+        "intervention": "assertion_failure",
+        "resolution": "source_local",
+        "sink_source": "assert payload[\"steps_completed\"] == 2",
+        "response_variables": "[\"payload\", \"result\"]",
+        "trace_lines": "[29, 32, 34]",
+        "joern_status": "no_joint_slice",
+        "slice_ids": "[2333489]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[\"result\"]",
+        "slice_parse_flags": "[{\"parses\": [\"1\"], \"slice_id\": 2333489}]"
+      }
+    ],
+    "index": 50
+  },
+  {
+    "method_id": "ob-labs/agentseek-api::examples/run_sample_graphs.py::38",
+    "method": {
+      "repo": "ob-labs/agentseek-api",
+      "file": "examples/run_sample_graphs.py",
+      "qname": "_run_subgraph_agent",
+      "line": "38",
+      "line_end": "44",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "ob-labs_agentseek-api/examples/run_sample_graphs.py::39::19",
+        "repo": "ob-labs/agentseek-api",
+        "rel_path": "examples/run_sample_graphs.py",
+        "code_kind": "production",
+        "call_line": "39",
+        "sink_line": "43",
+        "check_kind": "assertion",
+        "mechanism": "deterministic_assert",
+        "intervention": "assertion_failure",
+        "resolution": "source_local",
+        "sink_source": "assert final[\"status\"] == \"completed\"",
+        "response_variables": "[\"final\", \"result\"]",
+        "trace_lines": "[39, 42, 43]",
+        "joern_status": "no_joint_slice",
+        "slice_ids": "[2333491]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[\"result\"]",
+        "slice_parse_flags": "[{\"parses\": [\"1\"], \"slice_id\": 2333491}]"
+      }
+    ],
+    "index": 51
+  },
+  {
+    "method_id": "ob-labs/agentseek-api::examples/run_sample_graphs.py::47",
+    "method": {
+      "repo": "ob-labs/agentseek-api",
+      "file": "examples/run_sample_graphs.py",
+      "qname": "_run_react_agent",
+      "line": "47",
+      "line_end": "53",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "ob-labs_agentseek-api/examples/run_sample_graphs.py::48::19",
+        "repo": "ob-labs/agentseek-api",
+        "rel_path": "examples/run_sample_graphs.py",
+        "code_kind": "production",
+        "call_line": "48",
+        "sink_line": "52",
+        "check_kind": "assertion",
+        "mechanism": "deterministic_assert",
+        "intervention": "assertion_failure",
+        "resolution": "source_local",
+        "sink_source": "assert \"42\" in final",
+        "response_variables": "[\"final\", \"result\"]",
+        "trace_lines": "[48, 51, 52]",
+        "joern_status": "no_joint_slice",
+        "slice_ids": "[2333493]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[\"result\"]",
+        "slice_parse_flags": "[{\"parses\": [\"1\"], \"slice_id\": 2333493}]"
+      }
+    ],
+    "index": 52
+  },
+  {
+    "method_id": "ob-labs/agentseek-api::examples/run_sample_graphs.py::56",
+    "method": {
+      "repo": "ob-labs/agentseek-api",
+      "file": "examples/run_sample_graphs.py",
+      "qname": "_run_stress_tool_agent",
+      "line": "56",
+      "line_end": "65",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "ob-labs_agentseek-api/examples/run_sample_graphs.py::57::19",
+        "repo": "ob-labs/agentseek-api",
+        "rel_path": "examples/run_sample_graphs.py",
+        "code_kind": "production",
+        "call_line": "57",
+        "sink_line": "61",
+        "check_kind": "assertion",
+        "mechanism": "deterministic_assert",
+        "intervention": "assertion_failure",
+        "resolution": "source_local",
+        "sink_source": "assert payload[\"status\"] == \"completed\"",
+        "response_variables": "[\"payload\", \"result\"]",
+        "trace_lines": "[57, 60, 61]",
+        "joern_status": "no_joint_slice",
+        "slice_ids": "[2333495]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[\"result\"]",
+        "slice_parse_flags": "[{\"parses\": [\"1\"], \"slice_id\": 2333495}]"
+      },
+      {
+        "call_id": "ob-labs_agentseek-api/examples/run_sample_graphs.py::57::19",
+        "repo": "ob-labs/agentseek-api",
+        "rel_path": "examples/run_sample_graphs.py",
+        "code_kind": "production",
+        "call_line": "57",
+        "sink_line": "62",
+        "check_kind": "assertion",
+        "mechanism": "deterministic_assert",
+        "intervention": "assertion_failure",
+        "resolution": "source_local",
+        "sink_source": "assert payload[\"steps_completed\"] == 3",
+        "response_variables": "[\"payload\", \"result\"]",
+        "trace_lines": "[57, 60, 62]",
+        "joern_status": "no_joint_slice",
+        "slice_ids": "[2333495]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[\"result\"]",
+        "slice_parse_flags": "[{\"parses\": [\"1\"], \"slice_id\": 2333495}]"
+      }
+    ],
+    "index": 53
+  },
+  {
+    "method_id": "opea-project/GenAIComps::comps/guardrails/src/guardrails/integrations/llamaguard.py::125",
+    "method": {
+      "repo": "opea-project/GenAIComps",
+      "file": "comps/guardrails/src/guardrails/integrations/llamaguard.py",
+      "qname": "OpeaGuardrailsLlamaGuard.check_health",
+      "line": "125",
+      "line_end": "152",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "opea-project_GenAIComps/comps/guardrails/src/guardrails/integrations/llamaguard.py::142::23",
+        "repo": "opea-project/GenAIComps",
+        "rel_path": "comps/guardrails/src/guardrails/integrations/llamaguard.py",
+        "code_kind": "production",
+        "call_line": "142",
+        "sink_line": "144",
+        "check_kind": "early_exit_candidate",
+        "mechanism": "response_predicate",
+        "intervention": "replacement_return",
+        "resolution": "source_local",
+        "sink_source": "if \"safe\" in response:\n                return True\n            else:\n                return False",
+        "response_variables": "[\"response\"]",
+        "trace_lines": "[142, 144]",
+        "joern_status": "same_response_slice",
+        "slice_ids": "[2359030]",
+        "shared_slice_ids": "[2359030]",
+        "response_slice_ids": "[2359030]",
+        "slice_variables": "[\"response\"]",
+        "slice_parse_flags": "[{\"parses\": [\"1\"], \"slice_id\": 2359030}]"
+      }
+    ],
+    "index": 54
+  },
+  {
+    "method_id": "opea-project/GenAIComps::comps/guardrails/src/guardrails/integrations/wildguard.py::92",
+    "method": {
+      "repo": "opea-project/GenAIComps",
+      "file": "comps/guardrails/src/guardrails/integrations/wildguard.py",
+      "qname": "OpeaGuardrailsWildGuard.check_health",
+      "line": "92",
+      "line_end": "119",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "opea-project_GenAIComps/comps/guardrails/src/guardrails/integrations/wildguard.py::109::23",
+        "repo": "opea-project/GenAIComps",
+        "rel_path": "comps/guardrails/src/guardrails/integrations/wildguard.py",
+        "code_kind": "production",
+        "call_line": "109",
+        "sink_line": "111",
+        "check_kind": "early_exit_candidate",
+        "mechanism": "response_predicate",
+        "intervention": "replacement_return",
+        "resolution": "source_local",
+        "sink_source": "if \"safe\" in response:\n                return True\n            else:\n                return False",
+        "response_variables": "[\"response\"]",
+        "trace_lines": "[109, 111]",
+        "joern_status": "same_response_slice",
+        "slice_ids": "[2359041]",
+        "shared_slice_ids": "[2359041]",
+        "response_slice_ids": "[2359041]",
+        "slice_variables": "[\"response\"]",
+        "slice_parse_flags": "[{\"parses\": [\"1\"], \"slice_id\": 2359041}]"
+      }
+    ],
+    "index": 55
+  },
+  {
+    "method_id": "oracle/agent-spec::docs/pyagentspec/source/code_examples/adapter_agent_framework_quickstart.py::50",
+    "method": {
+      "repo": "oracle/agent-spec",
+      "file": "docs/pyagentspec/source/code_examples/adapter_agent_framework_quickstart.py",
+      "qname": "main",
+      "line": "50",
+      "line_end": "63",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "oracle_agent-spec/docs/pyagentspec/source/code_examples/adapter_agent_framework_quickstart.py::59::23",
+        "repo": "oracle/agent-spec",
+        "rel_path": "docs/pyagentspec/source/code_examples/adapter_agent_framework_quickstart.py",
+        "code_kind": "production",
+        "call_line": "59",
+        "sink_line": "61",
+        "check_kind": "rejection_branch",
+        "mechanism": "response_predicate",
+        "intervention": "raise",
+        "resolution": "source_local",
+        "sink_source": "if not isinstance(agent_message, Content):\r\n            raise ValueError(f\"Unexpected agent_message type {type(agent_message)}\")",
+        "response_variables": "[\"agent_message\", \"result\"]",
+        "trace_lines": "[59, 60, 61]",
+        "joern_status": "no_joint_slice",
+        "slice_ids": "[2416302, 2416304, 2416305]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[\"assistant\", \"result\", \"user_input\"]",
+        "slice_parse_flags": "[{\"parses\": [\"1\"], \"slice_id\": 2416302}, {\"parses\": [\"1\"], \"slice_id\": 2416304}, {\"parses\": [\"1\"], \"slice_id\": 2416305}]"
+      }
+    ],
+    "index": 56
+  },
+  {
+    "method_id": "oracle/agent-spec::pyagentspec/src/pyagentspec/adapters/crewai/_node_execution.py::208",
+    "method": {
+      "repo": "oracle/agent-spec",
+      "file": "pyagentspec/src/pyagentspec/adapters/crewai/_node_execution.py",
+      "qname": "LlmNodeExecutor._execute",
+      "line": "208",
+      "line_end": "224",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "oracle_agent-spec/pyagentspec/src/pyagentspec/adapters/crewai/_node_execution.py::212::28",
+        "repo": "oracle/agent-spec",
+        "rel_path": "pyagentspec/src/pyagentspec/adapters/crewai/_node_execution.py",
+        "code_kind": "production",
+        "call_line": "212",
+        "sink_line": "215",
+        "check_kind": "rejection_branch",
+        "mechanism": "response_predicate",
+        "intervention": "raise",
+        "resolution": "source_local",
+        "sink_source": "if not isinstance(generated_message, BaseModel):\r\n                raise TypeError(\r\n                    f\"Expected LLM response format to be BaseModel, got {type(generated_message)!r}\"\r\n                )",
+        "response_variables": "[\"generated_message\"]",
+        "trace_lines": "[212, 215]",
+        "joern_status": "no_saved_slice",
+        "slice_ids": "[]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[]",
+        "slice_parse_flags": "[]"
+      }
+    ],
+    "index": 57
+  },
+  {
+    "method_id": "robertwhiffin/ai-slide-generator::src/api/services/session_naming.py::26",
+    "method": {
+      "repo": "robertwhiffin/ai-slide-generator",
+      "file": "src/api/services/session_naming.py",
+      "qname": "generate_session_title",
+      "line": "26",
+      "line_end": "61",
+      "group": "llm",
+      "mapped_tests": "1",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "robertwhiffin_ai-slide-generator/src/api/services/session_naming.py::40::19",
+        "repo": "robertwhiffin/ai-slide-generator",
+        "rel_path": "src/api/services/session_naming.py",
+        "code_kind": "production",
+        "call_line": "40",
+        "sink_line": "47",
+        "check_kind": "early_exit_candidate",
+        "mechanism": "response_predicate",
+        "intervention": "replacement_return",
+        "resolution": "source_local",
+        "sink_source": "if not title:\r\n            return None",
+        "response_variables": "[\"response\", \"title\"]",
+        "trace_lines": "[40, 45, 47]",
+        "joern_status": "no_joint_slice",
+        "slice_ids": "[2504241, 2504242]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[\"model\", \"response\"]",
+        "slice_parse_flags": "[{\"parses\": [\"0\"], \"slice_id\": 2504241}, {\"parses\": [\"0\"], \"slice_id\": 2504242}]"
+      }
+    ],
+    "index": 58
+  },
+  {
+    "method_id": "rocketride-org/rocketride-server::packages/ai/src/ai/common/context.py::32",
+    "method": {
+      "repo": "rocketride-org/rocketride-server",
+      "file": "packages/ai/src/ai/common/context.py",
+      "qname": "Context.highlight_semantic_documents",
+      "line": "32",
+      "line_end": "78",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "rocketride-org_rocketride-server/packages/ai/src/ai/common/context.py::47::21",
+        "repo": "rocketride-org/rocketride-server",
+        "rel_path": "packages/ai/src/ai/common/context.py",
+        "code_kind": "production",
+        "call_line": "47",
+        "sink_line": "51",
+        "check_kind": "rejection_branch",
+        "mechanism": "response_predicate",
+        "intervention": "raise",
+        "resolution": "source_local",
+        "sink_source": "if answers is None or not len(answers):\n            raise Exception('No highlight results')",
+        "response_variables": "[\"answers\", \"highlights\"]",
+        "trace_lines": "[47, 48, 51]",
+        "joern_status": "no_joint_slice",
+        "slice_ids": "[2504777, 2504779, 2504781]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[\"h_documents\", \"highlights\", \"query\"]",
+        "slice_parse_flags": "[{\"parses\": [\"1\"], \"slice_id\": 2504777}, {\"parses\": [\"1\"], \"slice_id\": 2504779}, {\"parses\": [\"1\"], \"slice_id\": 2504781}]"
+      }
+    ],
+    "index": 59
+  },
+  {
+    "method_id": "skygazer42/Weaver::agent/workflows/viz_planner.py::163",
+    "method": {
+      "repo": "skygazer42/Weaver",
+      "file": "agent/workflows/viz_planner.py",
+      "qname": "VizPlanner.analyze_for_charts",
+      "line": "163",
+      "line_end": "244",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "skygazer42_Weaver/agent/workflows/viz_planner.py::216::23",
+        "repo": "skygazer42/Weaver",
+        "rel_path": "agent/workflows/viz_planner.py",
+        "code_kind": "production",
+        "call_line": "216",
+        "sink_line": "221",
+        "check_kind": "early_exit_candidate",
+        "mechanism": "response_predicate",
+        "intervention": "replacement_return",
+        "resolution": "source_local",
+        "sink_source": "if not response.has_chartable_data:\r\n                return []",
+        "response_variables": "[\"response\"]",
+        "trace_lines": "[216, 221]",
+        "joern_status": "same_response_slice",
+        "slice_ids": "[2596100, 2596107, 2596109, 2596113]",
+        "shared_slice_ids": "[2596109]",
+        "response_slice_ids": "[2596109]",
+        "slice_variables": "[\"content\", \"prompt\", \"response\", \"structured_llm\"]",
+        "slice_parse_flags": "[{\"parses\": [\"0\"], \"slice_id\": 2596100}, {\"parses\": [\"0\"], \"slice_id\": 2596107}, {\"parses\": [\"0\"], \"slice_id\": 2596109}, {\"parses\": [\"0\"], \"slice_id\": 2596113}]"
+      }
+    ],
+    "index": 60
+  },
+  {
+    "method_id": "skygazer42/Weaver::tools/sandbox/sandbox_image_edit_tool.py::151",
+    "method": {
+      "repo": "skygazer42/Weaver",
+      "file": "tools/sandbox/sandbox_image_edit_tool.py",
+      "qname": "ApplyFilterTool._run",
+      "line": "151",
+      "line_end": "240",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_image_edit_tool.py::217::21",
+        "repo": "skygazer42/Weaver",
+        "rel_path": "tools/sandbox/sandbox_image_edit_tool.py",
+        "code_kind": "production",
+        "call_line": "217",
+        "sink_line": "221",
+        "check_kind": "rejection_branch",
+        "mechanism": "response_predicate",
+        "intervention": "raise",
+        "resolution": "source_local",
+        "sink_source": "if \"error\" in output:\r\n                    raise RuntimeError(output[\"error\"])",
+        "response_variables": "[\"output\", \"result\"]",
+        "trace_lines": "[217, 220, 221]",
+        "joern_status": "no_saved_slice",
+        "slice_ids": "[]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[]",
+        "slice_parse_flags": "[]"
+      }
+    ],
+    "index": 61
+  },
+  {
+    "method_id": "skygazer42/Weaver::tools/sandbox/sandbox_image_edit_tool.py::261",
+    "method": {
+      "repo": "skygazer42/Weaver",
+      "file": "tools/sandbox/sandbox_image_edit_tool.py",
+      "qname": "ApplyEffectTool._run",
+      "line": "261",
+      "line_end": "368",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_image_edit_tool.py::345::21",
+        "repo": "skygazer42/Weaver",
+        "rel_path": "tools/sandbox/sandbox_image_edit_tool.py",
+        "code_kind": "production",
+        "call_line": "345",
+        "sink_line": "349",
+        "check_kind": "rejection_branch",
+        "mechanism": "response_predicate",
+        "intervention": "raise",
+        "resolution": "source_local",
+        "sink_source": "if \"error\" in output:\r\n                    raise RuntimeError(output[\"error\"])",
+        "response_variables": "[\"output\", \"result\"]",
+        "trace_lines": "[345, 348, 349]",
+        "joern_status": "no_saved_slice",
+        "slice_ids": "[]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[]",
+        "slice_parse_flags": "[]"
+      }
+    ],
+    "index": 62
+  },
+  {
+    "method_id": "skygazer42/Weaver::tools/sandbox/sandbox_image_edit_tool.py::396",
+    "method": {
+      "repo": "skygazer42/Weaver",
+      "file": "tools/sandbox/sandbox_image_edit_tool.py",
+      "qname": "AdjustImageTool._run",
+      "line": "396",
+      "line_end": "488",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_image_edit_tool.py::466::21",
+        "repo": "skygazer42/Weaver",
+        "rel_path": "tools/sandbox/sandbox_image_edit_tool.py",
+        "code_kind": "production",
+        "call_line": "466",
+        "sink_line": "470",
+        "check_kind": "rejection_branch",
+        "mechanism": "response_predicate",
+        "intervention": "raise",
+        "resolution": "source_local",
+        "sink_source": "if \"error\" in output:\r\n                    raise RuntimeError(output[\"error\"])",
+        "response_variables": "[\"output\", \"result\"]",
+        "trace_lines": "[466, 469, 470]",
+        "joern_status": "no_saved_slice",
+        "slice_ids": "[]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[]",
+        "slice_parse_flags": "[]"
+      }
+    ],
+    "index": 63
+  },
+  {
+    "method_id": "skygazer42/Weaver::tools/sandbox/sandbox_image_edit_tool.py::510",
+    "method": {
+      "repo": "skygazer42/Weaver",
+      "file": "tools/sandbox/sandbox_image_edit_tool.py",
+      "qname": "RotateFlipTool._run",
+      "line": "510",
+      "line_end": "595",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_image_edit_tool.py::573::21",
+        "repo": "skygazer42/Weaver",
+        "rel_path": "tools/sandbox/sandbox_image_edit_tool.py",
+        "code_kind": "production",
+        "call_line": "573",
+        "sink_line": "577",
+        "check_kind": "rejection_branch",
+        "mechanism": "response_predicate",
+        "intervention": "raise",
+        "resolution": "source_local",
+        "sink_source": "if \"error\" in output:\r\n                    raise RuntimeError(output[\"error\"])",
+        "response_variables": "[\"output\", \"result\"]",
+        "trace_lines": "[573, 576, 577]",
+        "joern_status": "no_saved_slice",
+        "slice_ids": "[]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[]",
+        "slice_parse_flags": "[]"
+      }
+    ],
+    "index": 64
+  },
+  {
+    "method_id": "skygazer42/Weaver::tools/sandbox/sandbox_image_edit_tool.py::622",
+    "method": {
+      "repo": "skygazer42/Weaver",
+      "file": "tools/sandbox/sandbox_image_edit_tool.py",
+      "qname": "AddWatermarkTool._run",
+      "line": "622",
+      "line_end": "757",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_image_edit_tool.py::735::21",
+        "repo": "skygazer42/Weaver",
+        "rel_path": "tools/sandbox/sandbox_image_edit_tool.py",
+        "code_kind": "production",
+        "call_line": "735",
+        "sink_line": "739",
+        "check_kind": "rejection_branch",
+        "mechanism": "response_predicate",
+        "intervention": "raise",
+        "resolution": "source_local",
+        "sink_source": "if \"error\" in output:\r\n                    raise RuntimeError(output[\"error\"])",
+        "response_variables": "[\"output\", \"result\"]",
+        "trace_lines": "[735, 738, 739]",
+        "joern_status": "no_saved_slice",
+        "slice_ids": "[]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[]",
+        "slice_parse_flags": "[]"
+      }
+    ],
+    "index": 65
+  },
+  {
+    "method_id": "skygazer42/Weaver::tools/sandbox/sandbox_image_edit_tool.py::784",
+    "method": {
+      "repo": "skygazer42/Weaver",
+      "file": "tools/sandbox/sandbox_image_edit_tool.py",
+      "qname": "OverlayImagesTool._run",
+      "line": "784",
+      "line_end": "884",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_image_edit_tool.py::861::21",
+        "repo": "skygazer42/Weaver",
+        "rel_path": "tools/sandbox/sandbox_image_edit_tool.py",
+        "code_kind": "production",
+        "call_line": "861",
+        "sink_line": "865",
+        "check_kind": "rejection_branch",
+        "mechanism": "response_predicate",
+        "intervention": "raise",
+        "resolution": "source_local",
+        "sink_source": "if \"error\" in output:\r\n                    raise RuntimeError(output[\"error\"])",
+        "response_variables": "[\"output\", \"result\"]",
+        "trace_lines": "[861, 864, 865]",
+        "joern_status": "no_saved_slice",
+        "slice_ids": "[]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[]",
+        "slice_parse_flags": "[]"
+      }
+    ],
+    "index": 66
+  },
+  {
+    "method_id": "skygazer42/Weaver::tools/sandbox/sandbox_presentation_outline_tool.py::295",
+    "method": {
+      "repo": "skygazer42/Weaver",
+      "file": "tools/sandbox/sandbox_presentation_outline_tool.py",
+      "qname": "OutlineToSlidesTool._run",
+      "line": "295",
+      "line_end": "416",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_presentation_outline_tool.py::396::21",
+        "repo": "skygazer42/Weaver",
+        "rel_path": "tools/sandbox/sandbox_presentation_outline_tool.py",
+        "code_kind": "production",
+        "call_line": "396",
+        "sink_line": "398",
+        "check_kind": "rejection_branch",
+        "mechanism": "response_predicate",
+        "intervention": "raise",
+        "resolution": "source_local",
+        "sink_source": "if \"SUCCESS\" not in result.stdout:\r\n                raise RuntimeError(f\"Failed to create presentation: {result.stderr}\")",
+        "response_variables": "[\"result\"]",
+        "trace_lines": "[396, 398]",
+        "joern_status": "no_saved_slice",
+        "slice_ids": "[]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[]",
+        "slice_parse_flags": "[]"
+      }
+    ],
+    "index": 67
+  },
+  {
+    "method_id": "skygazer42/Weaver::tools/sandbox/sandbox_presentation_tool.py::155",
+    "method": {
+      "repo": "skygazer42/Weaver",
+      "file": "tools/sandbox/sandbox_presentation_tool.py",
+      "qname": "SandboxCreatePresentationTool._run",
+      "line": "155",
+      "line_end": "220",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_presentation_tool.py::204::21",
+        "repo": "skygazer42/Weaver",
+        "rel_path": "tools/sandbox/sandbox_presentation_tool.py",
+        "code_kind": "production",
+        "call_line": "204",
+        "sink_line": "205",
+        "check_kind": "rejection_branch",
+        "mechanism": "response_predicate",
+        "intervention": "raise",
+        "resolution": "source_local",
+        "sink_source": "if \"SUCCESS\" not in result.stdout:\r\n                raise RuntimeError(f\"Failed to create presentation: {result.stderr}\")",
+        "response_variables": "[\"result\"]",
+        "trace_lines": "[204, 205]",
+        "joern_status": "no_saved_slice",
+        "slice_ids": "[]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[]",
+        "slice_parse_flags": "[]"
+      }
+    ],
+    "index": 68
+  },
+  {
+    "method_id": "skygazer42/Weaver::tools/sandbox/sandbox_presentation_tool.py::249",
+    "method": {
+      "repo": "skygazer42/Weaver",
+      "file": "tools/sandbox/sandbox_presentation_tool.py",
+      "qname": "SandboxAddSlideTool._run",
+      "line": "249",
+      "line_end": "346",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_presentation_tool.py::320::21",
+        "repo": "skygazer42/Weaver",
+        "rel_path": "tools/sandbox/sandbox_presentation_tool.py",
+        "code_kind": "production",
+        "call_line": "320",
+        "sink_line": "321",
+        "check_kind": "rejection_branch",
+        "mechanism": "response_predicate",
+        "intervention": "raise",
+        "resolution": "source_local",
+        "sink_source": "if \"SUCCESS\" not in result.stdout:\r\n                raise RuntimeError(f\"Failed to add slide: {result.stderr}\")",
+        "response_variables": "[\"result\"]",
+        "trace_lines": "[320, 321]",
+        "joern_status": "no_saved_slice",
+        "slice_ids": "[]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[]",
+        "slice_parse_flags": "[]"
+      }
+    ],
+    "index": 69
+  },
+  {
+    "method_id": "skygazer42/Weaver::tools/sandbox/sandbox_presentation_tool.py::372",
+    "method": {
+      "repo": "skygazer42/Weaver",
+      "file": "tools/sandbox/sandbox_presentation_tool.py",
+      "qname": "SandboxAddImageToSlideTool._run",
+      "line": "372",
+      "line_end": "442",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_presentation_tool.py::425::21",
+        "repo": "skygazer42/Weaver",
+        "rel_path": "tools/sandbox/sandbox_presentation_tool.py",
+        "code_kind": "production",
+        "call_line": "425",
+        "sink_line": "426",
+        "check_kind": "rejection_branch",
+        "mechanism": "response_predicate",
+        "intervention": "raise",
+        "resolution": "source_local",
+        "sink_source": "if \"SUCCESS\" not in result.stdout:\r\n                raise RuntimeError(f\"Failed to add image: {result.stderr}\")",
+        "response_variables": "[\"result\"]",
+        "trace_lines": "[425, 426]",
+        "joern_status": "no_saved_slice",
+        "slice_ids": "[]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[]",
+        "slice_parse_flags": "[]"
+      }
+    ],
+    "index": 70
+  },
+  {
+    "method_id": "skygazer42/Weaver::tools/sandbox/sandbox_presentation_tool.py::467",
+    "method": {
+      "repo": "skygazer42/Weaver",
+      "file": "tools/sandbox/sandbox_presentation_tool.py",
+      "qname": "SandboxAddTableToSlideTool._run",
+      "line": "467",
+      "line_end": "552",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_presentation_tool.py::534::21",
+        "repo": "skygazer42/Weaver",
+        "rel_path": "tools/sandbox/sandbox_presentation_tool.py",
+        "code_kind": "production",
+        "call_line": "534",
+        "sink_line": "535",
+        "check_kind": "rejection_branch",
+        "mechanism": "response_predicate",
+        "intervention": "raise",
+        "resolution": "source_local",
+        "sink_source": "if \"SUCCESS\" not in result.stdout:\r\n                raise RuntimeError(f\"Failed to add table: {result.stderr}\")",
+        "response_variables": "[\"result\"]",
+        "trace_lines": "[534, 535]",
+        "joern_status": "no_saved_slice",
+        "slice_ids": "[]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[]",
+        "slice_parse_flags": "[]"
+      }
+    ],
+    "index": 71
+  },
+  {
+    "method_id": "skygazer42/Weaver::tools/sandbox/sandbox_presentation_tool.py::581",
+    "method": {
+      "repo": "skygazer42/Weaver",
+      "file": "tools/sandbox/sandbox_presentation_tool.py",
+      "qname": "SandboxAddShapeToSlideTool._run",
+      "line": "581",
+      "line_end": "678",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_presentation_tool.py::661::21",
+        "repo": "skygazer42/Weaver",
+        "rel_path": "tools/sandbox/sandbox_presentation_tool.py",
+        "code_kind": "production",
+        "call_line": "661",
+        "sink_line": "662",
+        "check_kind": "rejection_branch",
+        "mechanism": "response_predicate",
+        "intervention": "raise",
+        "resolution": "source_local",
+        "sink_source": "if \"SUCCESS\" not in result.stdout:\r\n                raise RuntimeError(f\"Failed to add shape: {result.stderr}\")",
+        "response_variables": "[\"result\"]",
+        "trace_lines": "[661, 662]",
+        "joern_status": "no_saved_slice",
+        "slice_ids": "[]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[]",
+        "slice_parse_flags": "[]"
+      }
+    ],
+    "index": 72
+  },
+  {
+    "method_id": "skygazer42/Weaver::tools/sandbox/sandbox_presentation_tool.py::766",
+    "method": {
+      "repo": "skygazer42/Weaver",
+      "file": "tools/sandbox/sandbox_presentation_tool.py",
+      "qname": "SandboxUpdateSlideTool._run",
+      "line": "766",
+      "line_end": "841",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_presentation_tool.py::825::21",
+        "repo": "skygazer42/Weaver",
+        "rel_path": "tools/sandbox/sandbox_presentation_tool.py",
+        "code_kind": "production",
+        "call_line": "825",
+        "sink_line": "826",
+        "check_kind": "rejection_branch",
+        "mechanism": "response_predicate",
+        "intervention": "raise",
+        "resolution": "source_local",
+        "sink_source": "if \"SUCCESS\" not in result.stdout:\r\n                raise RuntimeError(f\"Failed to update slide: {result.stderr}\")",
+        "response_variables": "[\"result\"]",
+        "trace_lines": "[825, 826]",
+        "joern_status": "no_saved_slice",
+        "slice_ids": "[]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[]",
+        "slice_parse_flags": "[]"
+      }
+    ],
+    "index": 73
+  },
+  {
+    "method_id": "skygazer42/Weaver::tools/sandbox/sandbox_presentation_tool_v2.py::335",
+    "method": {
+      "repo": "skygazer42/Weaver",
+      "file": "tools/sandbox/sandbox_presentation_tool_v2.py",
+      "qname": "ApplyThemeTool._run",
+      "line": "335",
+      "line_end": "413",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_presentation_tool_v2.py::395::21",
+        "repo": "skygazer42/Weaver",
+        "rel_path": "tools/sandbox/sandbox_presentation_tool_v2.py",
+        "code_kind": "production",
+        "call_line": "395",
+        "sink_line": "397",
+        "check_kind": "rejection_branch",
+        "mechanism": "response_predicate",
+        "intervention": "raise",
+        "resolution": "source_local",
+        "sink_source": "if \"SUCCESS\" not in result.stdout:\r\n                raise RuntimeError(f\"Failed to apply theme: {result.stderr}\")",
+        "response_variables": "[\"result\"]",
+        "trace_lines": "[395, 397]",
+        "joern_status": "no_saved_slice",
+        "slice_ids": "[]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[]",
+        "slice_parse_flags": "[]"
+      }
+    ],
+    "index": 74
+  },
+  {
+    "method_id": "skygazer42/Weaver::tools/sandbox/sandbox_presentation_tool_v2.py::437",
+    "method": {
+      "repo": "skygazer42/Weaver",
+      "file": "tools/sandbox/sandbox_presentation_tool_v2.py",
+      "qname": "SetBackgroundTool._run",
+      "line": "437",
+      "line_end": "527",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_presentation_tool_v2.py::508::21",
+        "repo": "skygazer42/Weaver",
+        "rel_path": "tools/sandbox/sandbox_presentation_tool_v2.py",
+        "code_kind": "production",
+        "call_line": "508",
+        "sink_line": "510",
+        "check_kind": "rejection_branch",
+        "mechanism": "response_predicate",
+        "intervention": "raise",
+        "resolution": "source_local",
+        "sink_source": "if \"SUCCESS\" not in result.stdout:\r\n                raise RuntimeError(f\"Failed to set background: {result.stderr}\")",
+        "response_variables": "[\"result\"]",
+        "trace_lines": "[508, 510]",
+        "joern_status": "no_saved_slice",
+        "slice_ids": "[]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[]",
+        "slice_parse_flags": "[]"
+      }
+    ],
+    "index": 75
+  },
+  {
+    "method_id": "skygazer42/Weaver::tools/sandbox/sandbox_presentation_tool_v2.py::547",
+    "method": {
+      "repo": "skygazer42/Weaver",
+      "file": "tools/sandbox/sandbox_presentation_tool_v2.py",
+      "qname": "DuplicateSlideTool._run",
+      "line": "547",
+      "line_end": "623",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_presentation_tool_v2.py::606::21",
+        "repo": "skygazer42/Weaver",
+        "rel_path": "tools/sandbox/sandbox_presentation_tool_v2.py",
+        "code_kind": "production",
+        "call_line": "606",
+        "sink_line": "608",
+        "check_kind": "rejection_branch",
+        "mechanism": "response_predicate",
+        "intervention": "raise",
+        "resolution": "source_local",
+        "sink_source": "if \"SUCCESS\" not in result.stdout:\r\n                raise RuntimeError(f\"Failed to duplicate slide: {result.stderr}\")",
+        "response_variables": "[\"result\"]",
+        "trace_lines": "[606, 608]",
+        "joern_status": "no_saved_slice",
+        "slice_ids": "[]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[]",
+        "slice_parse_flags": "[]"
+      }
+    ],
+    "index": 76
+  },
+  {
+    "method_id": "skygazer42/Weaver::tools/sandbox/sandbox_presentation_tool_v2.py::646",
+    "method": {
+      "repo": "skygazer42/Weaver",
+      "file": "tools/sandbox/sandbox_presentation_tool_v2.py",
+      "qname": "ReorderSlidesTool._run",
+      "line": "646",
+      "line_end": "718",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_presentation_tool_v2.py::701::21",
+        "repo": "skygazer42/Weaver",
+        "rel_path": "tools/sandbox/sandbox_presentation_tool_v2.py",
+        "code_kind": "production",
+        "call_line": "701",
+        "sink_line": "703",
+        "check_kind": "rejection_branch",
+        "mechanism": "response_predicate",
+        "intervention": "raise",
+        "resolution": "source_local",
+        "sink_source": "if \"SUCCESS\" not in result.stdout:\r\n                raise RuntimeError(f\"Failed to reorder slides: {result.stderr}\")",
+        "response_variables": "[\"result\"]",
+        "trace_lines": "[701, 703]",
+        "joern_status": "no_saved_slice",
+        "slice_ids": "[]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[]",
+        "slice_parse_flags": "[]"
+      }
+    ],
+    "index": 77
+  },
+  {
+    "method_id": "skygazer42/Weaver::tools/sandbox/sandbox_sheets_tool.py::146",
+    "method": {
+      "repo": "skygazer42/Weaver",
+      "file": "tools/sandbox/sandbox_sheets_tool.py",
+      "qname": "SandboxCreateSpreadsheetTool._run",
+      "line": "146",
+      "line_end": "217",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_sheets_tool.py::200::25",
+        "repo": "skygazer42/Weaver",
+        "rel_path": "tools/sandbox/sandbox_sheets_tool.py",
+        "code_kind": "production",
+        "call_line": "200",
+        "sink_line": "201",
+        "check_kind": "rejection_branch",
+        "mechanism": "response_predicate",
+        "intervention": "raise",
+        "resolution": "source_local",
+        "sink_source": "if \"SUCCESS\" not in result.stdout:\r\n                    raise RuntimeError(f\"Failed to create spreadsheet: {result.stderr}\")",
+        "response_variables": "[\"result\"]",
+        "trace_lines": "[200, 201]",
+        "joern_status": "no_saved_slice",
+        "slice_ids": "[]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[]",
+        "slice_parse_flags": "[]"
+      }
+    ],
+    "index": 78
+  },
+  {
+    "method_id": "skygazer42/Weaver::tools/sandbox/sandbox_sheets_tool.py::241",
+    "method": {
+      "repo": "skygazer42/Weaver",
+      "file": "tools/sandbox/sandbox_sheets_tool.py",
+      "qname": "SandboxWriteDataTool._run",
+      "line": "241",
+      "line_end": "326",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_sheets_tool.py::308::25",
+        "repo": "skygazer42/Weaver",
+        "rel_path": "tools/sandbox/sandbox_sheets_tool.py",
+        "code_kind": "production",
+        "call_line": "308",
+        "sink_line": "309",
+        "check_kind": "rejection_branch",
+        "mechanism": "response_predicate",
+        "intervention": "raise",
+        "resolution": "source_local",
+        "sink_source": "if \"SUCCESS\" not in result.stdout:\r\n                    raise RuntimeError(f\"Failed to write data: {result.stderr}\")",
+        "response_variables": "[\"result\"]",
+        "trace_lines": "[308, 309]",
+        "joern_status": "no_saved_slice",
+        "slice_ids": "[]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[]",
+        "slice_parse_flags": "[]"
+      }
+    ],
+    "index": 79
+  },
+  {
+    "method_id": "skygazer42/Weaver::tools/sandbox/sandbox_sheets_tool.py::357",
+    "method": {
+      "repo": "skygazer42/Weaver",
+      "file": "tools/sandbox/sandbox_sheets_tool.py",
+      "qname": "SandboxFormatCellsTool._run",
+      "line": "357",
+      "line_end": "447",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_sheets_tool.py::431::21",
+        "repo": "skygazer42/Weaver",
+        "rel_path": "tools/sandbox/sandbox_sheets_tool.py",
+        "code_kind": "production",
+        "call_line": "431",
+        "sink_line": "432",
+        "check_kind": "rejection_branch",
+        "mechanism": "response_predicate",
+        "intervention": "raise",
+        "resolution": "source_local",
+        "sink_source": "if \"SUCCESS\" not in result.stdout:\r\n                raise RuntimeError(f\"Failed to format cells: {result.stderr}\")",
+        "response_variables": "[\"result\"]",
+        "trace_lines": "[431, 432]",
+        "joern_status": "no_saved_slice",
+        "slice_ids": "[]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[]",
+        "slice_parse_flags": "[]"
+      }
+    ],
+    "index": 80
+  },
+  {
+    "method_id": "skygazer42/Weaver::tools/sandbox/sandbox_sheets_tool.py::474",
+    "method": {
+      "repo": "skygazer42/Weaver",
+      "file": "tools/sandbox/sandbox_sheets_tool.py",
+      "qname": "SandboxCreateChartTool._run",
+      "line": "474",
+      "line_end": "566",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_sheets_tool.py::548::21",
+        "repo": "skygazer42/Weaver",
+        "rel_path": "tools/sandbox/sandbox_sheets_tool.py",
+        "code_kind": "production",
+        "call_line": "548",
+        "sink_line": "549",
+        "check_kind": "rejection_branch",
+        "mechanism": "response_predicate",
+        "intervention": "raise",
+        "resolution": "source_local",
+        "sink_source": "if \"SUCCESS\" not in result.stdout:\r\n                raise RuntimeError(f\"Failed to create chart: {result.stderr}\")",
+        "response_variables": "[\"result\"]",
+        "trace_lines": "[548, 549]",
+        "joern_status": "no_saved_slice",
+        "slice_ids": "[]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[]",
+        "slice_parse_flags": "[]"
+      }
+    ],
+    "index": 81
+  },
+  {
+    "method_id": "skygazer42/Weaver::tools/sandbox/sandbox_sheets_tool.py::587",
+    "method": {
+      "repo": "skygazer42/Weaver",
+      "file": "tools/sandbox/sandbox_sheets_tool.py",
+      "qname": "SandboxAddSheetTool._run",
+      "line": "587",
+      "line_end": "654",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_sheets_tool.py::627::21",
+        "repo": "skygazer42/Weaver",
+        "rel_path": "tools/sandbox/sandbox_sheets_tool.py",
+        "code_kind": "production",
+        "call_line": "627",
+        "sink_line": "628",
+        "check_kind": "rejection_branch",
+        "mechanism": "response_predicate",
+        "intervention": "raise",
+        "resolution": "source_local",
+        "sink_source": "if \"SUCCESS\" not in result.stdout:\r\n                raise RuntimeError(f\"Failed to add sheet: {result.stderr}\")",
+        "response_variables": "[\"result\"]",
+        "trace_lines": "[627, 628]",
+        "joern_status": "no_saved_slice",
+        "slice_ids": "[]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[]",
+        "slice_parse_flags": "[]"
+      }
+    ],
+    "index": 82
+  },
+  {
+    "method_id": "skygazer42/Weaver::tools/sandbox/sandbox_vision_tool.py::106",
+    "method": {
+      "repo": "skygazer42/Weaver",
+      "file": "tools/sandbox/sandbox_vision_tool.py",
+      "qname": "_SandboxVisionBaseTool._ensure_dependencies",
+      "line": "106",
+      "line_end": "119",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_vision_tool.py::113::37",
+        "repo": "skygazer42/Weaver",
+        "rel_path": "tools/sandbox/sandbox_vision_tool.py",
+        "code_kind": "production",
+        "call_line": "113",
+        "sink_line": "114",
+        "check_kind": "early_exit_candidate",
+        "mechanism": "response_predicate",
+        "intervention": "replacement_return",
+        "resolution": "source_local",
+        "sink_source": "if install_result.exit_code != 0:\r\n                        return False",
+        "response_variables": "[\"install_result\"]",
+        "trace_lines": "[113, 114]",
+        "joern_status": "same_response_slice",
+        "slice_ids": "[2597401, 2597403, 2597405]",
+        "shared_slice_ids": "[2597401, 2597403, 2597405]",
+        "response_slice_ids": "[2597401]",
+        "slice_variables": "[\"install_result\", \"pkg\", \"sandbox\"]",
+        "slice_parse_flags": "[{\"parses\": [\"1\"], \"slice_id\": 2597401}, {\"parses\": [\"1\"], \"slice_id\": 2597403}, {\"parses\": [\"1\"], \"slice_id\": 2597405}]"
+      }
+    ],
+    "index": 83
+  },
+  {
+    "method_id": "skygazer42/Weaver::tools/sandbox/sandbox_vision_tool.py::141",
+    "method": {
+      "repo": "skygazer42/Weaver",
+      "file": "tools/sandbox/sandbox_vision_tool.py",
+      "qname": "SandboxExtractTextTool._run",
+      "line": "141",
+      "line_end": "203",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_vision_tool.py::187::21",
+        "repo": "skygazer42/Weaver",
+        "rel_path": "tools/sandbox/sandbox_vision_tool.py",
+        "code_kind": "production",
+        "call_line": "187",
+        "sink_line": "191",
+        "check_kind": "rejection_branch",
+        "mechanism": "response_predicate",
+        "intervention": "raise",
+        "resolution": "source_local",
+        "sink_source": "if \"error\" in output:\r\n                    raise RuntimeError(output[\"error\"])",
+        "response_variables": "[\"output\", \"result\"]",
+        "trace_lines": "[187, 190, 191]",
+        "joern_status": "no_saved_slice",
+        "slice_ids": "[]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[]",
+        "slice_parse_flags": "[]"
+      }
+    ],
+    "index": 84
+  },
+  {
+    "method_id": "skygazer42/Weaver::tools/sandbox/sandbox_vision_tool.py::222",
+    "method": {
+      "repo": "skygazer42/Weaver",
+      "file": "tools/sandbox/sandbox_vision_tool.py",
+      "qname": "SandboxGetImageInfoTool._run",
+      "line": "222",
+      "line_end": "302",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_vision_tool.py::286::21",
+        "repo": "skygazer42/Weaver",
+        "rel_path": "tools/sandbox/sandbox_vision_tool.py",
+        "code_kind": "production",
+        "call_line": "286",
+        "sink_line": "290",
+        "check_kind": "rejection_branch",
+        "mechanism": "response_predicate",
+        "intervention": "raise",
+        "resolution": "source_local",
+        "sink_source": "if \"error\" in output:\r\n                    raise RuntimeError(output[\"error\"])",
+        "response_variables": "[\"output\", \"result\"]",
+        "trace_lines": "[286, 289, 290]",
+        "joern_status": "no_saved_slice",
+        "slice_ids": "[]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[]",
+        "slice_parse_flags": "[]"
+      }
+    ],
+    "index": 85
+  },
+  {
+    "method_id": "skygazer42/Weaver::tools/sandbox/sandbox_vision_tool.py::329",
+    "method": {
+      "repo": "skygazer42/Weaver",
+      "file": "tools/sandbox/sandbox_vision_tool.py",
+      "qname": "SandboxResizeImageTool._run",
+      "line": "329",
+      "line_end": "429",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_vision_tool.py::408::21",
+        "repo": "skygazer42/Weaver",
+        "rel_path": "tools/sandbox/sandbox_vision_tool.py",
+        "code_kind": "production",
+        "call_line": "408",
+        "sink_line": "412",
+        "check_kind": "rejection_branch",
+        "mechanism": "response_predicate",
+        "intervention": "raise",
+        "resolution": "source_local",
+        "sink_source": "if \"error\" in output:\r\n                    raise RuntimeError(output[\"error\"])",
+        "response_variables": "[\"output\", \"result\"]",
+        "trace_lines": "[408, 411, 412]",
+        "joern_status": "no_saved_slice",
+        "slice_ids": "[]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[]",
+        "slice_parse_flags": "[]"
+      }
+    ],
+    "index": 86
+  },
+  {
+    "method_id": "skygazer42/Weaver::tools/sandbox/sandbox_vision_tool.py::452",
+    "method": {
+      "repo": "skygazer42/Weaver",
+      "file": "tools/sandbox/sandbox_vision_tool.py",
+      "qname": "SandboxConvertImageTool._run",
+      "line": "452",
+      "line_end": "548",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_vision_tool.py::527::21",
+        "repo": "skygazer42/Weaver",
+        "rel_path": "tools/sandbox/sandbox_vision_tool.py",
+        "code_kind": "production",
+        "call_line": "527",
+        "sink_line": "531",
+        "check_kind": "rejection_branch",
+        "mechanism": "response_predicate",
+        "intervention": "raise",
+        "resolution": "source_local",
+        "sink_source": "if \"error\" in output:\r\n                    raise RuntimeError(output[\"error\"])",
+        "response_variables": "[\"output\", \"result\"]",
+        "trace_lines": "[527, 530, 531]",
+        "joern_status": "no_saved_slice",
+        "slice_ids": "[]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[]",
+        "slice_parse_flags": "[]"
+      }
+    ],
+    "index": 87
+  },
+  {
+    "method_id": "skygazer42/Weaver::tools/sandbox/sandbox_vision_tool.py::572",
+    "method": {
+      "repo": "skygazer42/Weaver",
+      "file": "tools/sandbox/sandbox_vision_tool.py",
+      "qname": "SandboxCropImageTool._run",
+      "line": "572",
+      "line_end": "652",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_vision_tool.py::631::21",
+        "repo": "skygazer42/Weaver",
+        "rel_path": "tools/sandbox/sandbox_vision_tool.py",
+        "code_kind": "production",
+        "call_line": "631",
+        "sink_line": "635",
+        "check_kind": "rejection_branch",
+        "mechanism": "response_predicate",
+        "intervention": "raise",
+        "resolution": "source_local",
+        "sink_source": "if \"error\" in output:\r\n                    raise RuntimeError(output[\"error\"])",
+        "response_variables": "[\"output\", \"result\"]",
+        "trace_lines": "[631, 634, 635]",
+        "joern_status": "no_saved_slice",
+        "slice_ids": "[]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[]",
+        "slice_parse_flags": "[]"
+      }
+    ],
+    "index": 88
+  },
+  {
+    "method_id": "skygazer42/Weaver::tools/sandbox/sandbox_vision_tool.py::671",
+    "method": {
+      "repo": "skygazer42/Weaver",
+      "file": "tools/sandbox/sandbox_vision_tool.py",
+      "qname": "SandboxReadQRCodeTool._run",
+      "line": "671",
+      "line_end": "732",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_vision_tool.py::716::21",
+        "repo": "skygazer42/Weaver",
+        "rel_path": "tools/sandbox/sandbox_vision_tool.py",
+        "code_kind": "production",
+        "call_line": "716",
+        "sink_line": "720",
+        "check_kind": "rejection_branch",
+        "mechanism": "response_predicate",
+        "intervention": "raise",
+        "resolution": "source_local",
+        "sink_source": "if \"error\" in output:\r\n                    raise RuntimeError(output[\"error\"])",
+        "response_variables": "[\"output\", \"result\"]",
+        "trace_lines": "[716, 719, 720]",
+        "joern_status": "no_saved_slice",
+        "slice_ids": "[]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[]",
+        "slice_parse_flags": "[]"
+      }
+    ],
+    "index": 89
+  },
+  {
+    "method_id": "swarm-ai-research/swarm::swarm/analysis/autoresearch.py::175",
+    "method": {
+      "repo": "swarm-ai-research/swarm",
+      "file": "swarm/analysis/autoresearch.py",
+      "qname": "evaluate_candidate",
+      "line": "175",
+      "line_end": "213",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "swarm-ai-research_swarm/swarm/analysis/autoresearch.py::203::18",
+        "repo": "swarm-ai-research/swarm",
+        "rel_path": "swarm/analysis/autoresearch.py",
+        "code_kind": "production",
+        "call_line": "203",
+        "sink_line": "204",
+        "check_kind": "retry_branch",
+        "mechanism": "response_predicate",
+        "intervention": "retry_continue",
+        "resolution": "source_local",
+        "sink_source": "if not history:\r\n            continue",
+        "response_variables": "[\"history\"]",
+        "trace_lines": "[203, 204]",
+        "joern_status": "same_response_slice",
+        "slice_ids": "[2649069, 2649074]",
+        "shared_slice_ids": "[2649069]",
+        "response_slice_ids": "[2649069]",
+        "slice_variables": "[\"history\", \"orchestrator\"]",
+        "slice_parse_flags": "[{\"parses\": [\"0\"], \"slice_id\": 2649069}, {\"parses\": [\"0\"], \"slice_id\": 2649074}]"
+      }
+    ],
+    "index": 90
+  },
+  {
+    "method_id": "swarm-ai-research/swarm::swarm/research/swarm_papers/track_a.py::1740",
+    "method": {
+      "repo": "swarm-ai-research/swarm",
+      "file": "swarm/research/swarm_papers/track_a.py",
+      "qname": "TrackARunner._write_paper",
+      "line": "1740",
+      "line_end": "1798",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "swarm-ai-research_swarm/swarm/research/swarm_papers/track_a.py::1785::26",
+        "repo": "swarm-ai-research/swarm",
+        "rel_path": "swarm/research/swarm_papers/track_a.py",
+        "code_kind": "production",
+        "call_line": "1785",
+        "sink_line": "1787",
+        "check_kind": "early_exit_candidate",
+        "mechanism": "response_predicate",
+        "intervention": "replacement_return",
+        "resolution": "source_local",
+        "sink_source": "if not gate_result.passed:\r\n                return",
+        "response_variables": "[\"gate_result\"]",
+        "trace_lines": "[1785, 1787]",
+        "joern_status": "same_response_slice",
+        "slice_ids": "[2649406, 2649407, 2649412]",
+        "shared_slice_ids": "[2649407]",
+        "response_slice_ids": "[2649407]",
+        "slice_variables": "[\"gate\", \"gate_result\", \"review\"]",
+        "slice_parse_flags": "[{\"parses\": [\"1\"], \"slice_id\": 2649406}, {\"parses\": [\"1\"], \"slice_id\": 2649407}, {\"parses\": [\"1\"], \"slice_id\": 2649412}]"
+      }
+    ],
+    "index": 91
+  },
+  {
+    "method_id": "timbal-ai/timbal::benchmarks/langchain/bench_long_conversation.py::429",
+    "method": {
+      "repo": "timbal-ai/timbal",
+      "file": "benchmarks/langchain/bench_long_conversation.py",
+      "qname": "_verify",
+      "line": "429",
+      "line_end": "454",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "timbal-ai_timbal/benchmarks/langchain/bench_long_conversation.py::440::19",
+        "repo": "timbal-ai/timbal",
+        "rel_path": "benchmarks/langchain/bench_long_conversation.py",
+        "code_kind": "production",
+        "call_line": "440",
+        "sink_line": "444",
+        "check_kind": "assertion",
+        "mechanism": "deterministic_assert",
+        "intervention": "assertion_failure",
+        "resolution": "source_local",
+        "sink_source": "assert \"10 msgs seen\" in lg_text, lg_text",
+        "response_variables": "[\"lg_out\", \"lg_text\"]",
+        "trace_lines": "[440, 441, 444]",
+        "joern_status": "no_joint_slice",
+        "slice_ids": "[2738982, 2738983, 2738985]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[\"lg_graph\", \"lg_out\", \"n\"]",
+        "slice_parse_flags": "[{\"parses\": [\"1\"], \"slice_id\": 2738982}, {\"parses\": [\"1\"], \"slice_id\": 2738983}, {\"parses\": [\"1\"], \"slice_id\": 2738985}]"
+      }
+    ],
+    "index": 92
+  },
+  {
+    "method_id": "wsargent/groundedllm::hayhooks/pipelines/excerpt/pipeline_wrapper.py::138",
+    "method": {
+      "repo": "wsargent/groundedllm",
+      "file": "hayhooks/pipelines/excerpt/pipeline_wrapper.py",
+      "qname": "PipelineWrapper.run_api",
+      "line": "138",
+      "line_end": "181",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "wsargent_groundedllm/hayhooks/pipelines/excerpt/pipeline_wrapper.py::167::21",
+        "repo": "wsargent/groundedllm",
+        "rel_path": "hayhooks/pipelines/excerpt/pipeline_wrapper.py",
+        "code_kind": "production",
+        "call_line": "167",
+        "sink_line": "174",
+        "check_kind": "rejection_branch",
+        "mechanism": "response_predicate",
+        "intervention": "raise",
+        "resolution": "source_local",
+        "sink_source": "if \"llm\" in result and \"replies\" in result[\"llm\"] and result[\"llm\"][\"replies\"]:\r\n                reply = result[\"llm\"][\"replies\"][0]\r\n                logger.info(f\"answer: reply is {reply}\")\r\n                return reply\r\n            else:\r\n                raise RuntimeError(\"Error: Could not retrieve answer from the pipeline.\")",
+        "response_variables": "[\"result\"]",
+        "trace_lines": "[167, 174]",
+        "joern_status": "no_saved_slice",
+        "slice_ids": "[]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[]",
+        "slice_parse_flags": "[]"
+      }
+    ],
+    "index": 93
+  },
+  {
+    "method_id": "wsargent/groundedllm::hayhooks/pipelines/search/pipeline_wrapper.py::141",
+    "method": {
+      "repo": "wsargent/groundedllm",
+      "file": "hayhooks/pipelines/search/pipeline_wrapper.py",
+      "qname": "PipelineWrapper.run_api",
+      "line": "141",
+      "line_end": "222",
+      "group": "llm",
+      "mapped_tests": "0",
+      "exact_mapped_tests": "0"
+    },
+    "checks": [
+      {
+        "call_id": "wsargent_groundedllm/hayhooks/pipelines/search/pipeline_wrapper.py::190::17",
+        "repo": "wsargent/groundedllm",
+        "rel_path": "hayhooks/pipelines/search/pipeline_wrapper.py",
+        "code_kind": "production",
+        "call_line": "190",
+        "sink_line": "218",
+        "check_kind": "rejection_branch",
+        "mechanism": "response_predicate",
+        "intervention": "raise",
+        "resolution": "source_local",
+        "sink_source": "if \"llm\" in result and \"replies\" in result[\"llm\"] and result[\"llm\"][\"replies\"]:\r\n            reply = result[\"llm\"][\"replies\"][0]\r\n            return reply\r\n        else:\r\n            raise RuntimeError(f\"Error: Could not retrieve answer from the pipeline. {result}\")",
+        "response_variables": "[\"result\"]",
+        "trace_lines": "[190, 218]",
+        "joern_status": "no_joint_slice",
+        "slice_ids": "[2894273, 2894274, 2894275, 2894276, 2894278, 2894279, 2894280]",
+        "shared_slice_ids": "[]",
+        "response_slice_ids": "[]",
+        "slice_variables": "[\"exclude_domains\", \"include_domains\", \"max_results\", \"question\", \"result\", \"search_depth\", \"time_range\"]",
+        "slice_parse_flags": "[{\"parses\": [\"0\"], \"slice_id\": 2894273}, {\"parses\": [\"0\"], \"slice_id\": 2894274}, {\"parses\": [\"0\"], \"slice_id\": 2894275}, {\"parses\": [\"0\"], \"slice_id\": 2894276}, {\"parses\": [\"0\"], \"slice_id\": 2894278}, {\"parses\": [\"0\"], \"slice_id\": 2894279}, {\"parses\": [\"0\"], \"slice_id\": 2894280}]"
+      }
+    ],
+    "index": 94
+  }
+]

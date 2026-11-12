@@ -1,0 +1,1979 @@
+[
+  {
+    "guardrail_id": "runtime-extra-000",
+    "producer_method_id": "Certora/AIComposer::composer/prover/analysis.py::9",
+    "decision": "guardrail",
+    "evidence": [
+      {
+        "rel_path": "composer/prover/analysis.py",
+        "line": 35,
+        "line_end": 38,
+        "sha256": "1478630058ac3eba150ca52d19c76d30aa80df9f042bb64f04a197b8c854823d",
+        "role": "output",
+        "text": "35:     res = await llm.ainvoke(new_messages)\r\n36:     if not isinstance(res, AIMessage):\r\n37:         return None\r\n38:     return res.text\r"
+      },
+      {
+        "rel_path": "composer/prover/analysis.py",
+        "line": 36,
+        "line_end": 38,
+        "sha256": "1478630058ac3eba150ca52d19c76d30aa80df9f042bb64f04a197b8c854823d",
+        "role": "checker",
+        "text": "36:     if not isinstance(res, AIMessage):\r\n37:         return None\r\n38:     return res.text\r"
+      },
+      {
+        "rel_path": "composer/prover/analysis.py",
+        "line": 37,
+        "line_end": 38,
+        "sha256": "1478630058ac3eba150ca52d19c76d30aa80df9f042bb64f04a197b8c854823d",
+        "role": "enforcement",
+        "text": "37:         return None\r\n38:     return res.text\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-001",
+    "producer_method_id": "Grigorij-Dudnik/Clean-Coder-AI::src/agents/frontend_feedback.py::40",
+    "decision": "not_guardrail",
+    "evidence": [
+      {
+        "rel_path": "src/agents/frontend_feedback.py",
+        "line": 53,
+        "line_end": 58,
+        "sha256": "e3015fe297990ac2f907705027a56dfcdce3e6357ef88165bbd498632a3d2bef",
+        "role": "support",
+        "text": "53:     response = llm_ff.invoke(prompt)\r\n54: \r\n55:     if response.screenshot_code == \"No screenshot needed\":\r\n56:         return None\r\n57: \r\n58:     questions = response.questions\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-002",
+    "producer_method_id": "HKUDS/ViMax::agents/camera_image_generator.py::122",
+    "decision": "guardrail",
+    "evidence": [
+      {
+        "rel_path": "agents/camera_image_generator.py",
+        "line": 147,
+        "line_end": 153,
+        "sha256": "f2ed1d2373785792615c7350a70830db58a7955ceaa267dc90179bf6b78f10c5",
+        "role": "output",
+        "text": "147:         response: CameraTreeResponse = await chain.ainvoke(messages)\r\n148:         parent_items = response.camera_parent_items\r\n149:         if len(parent_items) != len(cameras):\r\n150:             raise ValueError(f\"Camera tree response length mismatch: expected {len(cameras)}, got {len(parent_items)}\")\r\n151: \r\n152:         valid_camera_idxs = {cam.idx for cam in cameras}\r\n153:         valid_shot_idxs = set(shot_desc_by_idx)\r"
+      },
+      {
+        "rel_path": "agents/camera_image_generator.py",
+        "line": 149,
+        "line_end": 154,
+        "sha256": "f2ed1d2373785792615c7350a70830db58a7955ceaa267dc90179bf6b78f10c5",
+        "role": "checker",
+        "text": "149:         if len(parent_items) != len(cameras):\r\n150:             raise ValueError(f\"Camera tree response length mismatch: expected {len(cameras)}, got {len(parent_items)}\")\r\n151: \r\n152:         valid_camera_idxs = {cam.idx for cam in cameras}\r\n153:         valid_shot_idxs = set(shot_desc_by_idx)\r\n154:         parent_by_camera = {}\r"
+      },
+      {
+        "rel_path": "agents/camera_image_generator.py",
+        "line": 150,
+        "line_end": 153,
+        "sha256": "f2ed1d2373785792615c7350a70830db58a7955ceaa267dc90179bf6b78f10c5",
+        "role": "enforcement",
+        "text": "150:             raise ValueError(f\"Camera tree response length mismatch: expected {len(cameras)}, got {len(parent_items)}\")\r\n151: \r\n152:         valid_camera_idxs = {cam.idx for cam in cameras}\r\n153:         valid_shot_idxs = set(shot_desc_by_idx)\r"
+      },
+      {
+        "rel_path": "agents/camera_image_generator.py",
+        "line": 152,
+        "line_end": 181,
+        "sha256": "f2ed1d2373785792615c7350a70830db58a7955ceaa267dc90179bf6b78f10c5",
+        "role": "support",
+        "text": "152:         valid_camera_idxs = {cam.idx for cam in cameras}\r\n153:         valid_shot_idxs = set(shot_desc_by_idx)\r\n154:         parent_by_camera = {}\r\n155:         for cam, parent_cam_item in zip(cameras, parent_items):\r\n156:             parent_cam_idx = parent_cam_item.parent_cam_idx if parent_cam_item is not None else None\r\n157:             parent_shot_idx = parent_cam_item.parent_shot_idx if parent_cam_item is not None else None\r\n158:             if parent_cam_idx is not None and parent_cam_idx not in valid_camera_idxs:\r\n159:                 raise ValueError(f\"Camera {cam.idx} has invalid parent camera {parent_cam_idx}\")\r\n160:             if parent_cam_idx == cam.idx:\r\n161:                 raise ValueError(f\"Camera {cam.idx} cannot be its own parent\")\r\n162:             if parent_shot_idx is not None and parent_shot_idx not in valid_shot_idxs:\r\n163:                 raise ValueError(f\"Camera {cam.idx} has invalid parent shot {parent_shot_idx}\")\r\n164:             parent_by_camera[cam.idx] = parent_cam_idx\r\n165: \r\n166:         for cam in cameras:\r\n167:             seen = set()\r\n168:             current = cam.idx\r\n169:             while parent_by_camera.get(current) is not None:\r\n170:                 current = parent_by_camera[current]\r\n171:                 if current in seen:\r\n172:                     raise ValueError(f\"Camera tree contains a cycle involving camera {cam.idx}\")\r\n173:                 seen.add(current)\r\n174: \r\n175:         for cam, parent_cam_item in zip(cameras, parent_items):\r\n176:             cam.parent_cam_idx = parent_cam_item.parent_cam_idx if parent_cam_item is not None else None\r\n177:             cam.parent_shot_idx = parent_cam_item.parent_shot_idx if parent_cam_item is not None else None\r\n178:             cam.reason = parent_cam_item.reason if parent_cam_item is not None else None\r\n179:             cam.is_parent_fully_covers_child = parent_cam_item.is_parent_fully_covers_child if parent_cam_item is not None else None\r\n180:             cam.missing_info = parent_cam_item.missing_info if parent_cam_item is not None else None\r\n181:         return cameras\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-003",
+    "producer_method_id": "Insight-Services-APAC/ingenious::ingenious/models/ag_agents.py::74",
+    "decision": "guardrail",
+    "evidence": [
+      {
+        "rel_path": "ingenious/models/ag_agents.py",
+        "line": 129,
+        "line_end": 135,
+        "sha256": "c017f617dea8c1e7863c0358c6a1ede5f042ec7dae62b6bfc2c414666daf56ae",
+        "role": "output",
+        "text": "129:             create_result = await self._model_client.create(\r\n130:                 messages=session,\r\n131:                 cancellation_token=ctx.cancellation_token,\r\n132:             )\r\n133:             assert isinstance(create_result.content, str)\r\n134: \r\n135:             # Return the result as a message.\r"
+      },
+      {
+        "rel_path": "ingenious/models/ag_agents.py",
+        "line": 133,
+        "line_end": 138,
+        "sha256": "c017f617dea8c1e7863c0358c6a1ede5f042ec7dae62b6bfc2c414666daf56ae",
+        "role": "checker",
+        "text": "133:             assert isinstance(create_result.content, str)\r\n134: \r\n135:             # Return the result as a message.\r\n136:             agent_chat.chat_response = Response(\r\n137:                 chat_message=TextMessage(content=create_result.content, source=\"user\")\r\n138:             )\r"
+      },
+      {
+        "rel_path": "ingenious/models/ag_agents.py",
+        "line": 133,
+        "line_end": 136,
+        "sha256": "c017f617dea8c1e7863c0358c6a1ede5f042ec7dae62b6bfc2c414666daf56ae",
+        "role": "enforcement",
+        "text": "133:             assert isinstance(create_result.content, str)\r\n134: \r\n135:             # Return the result as a message.\r\n136:             agent_chat.chat_response = Response(\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-004",
+    "producer_method_id": "InternScience/InternAgent::internagent/mas/agents/dr_agents/camel/agents/role_assignment_agent.py::61",
+    "decision": "guardrail",
+    "evidence": [
+      {
+        "rel_path": "internagent/mas/agents/dr_agents/camel/agents/role_assignment_agent.py",
+        "line": 105,
+        "line_end": 111,
+        "sha256": "69d15da9e26554d6fd6f4c100aa54a4bdefb304468a794898022bfaa1e7111ff",
+        "role": "output",
+        "text": "105:         response = self.step(input_message=role_assignment_generation_msg)\r\n106: \r\n107:         msg = response.msg  # type: BaseMessage\r\n108:         terminated = response.terminated\r\n109: \r\n110:         # Distribute the output completions into role names and descriptions\r\n111:         role_names = [\r"
+      },
+      {
+        "rel_path": "internagent/mas/agents/dr_agents/camel/agents/role_assignment_agent.py",
+        "line": 129,
+        "line_end": 134,
+        "sha256": "69d15da9e26554d6fd6f4c100aa54a4bdefb304468a794898022bfaa1e7111ff",
+        "role": "checker",
+        "text": "129:         if len(role_names) != num_roles or len(role_descriptions) != num_roles:\r\n130:             raise RuntimeError(\r\n131:                 \"Got None or insufficient information of roles.\"\r\n132:             )\r\n133:         if terminated:\r\n134:             raise RuntimeError(\"Role assignment failed.\")\r"
+      },
+      {
+        "rel_path": "internagent/mas/agents/dr_agents/camel/agents/role_assignment_agent.py",
+        "line": 130,
+        "line_end": 133,
+        "sha256": "69d15da9e26554d6fd6f4c100aa54a4bdefb304468a794898022bfaa1e7111ff",
+        "role": "enforcement",
+        "text": "130:             raise RuntimeError(\r\n131:                 \"Got None or insufficient information of roles.\"\r\n132:             )\r\n133:         if terminated:\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-005",
+    "producer_method_id": "InternScience/InternAgent::internagent/mas/agents/dr_agents/camel/agents/search_agent.py::108",
+    "decision": "unresolved",
+    "evidence": [
+      {
+        "rel_path": "internagent/mas/agents/dr_agents/camel/agents/search_agent.py",
+        "line": 130,
+        "line_end": 133,
+        "sha256": "3d0337dcac28e5ca5ffdc028a3dfd3a1b6c04865545c71e355d65e400244f327",
+        "role": "support",
+        "text": "130:         response = self.step(user_msg).msg.content\r\n131:         if \"yes\" in str(response).lower():\r\n132:             return False\r\n133:         return True\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-006",
+    "producer_method_id": "InternScience/InternAgent::internagent/mas/agents/dr_agents/camel/agents/task_agent.py::93",
+    "decision": "guardrail",
+    "evidence": [
+      {
+        "rel_path": "internagent/mas/agents/dr_agents/camel/agents/task_agent.py",
+        "line": 118,
+        "line_end": 124,
+        "sha256": "9bff3dfa8aed426e6ff7f8e6a902f04091564b7d291af737e2104d4943212048",
+        "role": "output",
+        "text": "118:         specifier_response = self.step(task_msg)\r\n119: \r\n120:         if specifier_response.terminated:\r\n121:             raise RuntimeError(\"Task specification failed.\")\r\n122:         if len(specifier_response.msgs) == 0:\r\n123:             raise RuntimeError(\"Got no specification message.\")\r\n124: \r"
+      },
+      {
+        "rel_path": "internagent/mas/agents/dr_agents/camel/agents/task_agent.py",
+        "line": 120,
+        "line_end": 125,
+        "sha256": "9bff3dfa8aed426e6ff7f8e6a902f04091564b7d291af737e2104d4943212048",
+        "role": "checker",
+        "text": "120:         if specifier_response.terminated:\r\n121:             raise RuntimeError(\"Task specification failed.\")\r\n122:         if len(specifier_response.msgs) == 0:\r\n123:             raise RuntimeError(\"Got no specification message.\")\r\n124: \r\n125:         specified_task_msg = specifier_response.msgs[0]\r"
+      },
+      {
+        "rel_path": "internagent/mas/agents/dr_agents/camel/agents/task_agent.py",
+        "line": 121,
+        "line_end": 124,
+        "sha256": "9bff3dfa8aed426e6ff7f8e6a902f04091564b7d291af737e2104d4943212048",
+        "role": "enforcement",
+        "text": "121:             raise RuntimeError(\"Task specification failed.\")\r\n122:         if len(specifier_response.msgs) == 0:\r\n123:             raise RuntimeError(\"Got no specification message.\")\r\n124: \r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-007",
+    "producer_method_id": "InternScience/InternAgent::internagent/mas/agents/dr_agents/camel/agents/task_agent.py::168",
+    "decision": "guardrail",
+    "evidence": [
+      {
+        "rel_path": "internagent/mas/agents/dr_agents/camel/agents/task_agent.py",
+        "line": 189,
+        "line_end": 195,
+        "sha256": "9bff3dfa8aed426e6ff7f8e6a902f04091564b7d291af737e2104d4943212048",
+        "role": "output",
+        "text": "189:         task_response = self.step(task_msg)\r\n190: \r\n191:         if task_response.terminated:\r\n192:             raise RuntimeError(\"Task planning failed.\")\r\n193:         if len(task_response.msgs) == 0:\r\n194:             raise RuntimeError(\"Got no task planning message.\")\r\n195: \r"
+      },
+      {
+        "rel_path": "internagent/mas/agents/dr_agents/camel/agents/task_agent.py",
+        "line": 191,
+        "line_end": 196,
+        "sha256": "9bff3dfa8aed426e6ff7f8e6a902f04091564b7d291af737e2104d4943212048",
+        "role": "checker",
+        "text": "191:         if task_response.terminated:\r\n192:             raise RuntimeError(\"Task planning failed.\")\r\n193:         if len(task_response.msgs) == 0:\r\n194:             raise RuntimeError(\"Got no task planning message.\")\r\n195: \r\n196:         sub_tasks_msg = task_response.msgs[0]\r"
+      },
+      {
+        "rel_path": "internagent/mas/agents/dr_agents/camel/agents/task_agent.py",
+        "line": 192,
+        "line_end": 195,
+        "sha256": "9bff3dfa8aed426e6ff7f8e6a902f04091564b7d291af737e2104d4943212048",
+        "role": "enforcement",
+        "text": "192:             raise RuntimeError(\"Task planning failed.\")\r\n193:         if len(task_response.msgs) == 0:\r\n194:             raise RuntimeError(\"Got no task planning message.\")\r\n195: \r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-008",
+    "producer_method_id": "InternScience/InternAgent::internagent/mas/agents/dr_agents/camel/agents/task_agent.py::277",
+    "decision": "guardrail",
+    "evidence": [
+      {
+        "rel_path": "internagent/mas/agents/dr_agents/camel/agents/task_agent.py",
+        "line": 304,
+        "line_end": 310,
+        "sha256": "9bff3dfa8aed426e6ff7f8e6a902f04091564b7d291af737e2104d4943212048",
+        "role": "output",
+        "text": "304:         task_response = self.step(task_msg)\r\n305: \r\n306:         if task_response.terminated:\r\n307:             raise RuntimeError(\"Task creation failed.\")\r\n308:         if len(task_response.msgs) == 0:\r\n309:             raise RuntimeError(\"Got no task creation message.\")\r\n310: \r"
+      },
+      {
+        "rel_path": "internagent/mas/agents/dr_agents/camel/agents/task_agent.py",
+        "line": 306,
+        "line_end": 311,
+        "sha256": "9bff3dfa8aed426e6ff7f8e6a902f04091564b7d291af737e2104d4943212048",
+        "role": "checker",
+        "text": "306:         if task_response.terminated:\r\n307:             raise RuntimeError(\"Task creation failed.\")\r\n308:         if len(task_response.msgs) == 0:\r\n309:             raise RuntimeError(\"Got no task creation message.\")\r\n310: \r\n311:         sub_tasks_msg = task_response.msgs[0]\r"
+      },
+      {
+        "rel_path": "internagent/mas/agents/dr_agents/camel/agents/task_agent.py",
+        "line": 307,
+        "line_end": 310,
+        "sha256": "9bff3dfa8aed426e6ff7f8e6a902f04091564b7d291af737e2104d4943212048",
+        "role": "enforcement",
+        "text": "307:             raise RuntimeError(\"Task creation failed.\")\r\n308:         if len(task_response.msgs) == 0:\r\n309:             raise RuntimeError(\"Got no task creation message.\")\r\n310: \r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-009",
+    "producer_method_id": "InternScience/InternAgent::internagent/mas/agents/dr_agents/camel/datasets/few_shot_generator.py::123",
+    "decision": "guardrail",
+    "evidence": [
+      {
+        "rel_path": "internagent/mas/agents/dr_agents/camel/datasets/few_shot_generator.py",
+        "line": 195,
+        "line_end": 201,
+        "sha256": "745920c62aaea2dd83836055e7cf81b041f93c6d8e76b18c28f7c54853dbf59d",
+        "role": "output",
+        "text": "195:                         self.agent.step(\r\n196:                             prompt, response_format=DataPointSimplified\r\n197:                         )\r\n198:                         .msgs[0]\r\n199:                         .parsed\r\n200:                     )\r\n201: \r"
+      },
+      {
+        "rel_path": "internagent/mas/agents/dr_agents/camel/datasets/few_shot_generator.py",
+        "line": 202,
+        "line_end": 207,
+        "sha256": "745920c62aaea2dd83836055e7cf81b041f93c6d8e76b18c28f7c54853dbf59d",
+        "role": "checker",
+        "text": "202:                     assert isinstance(agent_output, DataPointSimplified)\r\n203: \r\n204:                     self.agent.reset()\r\n205: \r\n206:                 except (TypeError, KeyError) as e:\r\n207:                     logger.warning(\r"
+      },
+      {
+        "rel_path": "internagent/mas/agents/dr_agents/camel/datasets/few_shot_generator.py",
+        "line": 202,
+        "line_end": 205,
+        "sha256": "745920c62aaea2dd83836055e7cf81b041f93c6d8e76b18c28f7c54853dbf59d",
+        "role": "enforcement",
+        "text": "202:                     assert isinstance(agent_output, DataPointSimplified)\r\n203: \r\n204:                     self.agent.reset()\r\n205: \r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-010",
+    "producer_method_id": "Kasma-Inc/Sagi::src/Sagi/workflows/planning_html/planning_html_orchestrator.py::191",
+    "decision": "unresolved",
+    "evidence": [
+      {
+        "rel_path": "src/Sagi/workflows/planning_html/planning_html_orchestrator.py",
+        "line": 207,
+        "line_end": 217,
+        "sha256": "790d22c3e7d42e001ee1dec67c9a8f16dd13c5e5a8e88da9aa98a4fd833a304b",
+        "role": "support",
+        "text": "207:         stream = model_client.create_stream(\r\n208:             messages=self._get_compatible_context(\r\n209:                 model_client=model_client, messages=messages\r\n210:             ),\r\n211:             cancellation_token=cancellation_token,\r\n212:         )\r\n213: \r\n214:         if stream is None:\r\n215:             return \"\"\r\n216:         cur_stream_id = str(uuid.uuid4())\r\n217:         async for response in stream:\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-011",
+    "producer_method_id": "PostHog/posthog::ee/hogai/chat_agent/query_planner/nodes.py::95",
+    "decision": "guardrail",
+    "evidence": [
+      {
+        "rel_path": "ee/hogai/chat_agent/query_planner/nodes.py",
+        "line": 105,
+        "line_end": 111,
+        "sha256": "361065cb5d60968faa69d0c0a1df8f86375d28a31296c5e73f9d385fef25e53a",
+        "role": "output",
+        "text": "105:         output_message = chain.invoke(\r\n106:             {\r\n107:                 \"core_memory\": self.core_memory.text if self.core_memory else \"\",\r\n108:                 \"react_property_filters\": self._get_react_property_filters_prompt(),\r\n109:                 \"react_human_in_the_loop\": HUMAN_IN_THE_LOOP_PROMPT,\r\n110:                 \"groups\": self._team_group_types,\r\n111:                 \"events\": format_events_yaml(\r"
+      },
+      {
+        "rel_path": "ee/hogai/chat_agent/query_planner/nodes.py",
+        "line": 129,
+        "line_end": 134,
+        "sha256": "361065cb5d60968faa69d0c0a1df8f86375d28a31296c5e73f9d385fef25e53a",
+        "role": "checker",
+        "text": "129:         if not output_message.tool_calls:\r\n130:             raise ValueError(\"No tool calls found in the output message.\")\r\n131: \r\n132:         tool_call = output_message.tool_calls[0]\r\n133:         result = AgentAction(tool_call[\"name\"], tool_call[\"args\"], tool_call[\"id\"])\r\n134: \r"
+      },
+      {
+        "rel_path": "ee/hogai/chat_agent/query_planner/nodes.py",
+        "line": 130,
+        "line_end": 133,
+        "sha256": "361065cb5d60968faa69d0c0a1df8f86375d28a31296c5e73f9d385fef25e53a",
+        "role": "enforcement",
+        "text": "130:             raise ValueError(\"No tool calls found in the output message.\")\r\n131: \r\n132:         tool_call = output_message.tool_calls[0]\r\n133:         result = AgentAction(tool_call[\"name\"], tool_call[\"args\"], tool_call[\"id\"])\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-012",
+    "producer_method_id": "PostHog/posthog::ee/hogai/chat_agent/rag/nodes.py::64",
+    "decision": "not_guardrail",
+    "evidence": [
+      {
+        "rel_path": "ee/hogai/chat_agent/rag/nodes.py",
+        "line": 90,
+        "line_end": 95,
+        "sha256": "b1c42a843b819b3e923ba9874543ca4194855c957c763735cd2511588eec6c82",
+        "role": "support",
+        "text": "90:         rag_context = chain.invoke(context, config)\r\n91: \r\n92:         if not rag_context:\r\n93:             return None\r\n94: \r\n95:         return PartialAssistantState(rag_context=rag_context)\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-013",
+    "producer_method_id": "PostHog/posthog::ee/hogai/chat_agent/taxonomy/nodes.py::117",
+    "decision": "guardrail",
+    "evidence": [
+      {
+        "rel_path": "ee/hogai/chat_agent/taxonomy/nodes.py",
+        "line": 129,
+        "line_end": 135,
+        "sha256": "6994ad60f6116fcea8db9d2ea9f5d548172f91bd1ceee6d5bef183c861698552",
+        "role": "output",
+        "text": "129:         output_message = chain.invoke(\r\n130:             {\r\n131:                 \"events\": self._format_events(events_in_context),\r\n132:                 \"groups\": self._team_group_types,\r\n133:             },\r\n134:             config,\r\n135:         )\r"
+      },
+      {
+        "rel_path": "ee/hogai/chat_agent/taxonomy/nodes.py",
+        "line": 137,
+        "line_end": 142,
+        "sha256": "6994ad60f6116fcea8db9d2ea9f5d548172f91bd1ceee6d5bef183c861698552",
+        "role": "checker",
+        "text": "137:         if not output_message.tool_calls:\r\n138:             raise ValueError(\"No tool calls found in the output message.\")\r\n139: \r\n140:         tool_calls = output_message.tool_calls\r\n141:         # Preserve previous intermediate steps (and their results)\r\n142:         previous_steps = state.intermediate_steps or []\r"
+      },
+      {
+        "rel_path": "ee/hogai/chat_agent/taxonomy/nodes.py",
+        "line": 138,
+        "line_end": 141,
+        "sha256": "6994ad60f6116fcea8db9d2ea9f5d548172f91bd1ceee6d5bef183c861698552",
+        "role": "enforcement",
+        "text": "138:             raise ValueError(\"No tool calls found in the output message.\")\r\n139: \r\n140:         tool_calls = output_message.tool_calls\r\n141:         # Preserve previous intermediate steps (and their results)\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-014",
+    "producer_method_id": "PostHog/posthog::ee/hogai/utils/helpers.py::201",
+    "decision": "not_guardrail",
+    "evidence": [
+      {
+        "rel_path": "ee/hogai/utils/helpers.py",
+        "line": 211,
+        "line_end": 220,
+        "sha256": "983b40c2b7038b0d3a8bf177af0318f8440b970ace9964b732a8a39438ccb150",
+        "role": "support",
+        "text": "211:     response = TeamTaxonomyQueryRunner(query, team, user=user).run(\r\n212:         ExecutionMode.RECENT_CACHE_CALCULATE_ASYNC_IF_STALE_AND_BLOCKING_ON_MISS,\r\n213:         user=user,\r\n214:         analytics_props={\"source\": event_source},\r\n215:     )\r\n216: \r\n217:     if not isinstance(response, CachedTeamTaxonomyQueryResponse):\r\n218:         raise ValueError(\"Failed to generate events prompt.\")\r\n219: \r\n220:     has_more = bool(response.hasMore)\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-015",
+    "producer_method_id": "PostHog/posthog::products/cdp/backend/max_tools.py::164",
+    "decision": "guardrail",
+    "evidence": [
+      {
+        "rel_path": "products/cdp/backend/max_tools.py",
+        "line": 193,
+        "line_end": 199,
+        "sha256": "7b927bb938fbda2a0f70673b83ba2dd76876e4b815fc87fe18bad968e72420e6",
+        "role": "output",
+        "text": "193:                 result = self._model.invoke(messages)\r\n194:                 assert isinstance(result.content, str)\r\n195:                 parsed_result = self._parse_output(result.content)\r\n196:                 break\r\n197:             except PydanticOutputParserException as e:\r\n198:                 # Add error feedback to system message for retry\r\n199:                 system_content += f\"\\n\\nAvoid this error: {str(e)}\"\r"
+      },
+      {
+        "rel_path": "products/cdp/backend/max_tools.py",
+        "line": 194,
+        "line_end": 199,
+        "sha256": "7b927bb938fbda2a0f70673b83ba2dd76876e4b815fc87fe18bad968e72420e6",
+        "role": "checker",
+        "text": "194:                 assert isinstance(result.content, str)\r\n195:                 parsed_result = self._parse_output(result.content)\r\n196:                 break\r\n197:             except PydanticOutputParserException as e:\r\n198:                 # Add error feedback to system message for retry\r\n199:                 system_content += f\"\\n\\nAvoid this error: {str(e)}\"\r"
+      },
+      {
+        "rel_path": "products/cdp/backend/max_tools.py",
+        "line": 194,
+        "line_end": 197,
+        "sha256": "7b927bb938fbda2a0f70673b83ba2dd76876e4b815fc87fe18bad968e72420e6",
+        "role": "enforcement",
+        "text": "194:                 assert isinstance(result.content, str)\r\n195:                 parsed_result = self._parse_output(result.content)\r\n196:                 break\r\n197:             except PydanticOutputParserException as e:\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-016",
+    "producer_method_id": "PostHog/posthog::products/cdp/backend/max_tools.py::261",
+    "decision": "guardrail",
+    "evidence": [
+      {
+        "rel_path": "products/cdp/backend/max_tools.py",
+        "line": 281,
+        "line_end": 287,
+        "sha256": "7b927bb938fbda2a0f70673b83ba2dd76876e4b815fc87fe18bad968e72420e6",
+        "role": "output",
+        "text": "281:                 result = self._model.invoke(messages)\r\n282:                 assert isinstance(result.content, str)\r\n283:                 parsed_result = self._parse_output(result.content)\r\n284:                 break\r\n285:             except PydanticOutputParserException as e:\r\n286:                 system_content += f\"\\n\\nAvoid this error: {str(e)}\"\r\n287:                 messages[0] = SystemMessage(content=system_content)\r"
+      },
+      {
+        "rel_path": "products/cdp/backend/max_tools.py",
+        "line": 282,
+        "line_end": 287,
+        "sha256": "7b927bb938fbda2a0f70673b83ba2dd76876e4b815fc87fe18bad968e72420e6",
+        "role": "checker",
+        "text": "282:                 assert isinstance(result.content, str)\r\n283:                 parsed_result = self._parse_output(result.content)\r\n284:                 break\r\n285:             except PydanticOutputParserException as e:\r\n286:                 system_content += f\"\\n\\nAvoid this error: {str(e)}\"\r\n287:                 messages[0] = SystemMessage(content=system_content)\r"
+      },
+      {
+        "rel_path": "products/cdp/backend/max_tools.py",
+        "line": 282,
+        "line_end": 285,
+        "sha256": "7b927bb938fbda2a0f70673b83ba2dd76876e4b815fc87fe18bad968e72420e6",
+        "role": "enforcement",
+        "text": "282:                 assert isinstance(result.content, str)\r\n283:                 parsed_result = self._parse_output(result.content)\r\n284:                 break\r\n285:             except PydanticOutputParserException as e:\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-017",
+    "producer_method_id": "PostHog/posthog::products/cdp/backend/max_tools.py::68",
+    "decision": "guardrail",
+    "evidence": [
+      {
+        "rel_path": "products/cdp/backend/max_tools.py",
+        "line": 95,
+        "line_end": 101,
+        "sha256": "7b927bb938fbda2a0f70673b83ba2dd76876e4b815fc87fe18bad968e72420e6",
+        "role": "output",
+        "text": "95:                 result = self._model.invoke(messages)\r\n96:                 assert isinstance(result.content, str)\r\n97:                 parsed_result = self._parse_output(result.content)\r\n98:                 break\r\n99:             except PydanticOutputParserException as e:\r\n100:                 # Add error feedback to system message for retry\r\n101:                 system_content += f\"\\n\\nAvoid this error: {str(e)}\"\r"
+      },
+      {
+        "rel_path": "products/cdp/backend/max_tools.py",
+        "line": 96,
+        "line_end": 101,
+        "sha256": "7b927bb938fbda2a0f70673b83ba2dd76876e4b815fc87fe18bad968e72420e6",
+        "role": "checker",
+        "text": "96:                 assert isinstance(result.content, str)\r\n97:                 parsed_result = self._parse_output(result.content)\r\n98:                 break\r\n99:             except PydanticOutputParserException as e:\r\n100:                 # Add error feedback to system message for retry\r\n101:                 system_content += f\"\\n\\nAvoid this error: {str(e)}\"\r"
+      },
+      {
+        "rel_path": "products/cdp/backend/max_tools.py",
+        "line": 96,
+        "line_end": 99,
+        "sha256": "7b927bb938fbda2a0f70673b83ba2dd76876e4b815fc87fe18bad968e72420e6",
+        "role": "enforcement",
+        "text": "96:                 assert isinstance(result.content, str)\r\n97:                 parsed_result = self._parse_output(result.content)\r\n98:                 break\r\n99:             except PydanticOutputParserException as e:\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-018",
+    "producer_method_id": "RenqiChen/Virtual-Scientists-v2::camel-master/camel/agents/role_assignment_agent.py::61",
+    "decision": "guardrail",
+    "evidence": [
+      {
+        "rel_path": "camel-master/camel/agents/role_assignment_agent.py",
+        "line": 105,
+        "line_end": 111,
+        "sha256": "ed921a2de254c4af8ea17626c3e86556fff145f6705cf4f5c8a8adcb77db33b6",
+        "role": "output",
+        "text": "105:         response = self.step(input_message=role_assignment_generation_msg)\r\n106: \r\n107:         msg = response.msg  # type: BaseMessage\r\n108:         terminated = response.terminated\r\n109: \r\n110:         # Distribute the output completions into role names and descriptions\r\n111:         role_names = [\r"
+      },
+      {
+        "rel_path": "camel-master/camel/agents/role_assignment_agent.py",
+        "line": 129,
+        "line_end": 134,
+        "sha256": "ed921a2de254c4af8ea17626c3e86556fff145f6705cf4f5c8a8adcb77db33b6",
+        "role": "checker",
+        "text": "129:         if len(role_names) != num_roles or len(role_descriptions) != num_roles:\r\n130:             raise RuntimeError(\r\n131:                 \"Got None or insufficient information of roles.\"\r\n132:             )\r\n133:         if terminated:\r\n134:             raise RuntimeError(\"Role assignment failed.\")\r"
+      },
+      {
+        "rel_path": "camel-master/camel/agents/role_assignment_agent.py",
+        "line": 130,
+        "line_end": 133,
+        "sha256": "ed921a2de254c4af8ea17626c3e86556fff145f6705cf4f5c8a8adcb77db33b6",
+        "role": "enforcement",
+        "text": "130:             raise RuntimeError(\r\n131:                 \"Got None or insufficient information of roles.\"\r\n132:             )\r\n133:         if terminated:\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-019",
+    "producer_method_id": "RenqiChen/Virtual-Scientists-v2::camel-master/camel/agents/search_agent.py::108",
+    "decision": "unresolved",
+    "evidence": [
+      {
+        "rel_path": "camel-master/camel/agents/search_agent.py",
+        "line": 130,
+        "line_end": 133,
+        "sha256": "8d957140a032b266b1a66008f9f6f75e084cc7253d78daf4d0061c4f4134784d",
+        "role": "support",
+        "text": "130:         response = self.step(user_msg).msg.content\r\n131:         if \"yes\" in str(response).lower():\r\n132:             return False\r\n133:         return True\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-020",
+    "producer_method_id": "RenqiChen/Virtual-Scientists-v2::camel-master/camel/agents/task_agent.py::93",
+    "decision": "guardrail",
+    "evidence": [
+      {
+        "rel_path": "camel-master/camel/agents/task_agent.py",
+        "line": 118,
+        "line_end": 124,
+        "sha256": "32df850f8acf510ec2b7c11bd1b006515e9864b877a87b5183072bca451881e0",
+        "role": "output",
+        "text": "118:         specifier_response = self.step(task_msg)\r\n119: \r\n120:         if specifier_response.terminated:\r\n121:             raise RuntimeError(\"Task specification failed.\")\r\n122:         if len(specifier_response.msgs) == 0:\r\n123:             raise RuntimeError(\"Got no specification message.\")\r\n124: \r"
+      },
+      {
+        "rel_path": "camel-master/camel/agents/task_agent.py",
+        "line": 120,
+        "line_end": 125,
+        "sha256": "32df850f8acf510ec2b7c11bd1b006515e9864b877a87b5183072bca451881e0",
+        "role": "checker",
+        "text": "120:         if specifier_response.terminated:\r\n121:             raise RuntimeError(\"Task specification failed.\")\r\n122:         if len(specifier_response.msgs) == 0:\r\n123:             raise RuntimeError(\"Got no specification message.\")\r\n124: \r\n125:         specified_task_msg = specifier_response.msgs[0]\r"
+      },
+      {
+        "rel_path": "camel-master/camel/agents/task_agent.py",
+        "line": 121,
+        "line_end": 124,
+        "sha256": "32df850f8acf510ec2b7c11bd1b006515e9864b877a87b5183072bca451881e0",
+        "role": "enforcement",
+        "text": "121:             raise RuntimeError(\"Task specification failed.\")\r\n122:         if len(specifier_response.msgs) == 0:\r\n123:             raise RuntimeError(\"Got no specification message.\")\r\n124: \r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-021",
+    "producer_method_id": "RenqiChen/Virtual-Scientists-v2::camel-master/camel/agents/task_agent.py::168",
+    "decision": "guardrail",
+    "evidence": [
+      {
+        "rel_path": "camel-master/camel/agents/task_agent.py",
+        "line": 189,
+        "line_end": 195,
+        "sha256": "32df850f8acf510ec2b7c11bd1b006515e9864b877a87b5183072bca451881e0",
+        "role": "output",
+        "text": "189:         task_response = self.step(task_msg)\r\n190: \r\n191:         if task_response.terminated:\r\n192:             raise RuntimeError(\"Task planning failed.\")\r\n193:         if len(task_response.msgs) == 0:\r\n194:             raise RuntimeError(\"Got no task planning message.\")\r\n195: \r"
+      },
+      {
+        "rel_path": "camel-master/camel/agents/task_agent.py",
+        "line": 191,
+        "line_end": 196,
+        "sha256": "32df850f8acf510ec2b7c11bd1b006515e9864b877a87b5183072bca451881e0",
+        "role": "checker",
+        "text": "191:         if task_response.terminated:\r\n192:             raise RuntimeError(\"Task planning failed.\")\r\n193:         if len(task_response.msgs) == 0:\r\n194:             raise RuntimeError(\"Got no task planning message.\")\r\n195: \r\n196:         sub_tasks_msg = task_response.msgs[0]\r"
+      },
+      {
+        "rel_path": "camel-master/camel/agents/task_agent.py",
+        "line": 192,
+        "line_end": 195,
+        "sha256": "32df850f8acf510ec2b7c11bd1b006515e9864b877a87b5183072bca451881e0",
+        "role": "enforcement",
+        "text": "192:             raise RuntimeError(\"Task planning failed.\")\r\n193:         if len(task_response.msgs) == 0:\r\n194:             raise RuntimeError(\"Got no task planning message.\")\r\n195: \r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-022",
+    "producer_method_id": "RenqiChen/Virtual-Scientists-v2::camel-master/camel/agents/task_agent.py::277",
+    "decision": "guardrail",
+    "evidence": [
+      {
+        "rel_path": "camel-master/camel/agents/task_agent.py",
+        "line": 304,
+        "line_end": 310,
+        "sha256": "32df850f8acf510ec2b7c11bd1b006515e9864b877a87b5183072bca451881e0",
+        "role": "output",
+        "text": "304:         task_response = self.step(task_msg)\r\n305: \r\n306:         if task_response.terminated:\r\n307:             raise RuntimeError(\"Task creation failed.\")\r\n308:         if len(task_response.msgs) == 0:\r\n309:             raise RuntimeError(\"Got no task creation message.\")\r\n310: \r"
+      },
+      {
+        "rel_path": "camel-master/camel/agents/task_agent.py",
+        "line": 306,
+        "line_end": 311,
+        "sha256": "32df850f8acf510ec2b7c11bd1b006515e9864b877a87b5183072bca451881e0",
+        "role": "checker",
+        "text": "306:         if task_response.terminated:\r\n307:             raise RuntimeError(\"Task creation failed.\")\r\n308:         if len(task_response.msgs) == 0:\r\n309:             raise RuntimeError(\"Got no task creation message.\")\r\n310: \r\n311:         sub_tasks_msg = task_response.msgs[0]\r"
+      },
+      {
+        "rel_path": "camel-master/camel/agents/task_agent.py",
+        "line": 307,
+        "line_end": 310,
+        "sha256": "32df850f8acf510ec2b7c11bd1b006515e9864b877a87b5183072bca451881e0",
+        "role": "enforcement",
+        "text": "307:             raise RuntimeError(\"Task creation failed.\")\r\n308:         if len(task_response.msgs) == 0:\r\n309:             raise RuntimeError(\"Got no task creation message.\")\r\n310: \r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-023",
+    "producer_method_id": "Rvosy/Sakura::third_party/mem0/mem0/vector_stores/opensearch.py::317",
+    "decision": "not_guardrail",
+    "evidence": [
+      {
+        "rel_path": "third_party/mem0/mem0/vector_stores/opensearch.py",
+        "line": 321,
+        "line_end": 328,
+        "sha256": "4feb1c5fec03561d072205cb0285495a42c005f6fadb41c4505fe9da34d5a51b",
+        "role": "support",
+        "text": "321:             response = self.client.search(index=self.collection_name, body=search_query)\r\n322: \r\n323:             hits = response[\"hits\"][\"hits\"]\r\n324: \r\n325:             if not hits:\r\n326:                 return None\r\n327: \r\n328:             return OutputData(id=hits[0][\"_source\"].get(\"id\"), score=1.0, payload=hits[0][\"_source\"].get(\"payload\", {}))\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-024",
+    "producer_method_id": "THUIR/MemoryBench::baselines/mem0/mem0/vector_stores/opensearch.py::213",
+    "decision": "not_guardrail",
+    "evidence": [
+      {
+        "rel_path": "baselines/mem0/mem0/vector_stores/opensearch.py",
+        "line": 223,
+        "line_end": 230,
+        "sha256": "6ba578a3da0e5548be6b8b5c293dc5ce2fdd1ee9f7fd8ab6c80960dbe191b17d",
+        "role": "support",
+        "text": "223:             response = self.client.search(index=self.collection_name, body=search_query)\r\n224: \r\n225:             hits = response[\"hits\"][\"hits\"]\r\n226: \r\n227:             if not hits:\r\n228:                 return None\r\n229: \r\n230:             return OutputData(id=hits[0][\"_source\"].get(\"id\"), score=1.0, payload=hits[0][\"_source\"].get(\"payload\", {}))\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-025",
+    "producer_method_id": "XAIHT/Tlamatini::Tlamatini/agent/rag/interface.py::368",
+    "decision": "not_guardrail",
+    "evidence": [
+      {
+        "rel_path": "Tlamatini/agent/rag/interface.py",
+        "line": 399,
+        "line_end": 406,
+        "sha256": "844390540f83ee0daf4d7733395cf6911d0256bc399ac7be8b850faabd3d046a",
+        "role": "support",
+        "text": "399:         response = llm.invoke(classification_prompt)\r\n400:         output = (response or \"\").strip().upper()\r\n401:         print(f\"--- _acces_aimed_prompt LLM response: '{output}'\")\r\n402: \r\n403:         if \"NOT-INTENT\" in output or \"NOT INTENT\" in output:\r\n404:             return False\r\n405:         if \"INTENT\" in output:\r\n406:             return True\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-026",
+    "producer_method_id": "XAIHT/Tlamatini::Tlamatini/agent/rag/interface.py::414",
+    "decision": "not_guardrail",
+    "evidence": [
+      {
+        "rel_path": "Tlamatini/agent/rag/interface.py",
+        "line": 487,
+        "line_end": 494,
+        "sha256": "844390540f83ee0daf4d7733395cf6911d0256bc399ac7be8b850faabd3d046a",
+        "role": "support",
+        "text": "487:         response = llm.invoke(classification_prompt)\r\n488:         output = (response or \"\").strip().upper()\r\n489:         print(f\"--- _indirect_file_access_prompt LLM response: '{output}'\")\r\n490: \r\n491:         if output.startswith(\"NO\") or (\"NO\" in output and \"YES\" not in output):\r\n492:             return False\r\n493:         if output.startswith(\"YES\") or \"YES\" in output:\r\n494:             return True\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-027",
+    "producer_method_id": "XAIHT/Tlamatini::Tlamatini/agent/tests.py::987",
+    "decision": "not_guardrail",
+    "evidence": [
+      {
+        "rel_path": "Tlamatini/agent/tests.py",
+        "line": 1053,
+        "line_end": 1060,
+        "sha256": "09145b50e781c72cf891d0a30b91c5aa8b4ff64ce364ca8159ec6a5dd7475e57",
+        "role": "support",
+        "text": "1053:         result = exe.invoke({'input': 'use acpx', 'exec_report_enabled': True})\r\n1054:         entries = result['exec_report_entries']\r\n1055: \r\n1056:         # All four state-changing ACPX/skill calls must be captured.\r\n1057:         self.assertEqual(len(entries), 4)\r\n1058:         keys = [e['agent_key'] for e in entries]\r\n1059:         displays = [e['agent_display'] for e in entries]\r\n1060:         commands = [e['command'] for e in entries]\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-028",
+    "producer_method_id": "XAIHT/Tlamatini::Tlamatini/agent/tests.py::1074",
+    "decision": "not_guardrail",
+    "evidence": [
+      {
+        "rel_path": "Tlamatini/agent/tests.py",
+        "line": 1109,
+        "line_end": 1115,
+        "sha256": "09145b50e781c72cf891d0a30b91c5aa8b4ff64ce364ca8159ec6a5dd7475e57",
+        "role": "support",
+        "text": "1109:         result = exe.invoke({'input': 'fails', 'exec_report_enabled': True})\r\n1110:         entries = result['exec_report_entries']\r\n1111: \r\n1112:         self.assertEqual(len(entries), 2)\r\n1113:         self.assertEqual(entries[0]['agent_key'], 'acpx')\r\n1114:         self.assertFalse(entries[0]['success'])\r\n1115:         self.assertEqual(entries[0]['command'], '[kimi] do thing')\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-029",
+    "producer_method_id": "XAIHT/Tlamatini::Tlamatini/agent/tests.py::821",
+    "decision": "not_guardrail",
+    "evidence": [
+      {
+        "rel_path": "Tlamatini/agent/tests.py",
+        "line": 841,
+        "line_end": 847,
+        "sha256": "09145b50e781c72cf891d0a30b91c5aa8b4ff64ce364ca8159ec6a5dd7475e57",
+        "role": "support",
+        "text": "841:         result = exe.invoke({'input': 'do things', 'exec_report_enabled': True})\r\n842: \r\n843:         entries = result['exec_report_entries']\r\n844:         self.assertEqual(len(entries), 2)\r\n845:         self.assertEqual(entries[0]['agent_key'], 'executer')\r\n846:         self.assertEqual(entries[0]['agent_display'], 'Executer')\r\n847:         self.assertEqual(entries[0]['command'], 'git status')\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-030",
+    "producer_method_id": "baserow/baserow::enterprise/backend/src/baserow_enterprise/assistant/tools/database/tools.py::860",
+    "decision": "guardrail",
+    "evidence": [
+      {
+        "rel_path": "enterprise/backend/src/baserow_enterprise/assistant/tools/database/tools.py",
+        "line": 921,
+        "line_end": 927,
+        "sha256": "f4337ed7d387477a6be0cc40fa7130ec449fb4246f78c1c035453f66912153bd",
+        "role": "output",
+        "text": "921:     agent_result = formula_generation_agent.run_sync(\r\n922:         prompt,\r\n923:         model=model,\r\n924:         model_settings=get_model_settings(model, UTILITY),\r\n925:         toolsets=[formula_toolset],\r\n926:         usage_limits=UsageLimits(request_limit=20),\r\n927:     )\r"
+      },
+      {
+        "rel_path": "enterprise/backend/src/baserow_enterprise/assistant/tools/database/tools.py",
+        "line": 934,
+        "line_end": 939,
+        "sha256": "f4337ed7d387477a6be0cc40fa7130ec449fb4246f78c1c035453f66912153bd",
+        "role": "checker",
+        "text": "934:     if table is None:\r\n935:         raise Exception(\r\n936:             \"The generated formula is intended for a different table \"\r\n937:             f\"than the current one. Table with ID {result.table_id} not found.\"\r\n938:         )\r\n939: \r"
+      },
+      {
+        "rel_path": "enterprise/backend/src/baserow_enterprise/assistant/tools/database/tools.py",
+        "line": 935,
+        "line_end": 938,
+        "sha256": "f4337ed7d387477a6be0cc40fa7130ec449fb4246f78c1c035453f66912153bd",
+        "role": "enforcement",
+        "text": "935:         raise Exception(\r\n936:             \"The generated formula is intended for a different table \"\r\n937:             f\"than the current one. Table with ID {result.table_id} not found.\"\r\n938:         )\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-031",
+    "producer_method_id": "codemie-ai/codemie::src/codemie/chains/kb_sources_selector_chain.py::37",
+    "decision": "not_guardrail",
+    "evidence": [
+      {
+        "rel_path": "src/codemie/chains/kb_sources_selector_chain.py",
+        "line": 38,
+        "line_end": 48,
+        "sha256": "212b43627fbb4d82af4d43b967d2390c8b5ff0272cebf49cacb95c4165f847c9",
+        "role": "support",
+        "text": "38:         result = self._chain().invoke(\n39:             input={\n40:                 \"question\": self.query,\n41:                 \"sources\": self.sources,\n42:             }\n43:         )\n44: \n45:         if result == NONE_RESPONSE:\n46:             return []\n47: \n48:         return set(map(str.strip, result.split(\",\")))"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-032",
+    "producer_method_id": "crestalnetwork/intentkit::intentkit/core/summarization.py::392",
+    "decision": "guardrail",
+    "evidence": [
+      {
+        "rel_path": "intentkit/core/summarization.py",
+        "line": 394,
+        "line_end": 400,
+        "sha256": "05910556acc9343ba03fa601cc1123d47e79907a5beca586d610c3f16f01a0e7",
+        "role": "output",
+        "text": "394:         response = await self.summary_model.ainvoke(\r\n395:             SUMMARY_PROMPT.format(messages=formatted),\r\n396:             config={\"metadata\": {_SUMMARY_SOURCE_KEY: _SUMMARY_SOURCE_VALUE}},\r\n397:         )\r\n398:         text = response.text.strip()\r\n399:         if not text:\r\n400:             raise ValueError(\"summarizer returned empty text\")\r"
+      },
+      {
+        "rel_path": "intentkit/core/summarization.py",
+        "line": 399,
+        "line_end": 401,
+        "sha256": "05910556acc9343ba03fa601cc1123d47e79907a5beca586d610c3f16f01a0e7",
+        "role": "checker",
+        "text": "399:         if not text:\r\n400:             raise ValueError(\"summarizer returned empty text\")\r\n401:         return text\r"
+      },
+      {
+        "rel_path": "intentkit/core/summarization.py",
+        "line": 400,
+        "line_end": 401,
+        "sha256": "05910556acc9343ba03fa601cc1123d47e79907a5beca586d610c3f16f01a0e7",
+        "role": "enforcement",
+        "text": "400:             raise ValueError(\"summarizer returned empty text\")\r\n401:         return text\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-033",
+    "producer_method_id": "crestalnetwork/intentkit::intentkit/tools/aave_v3/utils.py::47",
+    "decision": "not_guardrail",
+    "evidence": [
+      {
+        "rel_path": "intentkit/tools/aave_v3/utils.py",
+        "line": 62,
+        "line_end": 70,
+        "sha256": "a805bc5a871354ef5460f9bb8d7289ed44cdaf62360fd844fab6e3c5c2ee67cd",
+        "role": "support",
+        "text": "62:     current = await contract.functions.allowance(\r\n63:         Web3.to_checksum_address(wallet.address),\r\n64:         spender,\r\n65:     ).call()\r\n66: \r\n67:     if current >= amount:\r\n68:         return\r\n69: \r\n70:     # Some tokens (e.g. USDT) revert if changing non-zero allowance directly\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-034",
+    "producer_method_id": "crestalnetwork/intentkit::intentkit/tools/aerodrome/add_liquidity.py::232",
+    "decision": "not_guardrail",
+    "evidence": [
+      {
+        "rel_path": "intentkit/tools/aerodrome/add_liquidity.py",
+        "line": 239,
+        "line_end": 245,
+        "sha256": "ef19eb2d8e7ddd673db0e881f769541642d2b72b61eb66c0ec56ca77a3af21f8",
+        "role": "support",
+        "text": "239:             gauge_address = await voter.functions.gauges(\r\n240:                 Web3.to_checksum_address(pool_address)\r\n241:             ).call()\r\n242:             if gauge_address == \"0x0000000000000000000000000000000000000000\":\r\n243:                 return None\r\n244:             return gauge_address\r\n245:         except Exception:\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-035",
+    "producer_method_id": "crestalnetwork/intentkit::intentkit/tools/aerodrome/get_positions.py::48",
+    "decision": "not_guardrail",
+    "evidence": [
+      {
+        "rel_path": "intentkit/tools/aerodrome/get_positions.py",
+        "line": 95,
+        "line_end": 101,
+        "sha256": "0c9808720ab6803589c754daf6c22e0de45a0f5c2a7235abe811908a34b596c5",
+        "role": "support",
+        "text": "95:                         is_staked = await gauge.functions.stakedContains(\r\n96:                             checksum_wallet, token_id\r\n97:                         ).call()\r\n98:                         if not is_staked:\r\n99:                             continue\r\n100: \r\n101:                         pos_info = await pm.functions.positions(token_id).call()\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-036",
+    "producer_method_id": "crestalnetwork/intentkit::intentkit/tools/aerodrome/remove_liquidity.py::60",
+    "decision": "not_guardrail",
+    "evidence": [
+      {
+        "rel_path": "intentkit/tools/aerodrome/remove_liquidity.py",
+        "line": 120,
+        "line_end": 129,
+        "sha256": "b76bb8391eed336cad58918989009a440e8b0c6adb102be0d67629da2e7cf1b8",
+        "role": "support",
+        "text": "120:             pos_info = await pm.functions.positions(token_id).call()\r\n121:             liquidity = pos_info[7]\r\n122:             token0 = pos_info[2]\r\n123:             token1 = pos_info[3]\r\n124:             tick_spacing_val = pos_info[4]\r\n125: \r\n126:             if liquidity == 0:\r\n127:                 raise ToolException(f\"Position {token_id} has no liquidity to remove\")\r\n128: \r\n129:             # Calculate liquidity to remove\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-037",
+    "producer_method_id": "crestalnetwork/intentkit::intentkit/tools/aerodrome/utils.py::69",
+    "decision": "not_guardrail",
+    "evidence": [
+      {
+        "rel_path": "intentkit/tools/aerodrome/utils.py",
+        "line": 81,
+        "line_end": 89,
+        "sha256": "9d58a34c5a70938f12265d23b70081294cbb50f4eab6973c3a0a785fe4567de4",
+        "role": "support",
+        "text": "81:     current = await contract.functions.allowance(\r\n82:         Web3.to_checksum_address(wallet.address),\r\n83:         spender,\r\n84:     ).call()\r\n85: \r\n86:     if current >= amount:\r\n87:         return\r\n88: \r\n89:     approve_data = contract.encode_abi(\"approve\", [spender, amount])\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-038",
+    "producer_method_id": "crestalnetwork/intentkit::intentkit/tools/opensea/onchain_base.py::63",
+    "decision": "not_guardrail",
+    "evidence": [
+      {
+        "rel_path": "intentkit/tools/opensea/onchain_base.py",
+        "line": 78,
+        "line_end": 86,
+        "sha256": "bad346565d3b7e999908457a5ee7951a6c818645e9a207ef473483ad5abe6c17",
+        "role": "support",
+        "text": "78:         is_approved = await nft_contract.functions.isApprovedForAll(\r\n79:             Web3.to_checksum_address(wallet_address),\r\n80:             Web3.to_checksum_address(OPENSEA_CONDUIT_ADDRESS),\r\n81:         ).call()\r\n82: \r\n83:         if is_approved:\r\n84:             return None\r\n85: \r\n86:         approve_data = nft_contract.encode_abi(\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-039",
+    "producer_method_id": "crestalnetwork/intentkit::intentkit/tools/pancakeswap/get_positions.py::44",
+    "decision": "not_guardrail",
+    "evidence": [
+      {
+        "rel_path": "intentkit/tools/pancakeswap/get_positions.py",
+        "line": 90,
+        "line_end": 97,
+        "sha256": "94b5b4da47aaa667b07f7f398ddafa1f8671c2d8b543f30df1f490ca97f12dcf",
+        "role": "support",
+        "text": "90:                             user_info = await mc.functions.userPositionInfos(\r\n91:                                 token_id\r\n92:                             ).call()\r\n93:                             # user_info[6] is the user address\r\n94:                             if user_info[6].lower() != wallet_address.lower():\r\n95:                                 continue\r\n96:                             pos_info = await pm.functions.positions(token_id).call()\r\n97:                             pending_cake = await mc.functions.pendingCake(\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-040",
+    "producer_method_id": "crestalnetwork/intentkit::intentkit/tools/pancakeswap/remove_liquidity.py::59",
+    "decision": "not_guardrail",
+    "evidence": [
+      {
+        "rel_path": "intentkit/tools/pancakeswap/remove_liquidity.py",
+        "line": 119,
+        "line_end": 128,
+        "sha256": "466822f532869a00f7ae0296a957a97235f8c9d2f303e5b387f53e6b684592a3",
+        "role": "support",
+        "text": "119:             pos_info = await pm.functions.positions(token_id).call()\r\n120:             liquidity = pos_info[7]\r\n121:             token0 = pos_info[2]\r\n122:             token1 = pos_info[3]\r\n123:             fee = pos_info[4]\r\n124: \r\n125:             if liquidity == 0:\r\n126:                 raise ToolException(f\"Position {token_id} has no liquidity to remove\")\r\n127: \r\n128:             # Calculate liquidity to remove\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-041",
+    "producer_method_id": "crestalnetwork/intentkit::intentkit/tools/pancakeswap/utils.py::64",
+    "decision": "not_guardrail",
+    "evidence": [
+      {
+        "rel_path": "intentkit/tools/pancakeswap/utils.py",
+        "line": 76,
+        "line_end": 84,
+        "sha256": "0838d6d5188658b9e282e99071747fce1077f83687e9e6402e1d411fa9cc350d",
+        "role": "support",
+        "text": "76:     current = await contract.functions.allowance(\r\n77:         Web3.to_checksum_address(wallet.address),\r\n78:         spender,\r\n79:     ).call()\r\n80: \r\n81:     if current >= amount:\r\n82:         return\r\n83: \r\n84:     approve_data = contract.encode_abi(\"approve\", [spender, amount])\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-042",
+    "producer_method_id": "crestalnetwork/intentkit::intentkit/tools/uniswap/remove_liquidity.py::49",
+    "decision": "not_guardrail",
+    "evidence": [
+      {
+        "rel_path": "intentkit/tools/uniswap/remove_liquidity.py",
+        "line": 74,
+        "line_end": 83,
+        "sha256": "dcd3a97193d854a747611f5b8a6feb521bf40320193082d8a9e2d905a2b47dfc",
+        "role": "support",
+        "text": "74:             pos_info = await pm.functions.positions(token_id).call()\r\n75:             liquidity = pos_info[7]\r\n76:             token0 = pos_info[2]\r\n77:             token1 = pos_info[3]\r\n78:             fee = pos_info[4]\r\n79: \r\n80:             if liquidity == 0:\r\n81:                 raise ToolException(f\"Position {token_id} has no liquidity to remove\")\r\n82: \r\n83:             # Calculate liquidity to remove\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-043",
+    "producer_method_id": "crestalnetwork/intentkit::intentkit/tools/uniswap/utils.py::65",
+    "decision": "not_guardrail",
+    "evidence": [
+      {
+        "rel_path": "intentkit/tools/uniswap/utils.py",
+        "line": 77,
+        "line_end": 85,
+        "sha256": "2358b3a04d5a5b9201cacae87dd041b573e2e63284fe333c74f22455dab8e8ce",
+        "role": "support",
+        "text": "77:     current = await contract.functions.allowance(\r\n78:         Web3.to_checksum_address(wallet.address),\r\n79:         spender,\r\n80:     ).call()\r\n81: \r\n82:     if current >= amount:\r\n83:         return\r\n84: \r\n85:     approve_data = contract.encode_abi(\"approve\", [spender, amount])\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-044",
+    "producer_method_id": "ericjiang18/Agent-Q-Mix::agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_code_executor_agent.py::515",
+    "decision": "guardrail",
+    "evidence": [
+      {
+        "rel_path": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_code_executor_agent.py",
+        "line": 557,
+        "line_end": 563,
+        "sha256": "17a62c54093ceb8b0ff5adeb4ad586fe1e123064b247184770c525eac6bf3327",
+        "role": "output",
+        "text": "557:             async for inference_output in self._call_llm(\n558:                 model_client=model_client,\n559:                 model_client_stream=model_client_stream,\n560:                 system_messages=system_messages,\n561:                 model_context=model_context,\n562:                 agent_name=agent_name,\n563:                 cancellation_token=cancellation_token,"
+      },
+      {
+        "rel_path": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_code_executor_agent.py",
+        "line": 589,
+        "line_end": 594,
+        "sha256": "17a62c54093ceb8b0ff5adeb4ad586fe1e123064b247184770c525eac6bf3327",
+        "role": "checker",
+        "text": "589:             assert isinstance(model_result.content, str), \"Expected inferred model_result.content to be of type str.\"\n590:             code_blocks = self._extract_markdown_code_blocks(str(model_result.content))\n591: \n592:             # Step 6: Exit the loop if no code blocks found\n593:             if not code_blocks:\n594:                 yield Response("
+      },
+      {
+        "rel_path": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_code_executor_agent.py",
+        "line": 589,
+        "line_end": 592,
+        "sha256": "17a62c54093ceb8b0ff5adeb4ad586fe1e123064b247184770c525eac6bf3327",
+        "role": "enforcement",
+        "text": "589:             assert isinstance(model_result.content, str), \"Expected inferred model_result.content to be of type str.\"\n590:             code_blocks = self._extract_markdown_code_blocks(str(model_result.content))\n591: \n592:             # Step 6: Exit the loop if no code blocks found"
+      },
+      {
+        "rel_path": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_code_executor_agent.py",
+        "line": 791,
+        "line_end": 822,
+        "sha256": "17a62c54093ceb8b0ff5adeb4ad586fe1e123064b247184770c525eac6bf3327",
+        "role": "support",
+        "text": "791:     async def _call_llm(\n792:         cls,\n793:         model_client: ChatCompletionClient,\n794:         model_client_stream: bool,\n795:         system_messages: List[SystemMessage],\n796:         model_context: ChatCompletionContext,\n797:         agent_name: str,\n798:         cancellation_token: CancellationToken,\n799:     ) -> AsyncGenerator[Union[CreateResult, ModelClientStreamingChunkEvent], None]:\n800:         \"\"\"\n801:         Perform a model inference and yield either streaming chunk events or the final CreateResult.\n802:         \"\"\"\n803:         all_messages = await model_context.get_messages()\n804:         llm_messages = cls._get_compatible_context(model_client=model_client, messages=system_messages + all_messages)\n805: \n806:         if model_client_stream:\n807:             model_result: Optional[CreateResult] = None\n808:             async for chunk in model_client.create_stream(\n809:                 llm_messages, tools=[], cancellation_token=cancellation_token\n810:             ):\n811:                 if isinstance(chunk, CreateResult):\n812:                     model_result = chunk\n813:                 elif isinstance(chunk, str):\n814:                     yield ModelClientStreamingChunkEvent(content=chunk, source=agent_name)\n815:                 else:\n816:                     raise RuntimeError(f\"Invalid chunk type: {type(chunk)}\")\n817:             if model_result is None:\n818:                 raise RuntimeError(\"No final model result in streaming mode.\")\n819:             yield model_result\n820:         else:\n821:             model_result = await model_client.create(llm_messages, tools=[], cancellation_token=cancellation_token)\n822:             yield model_result"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-045",
+    "producer_method_id": "ikamensh/kodo::kodo/coach.py::405",
+    "decision": "unresolved",
+    "evidence": [
+      {
+        "rel_path": "kodo/coach.py",
+        "line": 409,
+        "line_end": 418,
+        "sha256": "7d0a6b44945a71154fbf870289bee6ac7e312cf2a86e879e5ffc3dd02da41e32",
+        "role": "support",
+        "text": "409:             result = agent.run_sync(\r\n410:                 _FILTER_PROMPT.format(\r\n411:                     event=self._current_event[:2000],\r\n412:                     message=message,\r\n413:                 ),\r\n414:             )\r\n415:             if result.output.decision == \"pass\":\r\n416:                 return None\r\n417:             return result.output.reason or \"Not relevant enough.\"\r\n418:         except Exception:\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-046",
+    "producer_method_id": "itbench-hub/ITBench-CISO-CAA-Agent::src/ciso_agent/agents/kubernetes_kyverno.py::71",
+    "decision": "guardrail",
+    "evidence": [
+      {
+        "rel_path": "src/ciso_agent/agents/kubernetes_kyverno.py",
+        "line": 144,
+        "line_end": 150,
+        "sha256": "8838fb22d4fbf68794bcc7d5c043bee15ea1dc51e3ce554f47ecccc01c194980",
+        "role": "output",
+        "text": "144:         output = crew.kickoff(inputs=inputs)\r\n145:         result_str = output.raw.strip()\r\n146:         if not result_str:\r\n147:             raise ValueError(\"crew agent returned an empty string.\")\r\n148: \r\n149:         if \"```\" in result_str:\r\n150:             result_str = extract_code(result_str, code_type=\"json\")\r"
+      },
+      {
+        "rel_path": "src/ciso_agent/agents/kubernetes_kyverno.py",
+        "line": 146,
+        "line_end": 151,
+        "sha256": "8838fb22d4fbf68794bcc7d5c043bee15ea1dc51e3ce554f47ecccc01c194980",
+        "role": "checker",
+        "text": "146:         if not result_str:\r\n147:             raise ValueError(\"crew agent returned an empty string.\")\r\n148: \r\n149:         if \"```\" in result_str:\r\n150:             result_str = extract_code(result_str, code_type=\"json\")\r\n151:         result_str = result_str.strip()\r"
+      },
+      {
+        "rel_path": "src/ciso_agent/agents/kubernetes_kyverno.py",
+        "line": 147,
+        "line_end": 150,
+        "sha256": "8838fb22d4fbf68794bcc7d5c043bee15ea1dc51e3ce554f47ecccc01c194980",
+        "role": "enforcement",
+        "text": "147:             raise ValueError(\"crew agent returned an empty string.\")\r\n148: \r\n149:         if \"```\" in result_str:\r\n150:             result_str = extract_code(result_str, code_type=\"json\")\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-047",
+    "producer_method_id": "itbench-hub/ITBench-CISO-CAA-Agent::src/ciso_agent/agents/kubernetes_kyverno_update.py::82",
+    "decision": "guardrail",
+    "evidence": [
+      {
+        "rel_path": "src/ciso_agent/agents/kubernetes_kyverno_update.py",
+        "line": 152,
+        "line_end": 158,
+        "sha256": "f19666d66bbd4085af08aa6cb08fdd664e97a8283462267a849fa5938e19072d",
+        "role": "output",
+        "text": "152:         output = crew.kickoff(inputs=inputs)\r\n153:         result_str = output.raw.strip()\r\n154:         if not result_str:\r\n155:             raise ValueError(\"crew agent returned an empty string.\")\r\n156: \r\n157:         if \"```\" in result_str:\r\n158:             result_str = extract_code(result_str, code_type=\"json\")\r"
+      },
+      {
+        "rel_path": "src/ciso_agent/agents/kubernetes_kyverno_update.py",
+        "line": 154,
+        "line_end": 159,
+        "sha256": "f19666d66bbd4085af08aa6cb08fdd664e97a8283462267a849fa5938e19072d",
+        "role": "checker",
+        "text": "154:         if not result_str:\r\n155:             raise ValueError(\"crew agent returned an empty string.\")\r\n156: \r\n157:         if \"```\" in result_str:\r\n158:             result_str = extract_code(result_str, code_type=\"json\")\r\n159:         result_str = result_str.strip()\r"
+      },
+      {
+        "rel_path": "src/ciso_agent/agents/kubernetes_kyverno_update.py",
+        "line": 155,
+        "line_end": 158,
+        "sha256": "f19666d66bbd4085af08aa6cb08fdd664e97a8283462267a849fa5938e19072d",
+        "role": "enforcement",
+        "text": "155:             raise ValueError(\"crew agent returned an empty string.\")\r\n156: \r\n157:         if \"```\" in result_str:\r\n158:             result_str = extract_code(result_str, code_type=\"json\")\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-048",
+    "producer_method_id": "julienlucas/agentic-rag-multiagent::backend/retriever/contextual_compression.py::59",
+    "decision": "guardrail",
+    "evidence": [
+      {
+        "rel_path": "backend/retriever/contextual_compression.py",
+        "line": 76,
+        "line_end": 82,
+        "sha256": "5e7dd76e9775d80685c04d0637bda98fcfe406a5a6893894be38aa2032ce1d46",
+        "role": "output",
+        "text": "76:             response = llm.invoke(prompt)\r\n77:             extracted = response.content.strip()\r\n78: \r\n79:             # Vérifier si le contenu est pertinent\r\n80:             if (\r\n81:                 extracted.upper() == \"AUCUN\"\r\n82:                 or len(extracted) < self.min_relevance_length\r"
+      },
+      {
+        "rel_path": "backend/retriever/contextual_compression.py",
+        "line": 80,
+        "line_end": 85,
+        "sha256": "5e7dd76e9775d80685c04d0637bda98fcfe406a5a6893894be38aa2032ce1d46",
+        "role": "checker",
+        "text": "80:             if (\r\n81:                 extracted.upper() == \"AUCUN\"\r\n82:                 or len(extracted) < self.min_relevance_length\r\n83:                 or \"aucun passage\" in extracted.lower()\r\n84:             ):\r\n85:                 return None\r"
+      },
+      {
+        "rel_path": "backend/retriever/contextual_compression.py",
+        "line": 85,
+        "line_end": 88,
+        "sha256": "5e7dd76e9775d80685c04d0637bda98fcfe406a5a6893894be38aa2032ce1d46",
+        "role": "enforcement",
+        "text": "85:                 return None\r\n86: \r\n87:             # Créer un nouveau document avec le contenu compressé\r\n88:             compressed_doc = Document(\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-049",
+    "producer_method_id": "michaelalbada/BuildingApplicationsWithAIAgents::src/frameworks/langgraph_agents/supply_chain/ray_supply_chain_multi_agent.py::227",
+    "decision": "guardrail",
+    "evidence": [
+      {
+        "rel_path": "src/frameworks/langgraph_agents/supply_chain/ray_supply_chain_multi_agent.py",
+        "line": 244,
+        "line_end": 250,
+        "sha256": "0d22168c1b0de88457907460b8866dec24ef1cd7f31106c31e7e21c194cc5d30",
+        "role": "output",
+        "text": "244:     response = llm.invoke(full)\r\n245:     agent_name = response.content.strip().lower()\r\n246:     \r\n247:     if agent_name not in llms:\r\n248:         raise ValueError(f\"Unknown agent: {agent_name}\")\r\n249:     \r\n250:     # Get or create session-specific actor\r"
+      },
+      {
+        "rel_path": "src/frameworks/langgraph_agents/supply_chain/ray_supply_chain_multi_agent.py",
+        "line": 247,
+        "line_end": 252,
+        "sha256": "0d22168c1b0de88457907460b8866dec24ef1cd7f31106c31e7e21c194cc5d30",
+        "role": "checker",
+        "text": "247:     if agent_name not in llms:\r\n248:         raise ValueError(f\"Unknown agent: {agent_name}\")\r\n249:     \r\n250:     # Get or create session-specific actor\r\n251:     actor_ref = manager.get_or_create_actor.remote(\r\n252:         session_id, agent_name, llms[agent_name], tools_dict[agent_name], prompts[agent_name]\r"
+      },
+      {
+        "rel_path": "src/frameworks/langgraph_agents/supply_chain/ray_supply_chain_multi_agent.py",
+        "line": 248,
+        "line_end": 251,
+        "sha256": "0d22168c1b0de88457907460b8866dec24ef1cd7f31106c31e7e21c194cc5d30",
+        "role": "enforcement",
+        "text": "248:         raise ValueError(f\"Unknown agent: {agent_name}\")\r\n249:     \r\n250:     # Get or create session-specific actor\r\n251:     actor_ref = manager.get_or_create_actor.remote(\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-050",
+    "producer_method_id": "ob-labs/agentseek-api::examples/run_sample_graphs.py::28",
+    "decision": "not_guardrail",
+    "evidence": [
+      {
+        "rel_path": "examples/run_sample_graphs.py",
+        "line": 29,
+        "line_end": 36,
+        "sha256": "de439b48a74cb7956c0f3846ce8350f7b3051b3c7e407948aec92a20ef40b09c",
+        "role": "support",
+        "text": "29:     result = await stress_graph.ainvoke(\r\n30:         {\"messages\": [HumanMessage(content=json.dumps({\"delay\": 0.01, \"steps\": 2}))]}\r\n31:     )\r\n32:     payload = json.loads(result[\"messages\"][-1].content)\r\n33:     assert payload[\"status\"] == \"completed\"\r\n34:     assert payload[\"steps_completed\"] == 2\r\n35:     print(\"stress_test:\", payload)\r\n36: \r"
+      },
+      {
+        "rel_path": "examples/graphs/stress_test/graph.py",
+        "line": 58,
+        "line_end": 87,
+        "sha256": "25ab7ee19348cd07253a6678084aa8a9e16cb92849e98712ce76a7b220c00791",
+        "role": "support",
+        "text": "58: async def process_step(state: State) -> dict[str, Any]:\r\n59:     config = _parse_config(state)\r\n60:     delay = float(config[\"delay\"])\r\n61:     await asyncio.sleep(delay)\r\n62: \r\n63:     new_step = state.step_count + 1\r\n64:     new_delay = state.total_delay + delay\r\n65: \r\n66:     if config.get(\"fail\") and new_step >= int(config.get(\"steps\", 2)):\r\n67:         raise RuntimeError(f\"Intentional failure at step {new_step}\")\r\n68: \r\n69:     return {\"step_count\": new_step, \"total_delay\": new_delay}\r\n70: \r\n71: \r\n72: async def respond(state: State) -> dict[str, Any]:\r\n73:     return {\r\n74:         \"messages\": [\r\n75:             AIMessage(\r\n76:                 content=json.dumps(\r\n77:                     {\r\n78:                         \"echo\": state.messages[-1].content if state.messages else \"\",\r\n79:                         \"steps_completed\": state.step_count,\r\n80:                         \"total_delay_seconds\": round(state.total_delay, 2),\r\n81:                         \"status\": \"completed\",\r\n82:                     }\r\n83:                 )\r\n84:             )\r\n85:         ]\r\n86:     }\r\n87: \r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-051",
+    "producer_method_id": "ob-labs/agentseek-api::examples/run_sample_graphs.py::38",
+    "decision": "not_guardrail",
+    "evidence": [
+      {
+        "rel_path": "examples/run_sample_graphs.py",
+        "line": 39,
+        "line_end": 46,
+        "sha256": "de439b48a74cb7956c0f3846ce8350f7b3051b3c7e407948aec92a20ef40b09c",
+        "role": "support",
+        "text": "39:     result = await subgraph_agent_graph.ainvoke(\r\n40:         {\"messages\": [HumanMessage(content=json.dumps({\"delay\": 0.0, \"steps\": 1}))]}\r\n41:     )\r\n42:     final = json.loads(result[\"messages\"][-1].content)\r\n43:     assert final[\"status\"] == \"completed\"\r\n44:     print(\"subgraph_agent:\", final)\r\n45: \r\n46: \r"
+      },
+      {
+        "rel_path": "examples/graphs/subgraph_agent/graph.py",
+        "line": 1,
+        "line_end": 25,
+        "sha256": "4aacadcfa525f536bac61e8d66179d0e885914481d47a473ac87927ddfcc5989",
+        "role": "support",
+        "text": "1: \"\"\"Delegating-subgraph sample: outer prelude node then hand off to an inner graph.\r\n2: \r\n3: A common production shape is an outer orchestrator that pre-processes the\r\n4: incoming request (validation, routing, tenant resolution, ...) and then\r\n5: delegates the heavy lifting to a compiled inner graph. This sample keeps\r\n6: both halves fully offline by reusing the deterministic ``stress_test`` graph\r\n7: as the inner worker.\r\n8: \r\n9: Shape\r\n10: -----\r\n11:     START -> no_stream -> subgraph(stress_test) -> END\r\n12: \"\"\"\r\n13: \r\n14: from __future__ import annotations\r\n15: \r\n16: import json\r\n17: from collections.abc import Sequence\r\n18: from dataclasses import dataclass, field\r\n19: from typing import Annotated, Any\r\n20: \r\n21: from langchain_core.messages import AIMessage, AnyMessage, HumanMessage\r\n22: from langgraph.graph import END, START, StateGraph, add_messages\r\n23: \r\n24: from graphs.stress_test.graph import build_graph as build_inner_graph\r\n25: \r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-052",
+    "producer_method_id": "ob-labs/agentseek-api::examples/run_sample_graphs.py::47",
+    "decision": "not_guardrail",
+    "evidence": [
+      {
+        "rel_path": "examples/run_sample_graphs.py",
+        "line": 48,
+        "line_end": 55,
+        "sha256": "de439b48a74cb7956c0f3846ce8350f7b3051b3c7e407948aec92a20ef40b09c",
+        "role": "support",
+        "text": "48:     result = await react_graph.ainvoke(\r\n49:         {\"messages\": [HumanMessage(content=\"what is the meaning of life?\")]}\r\n50:     )\r\n51:     final = result[\"messages\"][-1].content\r\n52:     assert \"42\" in final\r\n53:     print(\"react_agent:\", final)\r\n54: \r\n55: \r"
+      },
+      {
+        "rel_path": "examples/graphs/react_agent/graph.py",
+        "line": 1,
+        "line_end": 61,
+        "sha256": "2aeb94a2f59c31427965958ac3769539c4a74c08d9029553d35bdc456e7e2ea6",
+        "role": "support",
+        "text": "1: \"\"\"Tool-calling ReAct sample agent (offline-friendly).\r\n2: \r\n3: Shape\r\n4: -----\r\n5:     START -> call_model -> (if tool_calls) tools -> call_model -> ... -> END\r\n6: \r\n7: The sample ships with a scripted ``call_model`` so it runs without API keys:\r\n8: first turn emits a tool call, second turn (after the ``ToolMessage`` lands\r\n9: in state) emits the final answer. To adapt this for production, replace\r\n10: the body of ``call_model`` with something like::\r\n11: \r\n12:     model = ChatOpenAI(model=\"gpt-4o-mini\").bind_tools(TOOLS)\r\n13:     response = await model.ainvoke(state[\"messages\"])\r\n14:     return {\"messages\": [response]}\r\n15: \r\n16: Everything else — the router, the ``ToolNode``, the topology — is unchanged.\r\n17: \r\n18: Sample input\r\n19: ------------\r\n20:     {\"messages\": [{\"role\": \"user\", \"content\": \"what is the meaning of life?\"}]}\r\n21: \"\"\"\r\n22: \r\n23: from __future__ import annotations\r\n24: \r\n25: from typing import Literal\r\n26: \r\n27: from langchain_core.messages import AIMessage, ToolMessage\r\n28: from langchain_core.tools import tool\r\n29: from langgraph.graph import END, START, MessagesState, StateGraph\r\n30: from langgraph.prebuilt import ToolNode\r\n31: \r\n32: \r\n33: @tool\r\n34: def lookup(query: str) -> str:\r\n35:     \"\"\"Stand-in for a real tool. Returns a canned answer.\"\"\"\r\n36: \r\n37:     return f\"Result for {query!r}: 42\"\r\n38: \r\n39: \r\n40: TOOLS = [lookup]\r\n41: \r\n42: \r\n43: async def call_model(state: MessagesState) -> dict:\r\n44:     \"\"\"Scripted \"LLM\" step. Replace with a real chat model in production.\"\"\"\r\n45: \r\n46:     has_tool_result = any(isinstance(m, ToolMessage) for m in state[\"messages\"])\r\n47:     if has_tool_result:\r\n48:         tool_answers = [m.content for m in state[\"messages\"] if isinstance(m, ToolMessage)]\r\n49:         return {\"messages\": [AIMessage(content=f\"Final answer: {tool_answers[-1]}\")]}\r\n50: \r\n51:     return {\r\n52:         \"messages\": [\r\n53:             AIMessage(\r\n54:                 content=\"\",\r\n55:                 tool_calls=[\r\n56:                     {\"name\": \"lookup\", \"args\": {\"query\": \"meaning of life\"}, \"id\": \"call-1\"}\r\n57:                 ],\r\n58:             )\r\n59:         ]\r\n60:     }\r\n61: \r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-053",
+    "producer_method_id": "ob-labs/agentseek-api::examples/run_sample_graphs.py::56",
+    "decision": "not_guardrail",
+    "evidence": [
+      {
+        "rel_path": "examples/run_sample_graphs.py",
+        "line": 57,
+        "line_end": 64,
+        "sha256": "de439b48a74cb7956c0f3846ce8350f7b3051b3c7e407948aec92a20ef40b09c",
+        "role": "support",
+        "text": "57:     result = await stress_tool_agent_graph.ainvoke(\r\n58:         {\"messages\": [HumanMessage(content=json.dumps({\"delay\": 0.01, \"steps\": 3}))]}\r\n59:     )\r\n60:     payload = json.loads(result[\"messages\"][-1].content)\r\n61:     assert payload[\"status\"] == \"completed\"\r\n62:     assert payload[\"steps_completed\"] == 3\r\n63:     tool_messages = [message for message in result[\"messages\"] if type(message).__name__ == \"ToolMessage\"]\r\n64:     assert len(tool_messages) == 3\r"
+      },
+      {
+        "rel_path": "examples/graphs/stress_tool_agent/graph.py",
+        "line": 72,
+        "line_end": 109,
+        "sha256": "3444928a5e8f7d0e58fdf1984145faf6943c720fc8d531af248da718807a4378",
+        "role": "support",
+        "text": "72: async def call_model(state: MessagesState) -> dict[str, list[AIMessage]]:\r\n73:     config = _parse_request(state[\"messages\"])\r\n74:     tool_results = [message for message in state[\"messages\"] if isinstance(message, ToolMessage)]\r\n75:     completed_steps = len(tool_results)\r\n76: \r\n77:     if completed_steps >= config[\"steps\"]:\r\n78:         results = [str(message.content) for message in tool_results]\r\n79:         return {\r\n80:             \"messages\": [\r\n81:                 AIMessage(\r\n82:                     content=json.dumps(\r\n83:                         {\r\n84:                             \"status\": \"completed\",\r\n85:                             \"steps_completed\": completed_steps,\r\n86:                             \"results\": results,\r\n87:                             \"total_delay_seconds\": round(config[\"delay\"] * completed_steps, 2),\r\n88:                         }\r\n89:                     )\r\n90:                 )\r\n91:             ]\r\n92:         }\r\n93: \r\n94:     next_step = completed_steps + 1\r\n95:     return {\r\n96:         \"messages\": [\r\n97:             AIMessage(\r\n98:                 content=\"\",\r\n99:                 tool_calls=[\r\n100:                     {\r\n101:                         \"name\": \"slow_process\",\r\n102:                         \"args\": {\"step_number\": next_step, \"delay_seconds\": config[\"delay\"]},\r\n103:                         \"id\": f\"slow-process-{next_step}\",\r\n104:                     }\r\n105:                 ],\r\n106:             )\r\n107:         ]\r\n108:     }\r\n109: \r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-054",
+    "producer_method_id": "opea-project/GenAIComps::comps/guardrails/src/guardrails/integrations/llamaguard.py::125",
+    "decision": "not_guardrail",
+    "evidence": [
+      {
+        "rel_path": "comps/guardrails/src/guardrails/integrations/llamaguard.py",
+        "line": 142,
+        "line_end": 147,
+        "sha256": "91ae80b602401f99bcc90c1bcab083b13acdd3595ce825139ea56f6c1654d905",
+        "role": "support",
+        "text": "142:             response = self.llm_engine_hf.invoke([{\"role\": \"user\", \"content\": \"The sky is blue.\"}]).content\n143: \n144:             if \"safe\" in response:\n145:                 return True\n146:             else:\n147:                 return False"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-055",
+    "producer_method_id": "opea-project/GenAIComps::comps/guardrails/src/guardrails/integrations/wildguard.py::92",
+    "decision": "not_guardrail",
+    "evidence": [
+      {
+        "rel_path": "comps/guardrails/src/guardrails/integrations/wildguard.py",
+        "line": 109,
+        "line_end": 114,
+        "sha256": "447103a3773072ed021aed116cd41c7f40afa6d19c8057261f115f904bc5faba",
+        "role": "support",
+        "text": "109:             response = self.llm_guard.invoke(\"The sky is blue.\")\n110: \n111:             if \"safe\" in response:\n112:                 return True\n113:             else:\n114:                 return False"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-056",
+    "producer_method_id": "oracle/agent-spec::docs/pyagentspec/source/code_examples/adapter_agent_framework_quickstart.py::50",
+    "decision": "guardrail",
+    "evidence": [
+      {
+        "rel_path": "docs/pyagentspec/source/code_examples/adapter_agent_framework_quickstart.py",
+        "line": 59,
+        "line_end": 63,
+        "sha256": "ddd21cde31489b396f06f62a22bde9f421ed15259e44b150a9dc3f218e959113",
+        "role": "output",
+        "text": "59:         result = await assistant.run(user_input)\r\n60:         agent_message = result.messages[-1].contents[-1]\r\n61:         if not isinstance(agent_message, Content):\r\n62:             raise ValueError(f\"Unexpected agent_message type {type(agent_message)}\")\r\n63:         print(f\"AGENT >> {agent_message.text}\")\r"
+      },
+      {
+        "rel_path": "docs/pyagentspec/source/code_examples/adapter_agent_framework_quickstart.py",
+        "line": 61,
+        "line_end": 63,
+        "sha256": "ddd21cde31489b396f06f62a22bde9f421ed15259e44b150a9dc3f218e959113",
+        "role": "checker",
+        "text": "61:         if not isinstance(agent_message, Content):\r\n62:             raise ValueError(f\"Unexpected agent_message type {type(agent_message)}\")\r\n63:         print(f\"AGENT >> {agent_message.text}\")\r"
+      },
+      {
+        "rel_path": "docs/pyagentspec/source/code_examples/adapter_agent_framework_quickstart.py",
+        "line": 62,
+        "line_end": 63,
+        "sha256": "ddd21cde31489b396f06f62a22bde9f421ed15259e44b150a9dc3f218e959113",
+        "role": "enforcement",
+        "text": "62:             raise ValueError(f\"Unexpected agent_message type {type(agent_message)}\")\r\n63:         print(f\"AGENT >> {agent_message.text}\")\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-057",
+    "producer_method_id": "oracle/agent-spec::pyagentspec/src/pyagentspec/adapters/crewai/_node_execution.py::208",
+    "decision": "guardrail",
+    "evidence": [
+      {
+        "rel_path": "pyagentspec/src/pyagentspec/adapters/crewai/_node_execution.py",
+        "line": 212,
+        "line_end": 218,
+        "sha256": "c6c2c84c8e01b2ef4abc62545aaf8c52d5197840c3a2513372f811693bbff0dc",
+        "role": "output",
+        "text": "212:         generated_message = self.llm.call(rendered_prompt)\r\n213: \r\n214:         if self.llm.response_format is not None:\r\n215:             if not isinstance(generated_message, BaseModel):\r\n216:                 raise TypeError(\r\n217:                     f\"Expected LLM response format to be BaseModel, got {type(generated_message)!r}\"\r\n218:                 )\r"
+      },
+      {
+        "rel_path": "pyagentspec/src/pyagentspec/adapters/crewai/_node_execution.py",
+        "line": 215,
+        "line_end": 220,
+        "sha256": "c6c2c84c8e01b2ef4abc62545aaf8c52d5197840c3a2513372f811693bbff0dc",
+        "role": "checker",
+        "text": "215:             if not isinstance(generated_message, BaseModel):\r\n216:                 raise TypeError(\r\n217:                     f\"Expected LLM response format to be BaseModel, got {type(generated_message)!r}\"\r\n218:                 )\r\n219: \r\n220:             return generated_message.dict()\r"
+      },
+      {
+        "rel_path": "pyagentspec/src/pyagentspec/adapters/crewai/_node_execution.py",
+        "line": 216,
+        "line_end": 219,
+        "sha256": "c6c2c84c8e01b2ef4abc62545aaf8c52d5197840c3a2513372f811693bbff0dc",
+        "role": "enforcement",
+        "text": "216:                 raise TypeError(\r\n217:                     f\"Expected LLM response format to be BaseModel, got {type(generated_message)!r}\"\r\n218:                 )\r\n219: \r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-058",
+    "producer_method_id": "robertwhiffin/ai-slide-generator::src/api/services/session_naming.py::26",
+    "decision": "guardrail",
+    "evidence": [
+      {
+        "rel_path": "src/api/services/session_naming.py",
+        "line": 40,
+        "line_end": 46,
+        "sha256": "5a99dc43483c119aa09f9f1362485b586f097f672780e5b5bd669a01069f0fd8",
+        "role": "output",
+        "text": "40:         response = model.invoke([\r\n41:             SystemMessage(content=TITLE_GENERATION_PROMPT),\r\n42:             HumanMessage(content=user_message),\r\n43:         ])\r\n44: \r\n45:         title = response.content.strip().strip('\"\\'')\r\n46: \r"
+      },
+      {
+        "rel_path": "src/api/services/session_naming.py",
+        "line": 47,
+        "line_end": 52,
+        "sha256": "5a99dc43483c119aa09f9f1362485b586f097f672780e5b5bd669a01069f0fd8",
+        "role": "checker",
+        "text": "47:         if not title:\r\n48:             return None\r\n49: \r\n50:         if len(title) > MAX_TITLE_LENGTH:\r\n51:             title = title[:MAX_TITLE_LENGTH]\r\n52: \r"
+      },
+      {
+        "rel_path": "src/api/services/session_naming.py",
+        "line": 48,
+        "line_end": 51,
+        "sha256": "5a99dc43483c119aa09f9f1362485b586f097f672780e5b5bd669a01069f0fd8",
+        "role": "enforcement",
+        "text": "48:             return None\r\n49: \r\n50:         if len(title) > MAX_TITLE_LENGTH:\r\n51:             title = title[:MAX_TITLE_LENGTH]\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-059",
+    "producer_method_id": "rocketride-org/rocketride-server::packages/ai/src/ai/common/context.py::32",
+    "decision": "not_guardrail",
+    "evidence": [
+      {
+        "rel_path": "packages/ai/src/ai/common/context.py",
+        "line": 47,
+        "line_end": 54,
+        "sha256": "f556f2155b97cb7b6ffd0dd86e917f1106cfb284627ac62707fce07771feae36",
+        "role": "support",
+        "text": "47:         highlights = self.reader.run(query=query, documents=h_documents, top_k=50, max_seq_length=512, no_answer=False)\n48:         answers = highlights['answers']\n49: \n50:         # If we did not get any results back\n51:         if answers is None or not len(answers):\n52:             raise Exception('No highlight results')\n53: \n54:         # Sort contexts by 'document_id'"
+      },
+      {
+        "rel_path": "packages/ai/src/ai/common/context.py",
+        "line": 9,
+        "line_end": 29,
+        "sha256": "f556f2155b97cb7b6ffd0dd86e917f1106cfb284627ac62707fce07771feae36",
+        "role": "support",
+        "text": "9: from haystack.components.readers import ExtractiveReader\n10: \n11: from .schema import Doc\n12: from .config import Config\n13: \n14: \n15: class Context:\n16:     \"\"\"\n17:     This class creates context information around a document.\n18:     \"\"\"\n19: \n20:     def __init__(self):\n21:         \"\"\"\n22:         Create the context generator.\n23:         \"\"\"\n24:         # Get our configuation\n25:         config = Config.getConfig()\n26: \n27:         # Get the model from our section\n28:         self.modelContext = config['modelContext']\n29:         self.reader = ExtractiveReader(model=config['modelContext'])"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-060",
+    "producer_method_id": "skygazer42/Weaver::agent/workflows/viz_planner.py::163",
+    "decision": "guardrail",
+    "evidence": [
+      {
+        "rel_path": "agent/workflows/viz_planner.py",
+        "line": 216,
+        "line_end": 222,
+        "sha256": "02b9cfc1b5106f21ada1fb8e6c0d988d2df10dac9a174a26d8a0f47b9432c82a",
+        "role": "output",
+        "text": "216:             response = structured_llm.invoke(\r\n217:                 prompt.format_messages(content=content[:6000]),\r\n218:                 config=self.config,\r\n219:             )\r\n220: \r\n221:             if not response.has_chartable_data:\r\n222:                 return []\r"
+      },
+      {
+        "rel_path": "agent/workflows/viz_planner.py",
+        "line": 227,
+        "line_end": 232,
+        "sha256": "02b9cfc1b5106f21ada1fb8e6c0d988d2df10dac9a174a26d8a0f47b9432c82a",
+        "role": "checker",
+        "text": "227:                     chart_type = ChartType(chart_data.get(\"chart_type\", \"bar\"))\r\n228:                     spec = ChartSpec(\r\n229:                         chart_type=chart_type,\r\n230:                         title=chart_data.get(\"title\", \"Chart\"),\r\n231:                         data=chart_data.get(\"data\", {}),\r\n232:                         description=chart_data.get(\"description\", \"\"),\r"
+      },
+      {
+        "rel_path": "agent/workflows/viz_planner.py",
+        "line": 236,
+        "line_end": 239,
+        "sha256": "02b9cfc1b5106f21ada1fb8e6c0d988d2df10dac9a174a26d8a0f47b9432c82a",
+        "role": "enforcement",
+        "text": "236:                 except Exception as e:\r\n237:                     logger.debug(f\"Failed to parse chart spec: {e}\")\r\n238: \r\n239:             logger.info(f\"[VizPlanner] Identified {len(chart_specs)} chartable datasets\")\r"
+      },
+      {
+        "rel_path": "agent/workflows/viz_planner.py",
+        "line": 225,
+        "line_end": 237,
+        "sha256": "02b9cfc1b5106f21ada1fb8e6c0d988d2df10dac9a174a26d8a0f47b9432c82a",
+        "role": "support",
+        "text": "225:             for chart_data in response.charts:\r\n226:                 try:\r\n227:                     chart_type = ChartType(chart_data.get(\"chart_type\", \"bar\"))\r\n228:                     spec = ChartSpec(\r\n229:                         chart_type=chart_type,\r\n230:                         title=chart_data.get(\"title\", \"Chart\"),\r\n231:                         data=chart_data.get(\"data\", {}),\r\n232:                         description=chart_data.get(\"description\", \"\"),\r\n233:                         source=chart_data.get(\"source\", \"\"),\r\n234:                     )\r\n235:                     chart_specs.append(spec)\r\n236:                 except Exception as e:\r\n237:                     logger.debug(f\"Failed to parse chart spec: {e}\")\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-061",
+    "producer_method_id": "skygazer42/Weaver::tools/sandbox/sandbox_image_edit_tool.py::151",
+    "decision": "not_guardrail",
+    "evidence": [
+      {
+        "rel_path": "tools/sandbox/sandbox_image_edit_tool.py",
+        "line": 217,
+        "line_end": 224,
+        "sha256": "a2f234894f156a46a3393dd56c7cece8e60cefa309d9d46b57dbcd10df836f0a",
+        "role": "support",
+        "text": "217:             result = sandbox.commands.run(f\"python3 -c '{python_code}'\", timeout=30)\r\n218: \r\n219:             try:\r\n220:                 output = json.loads(result.stdout.strip())\r\n221:                 if \"error\" in output:\r\n222:                     raise RuntimeError(output[\"error\"])\r\n223:             except json.JSONDecodeError:\r\n224:                 raise RuntimeError(f\"Failed to apply filter: {result.stderr}\")\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-062",
+    "producer_method_id": "skygazer42/Weaver::tools/sandbox/sandbox_image_edit_tool.py::261",
+    "decision": "not_guardrail",
+    "evidence": [
+      {
+        "rel_path": "tools/sandbox/sandbox_image_edit_tool.py",
+        "line": 345,
+        "line_end": 352,
+        "sha256": "a2f234894f156a46a3393dd56c7cece8e60cefa309d9d46b57dbcd10df836f0a",
+        "role": "support",
+        "text": "345:             result = sandbox.commands.run(f\"python3 -c '{python_code}'\", timeout=30)\r\n346: \r\n347:             try:\r\n348:                 output = json.loads(result.stdout.strip())\r\n349:                 if \"error\" in output:\r\n350:                     raise RuntimeError(output[\"error\"])\r\n351:             except json.JSONDecodeError:\r\n352:                 raise RuntimeError(f\"Failed to apply effect: {result.stderr}\")\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-063",
+    "producer_method_id": "skygazer42/Weaver::tools/sandbox/sandbox_image_edit_tool.py::396",
+    "decision": "not_guardrail",
+    "evidence": [
+      {
+        "rel_path": "tools/sandbox/sandbox_image_edit_tool.py",
+        "line": 466,
+        "line_end": 473,
+        "sha256": "a2f234894f156a46a3393dd56c7cece8e60cefa309d9d46b57dbcd10df836f0a",
+        "role": "support",
+        "text": "466:             result = sandbox.commands.run(f\"python3 -c '{python_code}'\", timeout=30)\r\n467: \r\n468:             try:\r\n469:                 output = json.loads(result.stdout.strip())\r\n470:                 if \"error\" in output:\r\n471:                     raise RuntimeError(output[\"error\"])\r\n472:             except json.JSONDecodeError:\r\n473:                 raise RuntimeError(f\"Failed to adjust image: {result.stderr}\")\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-064",
+    "producer_method_id": "skygazer42/Weaver::tools/sandbox/sandbox_image_edit_tool.py::510",
+    "decision": "not_guardrail",
+    "evidence": [
+      {
+        "rel_path": "tools/sandbox/sandbox_image_edit_tool.py",
+        "line": 573,
+        "line_end": 580,
+        "sha256": "a2f234894f156a46a3393dd56c7cece8e60cefa309d9d46b57dbcd10df836f0a",
+        "role": "support",
+        "text": "573:             result = sandbox.commands.run(f\"python3 -c '{python_code}'\", timeout=30)\r\n574: \r\n575:             try:\r\n576:                 output = json.loads(result.stdout.strip())\r\n577:                 if \"error\" in output:\r\n578:                     raise RuntimeError(output[\"error\"])\r\n579:             except json.JSONDecodeError:\r\n580:                 raise RuntimeError(f\"Failed to transform image: {result.stderr}\")\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-065",
+    "producer_method_id": "skygazer42/Weaver::tools/sandbox/sandbox_image_edit_tool.py::622",
+    "decision": "not_guardrail",
+    "evidence": [
+      {
+        "rel_path": "tools/sandbox/sandbox_image_edit_tool.py",
+        "line": 735,
+        "line_end": 742,
+        "sha256": "a2f234894f156a46a3393dd56c7cece8e60cefa309d9d46b57dbcd10df836f0a",
+        "role": "support",
+        "text": "735:             result = sandbox.commands.run(f\"python3 -c '{python_code}'\", timeout=30)\r\n736: \r\n737:             try:\r\n738:                 output = json.loads(result.stdout.strip())\r\n739:                 if \"error\" in output:\r\n740:                     raise RuntimeError(output[\"error\"])\r\n741:             except json.JSONDecodeError:\r\n742:                 raise RuntimeError(f\"Failed to add watermark: {result.stderr}\")\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-066",
+    "producer_method_id": "skygazer42/Weaver::tools/sandbox/sandbox_image_edit_tool.py::784",
+    "decision": "not_guardrail",
+    "evidence": [
+      {
+        "rel_path": "tools/sandbox/sandbox_image_edit_tool.py",
+        "line": 861,
+        "line_end": 868,
+        "sha256": "a2f234894f156a46a3393dd56c7cece8e60cefa309d9d46b57dbcd10df836f0a",
+        "role": "support",
+        "text": "861:             result = sandbox.commands.run(f\"python3 -c '{python_code}'\", timeout=30)\r\n862: \r\n863:             try:\r\n864:                 output = json.loads(result.stdout.strip())\r\n865:                 if \"error\" in output:\r\n866:                     raise RuntimeError(output[\"error\"])\r\n867:             except json.JSONDecodeError:\r\n868:                 raise RuntimeError(f\"Failed to overlay images: {result.stderr}\")\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-067",
+    "producer_method_id": "skygazer42/Weaver::tools/sandbox/sandbox_presentation_outline_tool.py::295",
+    "decision": "not_guardrail",
+    "evidence": [
+      {
+        "rel_path": "tools/sandbox/sandbox_presentation_outline_tool.py",
+        "line": 396,
+        "line_end": 401,
+        "sha256": "63cebdcda5834c6fcd5a403fbdc985a9281e20b7b5b89ab80ffe6aea2c471512",
+        "role": "support",
+        "text": "396:             result = sandbox.commands.run(f\"python3 -c '{python_code}'\", timeout=60)\r\n397: \r\n398:             if \"SUCCESS\" not in result.stdout:\r\n399:                 raise RuntimeError(f\"Failed to create presentation: {result.stderr}\")\r\n400: \r\n401:             # Extract slide count\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-068",
+    "producer_method_id": "skygazer42/Weaver::tools/sandbox/sandbox_presentation_tool.py::155",
+    "decision": "not_guardrail",
+    "evidence": [
+      {
+        "rel_path": "tools/sandbox/sandbox_presentation_tool.py",
+        "line": 204,
+        "line_end": 208,
+        "sha256": "97332b6edfc43aa1432562f60d5e65094c96e7849af350e125bc5627e2939047",
+        "role": "support",
+        "text": "204:             result = sandbox.commands.run(f\"python3 -c '{python_code}'\", timeout=30)\r\n205:             if \"SUCCESS\" not in result.stdout:\r\n206:                 raise RuntimeError(f\"Failed to create presentation: {result.stderr}\")\r\n207: \r\n208:             result = {\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-069",
+    "producer_method_id": "skygazer42/Weaver::tools/sandbox/sandbox_presentation_tool.py::249",
+    "decision": "not_guardrail",
+    "evidence": [
+      {
+        "rel_path": "tools/sandbox/sandbox_presentation_tool.py",
+        "line": 320,
+        "line_end": 324,
+        "sha256": "97332b6edfc43aa1432562f60d5e65094c96e7849af350e125bc5627e2939047",
+        "role": "support",
+        "text": "320:             result = sandbox.commands.run(f\"python3 -c '{python_code}'\", timeout=30)\r\n321:             if \"SUCCESS\" not in result.stdout:\r\n322:                 raise RuntimeError(f\"Failed to add slide: {result.stderr}\")\r\n323: \r\n324:             # Extract slide count\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-070",
+    "producer_method_id": "skygazer42/Weaver::tools/sandbox/sandbox_presentation_tool.py::372",
+    "decision": "not_guardrail",
+    "evidence": [
+      {
+        "rel_path": "tools/sandbox/sandbox_presentation_tool.py",
+        "line": 425,
+        "line_end": 429,
+        "sha256": "97332b6edfc43aa1432562f60d5e65094c96e7849af350e125bc5627e2939047",
+        "role": "support",
+        "text": "425:             result = sandbox.commands.run(f\"python3 -c '{python_code}'\", timeout=30)\r\n426:             if \"SUCCESS\" not in result.stdout:\r\n427:                 raise RuntimeError(f\"Failed to add image: {result.stderr}\")\r\n428: \r\n429:             result = {\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-071",
+    "producer_method_id": "skygazer42/Weaver::tools/sandbox/sandbox_presentation_tool.py::467",
+    "decision": "not_guardrail",
+    "evidence": [
+      {
+        "rel_path": "tools/sandbox/sandbox_presentation_tool.py",
+        "line": 534,
+        "line_end": 538,
+        "sha256": "97332b6edfc43aa1432562f60d5e65094c96e7849af350e125bc5627e2939047",
+        "role": "support",
+        "text": "534:             result = sandbox.commands.run(f\"python3 -c '{python_code}'\", timeout=30)\r\n535:             if \"SUCCESS\" not in result.stdout:\r\n536:                 raise RuntimeError(f\"Failed to add table: {result.stderr}\")\r\n537: \r\n538:             result = {\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-072",
+    "producer_method_id": "skygazer42/Weaver::tools/sandbox/sandbox_presentation_tool.py::581",
+    "decision": "not_guardrail",
+    "evidence": [
+      {
+        "rel_path": "tools/sandbox/sandbox_presentation_tool.py",
+        "line": 661,
+        "line_end": 665,
+        "sha256": "97332b6edfc43aa1432562f60d5e65094c96e7849af350e125bc5627e2939047",
+        "role": "support",
+        "text": "661:             result = sandbox.commands.run(f\"python3 -c '{python_code}'\", timeout=30)\r\n662:             if \"SUCCESS\" not in result.stdout:\r\n663:                 raise RuntimeError(f\"Failed to add shape: {result.stderr}\")\r\n664: \r\n665:             result = {\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-073",
+    "producer_method_id": "skygazer42/Weaver::tools/sandbox/sandbox_presentation_tool.py::766",
+    "decision": "not_guardrail",
+    "evidence": [
+      {
+        "rel_path": "tools/sandbox/sandbox_presentation_tool.py",
+        "line": 825,
+        "line_end": 829,
+        "sha256": "97332b6edfc43aa1432562f60d5e65094c96e7849af350e125bc5627e2939047",
+        "role": "support",
+        "text": "825:             result = sandbox.commands.run(f\"python3 -c '{python_code}'\", timeout=30)\r\n826:             if \"SUCCESS\" not in result.stdout:\r\n827:                 raise RuntimeError(f\"Failed to update slide: {result.stderr}\")\r\n828: \r\n829:             result = {\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-074",
+    "producer_method_id": "skygazer42/Weaver::tools/sandbox/sandbox_presentation_tool_v2.py::335",
+    "decision": "not_guardrail",
+    "evidence": [
+      {
+        "rel_path": "tools/sandbox/sandbox_presentation_tool_v2.py",
+        "line": 395,
+        "line_end": 400,
+        "sha256": "a3ac64c3766ed84fdf4c0c88c2bfed98d9f95d6a24ebb01adb4760d6f14bd5ee",
+        "role": "support",
+        "text": "395:             result = sandbox.commands.run(f\"python3 -c '{python_code}'\", timeout=30)\r\n396: \r\n397:             if \"SUCCESS\" not in result.stdout:\r\n398:                 raise RuntimeError(f\"Failed to apply theme: {result.stderr}\")\r\n399: \r\n400:             result = {\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-075",
+    "producer_method_id": "skygazer42/Weaver::tools/sandbox/sandbox_presentation_tool_v2.py::437",
+    "decision": "not_guardrail",
+    "evidence": [
+      {
+        "rel_path": "tools/sandbox/sandbox_presentation_tool_v2.py",
+        "line": 508,
+        "line_end": 513,
+        "sha256": "a3ac64c3766ed84fdf4c0c88c2bfed98d9f95d6a24ebb01adb4760d6f14bd5ee",
+        "role": "support",
+        "text": "508:             result = sandbox.commands.run(f\"python3 -c '{python_code}'\", timeout=30)\r\n509: \r\n510:             if \"SUCCESS\" not in result.stdout:\r\n511:                 raise RuntimeError(f\"Failed to set background: {result.stderr}\")\r\n512: \r\n513:             slides_affected = 1 if slide_number > 0 else \"all\"\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-076",
+    "producer_method_id": "skygazer42/Weaver::tools/sandbox/sandbox_presentation_tool_v2.py::547",
+    "decision": "not_guardrail",
+    "evidence": [
+      {
+        "rel_path": "tools/sandbox/sandbox_presentation_tool_v2.py",
+        "line": 606,
+        "line_end": 611,
+        "sha256": "a3ac64c3766ed84fdf4c0c88c2bfed98d9f95d6a24ebb01adb4760d6f14bd5ee",
+        "role": "support",
+        "text": "606:             result = sandbox.commands.run(f\"python3 -c '{python_code}'\", timeout=30)\r\n607: \r\n608:             if \"SUCCESS\" not in result.stdout:\r\n609:                 raise RuntimeError(f\"Failed to duplicate slide: {result.stderr}\")\r\n610: \r\n611:             result = {\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-077",
+    "producer_method_id": "skygazer42/Weaver::tools/sandbox/sandbox_presentation_tool_v2.py::646",
+    "decision": "not_guardrail",
+    "evidence": [
+      {
+        "rel_path": "tools/sandbox/sandbox_presentation_tool_v2.py",
+        "line": 701,
+        "line_end": 706,
+        "sha256": "a3ac64c3766ed84fdf4c0c88c2bfed98d9f95d6a24ebb01adb4760d6f14bd5ee",
+        "role": "support",
+        "text": "701:             result = sandbox.commands.run(f\"python3 -c '{python_code}'\", timeout=30)\r\n702: \r\n703:             if \"SUCCESS\" not in result.stdout:\r\n704:                 raise RuntimeError(f\"Failed to reorder slides: {result.stderr}\")\r\n705: \r\n706:             result = {\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-078",
+    "producer_method_id": "skygazer42/Weaver::tools/sandbox/sandbox_sheets_tool.py::146",
+    "decision": "not_guardrail",
+    "evidence": [
+      {
+        "rel_path": "tools/sandbox/sandbox_sheets_tool.py",
+        "line": 200,
+        "line_end": 204,
+        "sha256": "e4eb37e55a65114ab98709348f5168626dd6087d90ded35fb8de783e5ca4cdea",
+        "role": "support",
+        "text": "200:                 result = sandbox.commands.run(f'python3 -c \"{python_code}\"', timeout=30)\r\n201:                 if \"SUCCESS\" not in result.stdout:\r\n202:                     raise RuntimeError(f\"Failed to create spreadsheet: {result.stderr}\")\r\n203: \r\n204:             result = {\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-079",
+    "producer_method_id": "skygazer42/Weaver::tools/sandbox/sandbox_sheets_tool.py::241",
+    "decision": "not_guardrail",
+    "evidence": [
+      {
+        "rel_path": "tools/sandbox/sandbox_sheets_tool.py",
+        "line": 308,
+        "line_end": 312,
+        "sha256": "e4eb37e55a65114ab98709348f5168626dd6087d90ded35fb8de783e5ca4cdea",
+        "role": "support",
+        "text": "308:                 result = sandbox.commands.run(f\"python3 -c '{python_code}'\", timeout=30)\r\n309:                 if \"SUCCESS\" not in result.stdout:\r\n310:                     raise RuntimeError(f\"Failed to write data: {result.stderr}\")\r\n311: \r\n312:             result = {\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-080",
+    "producer_method_id": "skygazer42/Weaver::tools/sandbox/sandbox_sheets_tool.py::357",
+    "decision": "not_guardrail",
+    "evidence": [
+      {
+        "rel_path": "tools/sandbox/sandbox_sheets_tool.py",
+        "line": 431,
+        "line_end": 435,
+        "sha256": "e4eb37e55a65114ab98709348f5168626dd6087d90ded35fb8de783e5ca4cdea",
+        "role": "support",
+        "text": "431:             result = sandbox.commands.run(f\"python3 -c '{python_code}'\", timeout=30)\r\n432:             if \"SUCCESS\" not in result.stdout:\r\n433:                 raise RuntimeError(f\"Failed to format cells: {result.stderr}\")\r\n434: \r\n435:             result = {\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-081",
+    "producer_method_id": "skygazer42/Weaver::tools/sandbox/sandbox_sheets_tool.py::474",
+    "decision": "not_guardrail",
+    "evidence": [
+      {
+        "rel_path": "tools/sandbox/sandbox_sheets_tool.py",
+        "line": 548,
+        "line_end": 552,
+        "sha256": "e4eb37e55a65114ab98709348f5168626dd6087d90ded35fb8de783e5ca4cdea",
+        "role": "support",
+        "text": "548:             result = sandbox.commands.run(f\"python3 -c '{python_code}'\", timeout=30)\r\n549:             if \"SUCCESS\" not in result.stdout:\r\n550:                 raise RuntimeError(f\"Failed to create chart: {result.stderr}\")\r\n551: \r\n552:             result = {\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-082",
+    "producer_method_id": "skygazer42/Weaver::tools/sandbox/sandbox_sheets_tool.py::587",
+    "decision": "not_guardrail",
+    "evidence": [
+      {
+        "rel_path": "tools/sandbox/sandbox_sheets_tool.py",
+        "line": 627,
+        "line_end": 631,
+        "sha256": "e4eb37e55a65114ab98709348f5168626dd6087d90ded35fb8de783e5ca4cdea",
+        "role": "support",
+        "text": "627:             result = sandbox.commands.run(f\"python3 -c '{python_code}'\", timeout=30)\r\n628:             if \"SUCCESS\" not in result.stdout:\r\n629:                 raise RuntimeError(f\"Failed to add sheet: {result.stderr}\")\r\n630: \r\n631:             # Extract sheet names from output\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-083",
+    "producer_method_id": "skygazer42/Weaver::tools/sandbox/sandbox_vision_tool.py::106",
+    "decision": "not_guardrail",
+    "evidence": [
+      {
+        "rel_path": "tools/sandbox/sandbox_vision_tool.py",
+        "line": 113,
+        "line_end": 117,
+        "sha256": "4dee80f84d18f3d74a62093de4e233af0314d4addeb48c380c370523f220d346",
+        "role": "support",
+        "text": "113:                     install_result = sandbox.commands.run(f\"pip install {pkg}\", timeout=120)\r\n114:                     if install_result.exit_code != 0:\r\n115:                         return False\r\n116:             return True\r\n117:         except Exception as e:\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-084",
+    "producer_method_id": "skygazer42/Weaver::tools/sandbox/sandbox_vision_tool.py::141",
+    "decision": "not_guardrail",
+    "evidence": [
+      {
+        "rel_path": "tools/sandbox/sandbox_vision_tool.py",
+        "line": 187,
+        "line_end": 194,
+        "sha256": "4dee80f84d18f3d74a62093de4e233af0314d4addeb48c380c370523f220d346",
+        "role": "support",
+        "text": "187:             result = sandbox.commands.run(f\"python3 -c '{python_code}'\", timeout=60)\r\n188: \r\n189:             try:\r\n190:                 output = json.loads(result.stdout.strip())\r\n191:                 if \"error\" in output:\r\n192:                     raise RuntimeError(output[\"error\"])\r\n193:             except json.JSONDecodeError:\r\n194:                 raise RuntimeError(f\"OCR failed: {result.stderr}\")\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-085",
+    "producer_method_id": "skygazer42/Weaver::tools/sandbox/sandbox_vision_tool.py::222",
+    "decision": "not_guardrail",
+    "evidence": [
+      {
+        "rel_path": "tools/sandbox/sandbox_vision_tool.py",
+        "line": 286,
+        "line_end": 293,
+        "sha256": "4dee80f84d18f3d74a62093de4e233af0314d4addeb48c380c370523f220d346",
+        "role": "support",
+        "text": "286:             result = sandbox.commands.run(f\"python3 -c '{python_code}'\", timeout=30)\r\n287: \r\n288:             try:\r\n289:                 output = json.loads(result.stdout.strip())\r\n290:                 if \"error\" in output:\r\n291:                     raise RuntimeError(output[\"error\"])\r\n292:             except json.JSONDecodeError:\r\n293:                 raise RuntimeError(f\"Failed to get image info: {result.stderr}\")\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-086",
+    "producer_method_id": "skygazer42/Weaver::tools/sandbox/sandbox_vision_tool.py::329",
+    "decision": "not_guardrail",
+    "evidence": [
+      {
+        "rel_path": "tools/sandbox/sandbox_vision_tool.py",
+        "line": 408,
+        "line_end": 415,
+        "sha256": "4dee80f84d18f3d74a62093de4e233af0314d4addeb48c380c370523f220d346",
+        "role": "support",
+        "text": "408:             result = sandbox.commands.run(f\"python3 -c '{python_code}'\", timeout=30)\r\n409: \r\n410:             try:\r\n411:                 output = json.loads(result.stdout.strip())\r\n412:                 if \"error\" in output:\r\n413:                     raise RuntimeError(output[\"error\"])\r\n414:             except json.JSONDecodeError:\r\n415:                 raise RuntimeError(f\"Failed to resize image: {result.stderr}\")\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-087",
+    "producer_method_id": "skygazer42/Weaver::tools/sandbox/sandbox_vision_tool.py::452",
+    "decision": "not_guardrail",
+    "evidence": [
+      {
+        "rel_path": "tools/sandbox/sandbox_vision_tool.py",
+        "line": 527,
+        "line_end": 534,
+        "sha256": "4dee80f84d18f3d74a62093de4e233af0314d4addeb48c380c370523f220d346",
+        "role": "support",
+        "text": "527:             result = sandbox.commands.run(f\"python3 -c '{python_code}'\", timeout=30)\r\n528: \r\n529:             try:\r\n530:                 output = json.loads(result.stdout.strip())\r\n531:                 if \"error\" in output:\r\n532:                     raise RuntimeError(output[\"error\"])\r\n533:             except json.JSONDecodeError:\r\n534:                 raise RuntimeError(f\"Failed to convert image: {result.stderr}\")\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-088",
+    "producer_method_id": "skygazer42/Weaver::tools/sandbox/sandbox_vision_tool.py::572",
+    "decision": "not_guardrail",
+    "evidence": [
+      {
+        "rel_path": "tools/sandbox/sandbox_vision_tool.py",
+        "line": 631,
+        "line_end": 638,
+        "sha256": "4dee80f84d18f3d74a62093de4e233af0314d4addeb48c380c370523f220d346",
+        "role": "support",
+        "text": "631:             result = sandbox.commands.run(f\"python3 -c '{python_code}'\", timeout=30)\r\n632: \r\n633:             try:\r\n634:                 output = json.loads(result.stdout.strip())\r\n635:                 if \"error\" in output:\r\n636:                     raise RuntimeError(output[\"error\"])\r\n637:             except json.JSONDecodeError:\r\n638:                 raise RuntimeError(f\"Failed to crop image: {result.stderr}\")\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-089",
+    "producer_method_id": "skygazer42/Weaver::tools/sandbox/sandbox_vision_tool.py::671",
+    "decision": "not_guardrail",
+    "evidence": [
+      {
+        "rel_path": "tools/sandbox/sandbox_vision_tool.py",
+        "line": 716,
+        "line_end": 723,
+        "sha256": "4dee80f84d18f3d74a62093de4e233af0314d4addeb48c380c370523f220d346",
+        "role": "support",
+        "text": "716:             result = sandbox.commands.run(f\"python3 -c '{python_code}'\", timeout=30)\r\n717: \r\n718:             try:\r\n719:                 output = json.loads(result.stdout.strip())\r\n720:                 if \"error\" in output:\r\n721:                     raise RuntimeError(output[\"error\"])\r\n722:             except json.JSONDecodeError:\r\n723:                 raise RuntimeError(f\"Failed to read QR code: {result.stderr}\")\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-090",
+    "producer_method_id": "swarm-ai-research/swarm::swarm/analysis/autoresearch.py::175",
+    "decision": "not_guardrail",
+    "evidence": [
+      {
+        "rel_path": "swarm/analysis/autoresearch.py",
+        "line": 203,
+        "line_end": 207,
+        "sha256": "4c6d59b4fd053e4a52f0b7e29c3f6c819f6e9ba142ca304067dc64f91bc076bd",
+        "role": "support",
+        "text": "203:         history = orchestrator.run()\r\n204:         if not history:\r\n205:             continue\r\n206:         final = history[-1]\r\n207:         data = final.to_dict()\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-091",
+    "producer_method_id": "swarm-ai-research/swarm::swarm/research/swarm_papers/track_a.py::1740",
+    "decision": "not_guardrail",
+    "evidence": [
+      {
+        "rel_path": "swarm/research/swarm_papers/track_a.py",
+        "line": 1785,
+        "line_end": 1790,
+        "sha256": "fb0686402df172de75bc1f7854ab1a92ac465f9207dee2e0310d4fc576b57809",
+        "role": "support",
+        "text": "1785:             gate_result = gate.run(review.to_review())\r\n1786:             summary.review_gate_passed = gate_result.passed\r\n1787:             if not gate_result.passed:\r\n1788:                 return\r\n1789: \r\n1790:         if self.config.enable_pdf:\r"
+      },
+      {
+        "rel_path": "swarm/research/swarm_papers/track_a.py",
+        "line": 1691,
+        "line_end": 1738,
+        "sha256": "fb0686402df172de75bc1f7854ab1a92ac465f9207dee2e0310d4fc576b57809",
+        "role": "support",
+        "text": "1691:     def _generate_peer_review(self, paper: Paper) -> PeerReview:\r\n1692:         \"\"\"Lightweight self-review checking abstract, source length, completeness.\"\"\"\r\n1693:         critiques: list[Critique] = []\r\n1694:         if not paper.abstract or len(paper.abstract.strip()) < 20:\r\n1695:             critiques.append(\r\n1696:                 Critique(\r\n1697:                     severity=\"high\",\r\n1698:                     category=\"completeness\",\r\n1699:                     issue=\"Abstract is missing or too short\",\r\n1700:                     suggestion=\"Add a substantive abstract\",\r\n1701:                 )\r\n1702:             )\r\n1703:         if not paper.source or len(paper.source) < 200:\r\n1704:             critiques.append(\r\n1705:                 Critique(\r\n1706:                     severity=\"high\",\r\n1707:                     category=\"completeness\",\r\n1708:                     issue=\"Paper source is missing or too short\",\r\n1709:                     suggestion=\"Ensure paper has substantive content\",\r\n1710:                 )\r\n1711:             )\r\n1712:         if paper.source and \"\\\\section\" not in paper.source:\r\n1713:             critiques.append(\r\n1714:                 Critique(\r\n1715:                     severity=\"medium\",\r\n1716:                     category=\"completeness\",\r\n1717:                     issue=\"Paper has no sections\",\r\n1718:                     suggestion=\"Add section structure\",\r\n1719:                 )\r\n1720:             )\r\n1721:         high = len([c for c in critiques if c.severity in (\"high\", \"critical\")])\r\n1722:         if high > 0:\r\n1723:             recommendation = \"major_revision\"\r\n1724:         elif critiques:\r\n1725:             recommendation = \"minor_revision\"\r\n1726:         else:\r\n1727:             recommendation = \"accept\"\r\n1728:         from swarm.research.agents import _RECOMMENDATION_RATINGS\r\n1729:         rating = _RECOMMENDATION_RATINGS.get(recommendation, 3)\r\n1730:         return PeerReview(\r\n1731:             review_id=uuid.uuid4().hex[:12],\r\n1732:             paper_id=paper.paper_id or paper.content_hash(),\r\n1733:             reviewer_id=\"track_a_self_review\",\r\n1734:             critiques=critiques,\r\n1735:             recommendation=recommendation,\r\n1736:             summary=f\"Self-review found {len(critiques)} issue(s). Recommendation: {recommendation}\",\r\n1737:             rating=rating,\r\n1738:         )\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-092",
+    "producer_method_id": "timbal-ai/timbal::benchmarks/langchain/bench_long_conversation.py::429",
+    "decision": "not_guardrail",
+    "evidence": [
+      {
+        "rel_path": "benchmarks/langchain/bench_long_conversation.py",
+        "line": 440,
+        "line_end": 447,
+        "sha256": "810cb997741103752d707bd6f9b9a9b650ed841316e12839aeb4c9b5fd026e72",
+        "role": "support",
+        "text": "440:     lg_out = await lg_graph.ainvoke({\"messages\": _lc_history(n, \"hello\")})\r\n441:     lg_text = lg_out[\"messages\"][-1].content\r\n442:     print(f\"  stateless n={n}: Timbal='{t_text}'  LangGraph='{lg_text}'\")\r\n443:     assert \"10 msgs seen\" in t_text, t_text\r\n444:     assert \"10 msgs seen\" in lg_text, lg_text\r\n445: \r\n446:     # Stateful session: by turn 3 both must have accumulated 5 messages\r\n447:     # (u1, a1, u2, a2, u3) when the fake LLM is called.\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-093",
+    "producer_method_id": "wsargent/groundedllm::hayhooks/pipelines/excerpt/pipeline_wrapper.py::138",
+    "decision": "guardrail",
+    "evidence": [
+      {
+        "rel_path": "hayhooks/pipelines/excerpt/pipeline_wrapper.py",
+        "line": 167,
+        "line_end": 173,
+        "sha256": "e00952d9f89b6b19c84da8fca46d07be6f57df46ca502738816db2c04005c0b4",
+        "role": "output",
+        "text": "167:             result = self.pipeline.run(\r\n168:                 {\r\n169:                     \"content_extractor\": {\"urls\": clean_urls},\r\n170:                     \"prompt_builder\": {\"query\": question},\r\n171:                 }\r\n172:             )\r\n173: \r"
+      },
+      {
+        "rel_path": "hayhooks/pipelines/excerpt/pipeline_wrapper.py",
+        "line": 174,
+        "line_end": 179,
+        "sha256": "e00952d9f89b6b19c84da8fca46d07be6f57df46ca502738816db2c04005c0b4",
+        "role": "checker",
+        "text": "174:             if \"llm\" in result and \"replies\" in result[\"llm\"] and result[\"llm\"][\"replies\"]:\r\n175:                 reply = result[\"llm\"][\"replies\"][0]\r\n176:                 logger.info(f\"answer: reply is {reply}\")\r\n177:                 return reply\r\n178:             else:\r\n179:                 raise RuntimeError(\"Error: Could not retrieve answer from the pipeline.\")\r"
+      },
+      {
+        "rel_path": "hayhooks/pipelines/excerpt/pipeline_wrapper.py",
+        "line": 179,
+        "line_end": 181,
+        "sha256": "e00952d9f89b6b19c84da8fca46d07be6f57df46ca502738816db2c04005c0b4",
+        "role": "enforcement",
+        "text": "179:                 raise RuntimeError(\"Error: Could not retrieve answer from the pipeline.\")\r\n180:         except Exception as e:\r\n181:             return f\"Error: {e}\"\r"
+      }
+    ]
+  },
+  {
+    "guardrail_id": "runtime-extra-094",
+    "producer_method_id": "wsargent/groundedllm::hayhooks/pipelines/search/pipeline_wrapper.py::141",
+    "decision": "guardrail",
+    "evidence": [
+      {
+        "rel_path": "hayhooks/pipelines/search/pipeline_wrapper.py",
+        "line": 190,
+        "line_end": 196,
+        "sha256": "ec7871f4d87a1f2f189b94a6db370b5090864b45ce571e7ae677127e5f878839",
+        "role": "output",
+        "text": "190:         result = self.pipeline.run(\r\n191:             {\r\n192:                 \"tavily_search\": {\r\n193:                     \"query\": question,\r\n194:                     \"search_depth\": search_depth,\r\n195:                     \"max_results\": max_results,\r\n196:                     \"time_range\": time_range if time_range != \"\" else None,\r"
+      },
+      {
+        "rel_path": "hayhooks/pipelines/search/pipeline_wrapper.py",
+        "line": 218,
+        "line_end": 222,
+        "sha256": "ec7871f4d87a1f2f189b94a6db370b5090864b45ce571e7ae677127e5f878839",
+        "role": "checker",
+        "text": "218:         if \"llm\" in result and \"replies\" in result[\"llm\"] and result[\"llm\"][\"replies\"]:\r\n219:             reply = result[\"llm\"][\"replies\"][0]\r\n220:             return reply\r\n221:         else:\r\n222:             raise RuntimeError(f\"Error: Could not retrieve answer from the pipeline. {result}\")\r"
+      },
+      {
+        "rel_path": "hayhooks/pipelines/search/pipeline_wrapper.py",
+        "line": 222,
+        "line_end": 222,
+        "sha256": "ec7871f4d87a1f2f189b94a6db370b5090864b45ce571e7ae677127e5f878839",
+        "role": "enforcement",
+        "text": "222:             raise RuntimeError(f\"Error: Could not retrieve answer from the pipeline. {result}\")\r"
+      }
+    ]
+  }
+]

@@ -1,0 +1,20 @@
+{
+  "date": "2026-11-12",
+  "reviewer": "assistant-source-review-2026-11-12",
+  "independent_human_validation": false,
+  "runtime_auxiliary_ids": [
+    "runtime-source-candidate-008",
+    "runtime-source-candidate-016",
+    "runtime-source-candidate-083",
+    "runtime-source-candidate-084"
+  ],
+  "test_auxiliary_rule": "Schema/presence packaging solely of judge verdict is auxiliary. Explicit authored expected-value assertions on the mapped client own returned score/decision are simple mocked contract tests, not complex semantic guards on upstream generations.",
+  "review_scope": "All 187 source-method candidate groups from saved runtime checks plus 13 source-traced supplemental producer methods (overlap retained); all 461 saved mapped tests, of which126 inspected via206 independent returned-check candidates and335 reviewed as whole mapped edges. Not a census of all methods/guards.",
+  "complex_discovery_limit": "Supplemental semantic source catalog was purposive. No simple-versus-complex population composition inferred; counts are identified mechanisms.",
+  "review_findings": [
+    "Runtime code review independently inspected22 strict positive contexts and all14 supplemental annotations; corrected auxiliary evaluator-plumbing labels.",
+    "No application/model execution or Joern regeneration. Hashes establish snapshot consistency, not validity of classifications."
+  ],
+  "known_denominator_defects": "Frozen preliminary complete-case frame includes unresolved framework-call false positives, production/test mislabels, examples/tutorials/vendor duplicates; no canonical scope edits made.",
+  "source_range_correction": "Two unresolved Camel search-agent support ranges ended at trailing phantom line134; corrected to original EOF133 before aggregation; no semantic decisions changed."
+}

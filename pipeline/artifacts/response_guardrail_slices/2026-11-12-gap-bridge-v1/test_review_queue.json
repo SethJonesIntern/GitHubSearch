@@ -1,0 +1,513 @@
+{
+  "schema_version": "guardrail-test-review-queue-v1",
+  "review_status": "pending",
+  "selected_saved_calls": 33,
+  "candidates": [
+    {
+      "call_id": "GenseeAI_open_deep_research/src/legacy/tests/test_report_quality.py::240::18",
+      "repo": "GenseeAI/open_deep_research",
+      "rel_path": "src/legacy/tests/test_report_quality.py",
+      "call_line": 240,
+      "code_kind": "test",
+      "framework": "langgraph",
+      "pattern": ".invoke",
+      "enclosing_qname": "GenseeAI_open_deep_research.src.legacy.tests.test_report_quality.test_response_criteria_evaluation",
+      "source_test_context": [
+        "test_named_function:test_response_criteria_evaluation"
+      ],
+      "test_identity": {
+        "repo": "GenseeAI/open_deep_research",
+        "test_file": "src/legacy/tests/test_report_quality.py",
+        "test_method": "test_response_criteria_evaluation",
+        "test_line": 140,
+        "test_line_end": 294
+      },
+      "has_saved_exact_test_identity_mapping": false,
+      "review_status": "pending",
+      "evidence_origin": "uncertain_route",
+      "source_sha256": "76cbeb84c923a69bbc9081e5fc41995b0c6b4204ac7b329293eeca43125a5ec8",
+      "trace_lines": [
+        240,
+        277,
+        284,
+        294
+      ],
+      "original_trace": [
+        {
+          "line": 240,
+          "text": "    eval_result = criteria_eval_structured_llm.invoke(["
+        },
+        {
+          "line": 277,
+          "text": "    console.print(Panel("
+        },
+        {
+          "line": 284,
+          "text": "    t.log_outputs({"
+        },
+        {
+          "line": 294,
+          "text": "    assert eval_result.grade"
+        }
+      ],
+      "evidence": {
+        "call_id": "GenseeAI_open_deep_research/src/legacy/tests/test_report_quality.py::240::18",
+        "call_line": 240,
+        "sink_line": 294,
+        "sink_source": "assert eval_result.grade",
+        "response_variables": [
+          "eval_result"
+        ],
+        "trace_lines": [
+          240,
+          277,
+          284,
+          294
+        ],
+        "route_kind": "uncertain_flow_assertion_candidate",
+        "uncertainty_sources": [
+          "uncertain_flow_after_unknown_call:Panel:277",
+          "uncertain_flow_after_unknown_call:log_outputs:284"
+        ]
+      },
+      "limitations": [
+        "builtin_dispatch_unresolved",
+        "container_response_flow_unassessed",
+        "original_source_test_context:test_named_function:test_response_criteria_evaluation",
+        "receiver_dispatch_unresolved",
+        "uncertain_flow_after_unknown_call:Panel:277",
+        "uncertain_flow_after_unknown_call:log_outputs:284",
+        "unknown_transform_or_callback:Panel",
+        "unknown_transform_or_callback:log_outputs",
+        "unsupported_expression:IfExp",
+        "unsupported_merge"
+      ],
+      "attribution": "protected_production_method_not_assigned",
+      "candidate_id": "3194382a1bf111d1543416b02cba36aef3d405a995d71224a5dbd64982750fd2"
+    }
+  ],
+  "diagnostics": [
+    {
+      "call_id": "GenseeAI_open_deep_research/src/legacy/graph.py::134::28",
+      "status": "ok",
+      "limitations": [
+        "builtin_dispatch_unresolved",
+        "container_response_flow_unassessed",
+        "receiver_dispatch_unresolved",
+        "unsupported_comprehension_scope",
+        "unsupported_merge"
+      ]
+    },
+    {
+      "call_id": "GenseeAI_open_deep_research/src/legacy/graph.py::230::20",
+      "status": "ok",
+      "limitations": [
+        "container_response_flow_unassessed",
+        "receiver_dispatch_unresolved"
+      ]
+    },
+    {
+      "call_id": "GenseeAI_open_deep_research/src/legacy/graph.py::307::28",
+      "status": "ok",
+      "limitations": [
+        "container_response_flow_unassessed",
+        "receiver_dispatch_unresolved",
+        "unsupported_assignment_or_mutation",
+        "unsupported_merge"
+      ]
+    },
+    {
+      "call_id": "GenseeAI_open_deep_research/src/legacy/graph.py::338::21",
+      "status": "ok",
+      "limitations": [
+        "container_response_flow_unassessed",
+        "receiver_dispatch_unresolved",
+        "uncertain_flow_after_unknown_call:Command:351",
+        "unknown_transform_or_callback:Command",
+        "unsupported_merge"
+      ]
+    },
+    {
+      "call_id": "GenseeAI_open_deep_research/src/legacy/graph.py::387::28",
+      "status": "ok",
+      "limitations": [
+        "container_response_flow_unassessed",
+        "receiver_dispatch_unresolved",
+        "unsupported_assignment_or_mutation"
+      ]
+    },
+    {
+      "call_id": "GenseeAI_open_deep_research/src/legacy/graph.py::97::20",
+      "status": "ok",
+      "limitations": [
+        "builtin_dispatch_unresolved",
+        "container_response_flow_unassessed",
+        "unsupported_comprehension_scope",
+        "unsupported_merge"
+      ]
+    },
+    {
+      "call_id": "GenseeAI_open_deep_research/src/legacy/multi_agent.py::228::18",
+      "status": "ok",
+      "limitations": [
+        "container_response_flow_unassessed",
+        "nested_expression_flow_bounded",
+        "unsupported_comprehension_scope",
+        "unsupported_merge"
+      ]
+    },
+    {
+      "call_id": "GenseeAI_open_deep_research/src/legacy/multi_agent.py::381::18",
+      "status": "ok",
+      "limitations": [
+        "container_response_flow_unassessed",
+        "nested_expression_flow_bounded",
+        "unsupported_merge"
+      ]
+    },
+    {
+      "call_id": "GenseeAI_open_deep_research/src/legacy/tests/test_report_quality.py::191::20",
+      "status": "ok",
+      "limitations": [
+        "builtin_dispatch_unresolved",
+        "container_response_flow_unassessed",
+        "nested_expression_flow_bounded",
+        "original_source_test_context:test_named_function:test_response_criteria_evaluation",
+        "uncertain_flow_after_unknown_call:run:191",
+        "unknown_transform_or_callback:run",
+        "unsupported_merge"
+      ]
+    },
+    {
+      "call_id": "GenseeAI_open_deep_research/src/legacy/tests/test_report_quality.py::220::31",
+      "status": "ok",
+      "limitations": [
+        "nested_expression_flow_bounded",
+        "original_source_test_context:test_named_function:test_response_criteria_evaluation",
+        "unsupported_merge"
+      ]
+    },
+    {
+      "call_id": "GenseeAI_open_deep_research/src/legacy/tests/test_report_quality.py::225::31",
+      "status": "ok",
+      "limitations": [
+        "container_response_flow_unassessed",
+        "nested_expression_flow_bounded",
+        "original_source_test_context:test_named_function:test_response_criteria_evaluation",
+        "unsupported_merge"
+      ]
+    },
+    {
+      "call_id": "GenseeAI_open_deep_research/src/legacy/tests/test_report_quality.py::240::18",
+      "status": "ok",
+      "limitations": [
+        "builtin_dispatch_unresolved",
+        "container_response_flow_unassessed",
+        "original_source_test_context:test_named_function:test_response_criteria_evaluation",
+        "receiver_dispatch_unresolved",
+        "uncertain_flow_after_unknown_call:Panel:277",
+        "uncertain_flow_after_unknown_call:log_outputs:284",
+        "unknown_transform_or_callback:Panel",
+        "unknown_transform_or_callback:log_outputs",
+        "unsupported_expression:IfExp",
+        "unsupported_merge"
+      ]
+    },
+    {
+      "call_id": "GenseeAI_open_deep_research/src/legacy/utils.py::1518::21",
+      "status": "ok",
+      "limitations": [
+        "caller_flow_unassessed",
+        "container_response_flow_unassessed",
+        "unsupported_merge"
+      ]
+    },
+    {
+      "call_id": "GenseeAI_open_deep_research/src/legacy/utils.py::1521::21",
+      "status": "ok",
+      "limitations": [
+        "caller_flow_unassessed",
+        "container_response_flow_unassessed",
+        "unsupported_merge"
+      ]
+    },
+    {
+      "call_id": "GenseeAI_open_deep_research/src/legacy/utils.py::1558::24",
+      "status": "ok",
+      "limitations": [
+        "builtin_dispatch_unresolved",
+        "container_response_flow_unassessed",
+        "unsupported_merge"
+      ]
+    },
+    {
+      "call_id": "GenseeAI_open_deep_research/src/open_deep_research/deep_researcher.py::101::21",
+      "status": "ok",
+      "limitations": [
+        "container_response_flow_unassessed",
+        "receiver_dispatch_unresolved",
+        "uncertain_flow_after_unknown_call:AIMessage:108",
+        "uncertain_flow_after_unknown_call:Command:106",
+        "unknown_transform_or_callback:AIMessage",
+        "unknown_transform_or_callback:Command",
+        "unsupported_merge"
+      ]
+    },
+    {
+      "call_id": "GenseeAI_open_deep_research/src/open_deep_research/deep_researcher.py::154::21",
+      "status": "ok",
+      "limitations": [
+        "container_response_flow_unassessed",
+        "receiver_dispatch_unresolved",
+        "uncertain_flow_after_unknown_call:Command:163",
+        "uncertain_flow_after_unknown_call:HumanMessage:171",
+        "unknown_transform_or_callback:Command",
+        "unknown_transform_or_callback:HumanMessage"
+      ]
+    },
+    {
+      "call_id": "GenseeAI_open_deep_research/src/open_deep_research/deep_researcher.py::214::21",
+      "status": "ok",
+      "limitations": [
+        "container_response_flow_unassessed",
+        "uncertain_flow_after_unknown_call:Command:217",
+        "unknown_transform_or_callback:Command"
+      ]
+    },
+    {
+      "call_id": "GenseeAI_open_deep_research/src/open_deep_research/deep_researcher.py::296::16",
+      "status": "unsupported_scope",
+      "limitations": [
+        "unsupported_execution_scope"
+      ]
+    },
+    {
+      "call_id": "GenseeAI_open_deep_research/src/open_deep_research/deep_researcher.py::415::21",
+      "status": "ok",
+      "limitations": [
+        "builtin_dispatch_unresolved",
+        "container_response_flow_unassessed",
+        "uncertain_flow_after_unknown_call:Command:418",
+        "unknown_transform_or_callback:Command",
+        "unsupported_merge"
+      ]
+    },
+    {
+      "call_id": "GenseeAI_open_deep_research/src/open_deep_research/deep_researcher.py::551::29",
+      "status": "ok",
+      "limitations": [
+        "builtin_dispatch_unresolved",
+        "container_response_flow_unassessed",
+        "receiver_dispatch_unresolved",
+        "unsupported_comprehension_scope",
+        "unsupported_merge"
+      ]
+    },
+    {
+      "call_id": "GenseeAI_open_deep_research/src/open_deep_research/deep_researcher.py::650::33",
+      "status": "ok",
+      "limitations": [
+        "container_response_flow_unassessed",
+        "receiver_dispatch_unresolved",
+        "unsupported_merge"
+      ]
+    },
+    {
+      "call_id": "GenseeAI_open_deep_research/src/open_deep_research/utils.py::314::12",
+      "status": "ok",
+      "limitations": [
+        "builtin_dispatch_unresolved",
+        "nested_expression_flow_bounded",
+        "runnable_chain_flow_unassessed",
+        "uncertain_flow_after_unknown_call:wait_for:313",
+        "unknown_transform_or_callback:wait_for",
+        "unsupported_merge"
+      ]
+    },
+    {
+      "call_id": "GenseeAI_open_deep_research/tests/evaluators.py::120::41",
+      "status": "ok",
+      "limitations": [
+        "builtin_dispatch_unresolved",
+        "container_response_flow_unassessed",
+        "nested_expression_flow_bounded",
+        "uncertain_flow_after_unknown_call:cast:120",
+        "unknown_transform_or_callback:cast",
+        "unsupported_merge"
+      ]
+    },
+    {
+      "call_id": "GenseeAI_open_deep_research/tests/evaluators.py::146::42",
+      "status": "ok",
+      "limitations": [
+        "builtin_dispatch_unresolved",
+        "container_response_flow_unassessed",
+        "nested_expression_flow_bounded",
+        "uncertain_flow_after_unknown_call:cast:146",
+        "unknown_transform_or_callback:cast",
+        "unsupported_comprehension_scope",
+        "unsupported_merge"
+      ]
+    },
+    {
+      "call_id": "GenseeAI_open_deep_research/tests/evaluators.py::171::42",
+      "status": "ok",
+      "limitations": [
+        "builtin_dispatch_unresolved",
+        "container_response_flow_unassessed",
+        "nested_expression_flow_bounded",
+        "uncertain_flow_after_unknown_call:cast:171",
+        "unknown_transform_or_callback:cast",
+        "unsupported_merge"
+      ]
+    },
+    {
+      "call_id": "GenseeAI_open_deep_research/tests/evaluators.py::44::44",
+      "status": "ok",
+      "limitations": [
+        "builtin_dispatch_unresolved",
+        "container_response_flow_unassessed",
+        "nested_expression_flow_bounded",
+        "uncertain_flow_after_unknown_call:cast:44",
+        "unknown_transform_or_callback:cast",
+        "unsupported_merge"
+      ]
+    },
+    {
+      "call_id": "GenseeAI_open_deep_research/tests/evaluators.py::74::39",
+      "status": "ok",
+      "limitations": [
+        "builtin_dispatch_unresolved",
+        "container_response_flow_unassessed",
+        "nested_expression_flow_bounded",
+        "uncertain_flow_after_unknown_call:cast:74",
+        "unknown_transform_or_callback:cast",
+        "unsupported_merge"
+      ]
+    },
+    {
+      "call_id": "GenseeAI_open_deep_research/tests/evaluators.py::97::39",
+      "status": "ok",
+      "limitations": [
+        "builtin_dispatch_unresolved",
+        "container_response_flow_unassessed",
+        "nested_expression_flow_bounded",
+        "uncertain_flow_after_unknown_call:cast:97",
+        "unknown_transform_or_callback:cast",
+        "unsupported_merge"
+      ]
+    },
+    {
+      "call_id": "GenseeAI_open_deep_research/tests/pairwise_evaluation.py::42::15",
+      "status": "ok",
+      "limitations": [
+        "container_response_flow_unassessed",
+        "receiver_dispatch_unresolved",
+        "unsupported_merge"
+      ]
+    },
+    {
+      "call_id": "GenseeAI_open_deep_research/tests/pairwise_evaluation.py::99::15",
+      "status": "ok",
+      "limitations": [
+        "container_response_flow_unassessed"
+      ]
+    },
+    {
+      "call_id": "GenseeAI_open_deep_research/tests/run_evaluate.py::62::24",
+      "status": "ok",
+      "limitations": [
+        "builtin_dispatch_unresolved",
+        "container_response_flow_unassessed"
+      ]
+    },
+    {
+      "call_id": "GenseeAI_open_deep_research/tests/supervisor_parallel_evaluation.py::42::10",
+      "status": "ok",
+      "limitations": [
+        "builtin_dispatch_unresolved",
+        "container_response_flow_unassessed"
+      ]
+    }
+  ],
+  "consumed_inputs": [
+    {
+      "path": "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\artifacts\\response_guardrail_slices\\2026-11-04-v1\\calls.csv",
+      "sha256_before": "403a11c2b0fa6ec357b8d86e49db7dfc01624c25481946db0e0394986216f929",
+      "sha256_after": "403a11c2b0fa6ec357b8d86e49db7dfc01624c25481946db0e0394986216f929"
+    },
+    {
+      "path": "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\artifacts\\response_guardrail_slices\\2026-11-12-two-arm-methodology-v1\\mapped_test_edges.csv",
+      "sha256_before": "c553c2d4dd5967e65e9b0ff81bfd404e3636d3a95f50126f81496bf38f4893b5",
+      "sha256_after": "c553c2d4dd5967e65e9b0ff81bfd404e3636d3a95f50126f81496bf38f4893b5"
+    },
+    {
+      "path": "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\guardrail_test_review_queue.py",
+      "sha256_before": "22f3f9713360d90a8b399b1da6e50db176b6b60729701dcaa1708626daa6b9d0",
+      "sha256_after": "22f3f9713360d90a8b399b1da6e50db176b6b60729701dcaa1708626daa6b9d0"
+    },
+    {
+      "path": "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\GenseeAI_open_deep_research\\src\\legacy\\graph.py",
+      "sha256_before": "9e0f2f24d95da74ab15dfc383a3fb10a1a1f297bc36cc99c4589ef66e4c95ce0",
+      "sha256_after": "9e0f2f24d95da74ab15dfc383a3fb10a1a1f297bc36cc99c4589ef66e4c95ce0"
+    },
+    {
+      "path": "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\GenseeAI_open_deep_research\\src\\legacy\\multi_agent.py",
+      "sha256_before": "59e1949c238a0827f53b9d9be39f0c3cc3761effa48c73d8b9e6232dd04dcb21",
+      "sha256_after": "59e1949c238a0827f53b9d9be39f0c3cc3761effa48c73d8b9e6232dd04dcb21"
+    },
+    {
+      "path": "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\GenseeAI_open_deep_research\\src\\legacy\\tests\\test_report_quality.py",
+      "sha256_before": "76cbeb84c923a69bbc9081e5fc41995b0c6b4204ac7b329293eeca43125a5ec8",
+      "sha256_after": "76cbeb84c923a69bbc9081e5fc41995b0c6b4204ac7b329293eeca43125a5ec8"
+    },
+    {
+      "path": "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\GenseeAI_open_deep_research\\src\\legacy\\utils.py",
+      "sha256_before": "6debddfe3c2909cb7da87d2da734e44066c30f036543e6707a34f956e0f8c215",
+      "sha256_after": "6debddfe3c2909cb7da87d2da734e44066c30f036543e6707a34f956e0f8c215"
+    },
+    {
+      "path": "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\GenseeAI_open_deep_research\\src\\open_deep_research\\deep_researcher.py",
+      "sha256_before": "5f702068f13ede8639883426a94f84499df7afdbb06a4ad0674123c8ddaff707",
+      "sha256_after": "5f702068f13ede8639883426a94f84499df7afdbb06a4ad0674123c8ddaff707"
+    },
+    {
+      "path": "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\GenseeAI_open_deep_research\\src\\open_deep_research\\utils.py",
+      "sha256_before": "e1c8c6484890ce21ef7d5c398bbe07af57b5eda9839b8d0e64504c3abc6bb564",
+      "sha256_after": "e1c8c6484890ce21ef7d5c398bbe07af57b5eda9839b8d0e64504c3abc6bb564"
+    },
+    {
+      "path": "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\GenseeAI_open_deep_research\\tests\\evaluators.py",
+      "sha256_before": "aa8cdbe858ff3bb55a37b1beb7e041f034109a5896190747f09e6c5e220f0824",
+      "sha256_after": "aa8cdbe858ff3bb55a37b1beb7e041f034109a5896190747f09e6c5e220f0824"
+    },
+    {
+      "path": "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\GenseeAI_open_deep_research\\tests\\pairwise_evaluation.py",
+      "sha256_before": "2d621ad39213c181dbbdd0e30cd1c90a7c63fc80508d196b64ccc5df647cf25a",
+      "sha256_after": "2d621ad39213c181dbbdd0e30cd1c90a7c63fc80508d196b64ccc5df647cf25a"
+    },
+    {
+      "path": "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\GenseeAI_open_deep_research\\tests\\run_evaluate.py",
+      "sha256_before": "d2e2ad194f4a1141ba2bcd5b480e35a021248af17ef69805a6fd38753caf4733",
+      "sha256_after": "d2e2ad194f4a1141ba2bcd5b480e35a021248af17ef69805a6fd38753caf4733"
+    },
+    {
+      "path": "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\GenseeAI_open_deep_research\\tests\\supervisor_parallel_evaluation.py",
+      "sha256_before": "d370607bcca2ff8df242a8fe278c27029250b50a92b0656966d25a342e344423",
+      "sha256_after": "d370607bcca2ff8df242a8fe278c27029250b50a92b0656966d25a342e344423"
+    },
+    {
+      "path": "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\response_guardrail_slices.py",
+      "sha256_before": "9b1266368f93f681f161d427bb13fc84770e2a6bd80cd72ee8cf86b6eadb954e",
+      "sha256_after": "9b1266368f93f681f161d427bb13fc84770e2a6bd80cd72ee8cf86b6eadb954e"
+    }
+  ],
+  "source_path_policy": "response_guardrail_slices._safe_source; reject traversal, links and junctions",
+  "limits": [
+    "Discovery only; no oracle classification or protected-producer mapping.",
+    "Frozen call identities only; absent calls/tests remain undiscovered.",
+    "Exact test-identity match does not validate saved focal methods.",
+    "Uncertain flow remains a pending lead, never a confirmed guardrail.",
+    "Source test context can differ from saved production labels; labels and scope are unchanged."
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "date": "2026-11-12",
+  "status": "readiness and protocol only; no classified percentage estimates",
+  "inputs": {
+    "method_test_baseline/summary.json": "3f448c545b2ccccee2ef9d3f832cfad4d23516363bb8bd4c414be56785c95bbd",
+    "method_test_baseline/methods.csv": "8404f9480b9cce87eab691fb0063f2495853e42103c93f9329380f70eafd1882",
+    "pym2t_focal_tests.csv": "de53b0f8073d4c5f098f0e2c6607c4689876edca4cb4030bdcb8179e7d470097",
+    "response_guardrail_slices/2026-11-04-v1/calls.csv": "403a11c2b0fa6ec357b8d86e49db7dfc01624c25481946db0e0394986216f929",
+    "response_guardrail_slices/2026-11-04-v1/checks.csv": "70e890fd55e36a0d138bbc543a7bd09a94467819188a9ec5eb9058ec0039fe22"
+  },
+  "outputs": {
+    "codebook.json": "16518b3b320952233734d511e991b4b08e012855f0efa2560e76d1634113580b",
+    "readiness.json": "59e39990488771f2375843168e619dd3126f063bdb7c97bc1651384f779eeb7b",
+    "method_assessment.csv": "67c1dc6fa113b30afdb07b913fc29a2a527e561239c5caaa1e4f931d272fc445",
+    "mapped_test_edges.csv": "c553c2d4dd5967e65e9b0ff81bfd404e3636d3a95f50126f81496bf38f4893b5"
+  }
+}

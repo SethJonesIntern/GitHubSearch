@@ -1,0 +1,27 @@
+{
+  "date": "2026-11-11",
+  "method": "Read-only inspection of saved outputs and cloned source; no application/model/Joern execution; no corpus regeneration.",
+  "outputs": {
+    "evidence.json": "402b96368930061a4104b29ebd899e6f7d7cf71dc6a7aeb7d90dd0f10e83c239",
+    "review.csv": "1e89230e5e0c32da2101751eb66cafe6d4e1eb9e917eafdbe9ec4de8058726d6"
+  },
+  "inputs": {
+    "slice_call_hits.csv": "c743a5e94be669828662bccc9d3b0e3dbef959157760061f1aca7efdf0afbc84",
+    "slice_calls_summary.json": "fb9104188dff2104198308f7ebbdbea7e6b3976748a68f387594a3a31f383029",
+    "slice_index_summary.json": "8c9a9d843fb920fcc20e51bbc38979481c050032315085cd2ac631e25eeaf6ed",
+    "response_guardrail_slices/2026-11-04-v1/checks.csv": "70e890fd55e36a0d138bbc543a7bd09a94467819188a9ec5eb9058ec0039fe22",
+    "response_guardrail_slices/2026-11-04-v1/calls.csv": "403a11c2b0fa6ec357b8d86e49db7dfc01624c25481946db0e0394986216f929",
+    "response_guardrail_slices/2026-11-04-v1/routes.csv": "e4d537d23d5e38557903059f9bcbabd575c08ef904b6f1cb93ed69671f24cd2e",
+    "response_guardrail_slices/2026-11-04-v1/manifest.json": "a4886e11af2e75325e2c1e322c56235537584280dd194d94cc1cbb88e2abcc5b"
+  },
+  "additional_sources": {
+    "C:/Users/Seth/Documents/papers/GitHubSearch/pipeline/repos/Shubhamsaboo_awesome-llm-apps/advanced_ai_agents/autonomous_game_playing_agent_apps/ai_tic_tac_toe_agent/utils.py": "66a6e28a5dd6a1c24dc3cfcb9d3a9a01ee36ddf7053547778004789c6d81f997",
+    "C:/Users/Seth/Documents/papers/GitHubSearch/pipeline/repos/Shubhamsaboo_awesome-llm-apps/advanced_ai_agents/autonomous_game_playing_agent_apps/ai_tic_tac_toe_agent/app.py": "6eb1a3a16dba4e19350d4b1b58daed79e3a147fc63bc911fd8873337e63973e8",
+    "C:/Users/Seth/Documents/papers/GitHubSearch/pipeline/repos/ikamensh_kodo/kodo/coach.py": "7d0a6b44945a71154fbf870289bee6ac7e312cf2a86e879e5ffc3dd02da41e32",
+    "C:/Users/Seth/Documents/papers/GitHubSearch/pipeline/repos/sourangshupal_Agentic-RAG-project/src/services/agents/nodes/rewrite_query_node.py": "bb1cf19003854b21e5f3a2cad69d65cb03ff09478751977672a72b3941c2dc6e",
+    "C:/Users/Seth/Documents/papers/GitHubSearch/pipeline/repos/HKUDS_ViMax/agents/camera_image_generator.py": "f2ed1d2373785792615c7350a70830db58a7955ceaa267dc90179bf6b78f10c5",
+    "C:/Users/Seth/Documents/papers/GitHubSearch/pipeline/repos/alibaba_loongsuite-python/examples/ecommerce-customer-service/workflow.py": "ee2c093997753697ece232ad35eaa3f5615b827da3853a98c2f393ed6c297c9b",
+    "C:/Users/Seth/Documents/papers/GitHubSearch/pipeline/repos/FudanSELab_TripSphere/trip-itinerary-planner/src/itinerary_planner/agent/nodes.py": "208bf6a94f46c7d3eb2717839192198d4d627f3f98cc6bbb7a03ee118b2c8c82",
+    "C:/Users/Seth/Documents/papers/GitHubSearch/pipeline/repos/splx-ai_agentic-radar/examples/openai-agents/agent_patterns/deterministic/deterministic.py": "0fd4f8b787307886b21ee3c1f565140147b4c5740809ef65c92670891cfef30e"
+  }
+}

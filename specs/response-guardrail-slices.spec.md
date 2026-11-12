@@ -85,6 +85,19 @@ Parser-only `json.loads(response)` is `routes.route_kind=parser_only`, not a qua
 
 Direct return `return llm.invoke(...)` is `output_form=returned_to_caller`; caller-side checks remain unassessed, not absent. Bare expression calls are `discarded` for this local analysis, not proof their effects/results are globally unused. Unknown transformations, schema factories, aliases and dynamic dispatch abstain with explicit limitations.
 
+**Uncertain-flow recovery (2026-11-12):** unknown calls may mutate tracked arguments
+or receivers. Retain the existing alias origins as explicitly uncertain provenance,
+including unknown-call line/reason, so later supported sinks become
+`routes.route_kind=uncertain_flow_<original-kind>_candidate`. They never enter
+`checks` or source/slice/runtime check numerators. The same rule applies when
+response objects are passed inside literal containers or mutated by a later operand
+of the same predicate. Do not assume display/logging functions are pure based on
+names or imports. Explicit overwrite, mutation or deletion still removes the origin;
+unsupported branch/loop merges may conservatively drop it. Routes export
+`trace_lines` and `uncertainty_sources`; summary/report expose a separate
+`uncertain_review_candidates` pending lane. Slice membership cannot resolve an
+unknown callback effect by itself.
+
 ## Joern corroboration API
 
 `corroborate_slices` is pure; it adds `joern_status,slice_ids,shared_slice_ids,response_slice_ids,slice_variables,slice_parse_flags` to each check. IDs are integer JSON-array values when serialized; all arrays deterministic. Input hit dictionaries require `slice_id,call_id,variable,role,parses`; main enriches/validates original index/source identities before calling it. `pdg_lines` uses original source line numbers, never generated snippet/scaffolding lines.

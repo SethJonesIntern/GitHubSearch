@@ -1,0 +1,103 @@
+{
+  "version": "two-arm-guardrails-v1",
+  "date": "2026-11-12",
+  "status": "Operational coding protocol and reconciled preliminary assessment frame; semantic classification and independent precision/recall validation not yet conducted.",
+  "study_scope": "Reuse authoritative observed framework-call population. Do not enlarge population using search tokens, raw provider calls or evaluator invocations. Retain exclusions and raw data.",
+  "primary_unit": "Unique production application function/method containing at least one in-scope direct framework invocation, identified by repo, source path, qualified name and definition line in frozen source snapshot. Call sites and tests are evidence edges, not interchangeable denominator units.",
+  "guardrail_definition": "A source-supported association between an in-scope output or proposed action, an acceptability property checked on that output/action, and a failure consequence. Test-suite consequence is test failure; runtime consequence intervenes before that output/action is accepted or consumed along the protected path. A name match, schema declaration, parsing, logging or evaluation score alone is insufficient.",
+  "arms": {
+    "test_suite": {
+      "discovery": "All saved pyMethods2Test focal-method mappings into eligible production methods, not just direct ND tests. Preserve file rule/import-vs-basename and exact-vs-fuzzy method match. Supplemental semantic test discoveries remain a separately labelled discovery stratum until independently associated.",
+      "qualification": "Confirm target identity/call, target output or produced state routed to a check/evaluator, verdict or predicate routed to test pass/fail. Validate fixture, helper and callback connections explicitly; unmatched edge is unresolved, never absent testing.",
+      "corroboration": "Use saved Joern-selected original lines for target call/output, evaluator/check and assertion where available. Separate source-only verified edges from slice-corroborated edges. Never infer execution coverage from focal correspondence."
+    },
+    "runtime": {
+      "discovery": "All eligible production direct-invocation methods and their saved response slices; inspect original source, connected aliases and bounded caller/validator/callback code when needed.",
+      "qualification": "Confirm output/action -> checker -> failure decision -> reject/stop/rewrite/retry/fallback/suppress/manual-review action before protected acceptance or side effect. Separate merely corrective generation or diagnostics from a proven gate.",
+      "corroboration": "Preserve original PDG-selected lines and inserted support separately. Saved slice membership is corroboration, not a directed dependence-path proof. Missing slices or omitted branch bodies remain unresolved. Semantic enforcement may be outside producer method and must have a source-backed association."
+    }
+  },
+  "oracle_types": {
+    "simple": "Rule-based acceptability decision defined by explicit predicates or deterministic validation against specified expected values, schemas or application constraints, without learned semantic judgment. Includes type, presence, equality, regex, schema and deterministic domain checks. Simple describes oracle kind, not code length or computational complexity.",
+    "complex": "Learned/model-based semantic judgment of output/action acceptability, such as LLM judgment or learned factuality/entailment/relevance scoring, whose verdict is actually used in a test failure or runtime intervention. Identify judge input/output and predicate/threshold rather than classifying from library or variable names.",
+    "unknown": "Opaque checker backend, uncertain output association or unresolved semantics; do not force binary label.",
+    "human_only": "Record manual approval as a distinct oracle/control flag; do not silently classify as an automated complex check."
+  },
+  "counting": {
+    "atomic_guardrail_id": "repo + protected application output/action + checked property + oracle/decision source location + enforcement location. Deduplicate repeated reachability and slice rows. Schema validation solely packaging/parsing a judge verdict is auxiliary evaluator plumbing, not an extra simple guardrail on the underlying application output. Separate simple and complex checks count only if they independently assess properties of that protected output/action.",
+    "method_aggregation": "For each arm and method, retain independent has_verified_simple and has_verified_complex flags. Report simple_detected_only, complex_detected_only, both_detected, plus unresolved/other-oracle evidence. These are detected categories, not proof of absence of other guardrails.",
+    "composition": "Among methods with >=1 verified associated automated guardrail in an arm, report mutually exclusive simple-detected-only, complex-detected-only and both-detected percentages, plus a separate incomplete/unresolved-assessment flag/count. Do not sum any-simple and any-complex percentages as if disjoint. Also report unknown-only candidate methods outside verified G.",
+    "prevalence": "Report each verified category / all N eligible production methods alongside mapping/slice/source assessability and missingness. Denominator N is the same for both arms on the common frame. Never substitute mapped methods, slice-available methods or call counts without naming the conditional population.",
+    "atomic_composition_secondary": "Optionally report verified simple checks / (verified simple + verified complex checks), complex analogous, with unknown/human-only counts and duplicate handling explicit. This is check-level composition, not method prevalence.",
+    "no_detection": "No identified check is not proven absence; distinguish assessed-no-detection, unmapped, missing source/slice and unresolved association."
+  },
+  "annotation_fields": [
+    "arm",
+    "producer_method_id",
+    "target_output_call_id",
+    "test_id",
+    "focal_file_rule",
+    "focal_method_rule",
+    "checked_property",
+    "oracle_type",
+    "checker_location",
+    "judge_input_location",
+    "judge_verdict_location",
+    "enforcement_location",
+    "failure_action",
+    "protected_acceptance_location",
+    "source_association",
+    "saved_slice_ids",
+    "pdg_lines",
+    "support_lines",
+    "association_confidence",
+    "input_execution_mode",
+    "oracle_execution_mode",
+    "error_policy",
+    "retry_or_budget_bypass",
+    "duplicate_family",
+    "reviewer",
+    "review_status",
+    "rationale",
+    "configuration_enablement",
+    "assertion_optimization_sensitive",
+    "oracle_provenance",
+    "assessed_path_scope",
+    "guarded_subject",
+    "parent_guardrail_id",
+    "auxiliary_evaluator_plumbing"
+  ],
+  "validation": {
+    "mandatory_before_study_percentages": [
+      "Audit production/test/support boundaries and detector false-positive invocation families without silently changing canonical scope.",
+      "Recover simple and complex using one prespecified discovery/review protocol; do not compare exhaustive simple detection with keyword-selected complex examples.",
+      "Independently double-code positives and a prespecified probability sample of negatives/unmapped/unassessed strata; report agreement and adjudicate disagreements. If independent reviewers are not yet available, report that validation is pending.",
+      "Estimate missed checks from source-based review independent of same-slice requirement, including fixtures/callbacks/wrappers and unconventional tests.",
+      "Report precision and sampled missed-case rates with uncertainty; use sampling weights if strata sampled unequally and repository clustering for population uncertainty.",
+      "Separate development examples used to design rules from held-out validation cases; prior purposive catalogs are discovery evidence, not prevalence samples.",
+      "Report import/exact and broader focal-mapping sensitivity, source-only vs slice-corroborated sensitivity, mocked/recorded/configured-live/unknown input and oracle modes, examples/tutorials/vendored duplicates, and budget/error bypass.",
+      "Freeze source and input hashes and record tool versions; retain ambiguous and missing rows.",
+      "Do not count a discovered semantic test in the primary pyMethods2Test arm until its eligible production-method association is verified; unmatched semantic tests are mapping-miss evidence and reported separately.",
+      "Static presence does not establish invocation frequency, enabled configuration, assert execution under optimization, protection on every path or effectiveness."
+    ]
+  },
+  "current_percentages": {
+    "test_suite_simple": null,
+    "test_suite_complex": null,
+    "runtime_simple": null,
+    "runtime_complex": null,
+    "reason": "No validated composition labels exist. Prior 47 assertion / 52 conditional rejection / 7 schema counts are syntax/API categories at call-site level and cannot be repurposed."
+  },
+  "references": [
+    {
+      "title": "pyMethods2Test original paper",
+      "url": "https://arxiv.org/abs/2502.05143",
+      "role": "Heuristic test-to-focal traceability, not guardrail or execution coverage."
+    },
+    {
+      "title": "Joern slicing documentation",
+      "url": "https://docs.joern.io/cpg-slicing/",
+      "role": "General graph slicing reference; our custom producer and refined saved artifacts have their own provenance and limitations, not all stock joern-slice defaults."
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "test_input_modes": {
+    "fixture_configuration_not_fully_resolved": {
+      "annotations": 1,
+      "methods": 1
+    },
+    "mocked_model_or_framework_response": {
+      "annotations": 87,
+      "methods": 43
+    },
+    "mocked": {
+      "annotations": 116,
+      "methods": 77
+    },
+    "unknown": {
+      "annotations": 3,
+      "methods": 2
+    },
+    "live_model_configured_not_executed": {
+      "annotations": 3,
+      "methods": 2
+    },
+    "configured_live": {
+      "annotations": 4,
+      "methods": 4
+    }
+  },
+  "test_unique_tests": 192,
+  "import_exact_methods": 21,
+  "exact_methods": 31,
+  "source_files_verified": 473,
+  "correspondence": {
+    "methods_with_mapped_test": 220,
+    "mapped_test_edges": 461,
+    "identified_method_pct": 2.878828
+  }
+}

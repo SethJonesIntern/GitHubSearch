@@ -1,0 +1,2425 @@
+{
+  "node": "v22.21.0",
+  "script_sha256": "d5790b825ba5f6a855cbc8f5a3bcf764f872209800f1365ac60aab6cadcb0146",
+  "options": {
+    "frameDir": "pipeline/artifacts/response_guardrail_slices/2026-11-12-two-arm-methodology-v1",
+    "callsCsv": "pipeline/artifacts/response_guardrail_slices/2026-11-04-v1/calls.csv",
+    "checksCsv": "pipeline/artifacts/response_guardrail_slices/2026-11-04-v1/checks.csv",
+    "independentChecksCsv": "pipeline/artifacts/invoker_result_checks/2026-11-04-independent-v2/checks.csv",
+    "annotationsCsv": "pipeline/artifacts/response_guardrail_slices/2026-11-12-prevalence-source-audit-v1/annotations.csv",
+    "reposDir": "pipeline/repos",
+    "outputDir": "pipeline/artifacts/response_guardrail_slices/2026-11-12-method-prevalence-v1"
+  },
+  "inputs": {
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\artifacts\\response_guardrail_slices\\2026-11-12-two-arm-methodology-v1\\method_assessment.csv": {
+      "sha256_before": "67c1dc6fa113b30afdb07b913fc29a2a527e561239c5caaa1e4f931d272fc445",
+      "sha256_after": "67c1dc6fa113b30afdb07b913fc29a2a527e561239c5caaa1e4f931d272fc445"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\artifacts\\response_guardrail_slices\\2026-11-12-two-arm-methodology-v1\\mapped_test_edges.csv": {
+      "sha256_before": "c553c2d4dd5967e65e9b0ff81bfd404e3636d3a95f50126f81496bf38f4893b5",
+      "sha256_after": "c553c2d4dd5967e65e9b0ff81bfd404e3636d3a95f50126f81496bf38f4893b5"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\artifacts\\response_guardrail_slices\\2026-11-12-two-arm-methodology-v1\\readiness.json": {
+      "sha256_before": "59e39990488771f2375843168e619dd3126f063bdb7c97bc1651384f779eeb7b",
+      "sha256_after": "59e39990488771f2375843168e619dd3126f063bdb7c97bc1651384f779eeb7b"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\artifacts\\response_guardrail_slices\\2026-11-12-two-arm-methodology-v1\\codebook.json": {
+      "sha256_before": "16518b3b320952233734d511e991b4b08e012855f0efa2560e76d1634113580b",
+      "sha256_after": "16518b3b320952233734d511e991b4b08e012855f0efa2560e76d1634113580b"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\artifacts\\response_guardrail_slices\\2026-11-04-v1\\calls.csv": {
+      "sha256_before": "403a11c2b0fa6ec357b8d86e49db7dfc01624c25481946db0e0394986216f929",
+      "sha256_after": "403a11c2b0fa6ec357b8d86e49db7dfc01624c25481946db0e0394986216f929"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\artifacts\\response_guardrail_slices\\2026-11-04-v1\\checks.csv": {
+      "sha256_before": "70e890fd55e36a0d138bbc543a7bd09a94467819188a9ec5eb9058ec0039fe22",
+      "sha256_after": "70e890fd55e36a0d138bbc543a7bd09a94467819188a9ec5eb9058ec0039fe22"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\artifacts\\invoker_result_checks\\2026-11-04-independent-v2\\checks.csv": {
+      "sha256_before": "3604befd52b1d2a258848c36676d5a47edc254a49574124fa9ba1d5711b2d649",
+      "sha256_after": "3604befd52b1d2a258848c36676d5a47edc254a49574124fa9ba1d5711b2d649"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\artifacts\\response_guardrail_slices\\2026-11-12-prevalence-source-audit-v1\\annotations.csv": {
+      "sha256_before": "6a74144145824b50f6de5063f130f4586ba9f29bbf4af8589a84000efa5d0fef",
+      "sha256_after": "6a74144145824b50f6de5063f130f4586ba9f29bbf4af8589a84000efa5d0fef"
+    }
+  },
+  "inspected_sources": {
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\ai-forever_giga_agent\\backend\\giga_agent\\modules\\deep_research\\nodes\\compose.py": {
+      "sha256_before": "0b507506105014b7545a44998a1e4b0b70d6a2d5f00b90b39bd8e03b6b089987",
+      "line_count": 132,
+      "sha256_after": "0b507506105014b7545a44998a1e4b0b70d6a2d5f00b90b39bd8e03b6b089987"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\ai-forever_giga_agent\\backend\\giga_agent\\modules\\deep_research\\nodes\\critique.py": {
+      "sha256_before": "15fedc796e02ed7995b79625ae85c2440f0a03c8154e0bf0ab5ab7e3263c2b3e",
+      "line_count": 158,
+      "sha256_after": "15fedc796e02ed7995b79625ae85c2440f0a03c8154e0bf0ab5ab7e3263c2b3e"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\ai-forever_giga_agent\\backend\\giga_agent\\modules\\deep_research\\graph.py": {
+      "sha256_before": "61ec5c2f9f02870693803c4c77be1da43f475ab1d8922cac541f63c87a83e988",
+      "line_count": 183,
+      "sha256_after": "61ec5c2f9f02870693803c4c77be1da43f475ab1d8922cac541f63c87a83e988"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\alibaba_loongsuite-python\\examples\\ecommerce-customer-service\\workflow.py": {
+      "sha256_before": "ee2c093997753697ece232ad35eaa3f5615b827da3853a98c2f393ed6c297c9b",
+      "line_count": 288,
+      "sha256_after": "ee2c093997753697ece232ad35eaa3f5615b827da3853a98c2f393ed6c297c9b"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\arm_metis\\src\\metis\\engine\\llm_runner.py": {
+      "sha256_before": "6012ea55e225ceffdaefea2f10aadfe160385415de9839619c30ba4ea7d3b938",
+      "line_count": 351,
+      "sha256_after": "6012ea55e225ceffdaefea2f10aadfe160385415de9839619c30ba4ea7d3b938"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\baserow_baserow\\enterprise\\backend\\src\\baserow_enterprise\\assistant\\tools\\database\\tools.py": {
+      "sha256_before": "f4337ed7d387477a6be0cc40fa7130ec449fb4246f78c1c035453f66912153bd",
+      "line_count": 1231,
+      "sha256_after": "f4337ed7d387477a6be0cc40fa7130ec449fb4246f78c1c035453f66912153bd"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\BjornMelin_docmind-ai-llm\\src\\agents\\supervisor_graph.py": {
+      "sha256_before": "c54dff3fab5160293745e11916b919432b62e33c1fab73294a8da6750606a0d9",
+      "line_count": 524,
+      "sha256_after": "c54dff3fab5160293745e11916b919432b62e33c1fab73294a8da6750606a0d9"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\BjornMelin_docmind-ai-llm\\src\\agents\\tools\\memory.py": {
+      "sha256_before": "747b8c6930d9ec05ce56f078c3b816d76f9888277b74971eaf063f449f1da0a0",
+      "line_count": 1288,
+      "sha256_after": "747b8c6930d9ec05ce56f078c3b816d76f9888277b74971eaf063f449f1da0a0"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Certora_AIComposer\\composer\\prover\\analysis.py": {
+      "sha256_before": "1478630058ac3eba150ca52d19c76d30aa80df9f042bb64f04a197b8c854823d",
+      "line_count": 38,
+      "sha256_after": "1478630058ac3eba150ca52d19c76d30aa80df9f042bb64f04a197b8c854823d"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Certora_AIComposer\\composer\\spec\\refinement.py": {
+      "sha256_before": "1eedf40fc095e07262fb5961d7bac98f302e631ad7d4705c07ac7369058e48a8",
+      "line_count": 224,
+      "sha256_after": "1eedf40fc095e07262fb5961d7bac98f302e631ad7d4705c07ac7369058e48a8"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Certora_AIComposer\\composer\\spec\\source\\report\\grouping.py": {
+      "sha256_before": "cd91326378308ff2ab83d124aaff66304f72dc829a42179792d693124dad60c7",
+      "line_count": 131,
+      "sha256_after": "cd91326378308ff2ab83d124aaff66304f72dc829a42179792d693124dad60c7"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Certora_AIComposer\\composer\\workflow\\meta.py": {
+      "sha256_before": "2231899a172916ac6448931718a667cd84162ca4b615b923d3e46020f1e805ac",
+      "line_count": 33,
+      "sha256_after": "2231899a172916ac6448931718a667cd84162ca4b615b923d3e46020f1e805ac"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\codemie-ai_codemie\\src\\codemie_tools\\data_management\\code_executor\\session_factory.py": {
+      "sha256_before": "8aea6e87544b845163edd88a07cd4b60931a47edba86e6ed277afe50759e3af1",
+      "line_count": 277,
+      "sha256_after": "8aea6e87544b845163edd88a07cd4b60931a47edba86e6ed277afe50759e3af1"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\codemie-ai_codemie\\src\\codemie_tools\\data_management\\workspace\\execute_workspace_script_tool.py": {
+      "sha256_before": "c78e5b8c855c49e1c9388b0db9feefeab17299da29573f6a0876865e0f562d2e",
+      "line_count": 301,
+      "sha256_after": "c78e5b8c855c49e1c9388b0db9feefeab17299da29573f6a0876865e0f562d2e"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\codemie-ai_codemie\\src\\codemie\\chains\\kb_sources_selector_chain.py": {
+      "sha256_before": "212b43627fbb4d82af4d43b967d2390c8b5ff0272cebf49cacb95c4165f847c9",
+      "line_count": 58,
+      "sha256_after": "212b43627fbb4d82af4d43b967d2390c8b5ff0272cebf49cacb95c4165f847c9"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\crestalnetwork_intentkit\\intentkit\\core\\summarization.py": {
+      "sha256_before": "05910556acc9343ba03fa601cc1123d47e79907a5beca586d610c3f16f01a0e7",
+      "line_count": 443,
+      "sha256_after": "05910556acc9343ba03fa601cc1123d47e79907a5beca586d610c3f16f01a0e7"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\crestalnetwork_intentkit\\intentkit\\tools\\aave_v3\\utils.py": {
+      "sha256_before": "a805bc5a871354ef5460f9bb8d7289ed44cdaf62360fd844fab6e3c5c2ee67cd",
+      "line_count": 114,
+      "sha256_after": "a805bc5a871354ef5460f9bb8d7289ed44cdaf62360fd844fab6e3c5c2ee67cd"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\crestalnetwork_intentkit\\intentkit\\tools\\aerodrome\\add_liquidity.py": {
+      "sha256_before": "ef19eb2d8e7ddd673db0e881f769541642d2b72b61eb66c0ec56ca77a3af21f8",
+      "line_count": 330,
+      "sha256_after": "ef19eb2d8e7ddd673db0e881f769541642d2b72b61eb66c0ec56ca77a3af21f8"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\crestalnetwork_intentkit\\intentkit\\tools\\aerodrome\\get_positions.py": {
+      "sha256_before": "0c9808720ab6803589c754daf6c22e0de45a0f5c2a7235abe811908a34b596c5",
+      "line_count": 176,
+      "sha256_after": "0c9808720ab6803589c754daf6c22e0de45a0f5c2a7235abe811908a34b596c5"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\crestalnetwork_intentkit\\intentkit\\tools\\aerodrome\\remove_liquidity.py": {
+      "sha256_before": "b76bb8391eed336cad58918989009a440e8b0c6adb102be0d67629da2e7cf1b8",
+      "line_count": 218,
+      "sha256_after": "b76bb8391eed336cad58918989009a440e8b0c6adb102be0d67629da2e7cf1b8"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\crestalnetwork_intentkit\\intentkit\\tools\\aerodrome\\utils.py": {
+      "sha256_before": "9d58a34c5a70938f12265d23b70081294cbb50f4eab6973c3a0a785fe4567de4",
+      "line_count": 107,
+      "sha256_after": "9d58a34c5a70938f12265d23b70081294cbb50f4eab6973c3a0a785fe4567de4"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\crestalnetwork_intentkit\\intentkit\\tools\\image\\grok.py": {
+      "sha256_before": "956917ec587e125ab41f4f24a2ab3b63ab639f7772ff21a4403e69bb105c806c",
+      "line_count": 64,
+      "sha256_after": "956917ec587e125ab41f4f24a2ab3b63ab639f7772ff21a4403e69bb105c806c"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\crestalnetwork_intentkit\\intentkit\\tools\\opensea\\onchain_base.py": {
+      "sha256_before": "bad346565d3b7e999908457a5ee7951a6c818645e9a207ef473483ad5abe6c17",
+      "line_count": 180,
+      "sha256_after": "bad346565d3b7e999908457a5ee7951a6c818645e9a207ef473483ad5abe6c17"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\crestalnetwork_intentkit\\intentkit\\tools\\pancakeswap\\add_liquidity.py": {
+      "sha256_before": "6f81c7804854131d3002fbd36d810a17987e99eea862c4583cbe4ebcad1a6e1e",
+      "line_count": 313,
+      "sha256_after": "6f81c7804854131d3002fbd36d810a17987e99eea862c4583cbe4ebcad1a6e1e"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\crestalnetwork_intentkit\\intentkit\\tools\\pancakeswap\\get_positions.py": {
+      "sha256_before": "94b5b4da47aaa667b07f7f398ddafa1f8671c2d8b543f30df1f490ca97f12dcf",
+      "line_count": 174,
+      "sha256_after": "94b5b4da47aaa667b07f7f398ddafa1f8671c2d8b543f30df1f490ca97f12dcf"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\crestalnetwork_intentkit\\intentkit\\tools\\pancakeswap\\remove_liquidity.py": {
+      "sha256_before": "466822f532869a00f7ae0296a957a97235f8c9d2f303e5b387f53e6b684592a3",
+      "line_count": 210,
+      "sha256_after": "466822f532869a00f7ae0296a957a97235f8c9d2f303e5b387f53e6b684592a3"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\crestalnetwork_intentkit\\intentkit\\tools\\pancakeswap\\utils.py": {
+      "sha256_before": "0838d6d5188658b9e282e99071747fce1077f83687e9e6402e1d411fa9cc350d",
+      "line_count": 102,
+      "sha256_after": "0838d6d5188658b9e282e99071747fce1077f83687e9e6402e1d411fa9cc350d"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\crestalnetwork_intentkit\\intentkit\\tools\\uniswap\\add_liquidity.py": {
+      "sha256_before": "5e3aa53953b293b017e2173dde008ef90f2ab4c5a6626230c80c5ea8fefb29af",
+      "line_count": 267,
+      "sha256_after": "5e3aa53953b293b017e2173dde008ef90f2ab4c5a6626230c80c5ea8fefb29af"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\crestalnetwork_intentkit\\intentkit\\tools\\uniswap\\remove_liquidity.py": {
+      "sha256_before": "dcd3a97193d854a747611f5b8a6feb521bf40320193082d8a9e2d905a2b47dfc",
+      "line_count": 151,
+      "sha256_after": "dcd3a97193d854a747611f5b8a6feb521bf40320193082d8a9e2d905a2b47dfc"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\crestalnetwork_intentkit\\intentkit\\tools\\uniswap\\utils.py": {
+      "sha256_before": "2358b3a04d5a5b9201cacae87dd041b573e2e63284fe333c74f22455dab8e8ce",
+      "line_count": 98,
+      "sha256_after": "2358b3a04d5a5b9201cacae87dd041b573e2e63284fe333c74f22455dab8e8ce"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\crestalnetwork_intentkit\\intentkit\\tools\\xmtp\\transfer.py": {
+      "sha256_before": "2f9e30f2567656b9d56407d3c987ea33fc88af876b31218aae6a6cb8671f4a70",
+      "line_count": 212,
+      "sha256_after": "2f9e30f2567656b9d56407d3c987ea33fc88af876b31218aae6a6cb8671f4a70"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\datamllab_ltsm\\multi_agents_pipeline\\agents\\Planning_Agent.py": {
+      "sha256_before": "6cb287d907fe05c747442553fbddf9bfa709b035b27397ae1735df7a65607253",
+      "line_count": 117,
+      "sha256_after": "6cb287d907fe05c747442553fbddf9bfa709b035b27397ae1735df7a65607253"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\datamllab_ltsm\\multi_agents_pipeline\\agents\\QA_Agent.py": {
+      "sha256_before": "b6557386e71fc8ded122ed7e1c9e2798f4205d06a888b42d6f1c5c9fddca9a75",
+      "line_count": 84,
+      "sha256_after": "b6557386e71fc8ded122ed7e1c9e2798f4205d06a888b42d6f1c5c9fddca9a75"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\datastax_ragstack-ai\\libs\\e2e-tests\\e2e_tests\\langchain\\nemo_guardrails.py": {
+      "sha256_before": "302b11334f6ab8a7e8e1716979342f9282a1e39bc989475994c5112f30d1c2e5",
+      "line_count": 119,
+      "sha256_after": "302b11334f6ab8a7e8e1716979342f9282a1e39bc989475994c5112f30d1c2e5"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\dustland_vibex-py\\src\\vibex\\memory\\mem0_backend.py": {
+      "sha256_before": "6ac710f991fa54d7f3d7cd0dbcb7c30691f66ac548e0ffb42b151f972c5a6158",
+      "line_count": 442,
+      "sha256_after": "6ac710f991fa54d7f3d7cd0dbcb7c30691f66ac548e0ffb42b151f972c5a6158"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\ericjiang18_Agent-Q-Mix\\agent_baseline\\agent-framework\\python\\packages\\orchestrations\\agent_framework_orchestrations\\_magentic.py": {
+      "sha256_before": "9fb259d2e3fe7584d36cdfca4d76387cc10613c38b39640f2f139bc8d79c10a4",
+      "line_count": 1771,
+      "sha256_after": "9fb259d2e3fe7584d36cdfca4d76387cc10613c38b39640f2f139bc8d79c10a4"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\ericjiang18_Agent-Q-Mix\\agent_baseline\\autogen\\python\\packages\\agbench\\benchmarks\\GAIA\\Templates\\ParallelAgents\\scenario.py": {
+      "sha256_before": "02fdba4484ba695eaff11790ce27fb772c4102f8c44c2e38d81455bd0edc43d5",
+      "line_count": 402,
+      "sha256_after": "02fdba4484ba695eaff11790ce27fb772c4102f8c44c2e38d81455bd0edc43d5"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\ericjiang18_Agent-Q-Mix\\agent_baseline\\autogen\\python\\packages\\autogen-agentchat\\src\\autogen_agentchat\\agents\\_code_executor_agent.py": {
+      "sha256_before": "17a62c54093ceb8b0ff5adeb4ad586fe1e123064b247184770c525eac6bf3327",
+      "line_count": 893,
+      "sha256_after": "17a62c54093ceb8b0ff5adeb4ad586fe1e123064b247184770c525eac6bf3327"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\ericjiang18_Agent-Q-Mix\\agent_baseline\\autogen\\python\\packages\\autogen-agentchat\\src\\autogen_agentchat\\agents\\_society_of_mind_agent.py": {
+      "sha256_before": "097058b9e4d88639e28e62f312b81fa1ac80b838d8ab0d578ff1c3f9f81f06c5",
+      "line_count": 302,
+      "sha256_after": "097058b9e4d88639e28e62f312b81fa1ac80b838d8ab0d578ff1c3f9f81f06c5"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\ericjiang18_Agent-Q-Mix\\agent_baseline\\autogen\\python\\packages\\autogen-agentchat\\src\\autogen_agentchat\\teams\\_group_chat\\_chat_agent_container.py": {
+      "sha256_before": "6564fcf9c2660071b176c39c373616ed210b8723f68dc00386d724c6031dc5f6",
+      "line_count": 213,
+      "sha256_after": "6564fcf9c2660071b176c39c373616ed210b8723f68dc00386d724c6031dc5f6"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\ericjiang18_Agent-Q-Mix\\agent_baseline\\autogen\\python\\packages\\autogen-agentchat\\src\\autogen_agentchat\\teams\\_group_chat\\_magentic_one\\_magentic_one_orchestrator.py": {
+      "sha256_before": "9c0f815cc8b65ada85d54bf314c7f8869559a35477325bbd0d0577e80d4bda3f",
+      "line_count": 536,
+      "sha256_after": "9c0f815cc8b65ada85d54bf314c7f8869559a35477325bbd0d0577e80d4bda3f"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\ericjiang18_Agent-Q-Mix\\agent_baseline\\autogen\\python\\packages\\autogen-ext\\src\\autogen_ext\\experimental\\task_centric_memory\\_prompter.py": {
+      "sha256_before": "163812bfbff3ab45d7194b3441defa46d739f92599e2b972a4c97623e76adbad",
+      "line_count": 289,
+      "sha256_after": "163812bfbff3ab45d7194b3441defa46d739f92599e2b972a4c97623e76adbad"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\ericjiang18_Agent-Q-Mix\\agent_baseline\\autogen\\python\\packages\\autogen-ext\\src\\autogen_ext\\experimental\\task_centric_memory\\utils\\apprentice.py": {
+      "sha256_before": "9e43bf6476024291f1ccc76bbadf631dd93d6514af579ac410b8c6c9178844ba",
+      "line_count": 257,
+      "sha256_after": "9e43bf6476024291f1ccc76bbadf631dd93d6514af579ac410b8c6c9178844ba"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\ericjiang18_Agent-Q-Mix\\agent_baseline\\autogen\\python\\packages\\autogen-ext\\src\\autogen_ext\\experimental\\task_centric_memory\\utils\\grader.py": {
+      "sha256_before": "1201be96d0df0133981531b0e691be66740b7fa5df8163e4679b610bac480551",
+      "line_count": 179,
+      "sha256_after": "1201be96d0df0133981531b0e691be66740b7fa5df8163e4679b610bac480551"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\ericjiang18_Agent-Q-Mix\\agent_baseline\\autogen\\python\\samples\\agentchat_streamlit\\agent.py": {
+      "sha256_before": "d0f5a1760a37c0db26603097a14a8c0fa7e99c0366b308229216fc1bfbfe36f2",
+      "line_count": 26,
+      "sha256_after": "d0f5a1760a37c0db26603097a14a8c0fa7e99c0366b308229216fc1bfbfe36f2"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\ericjiang18_Agent-Q-Mix\\agent_baseline\\autogen\\python\\samples\\core_async_human_in_the_loop\\main.py": {
+      "sha256_before": "c0e7486272179d10187ccc0c692db66ca791a82e56313ff8e4f4b1782d0ca106",
+      "line_count": 356,
+      "sha256_after": "c0e7486272179d10187ccc0c692db66ca791a82e56313ff8e4f4b1782d0ca106"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\ericjiang18_Agent-Q-Mix\\agent_baseline\\autogen\\python\\samples\\core_distributed-group-chat\\_agents.py": {
+      "sha256_before": "b8ae5eaa4f6684e210e7e6fdb4f853696af622ba85dbeeddfc446c83ba27e07e",
+      "line_count": 214,
+      "sha256_after": "b8ae5eaa4f6684e210e7e6fdb4f853696af622ba85dbeeddfc446c83ba27e07e"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\FudanSELab_TripSphere\\trip-itinerary-planner\\src\\itinerary_planner\\agent\\nodes.py": {
+      "sha256_before": "208bf6a94f46c7d3eb2717839192198d4d627f3f98cc6bbb7a03ee118b2c8c82",
+      "line_count": 508,
+      "sha256_after": "208bf6a94f46c7d3eb2717839192198d4d627f3f98cc6bbb7a03ee118b2c8c82"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\GenseeAI_open_deep_research\\src\\legacy\\graph.py": {
+      "sha256_before": "9e0f2f24d95da74ab15dfc383a3fb10a1a1f297bc36cc99c4589ef66e4c95ce0",
+      "line_count": 503,
+      "sha256_after": "9e0f2f24d95da74ab15dfc383a3fb10a1a1f297bc36cc99c4589ef66e4c95ce0"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Grigorij-Dudnik_Clean-Coder-AI\\src\\agents\\frontend_feedback.py": {
+      "sha256_before": "e3015fe297990ac2f907705027a56dfcdce3e6357ef88165bbd498632a3d2bef",
+      "line_count": 109,
+      "sha256_after": "e3015fe297990ac2f907705027a56dfcdce3e6357ef88165bbd498632a3d2bef"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\gtesei_agentic_design_patterns\\foundational_design_patterns\\4_reflection\\src\\reflection_stateful_loop.py": {
+      "sha256_before": "42c30f03aa9332772da9a209e96cb010dcd377a514977020177d14f048570f11",
+      "line_count": 579,
+      "sha256_after": "42c30f03aa9332772da9a209e96cb010dcd377a514977020177d14f048570f11"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Haohao-end_openagent\\api\\internal\\service\\icon_generator_service.py": {
+      "sha256_before": "ab2d15fb4953a5124e2f992c4e2808eae6277a1d24856b4bf6a6641af9659ecc",
+      "line_count": 282,
+      "sha256_after": "ab2d15fb4953a5124e2f992c4e2808eae6277a1d24856b4bf6a6641af9659ecc"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\HKUDS_ViMax\\agents\\camera_image_generator.py": {
+      "sha256_before": "f2ed1d2373785792615c7350a70830db58a7955ceaa267dc90179bf6b78f10c5",
+      "line_count": 273,
+      "sha256_after": "f2ed1d2373785792615c7350a70830db58a7955ceaa267dc90179bf6b78f10c5"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\HKUDS_ViMax\\agents\\event_extractor.py": {
+      "sha256_before": "d6eb4f4c342db8dd96a0294634a6a8c12d1aafbb81bad14aa52e68a08f5b3e5f",
+      "line_count": 156,
+      "sha256_after": "d6eb4f4c342db8dd96a0294634a6a8c12d1aafbb81bad14aa52e68a08f5b3e5f"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\ibm-granite-community_granite-playground-agents\\granite_core\\granite_core\\research\\researcher.py": {
+      "sha256_before": "1a75ed232d909d0f0dfbc38de273bc1eb90d18d2ec104bc0125bfdc29bfc366f",
+      "line_count": 394,
+      "sha256_after": "1a75ed232d909d0f0dfbc38de273bc1eb90d18d2ec104bc0125bfdc29bfc366f"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\ikamensh_kodo\\kodo\\coach.py": {
+      "sha256_before": "7d0a6b44945a71154fbf870289bee6ac7e312cf2a86e879e5ffc3dd02da41e32",
+      "line_count": 453,
+      "sha256_after": "7d0a6b44945a71154fbf870289bee6ac7e312cf2a86e879e5ffc3dd02da41e32"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Insight-Services-APAC_ingenious\\ingenious\\models\\ag_agents.py": {
+      "sha256_before": "c017f617dea8c1e7863c0358c6a1ede5f042ec7dae62b6bfc2c414666daf56ae",
+      "line_count": 293,
+      "sha256_after": "c017f617dea8c1e7863c0358c6a1ede5f042ec7dae62b6bfc2c414666daf56ae"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\InternScience_InternAgent\\internagent\\mas\\agents\\dr_agents\\camel\\agents\\critic_agent.py": {
+      "sha256_before": "76a7da43c96a63b9bd7cc21f7f98a6f5290d4bf6dcefdd61e56015a3e30376e9",
+      "line_count": 202,
+      "sha256_after": "76a7da43c96a63b9bd7cc21f7f98a6f5290d4bf6dcefdd61e56015a3e30376e9"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\InternScience_InternAgent\\internagent\\mas\\agents\\dr_agents\\camel\\agents\\deductive_reasoner_agent.py": {
+      "sha256_before": "af8072287d7b985975b3c7a860c29d6d90ba9b265f1cfbe660a5441851852f5d",
+      "line_count": 303,
+      "sha256_after": "af8072287d7b985975b3c7a860c29d6d90ba9b265f1cfbe660a5441851852f5d"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\InternScience_InternAgent\\internagent\\mas\\agents\\dr_agents\\camel\\agents\\embodied_agent.py": {
+      "sha256_before": "0a044cc76bc32e6b2071a7106508b1777f42e72f2a103c06324baebeb0a36361",
+      "line_count": 201,
+      "sha256_after": "0a044cc76bc32e6b2071a7106508b1777f42e72f2a103c06324baebeb0a36361"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\InternScience_InternAgent\\internagent\\mas\\agents\\dr_agents\\camel\\agents\\role_assignment_agent.py": {
+      "sha256_before": "69d15da9e26554d6fd6f4c100aa54a4bdefb304468a794898022bfaa1e7111ff",
+      "line_count": 141,
+      "sha256_after": "69d15da9e26554d6fd6f4c100aa54a4bdefb304468a794898022bfaa1e7111ff"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\InternScience_InternAgent\\internagent\\mas\\agents\\dr_agents\\camel\\agents\\search_agent.py": {
+      "sha256_before": "3d0337dcac28e5ca5ffdc028a3dfd3a1b6c04865545c71e355d65e400244f327",
+      "line_count": 133,
+      "sha256_after": "3d0337dcac28e5ca5ffdc028a3dfd3a1b6c04865545c71e355d65e400244f327"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\InternScience_InternAgent\\internagent\\mas\\agents\\dr_agents\\camel\\agents\\task_agent.py": {
+      "sha256_before": "9bff3dfa8aed426e6ff7f8e6a902f04091564b7d291af737e2104d4943212048",
+      "line_count": 410,
+      "sha256_after": "9bff3dfa8aed426e6ff7f8e6a902f04091564b7d291af737e2104d4943212048"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\InternScience_InternAgent\\internagent\\mas\\agents\\dr_agents\\camel\\datagen\\self_improving_cot.py": {
+      "sha256_before": "c22e1357d744f1f2c4dd7742b7bb61b9112097ff52ee426e529099a92ae7818a",
+      "line_count": 899,
+      "sha256_after": "c22e1357d744f1f2c4dd7742b7bb61b9112097ff52ee426e529099a92ae7818a"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\InternScience_InternAgent\\internagent\\mas\\agents\\dr_agents\\camel\\datasets\\few_shot_generator.py": {
+      "sha256_before": "745920c62aaea2dd83836055e7cf81b041f93c6d8e76b18c28f7c54853dbf59d",
+      "line_count": 282,
+      "sha256_after": "745920c62aaea2dd83836055e7cf81b041f93c6d8e76b18c28f7c54853dbf59d"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\itbench-hub_ITBench-CISO-CAA-Agent\\src\\ciso_agent\\agents\\kubernetes_kyverno_update.py": {
+      "sha256_before": "f19666d66bbd4085af08aa6cb08fdd664e97a8283462267a849fa5938e19072d",
+      "line_count": 213,
+      "sha256_after": "f19666d66bbd4085af08aa6cb08fdd664e97a8283462267a849fa5938e19072d"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\itbench-hub_ITBench-CISO-CAA-Agent\\src\\ciso_agent\\agents\\kubernetes_kyverno.py": {
+      "sha256_before": "8838fb22d4fbf68794bcc7d5c043bee15ea1dc51e3ce554f47ecccc01c194980",
+      "line_count": 201,
+      "sha256_after": "8838fb22d4fbf68794bcc7d5c043bee15ea1dc51e3ce554f47ecccc01c194980"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\julienlucas_agentic-rag-multiagent\\backend\\retriever\\contextual_compression.py": {
+      "sha256_before": "5e7dd76e9775d80685c04d0637bda98fcfe406a5a6893894be38aa2032ce1d46",
+      "line_count": 157,
+      "sha256_after": "5e7dd76e9775d80685c04d0637bda98fcfe406a5a6893894be38aa2032ce1d46"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Kasma-Inc_Sagi\\src\\Sagi\\workflows\\planning_html\\planning_html_orchestrator.py": {
+      "sha256_before": "790d22c3e7d42e001ee1dec67c9a8f16dd13c5e5a8e88da9aa98a4fd833a304b",
+      "line_count": 894,
+      "sha256_after": "790d22c3e7d42e001ee1dec67c9a8f16dd13c5e5a8e88da9aa98a4fd833a304b"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\kjgpta_tracesage\\examples\\showcase\\23_reflexion_writer\\after.py": {
+      "sha256_before": "d6e3ae739c2fca99af537ddf79af05e36d1c585595750871b8dfa6e52ce5e521",
+      "line_count": 121,
+      "sha256_after": "d6e3ae739c2fca99af537ddf79af05e36d1c585595750871b8dfa6e52ce5e521"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\kjgpta_tracesage\\examples\\showcase\\23_reflexion_writer\\before.py": {
+      "sha256_before": "07502330d6f4ee28c9c1270e17e38266ba68d4599c4b16a13ea6d6cf96942c2c",
+      "line_count": 107,
+      "sha256_after": "07502330d6f4ee28c9c1270e17e38266ba68d4599c4b16a13ea6d6cf96942c2c"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\LearningCircuit_local-deep-research\\src\\local_deep_research\\web_search_engines\\engines\\full_search.py": {
+      "sha256_before": "a3e3c145002b6de59e4ae6b3f09924354628413ac6016edefb94a696235769a2",
+      "line_count": 247,
+      "sha256_after": "a3e3c145002b6de59e4ae6b3f09924354628413ac6016edefb94a696235769a2"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\lucebert_langchain-doc-graph\\src\\self_rag\\graph.py": {
+      "sha256_before": "7ff7f88cf36239e5397d713392252610f240de32d3a0d0a8deab08bc18545f7e",
+      "line_count": 220,
+      "sha256_after": "7ff7f88cf36239e5397d713392252610f240de32d3a0d0a8deab08bc18545f7e"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\lucebert_langchain-doc-graph\\src\\self_rag\\nodes\\hallucination_grader.py": {
+      "sha256_before": "a0d030d5fe16623fdad7a4f7c7138b9ea965c35d3a33fddcd079750694be460a",
+      "line_count": 31,
+      "sha256_after": "a0d030d5fe16623fdad7a4f7c7138b9ea965c35d3a33fddcd079750694be460a"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\lucebert_langchain-doc-graph\\src\\self_rag\\nodes\\answer_grader.py": {
+      "sha256_before": "7ab75daf047acab455296c3f97e84f2e9c5a7f39a214609eeb0dffd43bd67163",
+      "line_count": 31,
+      "sha256_after": "7ab75daf047acab455296c3f97e84f2e9c5a7f39a214609eeb0dffd43bd67163"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\michaelalbada_BuildingApplicationsWithAIAgents\\src\\frameworks\\langgraph_agents\\supply_chain\\ray_supply_chain_multi_agent.py": {
+      "sha256_before": "0d22168c1b0de88457907460b8866dec24ef1cd7f31106c31e7e21c194cc5d30",
+      "line_count": 326,
+      "sha256_after": "0d22168c1b0de88457907460b8866dec24ef1cd7f31106c31e7e21c194cc5d30"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\microsoft_Multi-Agent-Custom-Automation-Engine-Solution-Accelerator\\src\\backend\\patches\\magentic_duplicate_fc_id.py": {
+      "sha256_before": "1441431fefca17b043b6d9fd0a0b518a2aec37d08c21d71486769035d00cacb1",
+      "line_count": 84,
+      "sha256_after": "1441431fefca17b043b6d9fd0a0b518a2aec37d08c21d71486769035d00cacb1"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\microsoft_semanticworkbench\\libraries\\python\\guided-conversation\\guided_conversation\\functions\\conversation_plan.py": {
+      "sha256_before": "4d1819b09702562ee63794d201ffa24088dde121f4fb03e606c077461ffe976b",
+      "line_count": 285,
+      "sha256_after": "4d1819b09702562ee63794d201ffa24088dde121f4fb03e606c077461ffe976b"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\microsoft_semanticworkbench\\libraries\\python\\guided-conversation\\guided_conversation\\functions\\execution.py": {
+      "sha256_before": "71f0cd4c4b264c600b290ef604879f9c95b11df23faa3eb6f4de33845acd7253",
+      "line_count": 83,
+      "sha256_after": "71f0cd4c4b264c600b290ef604879f9c95b11df23faa3eb6f4de33845acd7253"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\microsoft_semanticworkbench\\libraries\\python\\guided-conversation\\guided_conversation\\functions\\final_update_plan.py": {
+      "sha256_before": "ba68a1a3f71eeefdaa62ded967d5017ad583b3b7171693cd9d1b4a0af6ff93f6",
+      "line_count": 103,
+      "sha256_after": "ba68a1a3f71eeefdaa62ded967d5017ad583b3b7171693cd9d1b4a0af6ff93f6"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\mindroom-ai_mindroom\\src\\mindroom\\routing.py": {
+      "sha256_before": "bddca9dbdf366559e33c7cf0f361cdaa04f6844cf61861bd8e5e4781ba72ddf5",
+      "line_count": 184,
+      "sha256_after": "bddca9dbdf366559e33c7cf0f361cdaa04f6844cf61861bd8e5e4781ba72ddf5"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\neul-labs_fast-langgraph\\scripts\\benchmark_rust_channels.py": {
+      "sha256_before": "168ca37444ed8b31800bd32eb3214b997d76ed9ea6f92e1f0e49004b304a18b9",
+      "line_count": 274,
+      "sha256_after": "168ca37444ed8b31800bd32eb3214b997d76ed9ea6f92e1f0e49004b304a18b9"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\ob-labs_agentseek-api\\examples\\run_sample_graphs.py": {
+      "sha256_before": "de439b48a74cb7956c0f3846ce8350f7b3051b3c7e407948aec92a20ef40b09c",
+      "line_count": 84,
+      "sha256_after": "de439b48a74cb7956c0f3846ce8350f7b3051b3c7e407948aec92a20ef40b09c"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\ob-labs_agentseek-api\\examples\\graphs\\stress_test\\graph.py": {
+      "sha256_before": "25ab7ee19348cd07253a6678084aa8a9e16cb92849e98712ce76a7b220c00791",
+      "line_count": 105,
+      "sha256_after": "25ab7ee19348cd07253a6678084aa8a9e16cb92849e98712ce76a7b220c00791"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\ob-labs_agentseek-api\\examples\\graphs\\subgraph_agent\\graph.py": {
+      "sha256_before": "4aacadcfa525f536bac61e8d66179d0e885914481d47a473ac87927ddfcc5989",
+      "line_count": 61,
+      "sha256_after": "4aacadcfa525f536bac61e8d66179d0e885914481d47a473ac87927ddfcc5989"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\ob-labs_agentseek-api\\examples\\graphs\\react_agent\\graph.py": {
+      "sha256_before": "2aeb94a2f59c31427965958ac3769539c4a74c08d9029553d35bdc456e7e2ea6",
+      "line_count": 80,
+      "sha256_after": "2aeb94a2f59c31427965958ac3769539c4a74c08d9029553d35bdc456e7e2ea6"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\ob-labs_agentseek-api\\examples\\graphs\\stress_tool_agent\\graph.py": {
+      "sha256_before": "3444928a5e8f7d0e58fdf1984145faf6943c720fc8d531af248da718807a4378",
+      "line_count": 128,
+      "sha256_after": "3444928a5e8f7d0e58fdf1984145faf6943c720fc8d531af248da718807a4378"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\opea-project_GenAIComps\\comps\\guardrails\\src\\guardrails\\integrations\\llamaguard.py": {
+      "sha256_before": "91ae80b602401f99bcc90c1bcab083b13acdd3595ce825139ea56f6c1654d905",
+      "line_count": 152,
+      "sha256_after": "91ae80b602401f99bcc90c1bcab083b13acdd3595ce825139ea56f6c1654d905"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\opea-project_GenAIComps\\comps\\guardrails\\src\\guardrails\\integrations\\wildguard.py": {
+      "sha256_before": "447103a3773072ed021aed116cd41c7f40afa6d19c8057261f115f904bc5faba",
+      "line_count": 119,
+      "sha256_after": "447103a3773072ed021aed116cd41c7f40afa6d19c8057261f115f904bc5faba"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\OpenDCAI_OpenResearchFlow\\backend\\src\\modules\\exp_gen_v2\\workflow.py": {
+      "sha256_before": "4ab978a1f6e50066ec9366548d9572ca88dedc6efdbe79d412e014dbfb0b8738",
+      "line_count": 2574,
+      "sha256_after": "4ab978a1f6e50066ec9366548d9572ca88dedc6efdbe79d412e014dbfb0b8738"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\OpenGradient_tee-gateway\\tee_gateway\\controllers\\chat_controller.py": {
+      "sha256_before": "7256c2aa4284900fcc5887facffe914caea513294c75bb1df153c189a8e007b3",
+      "line_count": 998,
+      "sha256_after": "7256c2aa4284900fcc5887facffe914caea513294c75bb1df153c189a8e007b3"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\oracle_agent-spec\\docs\\pyagentspec\\source\\code_examples\\adapter_agent_framework_quickstart.py": {
+      "sha256_before": "ddd21cde31489b396f06f62a22bde9f421ed15259e44b150a9dc3f218e959113",
+      "line_count": 103,
+      "sha256_after": "ddd21cde31489b396f06f62a22bde9f421ed15259e44b150a9dc3f218e959113"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\oracle_agent-spec\\pyagentspec\\src\\pyagentspec\\adapters\\crewai\\_node_execution.py": {
+      "sha256_before": "c6c2c84c8e01b2ef4abc62545aaf8c52d5197840c3a2513372f811693bbff0dc",
+      "line_count": 265,
+      "sha256_after": "c6c2c84c8e01b2ef4abc62545aaf8c52d5197840c3a2513372f811693bbff0dc"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\PostHog_posthog\\ee\\hogai\\chat_agent\\query_planner\\nodes.py": {
+      "sha256_before": "361065cb5d60968faa69d0c0a1df8f86375d28a31296c5e73f9d385fef25e53a",
+      "line_count": 335,
+      "sha256_after": "361065cb5d60968faa69d0c0a1df8f86375d28a31296c5e73f9d385fef25e53a"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\PostHog_posthog\\ee\\hogai\\chat_agent\\rag\\nodes.py": {
+      "sha256_before": "b1c42a843b819b3e923ba9874543ca4194855c957c763735cd2511588eec6c82",
+      "line_count": 208,
+      "sha256_after": "b1c42a843b819b3e923ba9874543ca4194855c957c763735cd2511588eec6c82"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\PostHog_posthog\\ee\\hogai\\chat_agent\\taxonomy\\nodes.py": {
+      "sha256_before": "6994ad60f6116fcea8db9d2ea9f5d548172f91bd1ceee6d5bef183c861698552",
+      "line_count": 275,
+      "sha256_after": "6994ad60f6116fcea8db9d2ea9f5d548172f91bd1ceee6d5bef183c861698552"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\PostHog_posthog\\ee\\hogai\\utils\\helpers.py": {
+      "sha256_before": "983b40c2b7038b0d3a8bf177af0318f8440b970ace9964b732a8a39438ccb150",
+      "line_count": 614,
+      "sha256_after": "983b40c2b7038b0d3a8bf177af0318f8440b970ace9964b732a8a39438ccb150"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\PostHog_posthog\\products\\cdp\\backend\\max_tools.py": {
+      "sha256_before": "7b927bb938fbda2a0f70673b83ba2dd76876e4b815fc87fe18bad968e72420e6",
+      "line_count": 337,
+      "sha256_after": "7b927bb938fbda2a0f70673b83ba2dd76876e4b815fc87fe18bad968e72420e6"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\RenqiChen_Virtual-Scientists-v2\\camel-master\\camel\\agents\\critic_agent.py": {
+      "sha256_before": "59458921c1cd32d586628ef9f18948f5e7bb07b090d8ac376b390a3026407b90",
+      "line_count": 202,
+      "sha256_after": "59458921c1cd32d586628ef9f18948f5e7bb07b090d8ac376b390a3026407b90"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\RenqiChen_Virtual-Scientists-v2\\camel-master\\camel\\agents\\deductive_reasoner_agent.py": {
+      "sha256_before": "e9c7558c51e39be7350b08a0353fb3b84711222b0f8ad33c327a99570442dedc",
+      "line_count": 300,
+      "sha256_after": "e9c7558c51e39be7350b08a0353fb3b84711222b0f8ad33c327a99570442dedc"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\RenqiChen_Virtual-Scientists-v2\\camel-master\\camel\\agents\\embodied_agent.py": {
+      "sha256_before": "25b14b899478b467b05c886c35ad8fb61f7646b6f1df1589363662cf1688d203",
+      "line_count": 201,
+      "sha256_after": "25b14b899478b467b05c886c35ad8fb61f7646b6f1df1589363662cf1688d203"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\RenqiChen_Virtual-Scientists-v2\\camel-master\\camel\\agents\\role_assignment_agent.py": {
+      "sha256_before": "ed921a2de254c4af8ea17626c3e86556fff145f6705cf4f5c8a8adcb77db33b6",
+      "line_count": 141,
+      "sha256_after": "ed921a2de254c4af8ea17626c3e86556fff145f6705cf4f5c8a8adcb77db33b6"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\RenqiChen_Virtual-Scientists-v2\\camel-master\\camel\\agents\\search_agent.py": {
+      "sha256_before": "8d957140a032b266b1a66008f9f6f75e084cc7253d78daf4d0061c4f4134784d",
+      "line_count": 133,
+      "sha256_after": "8d957140a032b266b1a66008f9f6f75e084cc7253d78daf4d0061c4f4134784d"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\RenqiChen_Virtual-Scientists-v2\\camel-master\\camel\\agents\\task_agent.py": {
+      "sha256_before": "32df850f8acf510ec2b7c11bd1b006515e9864b877a87b5183072bca451881e0",
+      "line_count": 410,
+      "sha256_after": "32df850f8acf510ec2b7c11bd1b006515e9864b877a87b5183072bca451881e0"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\rhesis-ai_rhesis\\agents\\visit-prep\\src\\visit_prep\\pipeline.py": {
+      "sha256_before": "3eb8e73333091cacf0e2836f2729191ef4e906a94dd5c0284be09a9f428b8912",
+      "line_count": 324,
+      "sha256_after": "3eb8e73333091cacf0e2836f2729191ef4e906a94dd5c0284be09a9f428b8912"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\rhesis-ai_rhesis\\agents\\visit-prep\\src\\visit_prep\\agents\\critic.py": {
+      "sha256_before": "aeed87a0217c655b15f135de11e250bdb2aed0eb67e7d5bf3e1e9d8ec2e5f68e",
+      "line_count": 52,
+      "sha256_after": "aeed87a0217c655b15f135de11e250bdb2aed0eb67e7d5bf3e1e9d8ec2e5f68e"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\rhesis-ai_rhesis\\agents\\visit-prep\\src\\visit_prep\\agents\\summary.py": {
+      "sha256_before": "9d14f17467cedd50cb2ae427dd10617dba0c3ec050c22bc0059bb18e7fed152c",
+      "line_count": 47,
+      "sha256_after": "9d14f17467cedd50cb2ae427dd10617dba0c3ec050c22bc0059bb18e7fed152c"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\robertwhiffin_ai-slide-generator\\src\\api\\services\\session_naming.py": {
+      "sha256_before": "5a99dc43483c119aa09f9f1362485b586f097f672780e5b5bd669a01069f0fd8",
+      "line_count": 61,
+      "sha256_after": "5a99dc43483c119aa09f9f1362485b586f097f672780e5b5bd669a01069f0fd8"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\rocketride-org_rocketride-server\\packages\\ai\\src\\ai\\common\\context.py": {
+      "sha256_before": "f556f2155b97cb7b6ffd0dd86e917f1106cfb284627ac62707fce07771feae36",
+      "line_count": 112,
+      "sha256_after": "f556f2155b97cb7b6ffd0dd86e917f1106cfb284627ac62707fce07771feae36"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Rvosy_Sakura\\third_party\\mem0\\mem0\\vector_stores\\opensearch.py": {
+      "sha256_before": "4feb1c5fec03561d072205cb0285495a42c005f6fadb41c4505fe9da34d5a51b",
+      "line_count": 380,
+      "sha256_after": "4feb1c5fec03561d072205cb0285495a42c005f6fadb41c4505fe9da34d5a51b"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\sambanova_agents\\backend\\src\\agents\\components\\datagen\\node.py": {
+      "sha256_before": "4e9b72dc9b6d519b31a6b5e461c098622dc2b14a318d72d9c359f3577673ebea",
+      "line_count": 519,
+      "sha256_after": "4e9b72dc9b6d519b31a6b5e461c098622dc2b14a318d72d9c359f3577673ebea"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Shubhamsaboo_awesome-llm-apps\\advanced_ai_agents\\autonomous_game_playing_agent_apps\\ai_tic_tac_toe_agent\\app.py": {
+      "sha256_before": "6eb1a3a16dba4e19350d4b1b58daed79e3a147fc63bc911fd8873337e63973e8",
+      "line_count": 309,
+      "sha256_after": "6eb1a3a16dba4e19350d4b1b58daed79e3a147fc63bc911fd8873337e63973e8"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Shubhamsaboo_awesome-llm-apps\\advanced_ai_agents\\autonomous_game_playing_agent_apps\\ai_tic_tac_toe_agent\\utils.py": {
+      "sha256_before": "66a6e28a5dd6a1c24dc3cfcb9d3a9a01ee36ddf7053547778004789c6d81f997",
+      "line_count": 416,
+      "sha256_after": "66a6e28a5dd6a1c24dc3cfcb9d3a9a01ee36ddf7053547778004789c6d81f997"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Shubhamsaboo_awesome-llm-apps\\ai_agent_framework_crash_course\\openai_sdk_crash_course\\6_guardrails_validation\\agent.py": {
+      "sha256_before": "a146008eb839ddd7a0e2ca6be7bdc60fe28b4df55737bde75ca95afec53dcc5e",
+      "line_count": 157,
+      "sha256_after": "a146008eb839ddd7a0e2ca6be7bdc60fe28b4df55737bde75ca95afec53dcc5e"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\skygazer42_Weaver\\agent\\workflows\\viz_planner.py": {
+      "sha256_before": "02b9cfc1b5106f21ada1fb8e6c0d988d2df10dac9a174a26d8a0f47b9432c82a",
+      "line_count": 427,
+      "sha256_after": "02b9cfc1b5106f21ada1fb8e6c0d988d2df10dac9a174a26d8a0f47b9432c82a"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\skygazer42_Weaver\\tools\\sandbox\\sandbox_image_edit_tool.py": {
+      "sha256_before": "a2f234894f156a46a3393dd56c7cece8e60cefa309d9d46b57dbcd10df836f0a",
+      "line_count": 1004,
+      "sha256_after": "a2f234894f156a46a3393dd56c7cece8e60cefa309d9d46b57dbcd10df836f0a"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\skygazer42_Weaver\\tools\\sandbox\\sandbox_presentation_outline_tool.py": {
+      "sha256_before": "63cebdcda5834c6fcd5a403fbdc985a9281e20b7b5b89ab80ffe6aea2c471512",
+      "line_count": 571,
+      "sha256_after": "63cebdcda5834c6fcd5a403fbdc985a9281e20b7b5b89ab80ffe6aea2c471512"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\skygazer42_Weaver\\tools\\sandbox\\sandbox_presentation_tool_v2.py": {
+      "sha256_before": "a3ac64c3766ed84fdf4c0c88c2bfed98d9f95d6a24ebb01adb4760d6f14bd5ee",
+      "line_count": 858,
+      "sha256_after": "a3ac64c3766ed84fdf4c0c88c2bfed98d9f95d6a24ebb01adb4760d6f14bd5ee"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\skygazer42_Weaver\\tools\\sandbox\\sandbox_presentation_tool.py": {
+      "sha256_before": "97332b6edfc43aa1432562f60d5e65094c96e7849af350e125bc5627e2939047",
+      "line_count": 938,
+      "sha256_after": "97332b6edfc43aa1432562f60d5e65094c96e7849af350e125bc5627e2939047"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\skygazer42_Weaver\\tools\\sandbox\\sandbox_sheets_tool.py": {
+      "sha256_before": "e4eb37e55a65114ab98709348f5168626dd6087d90ded35fb8de783e5ca4cdea",
+      "line_count": 863,
+      "sha256_after": "e4eb37e55a65114ab98709348f5168626dd6087d90ded35fb8de783e5ca4cdea"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\skygazer42_Weaver\\tools\\sandbox\\sandbox_vision_tool.py": {
+      "sha256_before": "4dee80f84d18f3d74a62093de4e233af0314d4addeb48c380c370523f220d346",
+      "line_count": 882,
+      "sha256_after": "4dee80f84d18f3d74a62093de4e233af0314d4addeb48c380c370523f220d346"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\sourangshupal_Agentic-RAG-project\\src\\services\\agents\\nodes\\rewrite_query_node.py": {
+      "sha256_before": "bb1cf19003854b21e5f3a2cad69d65cb03ff09478751977672a72b3941c2dc6e",
+      "line_count": 136,
+      "sha256_after": "bb1cf19003854b21e5f3a2cad69d65cb03ff09478751977672a72b3941c2dc6e"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\splunk_splunk-sdk-python\\splunklib\\ai\\engines\\langchain.py": {
+      "sha256_before": "1814bc53b69074a29d6c124f67dcb40e564bb0d4bc8797660ffe8c71a87eb88d",
+      "line_count": 2090,
+      "sha256_after": "1814bc53b69074a29d6c124f67dcb40e564bb0d4bc8797660ffe8c71a87eb88d"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\splx-ai_agentic-radar\\examples\\openai-agents\\agent_patterns\\deterministic\\deterministic.py": {
+      "sha256_before": "0fd4f8b787307886b21ee3c1f565140147b4c5740809ef65c92670891cfef30e",
+      "line_count": 80,
+      "sha256_after": "0fd4f8b787307886b21ee3c1f565140147b4c5740809ef65c92670891cfef30e"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\swarm-ai-research_swarm\\swarm\\analysis\\autoresearch.py": {
+      "sha256_before": "4c6d59b4fd053e4a52f0b7e29c3f6c819f6e9ba142ca304067dc64f91bc076bd",
+      "line_count": 354,
+      "sha256_after": "4c6d59b4fd053e4a52f0b7e29c3f6c819f6e9ba142ca304067dc64f91bc076bd"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\swarm-ai-research_swarm\\swarm\\research\\swarm_papers\\track_a.py": {
+      "sha256_before": "fb0686402df172de75bc1f7854ab1a92ac465f9207dee2e0310d4fc576b57809",
+      "line_count": 2394,
+      "sha256_after": "fb0686402df172de75bc1f7854ab1a92ac465f9207dee2e0310d4fc576b57809"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\temporalio_samples-python\\openai_agents\\agent_patterns\\workflows\\deterministic_workflow.py": {
+      "sha256_before": "bbf5decff35de3d4fb9fa3288628065760d72eaf00be41245dadf1a27282f781",
+      "line_count": 90,
+      "sha256_after": "bbf5decff35de3d4fb9fa3288628065760d72eaf00be41245dadf1a27282f781"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\THUIR_MemoryBench\\baselines\\mem0\\mem0\\vector_stores\\opensearch.py": {
+      "sha256_before": "6ba578a3da0e5548be6b8b5c293dc5ce2fdd1ee9f7fd8ab6c80960dbe191b17d",
+      "line_count": 281,
+      "sha256_after": "6ba578a3da0e5548be6b8b5c293dc5ce2fdd1ee9f7fd8ab6c80960dbe191b17d"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Tianyi-Billy-Ma_AutoData\\autodata\\extras\\browser_use\\chat_utils.py": {
+      "sha256_before": "8de8ae9bba0d8816f27b231cc8a3659f81788639336b410ed13c69e5ccf50e45",
+      "line_count": 235,
+      "sha256_after": "8de8ae9bba0d8816f27b231cc8a3659f81788639336b410ed13c69e5ccf50e45"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\tigergraph_graphrag\\graphrag\\app\\routers\\ui.py": {
+      "sha256_before": "b384b5ead7a230ee01e8610a6c87859ef2cffd034433fca67b71d978e0528bdd",
+      "line_count": 5039,
+      "sha256_after": "b384b5ead7a230ee01e8610a6c87859ef2cffd034433fca67b71d978e0528bdd"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\timbal-ai_timbal\\benchmarks\\langchain\\bench_long_conversation.py": {
+      "sha256_before": "810cb997741103752d707bd6f9b9a9b650ed841316e12839aeb4c9b5fd026e72",
+      "line_count": 481,
+      "sha256_after": "810cb997741103752d707bd6f9b9a9b650ed841316e12839aeb4c9b5fd026e72"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\UiPath_uipath-integrations-python\\packages\\uipath-pydantic-ai\\samples\\graph-flow\\main.py": {
+      "sha256_before": "17e2deeedcfc3a7bfb397c24858df3490dadd4734393fb1a9d7690bc5fc75470",
+      "line_count": 180,
+      "sha256_after": "17e2deeedcfc3a7bfb397c24858df3490dadd4734393fb1a9d7690bc5fc75470"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\wsargent_groundedllm\\hayhooks\\pipelines\\analyze_trace\\pipeline_wrapper.py": {
+      "sha256_before": "bce7c97486cdcb13e89986b6db8afe6f33dcf0104399d5127cc91f71a45776e9",
+      "line_count": 81,
+      "sha256_after": "bce7c97486cdcb13e89986b6db8afe6f33dcf0104399d5127cc91f71a45776e9"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\wsargent_groundedllm\\hayhooks\\pipelines\\excerpt\\pipeline_wrapper.py": {
+      "sha256_before": "e00952d9f89b6b19c84da8fca46d07be6f57df46ca502738816db2c04005c0b4",
+      "line_count": 181,
+      "sha256_after": "e00952d9f89b6b19c84da8fca46d07be6f57df46ca502738816db2c04005c0b4"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\wsargent_groundedllm\\hayhooks\\pipelines\\search_stackoverflow\\pipeline_wrapper.py": {
+      "sha256_before": "3c1500050f1dae96db5525fcf34a01f94823bbbd1f60d4cee11306b722ad7104",
+      "line_count": 88,
+      "sha256_after": "3c1500050f1dae96db5525fcf34a01f94823bbbd1f60d4cee11306b722ad7104"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\wsargent_groundedllm\\hayhooks\\pipelines\\search\\pipeline_wrapper.py": {
+      "sha256_before": "ec7871f4d87a1f2f189b94a6db370b5090864b45ce571e7ae677127e5f878839",
+      "line_count": 222,
+      "sha256_after": "ec7871f4d87a1f2f189b94a6db370b5090864b45ce571e7ae677127e5f878839"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\XAIHT_Tlamatini\\Tlamatini\\agent\\rag\\interface.py": {
+      "sha256_before": "844390540f83ee0daf4d7733395cf6911d0256bc399ac7be8b850faabd3d046a",
+      "line_count": 893,
+      "sha256_after": "844390540f83ee0daf4d7733395cf6911d0256bc399ac7be8b850faabd3d046a"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\XAIHT_Tlamatini\\Tlamatini\\agent\\tests.py": {
+      "sha256_before": "09145b50e781c72cf891d0a30b91c5aa8b4ff64ce364ca8159ec6a5dd7475e57",
+      "line_count": 7452,
+      "sha256_after": "09145b50e781c72cf891d0a30b91c5aa8b4ff64ce364ca8159ec6a5dd7475e57"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\xunharry4-source_AnimoCerebro\\src\\zentex\\tasks\\decomposition\\pydantic_ai_decomposer.py": {
+      "sha256_before": "46b790e64d0f97b3316119e5588a750bac400417295adb403503f27e22a51a7a",
+      "line_count": 459,
+      "sha256_after": "46b790e64d0f97b3316119e5588a750bac400417295adb403503f27e22a51a7a"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\zyhuang-gif_agent_project\\backend\\app\\utils\\factory.py": {
+      "sha256_before": "dc175a76c80a2325c8a454b74cd10ceb2cf6bfa53b8f7d0affa96bb83f74d398",
+      "line_count": 190,
+      "sha256_after": "dc175a76c80a2325c8a454b74cd10ceb2cf6bfa53b8f7d0affa96bb83f74d398"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\10xHub_Agentflow\\tests\\store\\test_mem0_store_async.py": {
+      "sha256_before": "ff10e18505a79b1775b5a08276ccc738cc0f7bd67fbb78d6180d34689a45df9f",
+      "line_count": 160,
+      "sha256_after": "ff10e18505a79b1775b5a08276ccc738cc0f7bd67fbb78d6180d34689a45df9f"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\10xHub_Agentflow\\agentflow\\storage\\store\\mem0_store.py": {
+      "sha256_before": "1b773587746dcd23dab654b16a1a571c45c8c433f69384c6448bfccd96608ba9",
+      "line_count": 435,
+      "sha256_after": "1b773587746dcd23dab654b16a1a571c45c8c433f69384c6448bfccd96608ba9"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\aegra_aegra\\libs\\aegra-api\\tests\\unit\\test_services\\test_graph_streaming.py": {
+      "sha256_before": "c54ca9174689211390737abac85d3db2c9b9e18acd5376b77987db872a5adf52",
+      "line_count": 892,
+      "sha256_after": "c54ca9174689211390737abac85d3db2c9b9e18acd5376b77987db872a5adf52"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\aegra_aegra\\libs\\aegra-api\\src\\aegra_api\\services\\graph_streaming.py": {
+      "sha256_before": "5b051d8711fe9cb41eb7cf4ae65c1204e3d3ae48053a4a0780e3830aa36d4948",
+      "line_count": 479,
+      "sha256_after": "5b051d8711fe9cb41eb7cf4ae65c1204e3d3ae48053a4a0780e3830aa36d4948"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\aegra_aegra\\libs\\aegra-api\\tests\\unit\\test_services\\test_graph_streaming_events_mode.py": {
+      "sha256_before": "3a57de7025feaf96f89716c8bd9393e876863045c2fdb109345b7a99877c7e44",
+      "line_count": 250,
+      "sha256_after": "3a57de7025feaf96f89716c8bd9393e876863045c2fdb109345b7a99877c7e44"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Aggregate-Intellect_sherpa\\src\\sherpa_ai\\actions\\planning.py": {
+      "sha256_before": "6aa4cd471a2b142624a31c0d331ff5269c78d26be905a3bb9c02803f95980791",
+      "line_count": 305,
+      "sha256_after": "6aa4cd471a2b142624a31c0d331ff5269c78d26be905a3bb9c02803f95980791"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Aggregate-Intellect_sherpa\\src\\tests\\unit_tests\\actions\\test_planning.py": {
+      "sha256_before": "026d8a891a25f4ae9a2839b4b093d4685ee9a994c41fe2786737f575ecdd6470",
+      "line_count": 27,
+      "sha256_after": "026d8a891a25f4ae9a2839b4b093d4685ee9a994c41fe2786737f575ecdd6470"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Aggregate-Intellect_sherpa\\src\\sherpa_ai\\utils.py": {
+      "sha256_before": "ea7e38e9150cd350f6b3687e3dc07653d28ebdc5fe4e4f8b5d5d34b32709cba9",
+      "line_count": 1297,
+      "sha256_after": "ea7e38e9150cd350f6b3687e3dc07653d28ebdc5fe4e4f8b5d5d34b32709cba9"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Aggregate-Intellect_sherpa\\src\\tests\\unit_tests\\test_utils.py": {
+      "sha256_before": "bc28d5bf1d39763c8ba3ae72d5c5171e27b6d287ec2fe5ba7f95d92a968bbbf9",
+      "line_count": 900,
+      "sha256_after": "bc28d5bf1d39763c8ba3ae72d5c5171e27b6d287ec2fe5ba7f95d92a968bbbf9"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\ai-christianson_RA.Aid\\tests\\ra_aid\\test_agent_utils.py": {
+      "sha256_before": "b8a84b705bad3891e0e6b67929c2b75935df94bcecb52828c1c42896448e8cad",
+      "line_count": 801,
+      "sha256_after": "b8a84b705bad3891e0e6b67929c2b75935df94bcecb52828c1c42896448e8cad"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\ai-christianson_RA.Aid\\ra_aid\\agent_utils.py": {
+      "sha256_before": "c5f4d09a036c90f45c6e001d8db2b66566dedfbcd6d4aa9893c23c36f777faad",
+      "line_count": 693,
+      "sha256_after": "c5f4d09a036c90f45c6e001d8db2b66566dedfbcd6d4aa9893c23c36f777faad"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\ai-christianson_RA.Aid\\tests\\ra_aid\\test_token_usage_tracking.py": {
+      "sha256_before": "c314a42d1d973754eeff05c35c6754d770818c2205a329f9e80cb59fbc6929f0",
+      "line_count": 153,
+      "sha256_after": "c314a42d1d973754eeff05c35c6754d770818c2205a329f9e80cb59fbc6929f0"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\ai-christianson_RA.Aid\\tests\\ra_aid\\test_fallback_handler.py": {
+      "sha256_before": "82803c8547e5746c5fc9090d685b2ba1f75b535c40394f5e71b213fe1085edf7",
+      "line_count": 372,
+      "sha256_after": "82803c8547e5746c5fc9090d685b2ba1f75b535c40394f5e71b213fe1085edf7"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\ai-christianson_RA.Aid\\ra_aid\\fallback_handler.py": {
+      "sha256_before": "662175b1da7e72dbf5c984c8c4a8916acc61528879345f63cd16a83b79dd5c74",
+      "line_count": 471,
+      "sha256_after": "662175b1da7e72dbf5c984c8c4a8916acc61528879345f63cd16a83b79dd5c74"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\ai-christianson_RA.Aid\\tests\\ra_aid\\tools\\test_agent.py": {
+      "sha256_before": "ff3a0948aaafdb56f70a8775687b254ca899341582fa99c7a6e1cad7ee6fd523",
+      "line_count": 307,
+      "sha256_after": "ff3a0948aaafdb56f70a8775687b254ca899341582fa99c7a6e1cad7ee6fd523"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\ai-christianson_RA.Aid\\ra_aid\\tools\\agent.py": {
+      "sha256_before": "6ff73958856636612a8bf3310de9476f98f6d4bbd3538b46e8d7037f733aaf01",
+      "line_count": 707,
+      "sha256_after": "6ff73958856636612a8bf3310de9476f98f6d4bbd3538b46e8d7037f733aaf01"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\ai-christianson_RA.Aid\\ra_aid\\tools\\write_file.py": {
+      "sha256_before": "dc2aca34e359f9415c902b78ef6a2e6ac0f4aa6adb94eb92707d48aac588d312",
+      "line_count": 105,
+      "sha256_after": "dc2aca34e359f9415c902b78ef6a2e6ac0f4aa6adb94eb92707d48aac588d312"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\ai-christianson_RA.Aid\\tests\\ra_aid\\tools\\test_write_file.py": {
+      "sha256_before": "fd0d962ac3699b3dc397a54f1dcea883bbb29e43960ece0a955d68e59eefff5d",
+      "line_count": 276,
+      "sha256_after": "fd0d962ac3699b3dc397a54f1dcea883bbb29e43960ece0a955d68e59eefff5d"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\aivrar_portable-hermes-agent\\tests\\plugins\\memory\\test_mem0_setup.py": {
+      "sha256_before": "e7112ffa3b43f760824910d0f0b99cbc6541d2a8bd9bce23470f092bbfb52ac5",
+      "line_count": 251,
+      "sha256_after": "e7112ffa3b43f760824910d0f0b99cbc6541d2a8bd9bce23470f092bbfb52ac5"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\aivrar_portable-hermes-agent\\plugins\\memory\\mem0\\_setup.py": {
+      "sha256_before": "9f429bb4de0e2bad71a1b88b43851558f772785815b03b92c439653e4de972cc",
+      "line_count": 858,
+      "sha256_after": "9f429bb4de0e2bad71a1b88b43851558f772785815b03b92c439653e4de972cc"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\AleksNeStu_ai-real-estate-assistant\\apps\\api\\tests\\unit\\test_hybrid_agent.py": {
+      "sha256_before": "52d14b3e5e66ce20da80e8d82d8eea613a6e9489a0e228cda2f73b015ae1629d",
+      "line_count": 512,
+      "sha256_after": "52d14b3e5e66ce20da80e8d82d8eea613a6e9489a0e228cda2f73b015ae1629d"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\AleksNeStu_ai-real-estate-assistant\\apps\\api\\agents\\hybrid_agent.py": {
+      "sha256_before": "03c13ceee9260ce729cf01f60aacce0ec2148ada2bd87ab4545610cde2bc1a7f",
+      "line_count": 1016,
+      "sha256_after": "03c13ceee9260ce729cf01f60aacce0ec2148ada2bd87ab4545610cde2bc1a7f"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\AleksNeStu_ai-real-estate-assistant\\apps\\api\\tests\\integration\\test_agent_sources_integration.py": {
+      "sha256_before": "eba29979e810ab13d0f336eb6fe2ee8d8363d82ed4ecf777804958b113659ebb",
+      "line_count": 201,
+      "sha256_after": "eba29979e810ab13d0f336eb6fe2ee8d8363d82ed4ecf777804958b113659ebb"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\andrewbartels1_SolidworksMCP-python\\tests\\solidworks_mcp\\agents\\test_harness.py": {
+      "sha256_before": "217f800735e264d35b91ee13d4ef885c6045f6d880134f2903521bdbb7f2c9ae",
+      "line_count": 544,
+      "sha256_after": "217f800735e264d35b91ee13d4ef885c6045f6d880134f2903521bdbb7f2c9ae"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\andrewbartels1_SolidworksMCP-python\\src\\solidworks_mcp\\agents\\harness.py": {
+      "sha256_before": "d680f18833d80f62a50b106e9f21acae8a6cff8e14828a4159dc40e44b606331",
+      "line_count": 217,
+      "sha256_after": "d680f18833d80f62a50b106e9f21acae8a6cff8e14828a4159dc40e44b606331"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\andrewbartels1_SolidworksMCP-python\\src\\solidworks_mcp\\ui\\local_llm.py": {
+      "sha256_before": "78b005c0d938a21c192cf7947c69b6f977f22c9f68369bec84c5d19c87870123",
+      "line_count": 728,
+      "sha256_after": "78b005c0d938a21c192cf7947c69b6f977f22c9f68369bec84c5d19c87870123"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\andrewbartels1_SolidworksMCP-python\\tests\\solidworks_mcp\\ui\\test_local_llm.py": {
+      "sha256_before": "0b37f7bf6e620e97b36eaabf73f82a58a99ce4b24d6ef1a4d8b8f61541acf6f0",
+      "line_count": 844,
+      "sha256_after": "0b37f7bf6e620e97b36eaabf73f82a58a99ce4b24d6ef1a4d8b8f61541acf6f0"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\angr_angr\\tests\\llm\\test_llm_client.py": {
+      "sha256_before": "f3a3533ee186a8ce705a393e9bfbcda17fa225c88004d9a679fce4a5b9d18db3",
+      "line_count": 186,
+      "sha256_after": "f3a3533ee186a8ce705a393e9bfbcda17fa225c88004d9a679fce4a5b9d18db3"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\angr_angr\\angr\\llm_client.py": {
+      "sha256_before": "6094f68dd00e8ca40eab71129f92d44045f1e768bf50f0b10ec903a37993993c",
+      "line_count": 213,
+      "sha256_after": "6094f68dd00e8ca40eab71129f92d44045f1e768bf50f0b10ec903a37993993c"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\apache_airflow\\providers\\common\\ai\\tests\\unit\\common\\ai\\operators\\test_agent.py": {
+      "sha256_before": "4a04740eb4507d5f29b9ed668ae199fd6ef1ab35d34740cc50c9895cb26bc28c",
+      "line_count": 920,
+      "sha256_after": "4a04740eb4507d5f29b9ed668ae199fd6ef1ab35d34740cc50c9895cb26bc28c"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\apache_airflow\\providers\\common\\ai\\src\\airflow\\providers\\common\\ai\\operators\\agent.py": {
+      "sha256_before": "1e928aa2a67608d4b60596843e121d9d04ff1e49c48549d55256cd534fc62d0b",
+      "line_count": 562,
+      "sha256_after": "1e928aa2a67608d4b60596843e121d9d04ff1e49c48549d55256cd534fc62d0b"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\arm_metis\\src\\metis\\engine\\model_tool_runner.py": {
+      "sha256_before": "ae294796c1cc275b8baf055015f3f8d0008b8e43cb37b81f163411154ab49a13",
+      "line_count": 227,
+      "sha256_after": "ae294796c1cc275b8baf055015f3f8d0008b8e43cb37b81f163411154ab49a13"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\arm_metis\\tests\\test_model_tool_runner.py": {
+      "sha256_before": "6cf8234a0a8e90da8a97af2d0983758c5e4ef274d46ab11966d43700484d4718",
+      "line_count": 135,
+      "sha256_after": "6cf8234a0a8e90da8a97af2d0983758c5e4ef274d46ab11966d43700484d4718"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\baserow_baserow\\enterprise\\backend\\tests\\baserow_enterprise_tests\\assistant\\test_assistant_database_table_tools.py": {
+      "sha256_before": "e4528e44ef109f2fdf23b0626f6178d00142faeef902f0f11eaf79cfdd475481",
+      "line_count": 822,
+      "sha256_after": "e4528e44ef109f2fdf23b0626f6178d00142faeef902f0f11eaf79cfdd475481"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\basnijholt_agent-cli\\tests\\rag\\test_engine.py": {
+      "sha256_before": "4deb10cb6dc539348cf076c044c75d913669668db9f8e41ae0aace335787d231",
+      "line_count": 238,
+      "sha256_after": "4deb10cb6dc539348cf076c044c75d913669668db9f8e41ae0aace335787d231"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\basnijholt_agent-cli\\agent_cli\\rag\\engine.py": {
+      "sha256_before": "58c7e05a880317a1b36ce8bb0042aacf32ebb944fe594a98544071851b0afb80",
+      "line_count": 301,
+      "sha256_after": "58c7e05a880317a1b36ce8bb0042aacf32ebb944fe594a98544071851b0afb80"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\basnijholt_agent-cli\\tests\\test_llm.py": {
+      "sha256_before": "6b5162643e61e503e19708be70e51b97de9ee713ca84319e4aafafadfb1333f1",
+      "line_count": 239,
+      "sha256_after": "6b5162643e61e503e19708be70e51b97de9ee713ca84319e4aafafadfb1333f1"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\basnijholt_agent-cli\\agent_cli\\services\\llm.py": {
+      "sha256_before": "bbe04d0ab261694f0fc2587854d96ef1b4ed8118918ac5277629d427055e42d5",
+      "line_count": 228,
+      "sha256_after": "bbe04d0ab261694f0fc2587854d96ef1b4ed8118918ac5277629d427055e42d5"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\beatwad_LinkedIn-AI-Job-Applier-Ultimate\\tests\\test_llm_manager.py": {
+      "sha256_before": "7b99c1ec8587ab238bcf5b642eb894307dd0a6bf0fcae80e4577f0d9c615ed1f",
+      "line_count": 1203,
+      "sha256_after": "7b99c1ec8587ab238bcf5b642eb894307dd0a6bf0fcae80e4577f0d9c615ed1f"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\beatwad_LinkedIn-AI-Job-Applier-Ultimate\\src\\llm\\llm_manager.py": {
+      "sha256_before": "bd5c86deb6d09444abfc2c5600dff974994e5e3fb4870406df33df9f801098f4",
+      "line_count": 1632,
+      "sha256_after": "bd5c86deb6d09444abfc2c5600dff974994e5e3fb4870406df33df9f801098f4"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\brevia-ai_brevia\\tests\\test_async_jobs.py": {
+      "sha256_before": "389f6dd9a4d00bc7c6561560bbf9d231b8c35343be9cedb32bb25c99802ae61f",
+      "line_count": 605,
+      "sha256_after": "389f6dd9a4d00bc7c6561560bbf9d231b8c35343be9cedb32bb25c99802ae61f"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\brevia-ai_brevia\\brevia\\async_jobs.py": {
+      "sha256_before": "c439994d3c0fd85f6cf5cb9bdc164319e7cbae7d902bcc1cd53de7951aa27e71",
+      "line_count": 335,
+      "sha256_after": "c439994d3c0fd85f6cf5cb9bdc164319e7cbae7d902bcc1cd53de7951aa27e71"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\chattermate_chattermate.chat\\backend\\tests\\agent\\test_chat_agent.py": {
+      "sha256_before": "3b0ef1937ec5e1777dd5a230c5b8772d7678462f3577d1728c00d826b6fb3f45",
+      "line_count": 455,
+      "sha256_after": "3b0ef1937ec5e1777dd5a230c5b8772d7678462f3577d1728c00d826b6fb3f45"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\chattermate_chattermate.chat\\backend\\app\\agents\\chat_agent.py": {
+      "sha256_before": "62c7eebc2b6cd42423dec42469cd413c88a6e28aa3049f99e046973ed26a1200",
+      "line_count": 1537,
+      "sha256_after": "62c7eebc2b6cd42423dec42469cd413c88a6e28aa3049f99e046973ed26a1200"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\chattermate_chattermate.chat\\backend\\tests\\agent\\test_transfer_agent.py": {
+      "sha256_before": "090479645a586e3b23be0435e93410e64d337fcc12f932a219975c2ccaa101d7",
+      "line_count": 583,
+      "sha256_after": "090479645a586e3b23be0435e93410e64d337fcc12f932a219975c2ccaa101d7"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\chattermate_chattermate.chat\\backend\\app\\agents\\transfer_agent.py": {
+      "sha256_before": "03d1cec596d8547f81475ac09acd8ddcf9258bb0efaa90ba44a8a6a00628f1ee",
+      "line_count": 328,
+      "sha256_after": "03d1cec596d8547f81475ac09acd8ddcf9258bb0efaa90ba44a8a6a00628f1ee"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\chattermate_chattermate.chat\\backend\\tests\\knowledge\\test_content_summarizer.py": {
+      "sha256_before": "71959006cd8eac9ff198e227f1f492599b5a89cbda7a10ca2dc9fb081812908b",
+      "line_count": 341,
+      "sha256_after": "71959006cd8eac9ff198e227f1f492599b5a89cbda7a10ca2dc9fb081812908b"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\chattermate_chattermate.chat\\backend\\app\\knowledge\\content_summarizer.py": {
+      "sha256_before": "92637235105c1936c8ab45f2bdb5b2b19d9201aace61649f78d545952fb27e9b",
+      "line_count": 183,
+      "sha256_after": "92637235105c1936c8ab45f2bdb5b2b19d9201aace61649f78d545952fb27e9b"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Citrus-bit_Anaxa\\backend\\tests\\test_subagent_executor.py": {
+      "sha256_before": "ba65c5928530e39680b7cc129ce9458017630c0c7fa5b79c05b1fb156a35da95",
+      "line_count": 804,
+      "sha256_after": "ba65c5928530e39680b7cc129ce9458017630c0c7fa5b79c05b1fb156a35da95"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Citrus-bit_Anaxa\\backend\\packages\\harness\\medrix_flow\\subagents\\executor.py": {
+      "sha256_before": "d53e8efc3a0d3050e263bbb8471a1c966ecab2e1554d378786cd42f8c42d1139",
+      "line_count": 620,
+      "sha256_after": "d53e8efc3a0d3050e263bbb8471a1c966ecab2e1554d378786cd42f8c42d1139"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\codemie-ai_codemie\\tests\\codemie_tools\\data_management\\code_executor\\test_session_manager.py": {
+      "sha256_before": "a4b3bdd0305451e8764196de242ddaaf9e46477afce885a07789a1d3d22d1f1d",
+      "line_count": 365,
+      "sha256_after": "a4b3bdd0305451e8764196de242ddaaf9e46477afce885a07789a1d3d22d1f1d"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\codemie-ai_codemie\\src\\codemie_tools\\data_management\\code_executor\\session_manager.py": {
+      "sha256_before": "8d4c2d40c15d293c272ff51437fb21ce9efe9b44d30a97b92abb5be37d2de7bb",
+      "line_count": 493,
+      "sha256_after": "8d4c2d40c15d293c272ff51437fb21ce9efe9b44d30a97b92abb5be37d2de7bb"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\codemie-ai_codemie\\tests\\codemie\\agents\\test_assistant_agent\\test_tool_structured_output_agent.py": {
+      "sha256_before": "9829e93e69fe15566b3b1f2bdefacf0f0056e022c2c1d8725628fef7fea81301",
+      "line_count": 142,
+      "sha256_after": "9829e93e69fe15566b3b1f2bdefacf0f0056e022c2c1d8725628fef7fea81301"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\codemie-ai_codemie\\src\\codemie\\agents\\structured_tool_agent.py": {
+      "sha256_before": "0f8bdf63f40e705fabed82443b946a2e370fddfcef0484f711c64fd512d0a2c4",
+      "line_count": 116,
+      "sha256_after": "0f8bdf63f40e705fabed82443b946a2e370fddfcef0484f711c64fd512d0a2c4"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\codemie-ai_codemie\\tests\\codemie\\chains\\test_kb_sources_selector_chain.py": {
+      "sha256_before": "41db382c1a4db320a7fc5bf89bdb395c5699134e9f275649d3276055dc88d627",
+      "line_count": 44,
+      "sha256_after": "41db382c1a4db320a7fc5bf89bdb395c5699134e9f275649d3276055dc88d627"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\codemie-ai_codemie\\tests\\codemie\\chains\\test_pure_chat_chain.py": {
+      "sha256_before": "b2a460196385a3dda40192cb132eab6dfd0cff18e9d82c0b304dbdea5bd9263d",
+      "line_count": 119,
+      "sha256_after": "b2a460196385a3dda40192cb132eab6dfd0cff18e9d82c0b304dbdea5bd9263d"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\codemie-ai_codemie\\src\\codemie\\chains\\pure_chat_chain.py": {
+      "sha256_before": "afeb84ff6261fe654fb4c5dbf0905c2b90754d63029c494a26076abeadff77da",
+      "line_count": 162,
+      "sha256_after": "afeb84ff6261fe654fb4c5dbf0905c2b90754d63029c494a26076abeadff77da"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\codemie-ai_codemie\\tests\\codemie\\service\\test_assistant_generator_service_prompt_generator_chain.py": {
+      "sha256_before": "6ed8f90889d17f6206ee7fe67032953d080729f52bc2aec9e70ecc33fc592ad8",
+      "line_count": 466,
+      "sha256_after": "6ed8f90889d17f6206ee7fe67032953d080729f52bc2aec9e70ecc33fc592ad8"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\codemie-ai_codemie\\src\\codemie\\service\\assistant_generator_service.py": {
+      "sha256_before": "41cf03d0dd6d600a3eed1ac619340a852a7554b20cd9c98d7dee104839be1a5e",
+      "line_count": 926,
+      "sha256_after": "41cf03d0dd6d600a3eed1ac619340a852a7554b20cd9c98d7dee104839be1a5e"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\codemie-ai_codemie\\tests\\codemie\\workflows\\nodes\\test_state_processor_node.py": {
+      "sha256_before": "94a05839585117c8a1d82339741bfa981920001498af0b37c2db67bfd57b1f02",
+      "line_count": 670,
+      "sha256_after": "94a05839585117c8a1d82339741bfa981920001498af0b37c2db67bfd57b1f02"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\codemie-ai_codemie\\src\\codemie\\workflows\\nodes\\state_processor_node.py": {
+      "sha256_before": "2c12c268d61334216de3ceb9effddd41a3e1dac060d79d1c3c7e3e36cddd9cc6",
+      "line_count": 171,
+      "sha256_after": "2c12c268d61334216de3ceb9effddd41a3e1dac060d79d1c3c7e3e36cddd9cc6"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\CoDS-GCS_Chatty-KG\\src\\multi_agent\\modules\\test_modules.py": {
+      "sha256_before": "ca46b0d5256690b90af8ed79a53e39e4a98d4be500aebcacd1a3ed2fbbc9708a",
+      "line_count": 153,
+      "sha256_after": "ca46b0d5256690b90af8ed79a53e39e4a98d4be500aebcacd1a3ed2fbbc9708a"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\CoDS-GCS_Chatty-KG\\src\\multi_agent\\modules\\modules.py": {
+      "sha256_before": "d8f8a5ff54411f93116ef92441e053800b9b1da13d87fc085423eb6b7503ff78",
+      "line_count": 371,
+      "sha256_after": "d8f8a5ff54411f93116ef92441e053800b9b1da13d87fc085423eb6b7503ff78"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\coredipper_operon\\tests\\unit\\convergence\\test_guarded_graph.py": {
+      "sha256_before": "923e52a04a0e6dcf2bed958d1bd945509dfc18af7da6048ab8a376334d1a4594",
+      "line_count": 106,
+      "sha256_after": "923e52a04a0e6dcf2bed958d1bd945509dfc18af7da6048ab8a376334d1a4594"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\coredipper_operon\\operon_ai\\convergence\\guarded_graph.py": {
+      "sha256_before": "07cc954f641f1744864d385c38f6c85b658c228d08c393a9534add0405e6e9c5",
+      "line_count": 602,
+      "sha256_after": "07cc954f641f1744864d385c38f6c85b658c228d08c393a9534add0405e6e9c5"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\cvs-health_uqlm\\uqlm\\code\\clusterer.py": {
+      "sha256_before": "003cfab250ad0f4b970ebdb588de80a3a215196ace2fecc85821eda7b601ab86",
+      "line_count": 300,
+      "sha256_after": "003cfab250ad0f4b970ebdb588de80a3a215196ace2fecc85821eda7b601ab86"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\cvs-health_uqlm\\tests\\test_clusterer.py": {
+      "sha256_before": "1d01a5dd6c6b588f65987175f53bb1ce8e742f6beab9b53029322adfd3e166b8",
+      "line_count": 213,
+      "sha256_after": "1d01a5dd6c6b588f65987175f53bb1ce8e742f6beab9b53029322adfd3e166b8"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\cvs-health_uqlm\\uqlm\\utils\\response_generator.py": {
+      "sha256_before": "46547eec558c87059743e73d3b2ad3cfc485ab5ed13383d1ee10fb78d8c82cf0",
+      "line_count": 288,
+      "sha256_after": "46547eec558c87059743e73d3b2ad3cfc485ab5ed13383d1ee10fb78d8c82cf0"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\cvs-health_uqlm\\tests\\test_responsegenerator.py": {
+      "sha256_before": "23718ee35e6f73ffd9d7acc4b2afa91c3dce4eebaf462ffe8a36969880f338b1",
+      "line_count": 347,
+      "sha256_after": "23718ee35e6f73ffd9d7acc4b2afa91c3dce4eebaf462ffe8a36969880f338b1"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\datarobot-oss_datarobot-genai\\tests\\crewai\\test_llm.py": {
+      "sha256_before": "ca24df2371c28e9595fb7186c8572b7529b1beb8d34fb512de044b52112a2df8",
+      "line_count": 678,
+      "sha256_after": "ca24df2371c28e9595fb7186c8572b7529b1beb8d34fb512de044b52112a2df8"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\datarobot-oss_datarobot-genai\\src\\datarobot_genai\\crewai\\llm.py": {
+      "sha256_before": "8939bc7d8552e17fb2989c8b301fc6ea3650c4e914b26942659d39eb0c78c6ad",
+      "line_count": 602,
+      "sha256_after": "8939bc7d8552e17fb2989c8b301fc6ea3650c4e914b26942659d39eb0c78c6ad"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\datastax_ragstack-ai\\libs\\knowledge-graph\\ragstack_knowledge_graph\\schema_inference.py": {
+      "sha256_before": "7869be6dcbe7a8c8fc22edcd25badc21891510ba6faf4f25b20eaa5192fc87a0",
+      "line_count": 39,
+      "sha256_after": "7869be6dcbe7a8c8fc22edcd25badc21891510ba6faf4f25b20eaa5192fc87a0"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\datastax_ragstack-ai\\libs\\knowledge-graph\\tests\\test_schema_inference.py": {
+      "sha256_before": "664a3a0c0bba010b1b9f23da6a641bc6c516602340759192f38ae87dfff637f3",
+      "line_count": 52,
+      "sha256_after": "664a3a0c0bba010b1b9f23da6a641bc6c516602340759192f38ae87dfff637f3"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\datawhalechina_vibe-blog\\backend\\tests\\integration\\test_blog_service.py": {
+      "sha256_before": "246f0e1d5c12059bde2f51dc3bac1910073a0eb6e9da6c5eac92c70eeda7112e",
+      "line_count": 250,
+      "sha256_after": "246f0e1d5c12059bde2f51dc3bac1910073a0eb6e9da6c5eac92c70eeda7112e"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\datawhalechina_vibe-blog\\backend\\services\\blog_generator\\blog_service.py": {
+      "sha256_before": "9da9c48f67ba20a8565683f3b4d1305b44ce84d98fa0e62f95da2d0233380e83",
+      "line_count": 1184,
+      "sha256_after": "9da9c48f67ba20a8565683f3b4d1305b44ce84d98fa0e62f95da2d0233380e83"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\deepset-ai_haystack-core-integrations\\integrations\\mem0\\tests\\test_memory_store.py": {
+      "sha256_before": "147a2bc959256676135e9c3dad864733e0ba6aea05a458b97c7bdb17cd29218d",
+      "line_count": 394,
+      "sha256_after": "147a2bc959256676135e9c3dad864733e0ba6aea05a458b97c7bdb17cd29218d"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\deepset-ai_haystack-core-integrations\\integrations\\mem0\\src\\haystack_integrations\\memory_stores\\mem0\\memory_store.py": {
+      "sha256_before": "a3e41e061cadd7e5cddbbab8039656cab8b905664d3a40eab2c2f0d1db348136",
+      "line_count": 218,
+      "sha256_after": "a3e41e061cadd7e5cddbbab8039656cab8b905664d3a40eab2c2f0d1db348136"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\deepset-ai_haystack-core-integrations\\integrations\\cohere\\tests\\test_generator.py": {
+      "sha256_before": "97459948ef7a8e427f0442d0949cefb28d2606fd8412aad9601fa8f818b5e1b4",
+      "line_count": 159,
+      "sha256_after": "97459948ef7a8e427f0442d0949cefb28d2606fd8412aad9601fa8f818b5e1b4"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\deepset-ai_haystack-core-integrations\\integrations\\watsonx\\src\\haystack_integrations\\components\\generators\\watsonx\\generator.py": {
+      "sha256_before": "ed259e5a4992d594c18b4cbbe35348315ea803a285769e7b14d58316706681b2",
+      "line_count": 294,
+      "sha256_after": "ed259e5a4992d594c18b4cbbe35348315ea803a285769e7b14d58316706681b2"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\deepset-ai_haystack-core-integrations\\integrations\\llama_cpp\\tests\\test_generator.py": {
+      "sha256_before": "1589801880058da0f90c79d94adf6f03048114d827038e0d22a38dbea920b6f6",
+      "line_count": 236,
+      "sha256_after": "1589801880058da0f90c79d94adf6f03048114d827038e0d22a38dbea920b6f6"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\deepset-ai_haystack-core-integrations\\integrations\\nvidia\\tests\\test_generator.py": {
+      "sha256_before": "92778cd712393e2a0c6d045c7a51b912ef8dccc67eee419c211fe3b649e72723",
+      "line_count": 302,
+      "sha256_after": "92778cd712393e2a0c6d045c7a51b912ef8dccc67eee419c211fe3b649e72723"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\deepset-ai_haystack-core-integrations\\integrations\\ollama\\tests\\test_generator.py": {
+      "sha256_before": "0012847100528572b5bfd6c9546a04295b7972e3007f56227a71d01c041ad4f1",
+      "line_count": 179,
+      "sha256_after": "0012847100528572b5bfd6c9546a04295b7972e3007f56227a71d01c041ad4f1"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\deepset-ai_haystack-core-integrations\\integrations\\togetherai\\tests\\test_togetherai_generator.py": {
+      "sha256_before": "1f12de6ec2173ad22c28d8b9496ea4467379b7ddc135f45341e8963610bb7ef0",
+      "line_count": 285,
+      "sha256_after": "1f12de6ec2173ad22c28d8b9496ea4467379b7ddc135f45341e8963610bb7ef0"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\deepset-ai_haystack-core-integrations\\integrations\\watsonx\\tests\\test_generator.py": {
+      "sha256_before": "e551c6ef6a817320a17e129ba25aa92a6cb7581773f70bec42e18408e56e6c34",
+      "line_count": 433,
+      "sha256_after": "e551c6ef6a817320a17e129ba25aa92a6cb7581773f70bec42e18408e56e6c34"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\double16_Cyber-AutoAgent-ng\\tests\\test_model_factory.py": {
+      "sha256_before": "08512379c8782cd7d0b871ecfec5063f193432793af7f53606a716f317466636",
+      "line_count": 336,
+      "sha256_after": "08512379c8782cd7d0b871ecfec5063f193432793af7f53606a716f317466636"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\double16_Cyber-AutoAgent-ng\\src\\modules\\config\\models\\factory.py": {
+      "sha256_before": "8a869428c3469cc1eb8f7f3f978d30c673b88f72fb97354c8714f54ee7029a5f",
+      "line_count": 1065,
+      "sha256_after": "8a869428c3469cc1eb8f7f3f978d30c673b88f72fb97354c8714f54ee7029a5f"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\dunetrace_dunetrace\\packages\\sdk-py\\tests\\test_integrations\\test_autogen.py": {
+      "sha256_before": "1b22c55ce6c0b453e801f216bb35abcf68f81f7bcf41473ec2696a0b3418995e",
+      "line_count": 340,
+      "sha256_after": "1b22c55ce6c0b453e801f216bb35abcf68f81f7bcf41473ec2696a0b3418995e"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\dunetrace_dunetrace\\packages\\sdk-py\\dunetrace\\integrations\\autogen.py": {
+      "sha256_before": "a637036a94ed27b770960f16eb187104ba64e7f264bb86279978c1debb3f4d72",
+      "line_count": 248,
+      "sha256_after": "a637036a94ed27b770960f16eb187104ba64e7f264bb86279978c1debb3f4d72"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\ericjiang18_Agent-Q-Mix\\agent_baseline\\autogen\\python\\packages\\autogen-agentchat\\tests\\test_group_chat.py": {
+      "sha256_before": "e32c20177ea1df5cb01482dc0a0bd104020a917f683d3b4005d013e021f4160e",
+      "line_count": 1946,
+      "sha256_after": "e32c20177ea1df5cb01482dc0a0bd104020a917f683d3b4005d013e021f4160e"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\ericjiang18_Agent-Q-Mix\\agent_baseline\\autogen\\python\\packages\\autogen-agentchat\\src\\autogen_agentchat\\teams\\_group_chat\\_swarm_group_chat.py": {
+      "sha256_before": "7c5c61450f5c80062d81a11be7a0ed039150c461b9f79d3c5f7609246eacb72f",
+      "line_count": 321,
+      "sha256_after": "7c5c61450f5c80062d81a11be7a0ed039150c461b9f79d3c5f7609246eacb72f"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\ExtensionShield_ExtensionShield\\src\\extension_shield\\core\\report_view_model.py": {
+      "sha256_before": "fe292d4f0443351e52c6d55723780692285bd562d691e2a0aa46e465c1b56ffa",
+      "line_count": 1910,
+      "sha256_after": "fe292d4f0443351e52c6d55723780692285bd562d691e2a0aa46e465c1b56ffa"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\ExtensionShield_ExtensionShield\\tests\\test_consumer_insights.py": {
+      "sha256_before": "22c73f50197ae0cc93b21bae155f487eee57ec9687d31e63e56a7918c53aaf7b",
+      "line_count": 353,
+      "sha256_after": "22c73f50197ae0cc93b21bae155f487eee57ec9687d31e63e56a7918c53aaf7b"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\facebookresearch_prompt-siren\\tests\\agents\\test_utils.py": {
+      "sha256_before": "cf01fdf7dc2a59d30819e31168519f73dd6b96239b669025fa971acabb87a9b1",
+      "line_count": 623,
+      "sha256_after": "cf01fdf7dc2a59d30819e31168519f73dd6b96239b669025fa971acabb87a9b1"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\facebookresearch_prompt-siren\\src\\prompt_siren\\agents\\utils.py": {
+      "sha256_before": "957f6ce9987c0009f57731e86a3ca394b7705fbd11904a7e212e93c67e2f7d70",
+      "line_count": 307,
+      "sha256_after": "957f6ce9987c0009f57731e86a3ca394b7705fbd11904a7e212e93c67e2f7d70"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\ggozad_haiku.rag\\evaluations\\tests\\test_capability_runner.py": {
+      "sha256_before": "d1d05931013a8fc38dc7953348dd992eb37bff04dc0813988a50574c761ff96d",
+      "line_count": 159,
+      "sha256_after": "d1d05931013a8fc38dc7953348dd992eb37bff04dc0813988a50574c761ff96d"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\ggozad_haiku.rag\\evaluations\\evaluations\\capability_runner.py": {
+      "sha256_before": "501a3832df384540add7d8796356013203dea4d1e50aab2169183bff7fc8b64a",
+      "line_count": 195,
+      "sha256_after": "501a3832df384540add7d8796356013203dea4d1e50aab2169183bff7fc8b64a"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\ggozad_haiku.rag\\tests\\test_picture_description.py": {
+      "sha256_before": "a620816b4726e148cec5bd9285372956a78ceeea3a2d7edc3100f9773999019d",
+      "line_count": 143,
+      "sha256_after": "a620816b4726e148cec5bd9285372956a78ceeea3a2d7edc3100f9773999019d"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\ggozad_haiku.rag\\haiku_rag_slim\\haiku\\rag\\providers\\picture_description.py": {
+      "sha256_before": "bc4367cc83756f1a9079103aa8c049e813756dee245005622eae735ea12cd870",
+      "line_count": 52,
+      "sha256_after": "bc4367cc83756f1a9079103aa8c049e813756dee245005622eae735ea12cd870"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\ginlix-ai_LangAlpha\\tests\\unit\\middleware\\test_compaction_request_shape.py": {
+      "sha256_before": "6b69a124bbff8a7faf36d272c37a69f32f74e24bd9bdd0570b0815d7d3de32bc",
+      "line_count": 509,
+      "sha256_after": "6b69a124bbff8a7faf36d272c37a69f32f74e24bd9bdd0570b0815d7d3de32bc"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\ginlix-ai_LangAlpha\\src\\ptc_agent\\agent\\middleware\\compaction\\compact.py": {
+      "sha256_before": "b081abd7e0389866b365deab4713951c90263ac89b4c92b6a828f3890f77de5d",
+      "line_count": 360,
+      "sha256_after": "b081abd7e0389866b365deab4713951c90263ac89b4c92b6a828f3890f77de5d"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\gizmax_Sandcastle\\src\\sandcastle\\engine\\memory.py": {
+      "sha256_before": "aa682699d65a9b7f14915742a143b48b3ad0a18305fe1c1d6904a2ddd65bd485",
+      "line_count": 930,
+      "sha256_after": "aa682699d65a9b7f14915742a143b48b3ad0a18305fe1c1d6904a2ddd65bd485"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\gizmax_Sandcastle\\tests\\test_memory_wave7.py": {
+      "sha256_before": "e85c7828bbde987b6fa13392b2e64abf176aa809aabfbb2c8fb71071510110b2",
+      "line_count": 1281,
+      "sha256_after": "e85c7828bbde987b6fa13392b2e64abf176aa809aabfbb2c8fb71071510110b2"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\gizmax_Sandcastle\\tests\\test_memory.py": {
+      "sha256_before": "7b1a67f432a5c7aab07dbd7693b778aa7f644b8399473611dbb7779266087ddd",
+      "line_count": 506,
+      "sha256_after": "7b1a67f432a5c7aab07dbd7693b778aa7f644b8399473611dbb7779266087ddd"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\goruck_home-generative-agent\\tests\\custom_components\\home_generative_agent\\test_fallback.py": {
+      "sha256_before": "595b88690acbf53049a74682bd85931b16ad067f55b935508bc8aadfd89e0a93",
+      "line_count": 861,
+      "sha256_after": "595b88690acbf53049a74682bd85931b16ad067f55b935508bc8aadfd89e0a93"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\goruck_home-generative-agent\\custom_components\\home_generative_agent\\core\\fallback.py": {
+      "sha256_before": "da7df2d7f0e9a16fd2c39c0012fee06c6713c6d4f7c3f51e47e9233713acddc5",
+      "line_count": 751,
+      "sha256_after": "da7df2d7f0e9a16fd2c39c0012fee06c6713c6d4f7c3f51e47e9233713acddc5"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\GrafeoDB_grafeo-memory\\tests\\test_communities.py": {
+      "sha256_before": "71d47d881f516af2810b32c23f81992126eb86994d5801d9f6dc165cc6e49acd",
+      "line_count": 405,
+      "sha256_after": "71d47d881f516af2810b32c23f81992126eb86994d5801d9f6dc165cc6e49acd"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\GrafeoDB_grafeo-memory\\src\\grafeo_memory\\communities.py": {
+      "sha256_before": "946d4f2bd1214917a3607a1fa3a2afe79d6ce6518f815db32dc5e07a87969566",
+      "line_count": 283,
+      "sha256_after": "946d4f2bd1214917a3607a1fa3a2afe79d6ce6518f815db32dc5e07a87969566"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Haohao-end_openagent\\api\\test\\internal\\core\\agent\\test_deep_thinking_agent.py": {
+      "sha256_before": "967d75f48c3abe829824764f2bd389fbda8c959720ec811fa0c52626b8c65c0b",
+      "line_count": 2987,
+      "sha256_after": "967d75f48c3abe829824764f2bd389fbda8c959720ec811fa0c52626b8c65c0b"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Haohao-end_openagent\\api\\internal\\core\\agent\\agents\\deep_thinking_agent.py": {
+      "sha256_before": "a8da561bf70154eb593802204178833eac42b316e310bba4094cd111b9a54f3e",
+      "line_count": 2426,
+      "sha256_after": "a8da561bf70154eb593802204178833eac42b316e310bba4094cd111b9a54f3e"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Haohao-end_openagent\\api\\test\\internal\\service\\test_ai_service.py": {
+      "sha256_before": "6f57c3f8875723b50968ee424d88fe9002b00babb05a10d90d48fa123fb3d10f",
+      "line_count": 300,
+      "sha256_after": "6f57c3f8875723b50968ee424d88fe9002b00babb05a10d90d48fa123fb3d10f"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Haohao-end_openagent\\api\\internal\\service\\ai_service.py": {
+      "sha256_before": "995961856385ea7b0fe0c45d1b6298259084ee30ef3ff34b06f9f3633a51fe61",
+      "line_count": 181,
+      "sha256_after": "995961856385ea7b0fe0c45d1b6298259084ee30ef3ff34b06f9f3633a51fe61"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Haohao-end_openagent\\api\\test\\internal\\service\\test_assistant_agent_service.py": {
+      "sha256_before": "a85b844b79cc3cc2262a6d70c8e8a60945a4a220c9078b32c93ffb68d47bc912",
+      "line_count": 1808,
+      "sha256_after": "a85b844b79cc3cc2262a6d70c8e8a60945a4a220c9078b32c93ffb68d47bc912"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Haohao-end_openagent\\api\\internal\\service\\assistant_agent_service.py": {
+      "sha256_before": "c59bef5d2a66e4fc5d25cfae08832ae5071f22246157250fc387e60f200a46ac",
+      "line_count": 864,
+      "sha256_after": "c59bef5d2a66e4fc5d25cfae08832ae5071f22246157250fc387e60f200a46ac"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Haohao-end_openagent\\api\\test\\internal\\service\\test_conversation_service.py": {
+      "sha256_before": "072b11c6ba49c370367a9396f2d71bb2bed13fb4b430e27077030c115fadba8f",
+      "line_count": 1662,
+      "sha256_after": "072b11c6ba49c370367a9396f2d71bb2bed13fb4b430e27077030c115fadba8f"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Haohao-end_openagent\\api\\internal\\service\\conversation_service.py": {
+      "sha256_before": "a6609d3f0a6d56f95fe84326e3bb3bff44470fea95d905d5be85560ccb3b17a8",
+      "line_count": 859,
+      "sha256_after": "a6609d3f0a6d56f95fe84326e3bb3bff44470fea95d905d5be85560ccb3b17a8"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\HeKun-NVIDIA_hackathon_aiqtoolkit\\packages\\aiqtoolkit_mem0ai\\tests\\test_mem0_editor.py": {
+      "sha256_before": "477584e3480c7694a52613df4d266e74289097d2478cc47adfe84c59d07cc497",
+      "line_count": 129,
+      "sha256_after": "477584e3480c7694a52613df4d266e74289097d2478cc47adfe84c59d07cc497"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\HeKun-NVIDIA_hackathon_aiqtoolkit\\packages\\aiqtoolkit_mem0ai\\src\\aiq\\plugins\\mem0ai\\mem0_editor.py": {
+      "sha256_before": "9e243a21d911891c843f29966b7b20c688ae1798f8e7004cd66008b12c1d8b9b",
+      "line_count": 112,
+      "sha256_after": "9e243a21d911891c843f29966b7b20c688ae1798f8e7004cd66008b12c1d8b9b"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\hybroai_a2a-adapter\\a2a_adapter\\integrations\\langgraph.py": {
+      "sha256_before": "93cd44c507dd9a58c97feb0f58d57289f27cedcfd80bfa90e896fcc9f9389ef8",
+      "line_count": 1050,
+      "sha256_after": "93cd44c507dd9a58c97feb0f58d57289f27cedcfd80bfa90e896fcc9f9389ef8"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\hybroai_a2a-adapter\\tests\\unit\\test_langgraph_adapter.py": {
+      "sha256_before": "5e2fe2840bd416711e4ebf8395d109412822772c85b2010e46f0bc20bbbe2256",
+      "line_count": 537,
+      "sha256_after": "5e2fe2840bd416711e4ebf8395d109412822772c85b2010e46f0bc20bbbe2256"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\indexedlabs_pydantic-ai-gepa\\src\\pydantic_ai_gepa\\gepa_graph\\proposal\\instruction.py": {
+      "sha256_before": "089a0b5fe352fdfc0b394c0aeda6898ec1faf7b6df1c304393fa0d7f6520ece2",
+      "line_count": 1312,
+      "sha256_after": "089a0b5fe352fdfc0b394c0aeda6898ec1faf7b6df1c304393fa0d7f6520ece2"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\indexedlabs_pydantic-ai-gepa\\tests\\gepa_graph\\proposal\\test_instruction.py": {
+      "sha256_before": "5e09dab1d4dce0bcc9ea7ce0f946e21b66cc33b3f3018aca782a6f8b3ad500c7",
+      "line_count": 1282,
+      "sha256_after": "5e09dab1d4dce0bcc9ea7ce0f946e21b66cc33b3f3018aca782a6f8b3ad500c7"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\jataware_archytas\\tests\\test_sync_invoke_agent_tools.py": {
+      "sha256_before": "314d9dd533e79f8f80fe6468b72b66592436dc9a5d460cc59b4ce9f55c3165bc",
+      "line_count": 68,
+      "sha256_after": "314d9dd533e79f8f80fe6468b72b66592436dc9a5d460cc59b4ce9f55c3165bc"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\jataware_archytas\\archytas\\models\\base.py": {
+      "sha256_before": "d40fdc444d358c5ce1ff76fd47e8748d633a9f36ff9a9f196572e7b95f92b30a",
+      "line_count": 356,
+      "sha256_after": "d40fdc444d358c5ce1ff76fd47e8748d633a9f36ff9a9f196572e7b95f92b30a"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\johnson7788_MultiUserClaw\\hermes-agent\\tests\\plugins\\memory\\test_mem0_setup.py": {
+      "sha256_before": "e7112ffa3b43f760824910d0f0b99cbc6541d2a8bd9bce23470f092bbfb52ac5",
+      "line_count": 251,
+      "sha256_after": "e7112ffa3b43f760824910d0f0b99cbc6541d2a8bd9bce23470f092bbfb52ac5"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\johnson7788_MultiUserClaw\\hermes-agent\\plugins\\memory\\mem0\\_setup.py": {
+      "sha256_before": "9f429bb4de0e2bad71a1b88b43851558f772785815b03b92c439653e4de972cc",
+      "line_count": 858,
+      "sha256_after": "9f429bb4de0e2bad71a1b88b43851558f772785815b03b92c439653e4de972cc"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\langchain-ai_open-swe\\agent\\review\\groups.py": {
+      "sha256_before": "f9540332c5627019cba591f9f1a4a2fceddd3d44b0c655cdda2db09b1b57d030",
+      "line_count": 232,
+      "sha256_after": "f9540332c5627019cba591f9f1a4a2fceddd3d44b0c655cdda2db09b1b57d030"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\langchain-ai_open-swe\\tests\\reviewer\\test_reviewer_groups.py": {
+      "sha256_before": "9a653780566ce244862b23e045a314c006972075d96f8fd0fa6ef144e367ec3c",
+      "line_count": 180,
+      "sha256_after": "9a653780566ce244862b23e045a314c006972075d96f8fd0fa6ef144e367ec3c"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\LearningCircuit_local-deep-research\\tests\\advanced_search_system\\test_candidate_exploration\\test_explorers.py": {
+      "sha256_before": "2e9b08eae535b19b0bfc54c266efa6b4b3738b1084b1e9c0e2519d33099f453d",
+      "line_count": 469,
+      "sha256_after": "2e9b08eae535b19b0bfc54c266efa6b4b3738b1084b1e9c0e2519d33099f453d"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\LearningCircuit_local-deep-research\\src\\local_deep_research\\advanced_search_system\\candidate_exploration\\base_explorer.py": {
+      "sha256_before": "a356e6007afaa2a309c173298d34b426e828e987dfa36d6ade0eae7f00e0a9df",
+      "line_count": 341,
+      "sha256_after": "a356e6007afaa2a309c173298d34b426e828e987dfa36d6ade0eae7f00e0a9df"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\LearningCircuit_local-deep-research\\tests\\advanced_search_system\\evidence\\test_evaluator_integration.py": {
+      "sha256_before": "866274ae89b7d4bfaf6eba40bb72d7f12360cfae74dab983b9767f8535ade5a2",
+      "line_count": 431,
+      "sha256_after": "866274ae89b7d4bfaf6eba40bb72d7f12360cfae74dab983b9767f8535ade5a2"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\LearningCircuit_local-deep-research\\src\\local_deep_research\\advanced_search_system\\evidence\\evaluator.py": {
+      "sha256_before": "816fb3288e184ecd71bf10894f944f14d3a4fa8400ca32935d29aeff9699fbd2",
+      "line_count": 158,
+      "sha256_after": "816fb3288e184ecd71bf10894f944f14d3a4fa8400ca32935d29aeff9699fbd2"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\LearningCircuit_local-deep-research\\tests\\advanced_search_system\\knowledge\\test_followup_context_manager.py": {
+      "sha256_before": "2c6edfffea82f1cec29c8078fedc0f9736b8047d5c3bef4d5fc6aeef315c2fba",
+      "line_count": 716,
+      "sha256_after": "2c6edfffea82f1cec29c8078fedc0f9736b8047d5c3bef4d5fc6aeef315c2fba"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\LearningCircuit_local-deep-research\\src\\local_deep_research\\advanced_search_system\\knowledge\\followup_context_manager.py": {
+      "sha256_before": "bc52f570ef4b5c012832ad219c4659ce8bf0e57b5487dbea82cc87bdb934a796",
+      "line_count": 416,
+      "sha256_after": "bc52f570ef4b5c012832ad219c4659ce8bf0e57b5487dbea82cc87bdb934a796"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\LearningCircuit_local-deep-research\\tests\\advanced_search_system\\questions\\test_decomposition_question.py": {
+      "sha256_before": "886d8a87793140491ff3b2dfa12bcc051778e606fab28701a30308fb6ba7f514",
+      "line_count": 513,
+      "sha256_after": "886d8a87793140491ff3b2dfa12bcc051778e606fab28701a30308fb6ba7f514"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\LearningCircuit_local-deep-research\\src\\local_deep_research\\advanced_search_system\\questions\\decomposition_question.py": {
+      "sha256_before": "122062684eda292ebf0c7ec1582093dc6b5adb3ccf6a1729b4f0185a665af918",
+      "line_count": 446,
+      "sha256_after": "122062684eda292ebf0c7ec1582093dc6b5adb3ccf6a1729b4f0185a665af918"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\LearningCircuit_local-deep-research\\tests\\strategies\\test_langgraph_agent_strategy.py": {
+      "sha256_before": "c717a79697012c29ac4894cc05c9e1b68e59e1a253b5a5e779d12b603ddbc2f4",
+      "line_count": 5417,
+      "sha256_after": "c717a79697012c29ac4894cc05c9e1b68e59e1a253b5a5e779d12b603ddbc2f4"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\LearningCircuit_local-deep-research\\src\\local_deep_research\\advanced_search_system\\strategies\\langgraph_agent_strategy.py": {
+      "sha256_before": "39cbbb7cab7128a3cc25d4fda6a207b931ffa4d14e67b516a1effbcaf2ade5ac",
+      "line_count": 2818,
+      "sha256_after": "39cbbb7cab7128a3cc25d4fda6a207b931ffa4d14e67b516a1effbcaf2ade5ac"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\LearningCircuit_local-deep-research\\tests\\report\\test_report_structure_parsing.py": {
+      "sha256_before": "0c3a9f4faa2d485587cffa19d629d3b077f0b032edb41e4da83aa62882155f80",
+      "line_count": 744,
+      "sha256_after": "0c3a9f4faa2d485587cffa19d629d3b077f0b032edb41e4da83aa62882155f80"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\LearningCircuit_local-deep-research\\src\\local_deep_research\\report_generator.py": {
+      "sha256_before": "e5194c47d5708cc30fbfd38b6731f821fda5f75a636ad2b59d9e6f97768e5df1",
+      "line_count": 1351,
+      "sha256_after": "e5194c47d5708cc30fbfd38b6731f821fda5f75a636ad2b59d9e6f97768e5df1"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\LearningCircuit_local-deep-research\\tests\\test_report_generator.py": {
+      "sha256_before": "b00036c812a0f43fdb5ede001e5dfe18d48523ace2377728c519b5ce2884e914",
+      "line_count": 1009,
+      "sha256_after": "b00036c812a0f43fdb5ede001e5dfe18d48523ace2377728c519b5ce2884e914"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\LearningCircuit_local-deep-research\\tests\\web_search_engines\\engines\\test_full_search.py": {
+      "sha256_before": "142d9683e7f7a492c44101090be0891bf7d3a2538c3fa669ecbd637698dbbbe1",
+      "line_count": 457,
+      "sha256_after": "142d9683e7f7a492c44101090be0891bf7d3a2538c3fa669ecbd637698dbbbe1"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\LearningCircuit_local-deep-research\\tests\\web_search_engines\\engines\\test_arxiv_coverage.py": {
+      "sha256_before": "f42c3d638cdc337c6b983685919dbf42dbd5b66a8e16381bdd3e4ac3d94edb85",
+      "line_count": 819,
+      "sha256_after": "f42c3d638cdc337c6b983685919dbf42dbd5b66a8e16381bdd3e4ac3d94edb85"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\LearningCircuit_local-deep-research\\src\\local_deep_research\\web_search_engines\\engines\\search_engine_arxiv.py": {
+      "sha256_before": "6977f55ee55248afcd18d5029d1474f2ec3bdb593821995e2574724d8fcd7fdb",
+      "line_count": 527,
+      "sha256_after": "6977f55ee55248afcd18d5029d1474f2ec3bdb593821995e2574724d8fcd7fdb"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\LearningCircuit_local-deep-research\\tests\\web_search_engines\\engines\\test_search_engine_arxiv.py": {
+      "sha256_before": "c77a29dcd56dc94df59972d88c4c38770997741bcf4a48701f709454fb3f0d39",
+      "line_count": 720,
+      "sha256_after": "c77a29dcd56dc94df59972d88c4c38770997741bcf4a48701f709454fb3f0d39"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\LearningCircuit_local-deep-research\\tests\\search_engines\\test_search_engine_brave.py": {
+      "sha256_before": "e49a166e7b1da2f0b0156efb73c09d0a6d0ee38812c1313c7181d80db4e80dd0",
+      "line_count": 330,
+      "sha256_after": "e49a166e7b1da2f0b0156efb73c09d0a6d0ee38812c1313c7181d80db4e80dd0"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\LearningCircuit_local-deep-research\\src\\local_deep_research\\web_search_engines\\engines\\search_engine_brave.py": {
+      "sha256_before": "570b7629db1410e8b7e89ae3d347ebed84703575190de7a38f2672980b18c80c",
+      "line_count": 182,
+      "sha256_after": "570b7629db1410e8b7e89ae3d347ebed84703575190de7a38f2672980b18c80c"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\LearningCircuit_local-deep-research\\tests\\web_search_engines\\engines\\test_search_engine_brave.py": {
+      "sha256_before": "28e1757aec652c4f343e2c464d784b7323cf4ca0f79e3f8cd58d4d3a805594fa",
+      "line_count": 688,
+      "sha256_after": "28e1757aec652c4f343e2c464d784b7323cf4ca0f79e3f8cd58d4d3a805594fa"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\LearningCircuit_local-deep-research\\tests\\search_engines\\test_search_engine_github.py": {
+      "sha256_before": "23177df9484b6525728018d4b43f4e3e3b5c14b4b34c27df435c170390e77a56",
+      "line_count": 727,
+      "sha256_after": "23177df9484b6525728018d4b43f4e3e3b5c14b4b34c27df435c170390e77a56"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\LearningCircuit_local-deep-research\\src\\local_deep_research\\web_search_engines\\engines\\search_engine_github.py": {
+      "sha256_before": "25d351cef47fde59af66c161476f3f26b758852747767118fae99da9c48fc2ef",
+      "line_count": 956,
+      "sha256_after": "25d351cef47fde59af66c161476f3f26b758852747767118fae99da9c48fc2ef"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\LearningCircuit_local-deep-research\\tests\\web_search_engines\\engines\\test_search_engine_github.py": {
+      "sha256_before": "27fadaca83e89fddffdd926f2f9d9517aa60cacf3f35195e5b22a7d25efd0ea5",
+      "line_count": 854,
+      "sha256_after": "27fadaca83e89fddffdd926f2f9d9517aa60cacf3f35195e5b22a7d25efd0ea5"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\LearningCircuit_local-deep-research\\tests\\search_engines\\test_search_engine_guardian.py": {
+      "sha256_before": "8442aaae5124f53d753ebf1b90aa17f10eca462a83031c119036fd1cc6de50ff",
+      "line_count": 423,
+      "sha256_after": "8442aaae5124f53d753ebf1b90aa17f10eca462a83031c119036fd1cc6de50ff"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\LearningCircuit_local-deep-research\\src\\local_deep_research\\web_search_engines\\engines\\search_engine_guardian.py": {
+      "sha256_before": "7f65abb54f911b360c78e2d5be0c232cdf5d394727c723a471077ed455f8e0e7",
+      "line_count": 695,
+      "sha256_after": "7f65abb54f911b360c78e2d5be0c232cdf5d394727c723a471077ed455f8e0e7"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\LearningCircuit_local-deep-research\\tests\\web_search_engines\\engines\\test_search_engine_guardian.py": {
+      "sha256_before": "0666ed225da841d6c7da600d70e9cbf99f70605057258d44b17e90444f109ee9",
+      "line_count": 549,
+      "sha256_after": "0666ed225da841d6c7da600d70e9cbf99f70605057258d44b17e90444f109ee9"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\LearningCircuit_local-deep-research\\tests\\web_search_engines\\engines\\test_guardian_coverage.py": {
+      "sha256_before": "51a1d7442126cb76c117ef3545f82321428ad538883a969f14d9183540d8eb2a",
+      "line_count": 985,
+      "sha256_after": "51a1d7442126cb76c117ef3545f82321428ad538883a969f14d9183540d8eb2a"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\LearningCircuit_local-deep-research\\tests\\search_engines\\test_search_engine_paperless.py": {
+      "sha256_before": "f883bce82ef1aa8ee28d4ad434387240d7c2ce77d2e3a3cbd91110cb37bb9cd1",
+      "line_count": 718,
+      "sha256_after": "f883bce82ef1aa8ee28d4ad434387240d7c2ce77d2e3a3cbd91110cb37bb9cd1"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\LearningCircuit_local-deep-research\\src\\local_deep_research\\web_search_engines\\engines\\search_engine_paperless.py": {
+      "sha256_before": "590b124d7f19253e1478992d08d200697895546f98b03d418bb580889cedf5b4",
+      "line_count": 819,
+      "sha256_after": "590b124d7f19253e1478992d08d200697895546f98b03d418bb580889cedf5b4"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\LearningCircuit_local-deep-research\\tests\\web_search_engines\\engines\\test_search_engine_pubmed.py": {
+      "sha256_before": "5c4a889c9005af060cf6a74cbafb09dd2df8e816fbaf64e21857b6c14b732a9a",
+      "line_count": 1469,
+      "sha256_after": "5c4a889c9005af060cf6a74cbafb09dd2df8e816fbaf64e21857b6c14b732a9a"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\LearningCircuit_local-deep-research\\src\\local_deep_research\\web_search_engines\\engines\\search_engine_pubmed.py": {
+      "sha256_before": "7e5a3a409da67ed3af2217e9570a8fd6b00f817516254619b6673b8967cf7a7f",
+      "line_count": 1832,
+      "sha256_after": "7e5a3a409da67ed3af2217e9570a8fd6b00f817516254619b6673b8967cf7a7f"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\LearningCircuit_local-deep-research\\tests\\web_search_engines\\engines\\test_search_engine_semantic_scholar.py": {
+      "sha256_before": "b39e1072364780920072f4e114751d1e89302ef3ea4dcfe64d05b10ee9a04d9c",
+      "line_count": 690,
+      "sha256_after": "b39e1072364780920072f4e114751d1e89302ef3ea4dcfe64d05b10ee9a04d9c"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\LearningCircuit_local-deep-research\\src\\local_deep_research\\web_search_engines\\engines\\search_engine_semantic_scholar.py": {
+      "sha256_before": "9b62e8d14cc9be125fa88b1d671260f760d20aab3ab54beb2b1e9be068134249",
+      "line_count": 737,
+      "sha256_after": "9b62e8d14cc9be125fa88b1d671260f760d20aab3ab54beb2b1e9be068134249"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\LearningCircuit_local-deep-research\\tests\\web_search_engines\\engines\\test_semantic_scholar_coverage.py": {
+      "sha256_before": "29f6642bfcf2e1433d8da1d6a2433a33ff662772abb1fb91008c6e12cb55c7e4",
+      "line_count": 771,
+      "sha256_after": "29f6642bfcf2e1433d8da1d6a2433a33ff662772abb1fb91008c6e12cb55c7e4"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\LearningCircuit_local-deep-research\\tests\\search_engines\\test_search_engine_wikinews.py": {
+      "sha256_before": "52af887fd25ef548a8d46332fe969f08a99933355b335904699a33414b42f0fe",
+      "line_count": 523,
+      "sha256_after": "52af887fd25ef548a8d46332fe969f08a99933355b335904699a33414b42f0fe"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\LearningCircuit_local-deep-research\\src\\local_deep_research\\web_search_engines\\engines\\search_engine_wikinews.py": {
+      "sha256_before": "1b3922a28f8c0754bf34526f64fb7c6e3896d13ca95b93bc02a92291d0bd8b59",
+      "line_count": 529,
+      "sha256_after": "1b3922a28f8c0754bf34526f64fb7c6e3896d13ca95b93bc02a92291d0bd8b59"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\LearningCircuit_local-deep-research\\tests\\search_engines\\test_search_engine_zenodo_deep_coverage.py": {
+      "sha256_before": "e0f6597a10731ef89e47a602d644029eedb2f2ee6f58f196a7bcf12b92701eed",
+      "line_count": 360,
+      "sha256_after": "e0f6597a10731ef89e47a602d644029eedb2f2ee6f58f196a7bcf12b92701eed"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\LearningCircuit_local-deep-research\\src\\local_deep_research\\web_search_engines\\engines\\search_engine_zenodo.py": {
+      "sha256_before": "075e64b446ae24d8dd1b1df7c760c89abb1761f7256336250863535f602702a7",
+      "line_count": 407,
+      "sha256_after": "075e64b446ae24d8dd1b1df7c760c89abb1761f7256336250863535f602702a7"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\learntocloud_learn-to-cloud-app\\apps\\verification-functions\\tests\\test_verification_agents.py": {
+      "sha256_before": "7b524c9b9d639b337ef21a4f778d19f87cc6f24ac6cf972751b6969dbc228122",
+      "line_count": 77,
+      "sha256_after": "7b524c9b9d639b337ef21a4f778d19f87cc6f24ac6cf972751b6969dbc228122"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\learntocloud_learn-to-cloud-app\\apps\\verification-functions\\verification_agents.py": {
+      "sha256_before": "a3c6f0f2c05508dc7c12880e1b2a5db701115816c48f6d2485212d5960cf7906",
+      "line_count": 172,
+      "sha256_after": "a3c6f0f2c05508dc7c12880e1b2a5db701115816c48f6d2485212d5960cf7906"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\llm-workflow-engine_llm-workflow-engine\\tests\\unit\\test_request.py": {
+      "sha256_before": "bea0885e59d0bda77c4d0b7534b0c79df3da9357359fcc3d485459ecd2c6c953",
+      "line_count": 1532,
+      "sha256_after": "bea0885e59d0bda77c4d0b7534b0c79df3da9357359fcc3d485459ecd2c6c953"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\llm-workflow-engine_llm-workflow-engine\\lwe\\backends\\api\\request.py": {
+      "sha256_before": "626ec8a16f6384367567ce53b58c6f377bf1b44b17eeb9afa176e57cf6c5d570",
+      "line_count": 614,
+      "sha256_after": "626ec8a16f6384367567ce53b58c6f377bf1b44b17eeb9afa176e57cf6c5d570"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\lxfight_astrbot_plugin_mnemosyne\\core\\memory_operations.py": {
+      "sha256_before": "82e003aa011e257b1f707fc4b1d98c7474a8c0decc464ecf63afcad157f82aea",
+      "line_count": 1695,
+      "sha256_after": "82e003aa011e257b1f707fc4b1d98c7474a8c0decc464ecf63afcad157f82aea"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\lxfight_astrbot_plugin_mnemosyne\\tests\\test_summary_provider.py": {
+      "sha256_before": "e9789a747372d805fcbce09606f20eb3cf7d0ba4e7cae4baafbecadacfdbecc1",
+      "line_count": 169,
+      "sha256_after": "e9789a747372d805fcbce09606f20eb3cf7d0ba4e7cae4baafbecadacfdbecc1"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\marcgs_lob-agent-evaluation\\evaluation\\chatbot\\simulation\\termination_strategy.py": {
+      "sha256_before": "0e68a6e28d049c84380bd3814e5e093ab663d6d89d775542f946d8b5fcedb55a",
+      "line_count": 133,
+      "sha256_after": "0e68a6e28d049c84380bd3814e5e093ab663d6d89d775542f946d8b5fcedb55a"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\marcgs_lob-agent-evaluation\\evaluation\\chatbot\\test\\simulation\\test_termination_strategy.py": {
+      "sha256_before": "9c66e61f63f3e36927accbd375fc686dbbcb62c50a336a7be21610099fa05ef0",
+      "line_count": 237,
+      "sha256_after": "9c66e61f63f3e36927accbd375fc686dbbcb62c50a336a7be21610099fa05ef0"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\martinapugliese_askademic\\tests\\test_question.py": {
+      "sha256_before": "4f18b5717bbe7ccb2315f23c266f2dba2f48c5e3c6a6e672401bae18ea653f69",
+      "line_count": 144,
+      "sha256_after": "4f18b5717bbe7ccb2315f23c266f2dba2f48c5e3c6a6e672401bae18ea653f69"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\martinapugliese_askademic\\src\\askademic\\question.py": {
+      "sha256_before": "00f17898bfcc60625556d525b5f0b7cf2e1eda46a6491927c1e207465bcba847",
+      "line_count": 141,
+      "sha256_after": "00f17898bfcc60625556d525b5f0b7cf2e1eda46a6491927c1e207465bcba847"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\maseval_MASEval\\maseval\\interface\\agents\\camel.py": {
+      "sha256_before": "d4c7bb4176813b5fe483480916a4ad5490b332833210d2cd370d1cf1a47e9136",
+      "line_count": 1276,
+      "sha256_after": "d4c7bb4176813b5fe483480916a4ad5490b332833210d2cd370d1cf1a47e9136"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\maseval_MASEval\\tests\\test_interface\\test_agent_integration\\test_camel_integration.py": {
+      "sha256_before": "a29c7ec9c5637499c737ab2c4e4ec4129eeb0f2ce65c0bd1223b59a4556c8846",
+      "line_count": 1313,
+      "sha256_after": "a29c7ec9c5637499c737ab2c4e4ec4129eeb0f2ce65c0bd1223b59a4556c8846"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\mdhaarishussain_chaos-kitten\\tests\\test_adaptive_generation.py": {
+      "sha256_before": "14ff4eb3b40bf34ac8cba9ea0b94e58ff90c0dfb90214c90523176c2e291218e",
+      "line_count": 132,
+      "sha256_after": "14ff4eb3b40bf34ac8cba9ea0b94e58ff90c0dfb90214c90523176c2e291218e"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\mdhaarishussain_chaos-kitten\\chaos_kitten\\brain\\adaptive_planner.py": {
+      "sha256_before": "de0e7979d91bbfd20ac629216170d91bfe9268e08d816fa10399deb173071de7",
+      "line_count": 95,
+      "sha256_after": "de0e7979d91bbfd20ac629216170d91bfe9268e08d816fa10399deb173071de7"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\mdhaarishussain_chaos-kitten\\tests\\test_attack_planner_implementation.py": {
+      "sha256_before": "b473ae11b5fe066e9d6fd890753a87c870c83efa1cdedf845220c79f3ce23ae0",
+      "line_count": 142,
+      "sha256_after": "b473ae11b5fe066e9d6fd890753a87c870c83efa1cdedf845220c79f3ce23ae0"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\mdhaarishussain_chaos-kitten\\chaos_kitten\\brain\\attack_planner.py": {
+      "sha256_before": "c6f7be6d30bff0fb67cb0d93350d969e9c654863724bb5bda096c53b6dcc2880",
+      "line_count": 885,
+      "sha256_after": "c6f7be6d30bff0fb67cb0d93350d969e9c654863724bb5bda096c53b6dcc2880"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\mdhaarishussain_chaos-kitten\\tests\\test_attack_planner.py": {
+      "sha256_before": "e58594ab408fa336af6cd5da56e27c3a006c1d69dfada6105093868c13a359ba",
+      "line_count": 364,
+      "sha256_after": "e58594ab408fa336af6cd5da56e27c3a006c1d69dfada6105093868c13a359ba"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\mdhaarishussain_chaos-kitten\\chaos_kitten\\brain\\orchestrator.py": {
+      "sha256_before": "4fb644def1849f1cd23d4e4c4ce262ea265018d258170fe0c7960b75169b6bf6",
+      "line_count": 773,
+      "sha256_after": "4fb644def1849f1cd23d4e4c4ce262ea265018d258170fe0c7960b75169b6bf6"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\mdhaarishussain_chaos-kitten\\tests\\test_brain.py": {
+      "sha256_before": "cad808dd4b6b54930b5ec20fbef122a9abb852b57b3368da74f347266dbd15c5",
+      "line_count": 508,
+      "sha256_after": "cad808dd4b6b54930b5ec20fbef122a9abb852b57b3368da74f347266dbd15c5"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\metauto-ai_GPTSwarm\\test\\experiments\\crosswords\\test_evaluator.py": {
+      "sha256_before": "81f2530e04d8667f39ace1400abd277bab48cac15310bcc4b3fc61a58160b2aa",
+      "line_count": 29,
+      "sha256_after": "81f2530e04d8667f39ace1400abd277bab48cac15310bcc4b3fc61a58160b2aa"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\metauto-ai_GPTSwarm\\swarm\\environment\\domain\\crosswords\\evaluator.py": {
+      "sha256_before": "088165fd186a79cc06c68f2ce9815e228c32d7f754334183f5fb78d6ac17ac99",
+      "line_count": 57,
+      "sha256_after": "088165fd186a79cc06c68f2ce9815e228c32d7f754334183f5fb78d6ac17ac99"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\metauto-ai_GPTSwarm\\test\\swarm\\graph\\test_swarm.py": {
+      "sha256_before": "6eded1ed6134bbdc188acafccba3212b1fd6854cf06c9d308e8e225a67f0d005",
+      "line_count": 31,
+      "sha256_after": "6eded1ed6134bbdc188acafccba3212b1fd6854cf06c9d308e8e225a67f0d005"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\metauto-ai_GPTSwarm\\swarm\\graph\\swarm.py": {
+      "sha256_before": "2a70b60a001c8217bf4247bf4abf0af592bc36b529e5a8ed90f63f4101b19bba",
+      "line_count": 168,
+      "sha256_after": "2a70b60a001c8217bf4247bf4abf0af592bc36b529e5a8ed90f63f4101b19bba"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\microsoft_content-generation-solution-accelerator\\src\\tests\\services\\test_orchestrator.py": {
+      "sha256_before": "eaf30af62a5f37f69e2fbe4fe48950249ee6ae036fbc1215dbaee863ee8aeced",
+      "line_count": 2442,
+      "sha256_after": "eaf30af62a5f37f69e2fbe4fe48950249ee6ae036fbc1215dbaee863ee8aeced"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\microsoft_content-generation-solution-accelerator\\src\\backend\\orchestrator.py": {
+      "sha256_before": "71bb9963046b02514f4710e8373c940122cae074d7246c8a7089c1d52678e17a",
+      "line_count": 1838,
+      "sha256_after": "71bb9963046b02514f4710e8373c940122cae074d7246c8a7089c1d52678e17a"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\microsoft_spec-to-agents\\tests\\test_tools_bing_search.py": {
+      "sha256_before": "7f19628dc595d650318090edd38c33c171ffd3543fdfa3757218e041ee994985",
+      "line_count": 267,
+      "sha256_after": "7f19628dc595d650318090edd38c33c171ffd3543fdfa3757218e041ee994985"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\microsoft_spec-to-agents\\src\\spec_to_agents\\tools\\bing_search.py": {
+      "sha256_before": "2ab772f6c3635540dfb03dd3775461bfc9c77b782220f9ba56cb7082a4c5dead",
+      "line_count": 68,
+      "sha256_after": "2ab772f6c3635540dfb03dd3775461bfc9c77b782220f9ba56cb7082a4c5dead"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\mindroom-ai_mindroom\\tests\\test_workflow_scheduling.py": {
+      "sha256_before": "2345a1624c8e65cffcb9afe3da063083958c93a394158b0fb4829ba8df38fe2a",
+      "line_count": 1270,
+      "sha256_after": "2345a1624c8e65cffcb9afe3da063083958c93a394158b0fb4829ba8df38fe2a"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\mindroom-ai_mindroom\\src\\mindroom\\scheduling.py": {
+      "sha256_before": "681370589cce8b2bac2005f1c54d63921b6a09d042f8790a9ace2d12bb06ac0a",
+      "line_count": 1807,
+      "sha256_after": "681370589cce8b2bac2005f1c54d63921b6a09d042f8790a9ace2d12bb06ac0a"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\mindroom-ai_mindroom\\tests\\test_voice_handler.py": {
+      "sha256_before": "82ac88545c1608942d2b7354e9f410905d561f64cabf9d16cfb9cfc37b8690d6",
+      "line_count": 764,
+      "sha256_after": "82ac88545c1608942d2b7354e9f410905d561f64cabf9d16cfb9cfc37b8690d6"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\mindroom-ai_mindroom\\src\\mindroom\\voice_handler.py": {
+      "sha256_before": "0d14cc83397487604e7d9e6952655a47f3bb4f56bd4ce8020b89504f7f554b1a",
+      "line_count": 727,
+      "sha256_after": "0d14cc83397487604e7d9e6952655a47f3bb4f56bd4ce8020b89504f7f554b1a"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\minitap-ai_mobile-use\\minitap\\mobile_use\\agents\\outputter\\outputter.py": {
+      "sha256_before": "e8828a4d6c1afd6e87e34234d757af28b4bd2d86be1bb1a65424508dbce77975",
+      "line_count": 85,
+      "sha256_after": "e8828a4d6c1afd6e87e34234d757af28b4bd2d86be1bb1a65424508dbce77975"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\minitap-ai_mobile-use\\minitap\\mobile_use\\agents\\outputter\\test_outputter.py": {
+      "sha256_before": "ce72b85b79851accd918679b9a33601ea08e988902f683232b76c5596c3b2f7f",
+      "line_count": 169,
+      "sha256_after": "ce72b85b79851accd918679b9a33601ea08e988902f683232b76c5596c3b2f7f"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\mixseek_mixseek-core\\tests\\unit\\round_controller\\test_improvement_judgment.py": {
+      "sha256_before": "9ddf714528630a6fac16036b13d1d08a278056fb4f6619027d33f23622bb5fa1",
+      "line_count": 193,
+      "sha256_after": "9ddf714528630a6fac16036b13d1d08a278056fb4f6619027d33f23622bb5fa1"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\mixseek_mixseek-core\\src\\mixseek\\round_controller\\judgment_client.py": {
+      "sha256_before": "c5c143f231eea6540550717ac2cd05b989b389c21cf56524f73e24244f222cbb",
+      "line_count": 123,
+      "sha256_after": "c5c143f231eea6540550717ac2cd05b989b389c21cf56524f73e24244f222cbb"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\monarch-initiative_aurelian\\tests\\test_agents\\test_web_tools.py": {
+      "sha256_before": "e6e38a6c1859a58e6412da586d4afc26d5930bcf7f46925189b2d2cf9306a498",
+      "line_count": 183,
+      "sha256_after": "e6e38a6c1859a58e6412da586d4afc26d5930bcf7f46925189b2d2cf9306a498"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\monarch-initiative_aurelian\\src\\aurelian\\agents\\web\\web_tools.py": {
+      "sha256_before": "4a4c3fa06943c0ba5dc794cb50e98177dae3041f03bba34439998e905247bbd3",
+      "line_count": 121,
+      "sha256_after": "4a4c3fa06943c0ba5dc794cb50e98177dae3041f03bba34439998e905247bbd3"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\MotleyAI_motleycrew\\motleycrew\\utils\\image_utils.py": {
+      "sha256_before": "6498ce5de20b1e8b4b90418c3367283e3d827853e8cdf267931df2764b85dc8a",
+      "line_count": 204,
+      "sha256_after": "6498ce5de20b1e8b4b90418c3367283e3d827853e8cdf267931df2764b85dc8a"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\MotleyAI_motleycrew\\tests\\test_image_utils.py": {
+      "sha256_before": "8f2edfc9da66451d30dd7137fa388855b8d350d57a75201ce1239ed647d14177",
+      "line_count": 101,
+      "sha256_after": "8f2edfc9da66451d30dd7137fa388855b8d350d57a75201ce1239ed647d14177"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\MotleyAI_motleycrew\\tests\\test_tools\\test_image_utils.py": {
+      "sha256_before": "b59d73572642212bdd514e198649a8fce42a56b5649fe3522ca249d5eb078835",
+      "line_count": 147,
+      "sha256_after": "b59d73572642212bdd514e198649a8fce42a56b5649fe3522ca249d5eb078835"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\MSDLLCpapers_teal-agents\\src\\sk-agents\\tests\\skagents\\v1\\test_sk_agent.py": {
+      "sha256_before": "295c4a714e0443fa6c74ea05b4bf487d210628def176c401e5ce5092873ffd65",
+      "line_count": 300,
+      "sha256_after": "295c4a714e0443fa6c74ea05b4bf487d210628def176c401e5ce5092873ffd65"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\MSDLLCpapers_teal-agents\\src\\sk-agents\\src\\sk_agents\\skagents\\v1\\sk_agent.py": {
+      "sha256_before": "f2b9926760e2623686cce4247eda993afac4912f410648042f28ba508bff5548",
+      "line_count": 39,
+      "sha256_after": "f2b9926760e2623686cce4247eda993afac4912f410648042f28ba508bff5548"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\MSDLLCpapers_teal-agents\\src\\sk-agents\\tests\\tealagents\\v1alpha1\\agent\\test_tealagents_v1alpha1_agent_handler.py": {
+      "sha256_before": "1eea3b079921b71264e51869db23bff97ee1cadb07075a57d573b20f9ca4bf2c",
+      "line_count": 2229,
+      "sha256_after": "1eea3b079921b71264e51869db23bff97ee1cadb07075a57d573b20f9ca4bf2c"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\MSDLLCpapers_teal-agents\\src\\sk-agents\\src\\sk_agents\\tealagents\\v1alpha1\\agent\\handler.py": {
+      "sha256_before": "ab29355f1ea5e01276484dfc6dc18b546d443afa8675acd93f061c0400ccbb77",
+      "line_count": 1134,
+      "sha256_after": "ab29355f1ea5e01276484dfc6dc18b546d443afa8675acd93f061c0400ccbb77"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\musicmonk42_The_Code_Factory_Working_V2\\generator\\tests\\test_agents_critique_prompt.py": {
+      "sha256_before": "24a4023e5b00321730205e717a3dc50a282b7121d331e7f4df70565b3346cddc",
+      "line_count": 278,
+      "sha256_after": "24a4023e5b00321730205e717a3dc50a282b7121d331e7f4df70565b3346cddc"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\musicmonk42_The_Code_Factory_Working_V2\\generator\\agents\\critique_agent\\critique_prompt.py": {
+      "sha256_before": "a48b189f0868d9cff475ab6fe01c797787cb8ab1140048000e4486131b50ac70",
+      "line_count": 1068,
+      "sha256_after": "a48b189f0868d9cff475ab6fe01c797787cb8ab1140048000e4486131b50ac70"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\musicmonk42_The_Code_Factory_Working_V2\\self_fixing_engineer\\tests\\test_simulation_explain.py": {
+      "sha256_before": "2532cb569fd665dd284b1e2d9c8620d326a1efd7017d621ff50981a5f25ec218",
+      "line_count": 310,
+      "sha256_after": "2532cb569fd665dd284b1e2d9c8620d326a1efd7017d621ff50981a5f25ec218"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\musicmonk42_The_Code_Factory_Working_V2\\self_fixing_engineer\\simulation\\explain.py": {
+      "sha256_before": "0a3fbc7d38b49c897e47cdd357828544138449b50fa0f7b5017da89457154990",
+      "line_count": 1949,
+      "sha256_after": "0a3fbc7d38b49c897e47cdd357828544138449b50fa0f7b5017da89457154990"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\musicmonk42_The_Code_Factory_Working_V2\\self_fixing_engineer\\tests\\test_simulation_self_evolution_plugin.py": {
+      "sha256_before": "c9e897e798d8fa3990f7033f631ab3811ed6524f3dfedb58b6bd9e23b567fe71",
+      "line_count": 329,
+      "sha256_after": "c9e897e798d8fa3990f7033f631ab3811ed6524f3dfedb58b6bd9e23b567fe71"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\musicmonk42_The_Code_Factory_Working_V2\\self_fixing_engineer\\simulation\\plugins\\self_evolution_plugin.py": {
+      "sha256_before": "bc119af33d5e898ceb2fb5305eff39176cb513f6b9ae6894a477d7d0b7c19ec9",
+      "line_count": 1914,
+      "sha256_after": "bc119af33d5e898ceb2fb5305eff39176cb513f6b9ae6894a477d7d0b7c19ec9"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\nalamap_nalamap\\backend\\tests\\test_conversation_manager.py": {
+      "sha256_before": "cd044778994a2005c72c4e86a929a6836cee7ca40fb330e33ce464ad0f4a606f",
+      "line_count": 301,
+      "sha256_after": "cd044778994a2005c72c4e86a929a6836cee7ca40fb330e33ce464ad0f4a606f"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\nalamap_nalamap\\backend\\services\\conversation_manager.py": {
+      "sha256_before": "cae146d5a3ab2fc57bef45b4407f63163e555fddc8d9f98aec951974fbc4de09",
+      "line_count": 201,
+      "sha256_after": "cae146d5a3ab2fc57bef45b4407f63163e555fddc8d9f98aec951974fbc4de09"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\nalamap_nalamap\\backend\\services\\tools\\attribute_tools.py": {
+      "sha256_before": "b2e8094dda182544fd63d0ab64cabd1566b3518185ea7b46847222bdecd98f8d",
+      "line_count": 2001,
+      "sha256_after": "b2e8094dda182544fd63d0ab64cabd1566b3518185ea7b46847222bdecd98f8d"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\nalamap_nalamap\\backend\\tests\\test_attribute_tools_large_datasets.py": {
+      "sha256_before": "d8c08f891bdb0dbd174bab067a994d0dc61818cf1fecb389b28164a78f931a85",
+      "line_count": 825,
+      "sha256_after": "d8c08f891bdb0dbd174bab067a994d0dc61818cf1fecb389b28164a78f931a85"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\nalamap_nalamap\\backend\\tests\\test_attribute_tools.py": {
+      "sha256_before": "ab904f6d8959d7106a696284c17e5cae8b47af22886f1febfe5e362b86521acd",
+      "line_count": 640,
+      "sha256_after": "ab904f6d8959d7106a696284c17e5cae8b47af22886f1febfe5e362b86521acd"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\NousResearch_hermes-agent\\tests\\plugins\\memory\\test_mem0_setup.py": {
+      "sha256_before": "d4d91ba9faef27dc81e2cec38a81f5c521a2e1bce6fbe243f608bfd4c92db08d",
+      "line_count": 233,
+      "sha256_after": "d4d91ba9faef27dc81e2cec38a81f5c521a2e1bce6fbe243f608bfd4c92db08d"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\NousResearch_hermes-agent\\plugins\\memory\\mem0\\_setup.py": {
+      "sha256_before": "118d3be4d4a030d98b3b984474f5008dae71b4691432a8f8b67c32bd7a462195",
+      "line_count": 1001,
+      "sha256_after": "118d3be4d4a030d98b3b984474f5008dae71b4691432a8f8b67c32bd7a462195"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\NVIDIA-AI-Blueprints_aiq\\tests\\aiq_agent\\agents\\chat_researcher\\test_register_helpers.py": {
+      "sha256_before": "4526040ff842004ac3402c4800a68dbd477148bc37f55cd00c4ca048223544a9",
+      "line_count": 538,
+      "sha256_after": "4526040ff842004ac3402c4800a68dbd477148bc37f55cd00c4ca048223544a9"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\NVIDIA-AI-Blueprints_aiq\\src\\aiq_agent\\agents\\chat_researcher\\register.py": {
+      "sha256_before": "7a88a2b2a63b3e63dd014b6e42ecf54e34d1e98f0a18afeab0bd840aa856d2ec",
+      "line_count": 724,
+      "sha256_after": "7a88a2b2a63b3e63dd014b6e42ecf54e34d1e98f0a18afeab0bd840aa856d2ec"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\NVIDIA_NeMo-Agent-Toolkit\\examples\\advanced_agents\\alert_triage_agent\\tests\\test_utils.py": {
+      "sha256_before": "842b8b0210d8b93368994253e25621533faee376288aab49a2d4e179682c8256",
+      "line_count": 286,
+      "sha256_after": "842b8b0210d8b93368994253e25621533faee376288aab49a2d4e179682c8256"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\NVIDIA_NeMo-Agent-Toolkit\\examples\\advanced_agents\\alert_triage_agent\\src\\nat_alert_triage_agent\\utils.py": {
+      "sha256_before": "a08f10937385500e388bf93f05d63ee019e614b53adf550c926115741c50e68c",
+      "line_count": 235,
+      "sha256_after": "a08f10937385500e388bf93f05d63ee019e614b53adf550c926115741c50e68c"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\NVIDIA_NeMo-Agent-Toolkit\\packages\\nvidia_nat_mem0ai\\tests\\test_mem0_editor.py": {
+      "sha256_before": "88ba14b2cb49d4bd8d1cd8a98e3b71107dc2f5b676ae3105bd521b5dd6ad7580",
+      "line_count": 129,
+      "sha256_after": "88ba14b2cb49d4bd8d1cd8a98e3b71107dc2f5b676ae3105bd521b5dd6ad7580"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\NVIDIA_NeMo-Agent-Toolkit\\packages\\nvidia_nat_mem0ai\\src\\nat\\plugins\\mem0ai\\mem0_editor.py": {
+      "sha256_before": "1da6264f2c0051add77accd034ad1464d66c97bcd63eb647986e6c51b0e57f92",
+      "line_count": 115,
+      "sha256_after": "1da6264f2c0051add77accd034ad1464d66c97bcd63eb647986e6c51b0e57f92"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\NVIDIA_NeMo-Agent-Toolkit\\packages\\nvidia_nat_security\\tests\\eval\\red_teaming_evaluator\\test_evaluate.py": {
+      "sha256_before": "082bebef6fa3800c66c66505e276ef0378464e1c7639ae2e65794a8833222c36",
+      "line_count": 408,
+      "sha256_after": "082bebef6fa3800c66c66505e276ef0378464e1c7639ae2e65794a8833222c36"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\NVIDIA_NeMo-Agent-Toolkit\\packages\\nvidia_nat_security\\src\\nat\\plugins\\security\\eval\\red_teaming_evaluator\\evaluate.py": {
+      "sha256_before": "6cb452e908c66b8f0bb3bdb12804de2fa3e51f03e84837a6a9733d83fe718f2b",
+      "line_count": 327,
+      "sha256_after": "6cb452e908c66b8f0bb3bdb12804de2fa3e51f03e84837a6a9733d83fe718f2b"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\NVIDIA_SkillSpector\\tests\\unit\\test_cli.py": {
+      "sha256_before": "df3b1073b8a6accdd718e2166397d7bca7899cfbd2cdb7609eaeee47420b9a4c",
+      "line_count": 887,
+      "sha256_after": "df3b1073b8a6accdd718e2166397d7bca7899cfbd2cdb7609eaeee47420b9a4c"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\NVIDIA_SkillSpector\\src\\skillspector\\cli.py": {
+      "sha256_before": "6408bded2b9f184bfd4d04f58d2dcc3abbe076eb1773fe302b8ff59b6a2ab0c9",
+      "line_count": 650,
+      "sha256_after": "6408bded2b9f184bfd4d04f58d2dcc3abbe076eb1773fe302b8ff59b6a2ab0c9"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Open-Source-Legal_OpenContracts\\opencontractserver\\tests\\test_pydantic_ai_agents.py": {
+      "sha256_before": "611073817c3408902f74d53fc5acf1eea25b61eab95488ef0c291a270e213f66",
+      "line_count": 1823,
+      "sha256_after": "611073817c3408902f74d53fc5acf1eea25b61eab95488ef0c291a270e213f66"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Open-Source-Legal_OpenContracts\\opencontractserver\\llms\\agents\\pydantic_ai_agents.py": {
+      "sha256_before": "866da3bc4e6818f9b3e44037709864ca1464cfd3180789c74395bf3997b976c4",
+      "line_count": 3782,
+      "sha256_after": "866da3bc4e6818f9b3e44037709864ca1464cfd3180789c74395bf3997b976c4"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\OpenDataBox_Workspace-Bench\\deepagents\\libs\\cli\\tests\\unit_tests\\test_remote_client.py": {
+      "sha256_before": "5fc0a4f3f7d56d114c10be0bc597e9fa1e89b64c818a6409b6713c4a1d4a3e71",
+      "line_count": 615,
+      "sha256_after": "5fc0a4f3f7d56d114c10be0bc597e9fa1e89b64c818a6409b6713c4a1d4a3e71"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\OpenDataBox_Workspace-Bench\\deepagents\\libs\\cli\\deepagents_cli\\remote_client.py": {
+      "sha256_before": "2d54b193fcd1073a1e5e56ae4c5ba21397a59cd5b1bee1723e44afa031efba74",
+      "line_count": 515,
+      "sha256_after": "2d54b193fcd1073a1e5e56ae4c5ba21397a59cd5b1bee1723e44afa031efba74"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\prebid_salesagent\\src\\services\\ai\\agents\\naming_agent.py": {
+      "sha256_before": "49135cfcd75ecdc1b8e098736d2671b2ce16db35e80c012f4aaa33a4891b11e6",
+      "line_count": 156,
+      "sha256_after": "49135cfcd75ecdc1b8e098736d2671b2ce16db35e80c012f4aaa33a4891b11e6"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\prebid_salesagent\\tests\\unit\\test_naming_agent.py": {
+      "sha256_before": "37fd3aec62c99020c3af0d166b76ea25efb1d5e37eaf14d3a8433640716610da",
+      "line_count": 191,
+      "sha256_after": "37fd3aec62c99020c3af0d166b76ea25efb1d5e37eaf14d3a8433640716610da"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\project-ryoma_ryoma\\packages\\ryoma_ai\\tests\\agent\\test_sql_approval_workflow.py": {
+      "sha256_before": "2c617540eee831e73bd23b6bd7c0111d1ad79485390e308e9e3a4eea9c2e2021",
+      "line_count": 429,
+      "sha256_after": "2c617540eee831e73bd23b6bd7c0111d1ad79485390e308e9e3a4eea9c2e2021"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\project-ryoma_ryoma\\packages\\ryoma_ai\\ryoma_ai\\agent\\workflow.py": {
+      "sha256_before": "3675ae3b5111336376bc51154ab3ab885b553bf2f8605a54240d97ac1fe24e19",
+      "line_count": 397,
+      "sha256_after": "3675ae3b5111336376bc51154ab3ab885b553bf2f8605a54240d97ac1fe24e19"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\prospectio-ai_prospectio-api-mcp\\tests\\ut\\test_compatibility_score.py": {
+      "sha256_before": "b650d177caf5c8ac01103c59bec86f72bd2866b4c960bfd23985b488b068242f",
+      "line_count": 84,
+      "sha256_after": "b650d177caf5c8ac01103c59bec86f72bd2866b4c960bfd23985b488b068242f"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\prospectio-ai_prospectio-api-mcp\\prospectio_api_mcp\\infrastructure\\services\\compatibility_score.py": {
+      "sha256_before": "36fe84a40737dd7524fe722fcf9df1f4028bbdaf758c9f660fedc606ee1481aa",
+      "line_count": 54,
+      "sha256_after": "36fe84a40737dd7524fe722fcf9df1f4028bbdaf758c9f660fedc606ee1481aa"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\prospectio-ai_prospectio-api-mcp\\tests\\ut\\test_decision_chain.py": {
+      "sha256_before": "28ecc67d3dca74e6cd0f6c43f95fa0db7814e79664b94403beaffa319b180145",
+      "line_count": 86,
+      "sha256_after": "28ecc67d3dca74e6cd0f6c43f95fa0db7814e79664b94403beaffa319b180145"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\prospectio-ai_prospectio-api-mcp\\prospectio_api_mcp\\infrastructure\\services\\enrich_leads_agent\\chains\\decision_chain.py": {
+      "sha256_before": "b1fc6bbeba753b58e58d0ca19e62443290f234e83430ff6dae9dbf9d52609e49",
+      "line_count": 48,
+      "sha256_after": "b1fc6bbeba753b58e58d0ca19e62443290f234e83430ff6dae9dbf9d52609e49"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\prospectio-ai_prospectio-api-mcp\\tests\\ut\\test_enrich_chain.py": {
+      "sha256_before": "78e3e05aafe280714212167fc00a2b19cec172e53591aec953df5ec0d5063bca",
+      "line_count": 334,
+      "sha256_after": "78e3e05aafe280714212167fc00a2b19cec172e53591aec953df5ec0d5063bca"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\prospectio-ai_prospectio-api-mcp\\prospectio_api_mcp\\infrastructure\\services\\enrich_leads_agent\\chains\\enrich_chain.py": {
+      "sha256_before": "dc5f6e15f0b81ddd14bf3448d58baebf604e607202e47cc7244552dcf6b52bd9",
+      "line_count": 223,
+      "sha256_after": "dc5f6e15f0b81ddd14bf3448d58baebf604e607202e47cc7244552dcf6b52bd9"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Qredence_agentic-fleet\\src\\agentic_fleet\\agents\\base.py": {
+      "sha256_before": "e9580c60812a2b35ae69639e6112e862c72a17ad4590abb12fb8e4655f5e2c9e",
+      "line_count": 509,
+      "sha256_after": "e9580c60812a2b35ae69639e6112e862c72a17ad4590abb12fb8e4655f5e2c9e"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Qredence_agentic-fleet\\tests\\agents\\test_base.py": {
+      "sha256_before": "f8de806ad9c5006d46e53afb323fc89d51210923279bd2a4eaa77e879b48b7f2",
+      "line_count": 541,
+      "sha256_after": "f8de806ad9c5006d46e53afb323fc89d51210923279bd2a4eaa77e879b48b7f2"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\redis-applied-ai_redis-sre-agent\\redis_sre_agent\\core\\llm_request_guard.py": {
+      "sha256_before": "f92ec80b3e0288133e8a5d6a20d37114f5c58b2784a75028038bad112405cb9d",
+      "line_count": 627,
+      "sha256_after": "f92ec80b3e0288133e8a5d6a20d37114f5c58b2784a75028038bad112405cb9d"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\redis-applied-ai_redis-sre-agent\\tests\\unit\\core\\test_llm_request_guard.py": {
+      "sha256_before": "bef7af2bc67985a64505dac6fc243f2558cbc501a6892b330665daa8c3c94f5a",
+      "line_count": 749,
+      "sha256_after": "bef7af2bc67985a64505dac6fc243f2558cbc501a6892b330665daa8c3c94f5a"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\redis-applied-ai_redis-sre-agent\\tests\\unit\\core\\semantic_cache\\test_rewrite.py": {
+      "sha256_before": "de28254d329462fae2d07d223cf2a653c4107ca077a9c0fd3bc88b8112a07dea",
+      "line_count": 54,
+      "sha256_after": "de28254d329462fae2d07d223cf2a653c4107ca077a9c0fd3bc88b8112a07dea"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\redis-applied-ai_redis-sre-agent\\redis_sre_agent\\core\\semantic_cache\\rewrite.py": {
+      "sha256_before": "f36e25b3c54181d1fafb8cdfca9e17ed1d6fc2cb474dae556f9ec872db21f844",
+      "line_count": 79,
+      "sha256_after": "f36e25b3c54181d1fafb8cdfca9e17ed1d6fc2cb474dae556f9ec872db21f844"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\rhesis-ai_rhesis\\tests\\penelope\\targets\\test_langgraph.py": {
+      "sha256_before": "ba6365df76c516a85ffb7c7bfb542dcdcd84b3d50a9e46f0dc2496396f337aae",
+      "line_count": 118,
+      "sha256_after": "ba6365df76c516a85ffb7c7bfb542dcdcd84b3d50a9e46f0dc2496396f337aae"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\rhesis-ai_rhesis\\penelope\\src\\rhesis\\penelope\\targets\\langgraph.py": {
+      "sha256_before": "2bdc64b78d71db222cb037ba51cc35d8add922c8a85e080e5883fde5575858ac",
+      "line_count": 245,
+      "sha256_after": "2bdc64b78d71db222cb037ba51cc35d8add922c8a85e080e5883fde5575858ac"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\rhesis-ai_rhesis\\tests\\penelope\\targets\\test_pydantic_ai.py": {
+      "sha256_before": "2444614726e6b3de6328c031cf9dfed517cf0423c8394f533a4dd934824cae8c",
+      "line_count": 314,
+      "sha256_after": "2444614726e6b3de6328c031cf9dfed517cf0423c8394f533a4dd934824cae8c"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\rhesis-ai_rhesis\\penelope\\src\\rhesis\\penelope\\targets\\pydantic_ai.py": {
+      "sha256_before": "ae65fce36a16109d5b4e03459674f5b9021d0a46578a86586d2744f55877bc4f",
+      "line_count": 245,
+      "sha256_after": "ae65fce36a16109d5b4e03459674f5b9021d0a46578a86586d2744f55877bc4f"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\robertwhiffin_ai-slide-generator\\tests\\unit\\test_session_naming.py": {
+      "sha256_before": "83108c9576a0eaddb0171b555cabeed7da044c51d6c1afed344c5b0cea2545a2",
+      "line_count": 358,
+      "sha256_after": "83108c9576a0eaddb0171b555cabeed7da044c51d6c1afed344c5b0cea2545a2"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\rte-france_BERTrend\\bertrend\\tests\\llm\\test_agent_utils.py": {
+      "sha256_before": "00b4a2e903655fcafb362caaa001e07c878b555e4fc909787d7c24c784e1ba4b",
+      "line_count": 455,
+      "sha256_after": "00b4a2e903655fcafb362caaa001e07c878b555e4fc909787d7c24c784e1ba4b"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\rte-france_BERTrend\\bertrend\\llm_utils\\agent_utils.py": {
+      "sha256_before": "60662d0c96141f2b3c57f9a358e92348854db0658c17c5617224bd35dee2cff7",
+      "line_count": 418,
+      "sha256_after": "60662d0c96141f2b3c57f9a358e92348854db0658c17c5617224bd35dee2cff7"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\shotgun-sh_shotgun\\test\\unit\\agents\\autopilot\\test_stage_monitor.py": {
+      "sha256_before": "1a1191afd067f8a052c1123a9d243460a87b3c50a7c89ad04386219d8f2561d0",
+      "line_count": 262,
+      "sha256_after": "1a1191afd067f8a052c1123a9d243460a87b3c50a7c89ad04386219d8f2561d0"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\shotgun-sh_shotgun\\src\\shotgun\\agents\\autopilot\\stage_monitor.py": {
+      "sha256_before": "081ebcfd651accf4c441d7c716d4a4e5ca0321ccef209126aceb97f2fdfb1cd2",
+      "line_count": 218,
+      "sha256_after": "081ebcfd651accf4c441d7c716d4a4e5ca0321ccef209126aceb97f2fdfb1cd2"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\shotgun-sh_shotgun\\test\\unit\\agents\\autopilot\\test_stage_monitor_usage.py": {
+      "sha256_before": "f80bd19b386dbe31d1904efddad5849f353a0395fb3453eacf6119090ec45a9c",
+      "line_count": 171,
+      "sha256_after": "f80bd19b386dbe31d1904efddad5849f353a0395fb3453eacf6119090ec45a9c"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\slimeslab_ComProScanner\\tests\\test_public_api.py": {
+      "sha256_before": "cb7bb8f6bef83ee165a211ece1991530615cb30f5cb599b8ac0d139e7abdebe5",
+      "line_count": 273,
+      "sha256_after": "cb7bb8f6bef83ee165a211ece1991530615cb30f5cb599b8ac0d139e7abdebe5"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\slimeslab_ComProScanner\\src\\comproscanner\\comproscanner.py": {
+      "sha256_before": "ab0e14814de5310523f859f439c658faef2d5fc2d089733f55c9cc05c5664d4f",
+      "line_count": 973,
+      "sha256_after": "ab0e14814de5310523f859f439c658faef2d5fc2d089733f55c9cc05c5664d4f"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\slimeslab_ComProScanner\\tests\\test_extract_flow.py": {
+      "sha256_before": "6311f723afde412e68209937065be3688634294e153a79e1f253077671d9c4a6",
+      "line_count": 1632,
+      "sha256_after": "6311f723afde412e68209937065be3688634294e153a79e1f253077671d9c4a6"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\slimeslab_ComProScanner\\src\\comproscanner\\extract_flow\\main_extraction_flow.py": {
+      "sha256_before": "238cea4e6930c51582209bee732f444d903bcf5a770679922eac3bdbec81c5f0",
+      "line_count": 977,
+      "sha256_after": "238cea4e6930c51582209bee732f444d903bcf5a770679922eac3bdbec81c5f0"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\sola-st_RepairAgent\\repair_agent\\autogpt\\commands\\defects4j.py": {
+      "sha256_before": "e645becbef148460058751dfcd7f27043d7e5de54d2b460a4d776c20336c0fe5",
+      "line_count": 1460,
+      "sha256_after": "e645becbef148460058751dfcd7f27043d7e5de54d2b460a4d776c20336c0fe5"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\sola-st_RepairAgent\\repair_agent\\tests\\test_defects4j_core.py": {
+      "sha256_before": "6cd1c55f98a45d45539f4ded088166d673c4d88972446d8a1c8128a6a390c76f",
+      "line_count": 1105,
+      "sha256_after": "6cd1c55f98a45d45539f4ded088166d673c4d88972446d8a1c8128a6a390c76f"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\sondera-ai_sondera-harness-python\\tests\\langgraph\\test_graph.py": {
+      "sha256_before": "6d5401dc8aa286a8f260ba2343acb6e004ce5ada3628e7785ffe22bbabd769ba",
+      "line_count": 654,
+      "sha256_after": "6d5401dc8aa286a8f260ba2343acb6e004ce5ada3628e7785ffe22bbabd769ba"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\sondera-ai_sondera-harness-python\\src\\sondera\\langgraph\\graph.py": {
+      "sha256_before": "7b1e3ad35384627192104b8f853125b2cc5e53fb9d2b50c0bc65bb195709af53",
+      "line_count": 482,
+      "sha256_after": "7b1e3ad35384627192104b8f853125b2cc5e53fb9d2b50c0bc65bb195709af53"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\spyrae_kronos-agent-os\\tests\\test_skill_create.py": {
+      "sha256_before": "1421a46ffe25d9edc87a6deadaa1d48622d960656b11a8ae5408f06eb946b54c",
+      "line_count": 224,
+      "sha256_after": "1421a46ffe25d9edc87a6deadaa1d48622d960656b11a8ae5408f06eb946b54c"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\spyrae_kronos-agent-os\\kronos\\cron\\skill_create.py": {
+      "sha256_before": "d8bb2de0cd2086992e32bec3ff9361a4ee647afb237272fbe4bbb5312cb9ec8d",
+      "line_count": 267,
+      "sha256_after": "d8bb2de0cd2086992e32bec3ff9361a4ee647afb237272fbe4bbb5312cb9ec8d"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\suitenumerique_conversations\\src\\backend\\chat\\tests\\agents\\test_history_processors.py": {
+      "sha256_before": "612bff3365e34002eeedc3b60ab88c5e93dcd27dc347bf0133f5b848c1461ca5",
+      "line_count": 686,
+      "sha256_after": "612bff3365e34002eeedc3b60ab88c5e93dcd27dc347bf0133f5b848c1461ca5"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\suitenumerique_conversations\\src\\backend\\chat\\agents\\history_processors.py": {
+      "sha256_before": "e6e5f014342221780bd05465aecd9c1c5d1c3e433072aaa4fbd1a659d57b508c",
+      "line_count": 449,
+      "sha256_after": "e6e5f014342221780bd05465aecd9c1c5d1c3e433072aaa4fbd1a659d57b508c"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\SuperagenticAI_superqode\\tests\\test_runtime_openai_events.py": {
+      "sha256_before": "e485ab3064cee1cbf67a9dead7ee0965a363706e9a680a917eb42f14665c2e5c",
+      "line_count": 177,
+      "sha256_after": "e485ab3064cee1cbf67a9dead7ee0965a363706e9a680a917eb42f14665c2e5c"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\SuperagenticAI_superqode\\src\\superqode\\runtime\\openai_agents.py": {
+      "sha256_before": "a63fa7565fdbb3aede7f4182d79212d16c6e35c0b4124e402952fa236679f9fd",
+      "line_count": 867,
+      "sha256_after": "a63fa7565fdbb3aede7f4182d79212d16c6e35c0b4124e402952fa236679f9fd"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\swarm-ai-research_swarm\\tests\\test_evolver.py": {
+      "sha256_before": "ee613a14e1b337ef1780ba1dbaf522640be00e4d774b55f4c35bcf35838f39c9",
+      "line_count": 428,
+      "sha256_after": "ee613a14e1b337ef1780ba1dbaf522640be00e4d774b55f4c35bcf35838f39c9"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\swarm-ai-research_swarm\\swarm\\analysis\\evolver.py": {
+      "sha256_before": "a5b342ad79f5bd9b041a15bf9c3d8680f34bc1a9019d53f70ee5b972d452bdb8",
+      "line_count": 856,
+      "sha256_after": "a5b342ad79f5bd9b041a15bf9c3d8680f34bc1a9019d53f70ee5b972d452bdb8"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\swarm-ai-research_swarm\\tests\\test_docker_sandbox.py": {
+      "sha256_before": "5b173ff09d36015649a0588aea65eb6652fa1d7254a3d519e794d3b405985ec4",
+      "line_count": 659,
+      "sha256_after": "5b173ff09d36015649a0588aea65eb6652fa1d7254a3d519e794d3b405985ec4"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\swarm-ai-research_swarm\\swarm\\core\\docker_sandbox.py": {
+      "sha256_before": "7eca7f1169bc20b3ac0fcacde1d01bfbbaa6d5603d4ee8b33f2226e77a102a28",
+      "line_count": 989,
+      "sha256_after": "7eca7f1169bc20b3ac0fcacde1d01bfbbaa6d5603d4ee8b33f2226e77a102a28"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\THUIR_MemoryBench\\baselines\\mem0\\embedchain\\tests\\llm\\test_azure_openai.py": {
+      "sha256_before": "ca441220018fd63e7c928c1235eb4c3d249c315818725fb3bbf265049fd955b1",
+      "line_count": 164,
+      "sha256_after": "ca441220018fd63e7c928c1235eb4c3d249c315818725fb3bbf265049fd955b1"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\THUIR_MemoryBench\\baselines\\mem0\\embedchain\\embedchain\\llm\\azure_openai.py": {
+      "sha256_before": "7324cd312a652fa1ae4358c16c554065d01b184f8aa3ad5990bb09e09a2e4228",
+      "line_count": 42,
+      "sha256_after": "7324cd312a652fa1ae4358c16c554065d01b184f8aa3ad5990bb09e09a2e4228"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\THUIR_MemoryBench\\baselines\\mem0\\embedchain\\embedchain\\llm\\base.py": {
+      "sha256_before": "967f77623c384a59081ae6c3696c4f13fe2a45c05af9a9e1027c1bc090b4e572",
+      "line_count": 350,
+      "sha256_after": "967f77623c384a59081ae6c3696c4f13fe2a45c05af9a9e1027c1bc090b4e572"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\THUIR_MemoryBench\\baselines\\mem0\\embedchain\\tests\\llm\\test_base_llm.py": {
+      "sha256_before": "66029a2d14f689b360c12171f37c3767c9ccf2223661e3c118a6eccb99e169a1",
+      "line_count": 61,
+      "sha256_after": "66029a2d14f689b360c12171f37c3767c9ccf2223661e3c118a6eccb99e169a1"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\THUIR_MemoryBench\\baselines\\mem0\\embedchain\\embedchain\\llm\\llama2.py": {
+      "sha256_before": "eeefa3af59bc2dd5b8b030186a66a45f33be2fdbffbaa07bd42807b0eeb71572",
+      "line_count": 53,
+      "sha256_after": "eeefa3af59bc2dd5b8b030186a66a45f33be2fdbffbaa07bd42807b0eeb71572"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\THUIR_MemoryBench\\baselines\\mem0\\embedchain\\tests\\llm\\test_llama2.py": {
+      "sha256_before": "41bbe1604e9f58adff68bf2019bc883f4de95c6c68f05795a5775ad51595be5f",
+      "line_count": 40,
+      "sha256_after": "41bbe1604e9f58adff68bf2019bc883f4de95c6c68f05795a5775ad51595be5f"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\THUIR_MemoryBench\\baselines\\mem0\\embedchain\\embedchain\\llm\\vertex_ai.py": {
+      "sha256_before": "0d37df21f3037fbafbe63472186b42531811c4ab1fa26477c542c00824bd50b4",
+      "line_count": 68,
+      "sha256_after": "0d37df21f3037fbafbe63472186b42531811c4ab1fa26477c542c00824bd50b4"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\THUIR_MemoryBench\\baselines\\mem0\\embedchain\\tests\\llm\\test_vertex_ai.py": {
+      "sha256_before": "2bf7c4f5574f3653f7f3e063a5ef3313cf7bbdaf7b22cf634af9ebe86b2af353",
+      "line_count": 76,
+      "sha256_after": "2bf7c4f5574f3653f7f3e063a5ef3313cf7bbdaf7b22cf634af9ebe86b2af353"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\THUIR_MemoryBench\\baselines\\mem0\\mem0\\llms\\langchain.py": {
+      "sha256_before": "7939e0e9286594d56842ecdedd6cb34cef6f48605016eccedc1b113232d824f6",
+      "line_count": 65,
+      "sha256_after": "7939e0e9286594d56842ecdedd6cb34cef6f48605016eccedc1b113232d824f6"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\THUIR_MemoryBench\\baselines\\mem0\\tests\\llms\\test_langchain.py": {
+      "sha256_before": "ecf200e97df0d2de40626ba7ecd85411fb51510e258af12ed7855f4e4664938f",
+      "line_count": 84,
+      "sha256_after": "ecf200e97df0d2de40626ba7ecd85411fb51510e258af12ed7855f4e4664938f"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\THUIR_MemoryBench\\baselines\\mem0\\tests\\vector_stores\\test_elasticsearch.py": {
+      "sha256_before": "2b26227dfdb3a7fd6705b041bee9f596d8b2a18c25a73995a41907b102488c8d",
+      "line_count": 358,
+      "sha256_after": "2b26227dfdb3a7fd6705b041bee9f596d8b2a18c25a73995a41907b102488c8d"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\THUIR_MemoryBench\\baselines\\mem0\\mem0\\vector_stores\\elasticsearch.py": {
+      "sha256_before": "89fef4ce4c857f9947ec0946102d5a4f107bcb25c75145cb57bd80ac5af6c2d8",
+      "line_count": 237,
+      "sha256_after": "89fef4ce4c857f9947ec0946102d5a4f107bcb25c75145cb57bd80ac5af6c2d8"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\THUIR_MemoryBench\\baselines\\mem0\\tests\\vector_stores\\test_faiss.py": {
+      "sha256_before": "8269c90a71fb0b13c472afc3c0d629ee4fd2686c875485782d363351a4e05b63",
+      "line_count": 291,
+      "sha256_after": "8269c90a71fb0b13c472afc3c0d629ee4fd2686c875485782d363351a4e05b63"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\THUIR_MemoryBench\\baselines\\mem0\\mem0\\vector_stores\\faiss.py": {
+      "sha256_before": "1c9f7c1ae844c7c2d72bab53474bca5db2dc085fd74f39f37c6da6788a32c7b9",
+      "line_count": 473,
+      "sha256_after": "1c9f7c1ae844c7c2d72bab53474bca5db2dc085fd74f39f37c6da6788a32c7b9"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\THUIR_MemoryBench\\baselines\\mem0\\tests\\vector_stores\\test_opensearch.py": {
+      "sha256_before": "240e40942f072f1283a60e38876025c64d40910bc218350755dbc462bfb9c2f0",
+      "line_count": 213,
+      "sha256_after": "240e40942f072f1283a60e38876025c64d40910bc218350755dbc462bfb9c2f0"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\tinyfish-io_tinyfish-web-agent-integrations\\langchain\\tests\\unit_tests\\test_api_wrapper.py": {
+      "sha256_before": "1ee7e18ce9a60d9c142167f3cdf0d38bd7f4515b7433425f0d92f49d516b4168",
+      "line_count": 440,
+      "sha256_after": "1ee7e18ce9a60d9c142167f3cdf0d38bd7f4515b7433425f0d92f49d516b4168"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\tinyfish-io_tinyfish-web-agent-integrations\\langchain\\langchain_tinyfish\\_api_wrapper.py": {
+      "sha256_before": "fdf1084afe39b90ef69ce50e6975f204ee3c3d49cb7a176de09358d77176cf84",
+      "line_count": 458,
+      "sha256_after": "fdf1084afe39b90ef69ce50e6975f204ee3c3d49cb7a176de09358d77176cf84"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\trpc-group_trpc-agent-python\\tests\\memory\\test_mem0_memory_service.py": {
+      "sha256_before": "4a8809b80fd51a731e4f182f3b5a2bed2d0747f2f16ab28439b64abb938dacb8",
+      "line_count": 696,
+      "sha256_after": "4a8809b80fd51a731e4f182f3b5a2bed2d0747f2f16ab28439b64abb938dacb8"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\trpc-group_trpc-agent-python\\trpc_agent_sdk\\memory\\mem0_memory_service.py": {
+      "sha256_before": "aeb336c5a8db0ceea318858280867e636ec77fde5d0035b5472eef211cba60cf",
+      "line_count": 438,
+      "sha256_after": "aeb336c5a8db0ceea318858280867e636ec77fde5d0035b5472eef211cba60cf"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\ui-insight_vandalizer\\backend\\app\\services\\extraction_engine.py": {
+      "sha256_before": "02ef9f487aebcadd2818f9dfc1ebb668a4ded21196a0081b6c2c769007c09ee8",
+      "line_count": 1023,
+      "sha256_after": "02ef9f487aebcadd2818f9dfc1ebb668a4ded21196a0081b6c2c769007c09ee8"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\ui-insight_vandalizer\\backend\\tests\\test_extraction_engine_core.py": {
+      "sha256_before": "43c93a6990a0ce03ee277c020945db1137ef5d6be006351ceeb2c47cf10e3e8b",
+      "line_count": 741,
+      "sha256_after": "43c93a6990a0ce03ee277c020945db1137ef5d6be006351ceeb2c47cf10e3e8b"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\ui-insight_vandalizer\\backend\\tests\\test_extraction_judge.py": {
+      "sha256_before": "6ce4fdcdcbce647ad92c71ce11d8bdabff624bf29cd8ba07a074de3e1886e98a",
+      "line_count": 291,
+      "sha256_after": "6ce4fdcdcbce647ad92c71ce11d8bdabff624bf29cd8ba07a074de3e1886e98a"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\ui-insight_vandalizer\\backend\\app\\services\\extraction_judge.py": {
+      "sha256_before": "2989ec3a78d6b025c94637080989e3fc4ea579daa1272bca886a3360e4266130",
+      "line_count": 282,
+      "sha256_after": "2989ec3a78d6b025c94637080989e3fc4ea579daa1272bca886a3360e4266130"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\ui-insight_vandalizer\\backend\\tests\\test_kb_question_generator.py": {
+      "sha256_before": "31cdf2bf49adb10f5f4147d24324309a60173427db982ae349458952be1b8002",
+      "line_count": 410,
+      "sha256_after": "31cdf2bf49adb10f5f4147d24324309a60173427db982ae349458952be1b8002"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\ui-insight_vandalizer\\backend\\app\\services\\kb_question_generator.py": {
+      "sha256_before": "b3503d1a2cd2c252c3f05face83372dfacb8c811cdd9a2a499cdfceb27a59038",
+      "line_count": 455,
+      "sha256_after": "b3503d1a2cd2c252c3f05face83372dfacb8c811cdd9a2a499cdfceb27a59038"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\ui-insight_vandalizer\\backend\\tests\\test_system_diagnostics.py": {
+      "sha256_before": "81ebe797868a34eda62d6acf08f8d952c9b4fc9907a29f5dd47c5c13d57948e5",
+      "line_count": 145,
+      "sha256_after": "81ebe797868a34eda62d6acf08f8d952c9b4fc9907a29f5dd47c5c13d57948e5"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\ui-insight_vandalizer\\backend\\app\\services\\system_diagnostics.py": {
+      "sha256_before": "641ca2b2c1db1fceac932a3b5ccd90d5d02b618b261521da27368a6cecb92ef3",
+      "line_count": 309,
+      "sha256_after": "641ca2b2c1db1fceac932a3b5ccd90d5d02b618b261521da27368a6cecb92ef3"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\urstory_urstory-rag\\backend\\tests\\unit\\test_chunking.py": {
+      "sha256_before": "276a2b13dd7bc2af80189d5c33dbf40c6ad898d6db0c510a6dd19e4efd555530",
+      "line_count": 359,
+      "sha256_after": "276a2b13dd7bc2af80189d5c33dbf40c6ad898d6db0c510a6dd19e4efd555530"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\urstory_urstory-rag\\backend\\app\\services\\chunking\\recursive.py": {
+      "sha256_before": "08cc7f2814d3830ab08deaaca085063d427f558cca077ef66b94a7b9b4783719",
+      "line_count": 48,
+      "sha256_after": "08cc7f2814d3830ab08deaaca085063d427f558cca077ef66b94a7b9b4783719"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\VirtualPatientEngine_AIAgents4Pharma\\aiagents4pharma\\talk2scholars\\tests\\test_utils_pdf_generate_answer.py": {
+      "sha256_before": "d503c2fbb7d0ff21d6a85191501df328cc69b545d3bcac9adb324e6271bba06b",
+      "line_count": 72,
+      "sha256_after": "d503c2fbb7d0ff21d6a85191501df328cc69b545d3bcac9adb324e6271bba06b"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\VirtualPatientEngine_AIAgents4Pharma\\aiagents4pharma\\talk2scholars\\tools\\pdf\\utils\\generate_answer.py": {
+      "sha256_before": "017327f93ad8326aa0d1a09bf02ffd96e6d275fd1ec5eeb38ca2dd58a1fa242a",
+      "line_count": 97,
+      "sha256_after": "017327f93ad8326aa0d1a09bf02ffd96e6d275fd1ec5eeb38ca2dd58a1fa242a"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\vstorm-co_pydantic-deepagents\\tests\\test_agent.py": {
+      "sha256_before": "4da79ff3a815a63242a9b8b5ce15b78e85067eda3f964e663a0f08efd5a55092",
+      "line_count": 869,
+      "sha256_after": "4da79ff3a815a63242a9b8b5ce15b78e85067eda3f964e663a0f08efd5a55092"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\vstorm-co_pydantic-deepagents\\pydantic_deep\\agent.py": {
+      "sha256_before": "7080cd4dd9adf1c3f9314d5e86b81da7750d5919816684e1b3c9f486bcc60145",
+      "line_count": 1551,
+      "sha256_after": "7080cd4dd9adf1c3f9314d5e86b81da7750d5919816684e1b3c9f486bcc60145"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\vstorm-co_pydantic-deepagents\\tests\\test_improve.py": {
+      "sha256_before": "12b2ea31f12c1ca25d268704dbef3f6fe0b35067f9c75401c8854c13ff6c0bd7",
+      "line_count": 1320,
+      "sha256_after": "12b2ea31f12c1ca25d268704dbef3f6fe0b35067f9c75401c8854c13ff6c0bd7"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\vstorm-co_pydantic-deepagents\\pydantic_deep\\features\\improve\\synthesizer.py": {
+      "sha256_before": "2e2579cc2805eeeff299721028c015251b7764fec9e99feeb2158b25f05127a5",
+      "line_count": 150,
+      "sha256_after": "2e2579cc2805eeeff299721028c015251b7764fec9e99feeb2158b25f05127a5"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\vstorm-co_pydantic-deepagents\\pydantic_deep\\goal.py": {
+      "sha256_before": "7b5b264672d27670f5b1f21511ab94f6d48e40771531c732ff57fd684e74773b",
+      "line_count": 404,
+      "sha256_after": "7b5b264672d27670f5b1f21511ab94f6d48e40771531c732ff57fd684e74773b"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\vstorm-co_pydantic-deepagents\\tests\\test_goal.py": {
+      "sha256_before": "87f193871adced233424960f2f05d621d905ae9c658bd009a673f42f031f2e1f",
+      "line_count": 281,
+      "sha256_after": "87f193871adced233424960f2f05d621d905ae9c658bd009a673f42f031f2e1f"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\wshobson_maverick-mcp\\tests\\research\\test_agents_analyzer.py": {
+      "sha256_before": "17adba3a591be468d7e8a23a6cdf6422aed5b8c9db4de982ece2f10129cfff73",
+      "line_count": 151,
+      "sha256_after": "17adba3a591be468d7e8a23a6cdf6422aed5b8c9db4de982ece2f10129cfff73"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\wshobson_maverick-mcp\\maverick\\research\\agents\\analyzer.py": {
+      "sha256_before": "fa9392231e7a58c5d7e27c115c8f685acf4c37d96d61770c027f1c01015e3ac0",
+      "line_count": 244,
+      "sha256_after": "fa9392231e7a58c5d7e27c115c8f685acf4c37d96d61770c027f1c01015e3ac0"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\wshobson_maverick-mcp\\tests\\research\\test_agents_graph.py": {
+      "sha256_before": "051f9e588c29d543c383f495727a2e56082f45d2bed5b382debfbc537f2490ce",
+      "line_count": 206,
+      "sha256_after": "051f9e588c29d543c383f495727a2e56082f45d2bed5b382debfbc537f2490ce"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\wshobson_maverick-mcp\\maverick\\research\\agents\\graph.py": {
+      "sha256_before": "8bf14506d5195f4a33e83742bbd9fef577ba3d21505a64736e8a2183ec3d2dd2",
+      "line_count": 496,
+      "sha256_after": "8bf14506d5195f4a33e83742bbd9fef577ba3d21505a64736e8a2183ec3d2dd2"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\yaalalabs_agent-kernel\\ak-py\\tests\\test_crewai_runner.py": {
+      "sha256_before": "d619499fef82c64a1308d4d09d0a1dadcd602b2b2119f5c89f90cfac722fe136",
+      "line_count": 362,
+      "sha256_after": "d619499fef82c64a1308d4d09d0a1dadcd602b2b2119f5c89f90cfac722fe136"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\yaalalabs_agent-kernel\\ak-py\\src\\agentkernel\\framework\\crewai\\crewai.py": {
+      "sha256_before": "f6f78d9d8bad42661cf6f242000f9d59c46199f9a7f904420850d8501c064338",
+      "line_count": 632,
+      "sha256_after": "f6f78d9d8bad42661cf6f242000f9d59c46199f9a7f904420850d8501c064338"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Yanyutin753_LambChat\\src\\infra\\memory\\compaction_agent.py": {
+      "sha256_before": "3ec27f9c904a21e00ee93ec3aa04008b44840cd2bfe5677be0bb9de20e448918",
+      "line_count": 712,
+      "sha256_after": "3ec27f9c904a21e00ee93ec3aa04008b44840cd2bfe5677be0bb9de20e448918"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Yanyutin753_LambChat\\tests\\infra\\memory\\test_compaction_agent.py": {
+      "sha256_before": "e03a8b5da2d7e09f35c3fedfc69494b94a2cc0167fb237d0c5a4227fad6db026",
+      "line_count": 1436,
+      "sha256_after": "e03a8b5da2d7e09f35c3fedfc69494b94a2cc0167fb237d0c5a4227fad6db026"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Yanyutin753_LambChat\\tests\\infra\\tool\\test_image_generation_tool.py": {
+      "sha256_before": "77af9236d30b1a37ef669a1c0a9032ad5a5f85b70697e698ee7031ee1c56b4ec",
+      "line_count": 1683,
+      "sha256_after": "77af9236d30b1a37ef669a1c0a9032ad5a5f85b70697e698ee7031ee1c56b4ec"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\Yanyutin753_LambChat\\src\\infra\\tool\\image_generation_tool.py": {
+      "sha256_before": "4e859293b710f128483bac79e3fcef7f392ca2d7a3b76223937837d5650867b4",
+      "line_count": 922,
+      "sha256_after": "4e859293b710f128483bac79e3fcef7f392ca2d7a3b76223937837d5650867b4"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\yueguobin_gns3-copilot\\src\\gns3_copilot\\tools_v2\\config_tools_nornir.py": {
+      "sha256_before": "87ca3ee2e9463fc459001b7d7c87751311cc53c43a732846ee1538cdbf297699",
+      "line_count": 527,
+      "sha256_after": "87ca3ee2e9463fc459001b7d7c87751311cc53c43a732846ee1538cdbf297699"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\yueguobin_gns3-copilot\\tests\\tools_v2\\test_config_tools_nornir.py": {
+      "sha256_before": "48a16eee99104b607ca6dc41283755116a5792da7c986517a8a43c5fcfe7afcc",
+      "line_count": 843,
+      "sha256_after": "48a16eee99104b607ca6dc41283755116a5792da7c986517a8a43c5fcfe7afcc"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\yueguobin_gns3-copilot\\src\\gns3_copilot\\tools_v2\\display_tools_nornir.py": {
+      "sha256_before": "66616c97acd019ca5f9c9084992839bb893fc65b5f601485feed362220ec0911",
+      "line_count": 499,
+      "sha256_after": "66616c97acd019ca5f9c9084992839bb893fc65b5f601485feed362220ec0911"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\yueguobin_gns3-copilot\\tests\\tools_v2\\test_display_tools_nornir.py": {
+      "sha256_before": "e6d7fec0d08a1f3ba2a645dc00a5b8845dbf62581f2504aa7943e27eb323fe93",
+      "line_count": 879,
+      "sha256_after": "e6d7fec0d08a1f3ba2a645dc00a5b8845dbf62581f2504aa7943e27eb323fe93"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\yueguobin_gns3-copilot\\src\\gns3_copilot\\tools_v2\\linux_tools_nornir.py": {
+      "sha256_before": "1fb7ddc5ff95c7b81792926e2f9521205faf1ce66ad29b5d80fe45e3440c0527",
+      "line_count": 598,
+      "sha256_after": "1fb7ddc5ff95c7b81792926e2f9521205faf1ce66ad29b5d80fe45e3440c0527"
+    },
+    "C:\\Users\\Seth\\Documents\\papers\\GitHubSearch\\pipeline\\repos\\yueguobin_gns3-copilot\\tests\\tools_v2\\test_linux_tools_nornir.py": {
+      "sha256_before": "80f200bf5cafd0b9db2485f57db4d44d77fd3fdd972d8a151cf4abd33d4ddb26",
+      "line_count": 1076,
+      "sha256_after": "80f200bf5cafd0b9db2485f57db4d44d77fd3fdd972d8a151cf4abd33d4ddb26"
+    }
+  },
+  "outputs": {
+    "runtime_candidates.csv": "c3c04c227cc6211dadf81d89f9e1968884c1b8beffcf8ef168f660f7d3d900cc",
+    "test_suite_candidates.csv": "dff7e687f70c22f4f7271808a73849040ba7c3215c0e942d9b864bfc2da7ca98",
+    "methods.csv": "3ecdfd67ddec5f24e9fc5daec94ed149414a1f9963358baa3179b88b4a69f6af",
+    "verified_guardrails.csv": "ee0b8fa5055754b528439e8bd544196d0d3268abb1bacd80380a7cd70fbee074",
+    "rejected_candidates.csv": "ce8cfcb7556677a4c35ea49307d201ebb1f82bb4e7d6416d502fc9341ae8ef32",
+    "unresolved_candidates.csv": "5ef92fbe7b56d1f0864908d2d1cd4b928decd0099fef87cb12e97a6fad4ef9c8",
+    "diagnostics.csv": "89117af08cb52d3bfd798cb93a0134a050ce1e39ee17920e7db7e11f58dc5e92",
+    "summary.json": "ec9e062a9909cca3ebf00780ae76761f301acc930876ca3606b68339e8cecde3",
+    "REPORT.md": "0abd97bff2aad824900de21fe9c06fad8af1891720080e0de47406bcee2f4df6"
+  }
+}

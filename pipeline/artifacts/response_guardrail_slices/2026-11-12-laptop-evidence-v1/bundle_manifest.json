@@ -1,0 +1,380 @@
+{
+  "schema_version": "guardrail-laptop-bundle-v1",
+  "date": "2026-11-12",
+  "entry_point": "AGENTS.md",
+  "branch": "codex/invoker-result-checks",
+  "historical_base_commit": "9a6c947",
+  "files": [
+    {
+      "path": "pipeline/artifacts/invoker_result_checks/2026-11-04-independent-v2/checks.csv",
+      "bytes": 1398980,
+      "sha256": "3604befd52b1d2a258848c36676d5a47edc254a49574124fa9ba1d5711b2d649",
+      "git_blob_bytes": 1398980,
+      "git_blob_sha256": "3604befd52b1d2a258848c36676d5a47edc254a49574124fa9ba1d5711b2d649"
+    },
+    {
+      "path": "pipeline/artifacts/method_test_baseline/summary.json",
+      "bytes": 164901,
+      "sha256": "3f448c545b2ccccee2ef9d3f832cfad4d23516363bb8bd4c414be56785c95bbd",
+      "git_blob_bytes": 159541,
+      "git_blob_sha256": "de0f91a7596e3e32559063df8b422aa2bb291f80bc23d1b298c515cc076ab4b2"
+    },
+    {
+      "path": "pipeline/artifacts/response_guardrail_slices/2026-11-04-candidate-tiers.csv",
+      "bytes": 371,
+      "sha256": "06bc994c8a8b37c82211d86e46491dc9d8a1e929df314b898988dcd79b9cb78c",
+      "git_blob_bytes": 371,
+      "git_blob_sha256": "06bc994c8a8b37c82211d86e46491dc9d8a1e929df314b898988dcd79b9cb78c"
+    },
+    {
+      "path": "pipeline/artifacts/response_guardrail_slices/2026-11-04-v1/calls.csv",
+      "bytes": 9314302,
+      "sha256": "403a11c2b0fa6ec357b8d86e49db7dfc01624c25481946db0e0394986216f929",
+      "git_blob_bytes": 9314302,
+      "git_blob_sha256": "403a11c2b0fa6ec357b8d86e49db7dfc01624c25481946db0e0394986216f929"
+    },
+    {
+      "path": "pipeline/artifacts/response_guardrail_slices/2026-11-04-v1/checks.csv",
+      "bytes": 6269961,
+      "sha256": "70e890fd55e36a0d138bbc543a7bd09a94467819188a9ec5eb9058ec0039fe22",
+      "git_blob_bytes": 6269961,
+      "git_blob_sha256": "70e890fd55e36a0d138bbc543a7bd09a94467819188a9ec5eb9058ec0039fe22"
+    },
+    {
+      "path": "pipeline/artifacts/response_guardrail_slices/2026-11-04-v1/summary.json",
+      "bytes": 812165,
+      "sha256": "d08e237b85c3aab6dc8b10d7af1ab3a923b08965541ab7356b63ce3cd660283e",
+      "git_blob_bytes": 812165,
+      "git_blob_sha256": "d08e237b85c3aab6dc8b10d7af1ab3a923b08965541ab7356b63ce3cd660283e"
+    },
+    {
+      "path": "pipeline/artifacts/response_guardrail_slices/2026-11-11-examination-v1/evidence.json",
+      "bytes": 114033,
+      "sha256": "402b96368930061a4104b29ebd899e6f7d7cf71dc6a7aeb7d90dd0f10e83c239",
+      "git_blob_bytes": 114033,
+      "git_blob_sha256": "402b96368930061a4104b29ebd899e6f7d7cf71dc6a7aeb7d90dd0f10e83c239"
+    },
+    {
+      "path": "pipeline/artifacts/response_guardrail_slices/2026-11-11-examination-v1/manifest.json",
+      "bytes": 2904,
+      "sha256": "56ca326c069d67bdb695373ab7bf526f4561604b1b4c5075d537f4dd9f546a94",
+      "git_blob_bytes": 2904,
+      "git_blob_sha256": "56ca326c069d67bdb695373ab7bf526f4561604b1b4c5075d537f4dd9f546a94"
+    },
+    {
+      "path": "pipeline/artifacts/response_guardrail_slices/2026-11-11-examination-v1/review.csv",
+      "bytes": 8815,
+      "sha256": "1e89230e5e0c32da2101751eb66cafe6d4e1eb9e917eafdbe9ec4de8058726d6",
+      "git_blob_bytes": 8815,
+      "git_blob_sha256": "1e89230e5e0c32da2101751eb66cafe6d4e1eb9e917eafdbe9ec4de8058726d6"
+    },
+    {
+      "path": "pipeline/artifacts/response_guardrail_slices/2026-11-12-complex-checks-v1/catalog.csv",
+      "bytes": 71309,
+      "sha256": "70c8922f49c1f24d55371ce31d76bf92f5151b8fb6fc5bb9084ff73e1b630088",
+      "git_blob_bytes": 71309,
+      "git_blob_sha256": "70c8922f49c1f24d55371ce31d76bf92f5151b8fb6fc5bb9084ff73e1b630088"
+    },
+    {
+      "path": "pipeline/artifacts/response_guardrail_slices/2026-11-12-complex-checks-v1/evidence.json",
+      "bytes": 96784,
+      "sha256": "82bfa90dcb15fac34536dd9d8abd231b10ba085304d5d2e60fd1664d4377b5b9",
+      "git_blob_bytes": 96784,
+      "git_blob_sha256": "82bfa90dcb15fac34536dd9d8abd231b10ba085304d5d2e60fd1664d4377b5b9"
+    },
+    {
+      "path": "pipeline/artifacts/response_guardrail_slices/2026-11-12-complex-checks-v1/manifest.json",
+      "bytes": 691,
+      "sha256": "9572491faf23b306f627d365987d783a20f39aed16b2def9ddb4ffd3c994bbe6",
+      "git_blob_bytes": 691,
+      "git_blob_sha256": "9572491faf23b306f627d365987d783a20f39aed16b2def9ddb4ffd3c994bbe6"
+    },
+    {
+      "path": "pipeline/artifacts/response_guardrail_slices/2026-11-12-complex-checks-v1/search_candidates.csv",
+      "bytes": 399973,
+      "sha256": "5436c355bb0e390f33db0b6213ccbe820acf79fd77a3a89833de291727837bd7",
+      "git_blob_bytes": 399973,
+      "git_blob_sha256": "5436c355bb0e390f33db0b6213ccbe820acf79fd77a3a89833de291727837bd7"
+    },
+    {
+      "path": "pipeline/artifacts/response_guardrail_slices/2026-11-12-gap-bridge-v1/gensee_composite_association.json",
+      "bytes": 4295,
+      "sha256": "2298905963b99a10085b72c61beb39753ca5ff060c6cabbc4f2a46ccf24deb28",
+      "git_blob_bytes": 4295,
+      "git_blob_sha256": "2298905963b99a10085b72c61beb39753ca5ff060c6cabbc4f2a46ccf24deb28"
+    },
+    {
+      "path": "pipeline/artifacts/response_guardrail_slices/2026-11-12-gap-bridge-v1/test_review_queue.json",
+      "bytes": 19542,
+      "sha256": "64831c7bca3729c4f7c9bb1c0eb76c61927c2dc27ac84bc31b8fef661e9d18e4",
+      "git_blob_bytes": 19542,
+      "git_blob_sha256": "64831c7bca3729c4f7c9bb1c0eb76c61927c2dc27ac84bc31b8fef661e9d18e4"
+    },
+    {
+      "path": "pipeline/artifacts/response_guardrail_slices/2026-11-12-laptop-evidence-v1/gensee_source_excerpts.jsonl",
+      "bytes": 32436,
+      "sha256": "15817e8713ce004822e6ba26b07fdcef78a28cdcaab1c7ba9f1620bebb5ce344",
+      "git_blob_bytes": 32436,
+      "git_blob_sha256": "15817e8713ce004822e6ba26b07fdcef78a28cdcaab1c7ba9f1620bebb5ce344"
+    },
+    {
+      "path": "pipeline/artifacts/response_guardrail_slices/2026-11-12-laptop-evidence-v1/source_excerpts.jsonl",
+      "bytes": 1761926,
+      "sha256": "752f578d149c1609a7acfe265b156ed7e67daab8b8f1704e395e23817a90b502",
+      "git_blob_bytes": 1761926,
+      "git_blob_sha256": "752f578d149c1609a7acfe265b156ed7e67daab8b8f1704e395e23817a90b502"
+    },
+    {
+      "path": "pipeline/artifacts/response_guardrail_slices/2026-11-12-method-prevalence-v1/REPORT.md",
+      "bytes": 21371,
+      "sha256": "0abd97bff2aad824900de21fe9c06fad8af1891720080e0de47406bcee2f4df6",
+      "git_blob_bytes": 21371,
+      "git_blob_sha256": "0abd97bff2aad824900de21fe9c06fad8af1891720080e0de47406bcee2f4df6"
+    },
+    {
+      "path": "pipeline/artifacts/response_guardrail_slices/2026-11-12-method-prevalence-v1/diagnostics.csv",
+      "bytes": 586547,
+      "sha256": "89117af08cb52d3bfd798cb93a0134a050ce1e39ee17920e7db7e11f58dc5e92",
+      "git_blob_bytes": 586547,
+      "git_blob_sha256": "89117af08cb52d3bfd798cb93a0134a050ce1e39ee17920e7db7e11f58dc5e92"
+    },
+    {
+      "path": "pipeline/artifacts/response_guardrail_slices/2026-11-12-method-prevalence-v1/manifest.json",
+      "bytes": 177301,
+      "sha256": "6be25baaa014249b7ab93cb3cc307afcd6b025ffa0d606ef01d9823914fd2320",
+      "git_blob_bytes": 177301,
+      "git_blob_sha256": "6be25baaa014249b7ab93cb3cc307afcd6b025ffa0d606ef01d9823914fd2320"
+    },
+    {
+      "path": "pipeline/artifacts/response_guardrail_slices/2026-11-12-method-prevalence-v1/methods.csv",
+      "bytes": 3884663,
+      "sha256": "3ecdfd67ddec5f24e9fc5daec94ed149414a1f9963358baa3179b88b4a69f6af",
+      "git_blob_bytes": 3884663,
+      "git_blob_sha256": "3ecdfd67ddec5f24e9fc5daec94ed149414a1f9963358baa3179b88b4a69f6af"
+    },
+    {
+      "path": "pipeline/artifacts/response_guardrail_slices/2026-11-12-method-prevalence-v1/rejected_candidates.csv",
+      "bytes": 423875,
+      "sha256": "ce8cfcb7556677a4c35ea49307d201ebb1f82bb4e7d6416d502fc9341ae8ef32",
+      "git_blob_bytes": 423875,
+      "git_blob_sha256": "ce8cfcb7556677a4c35ea49307d201ebb1f82bb4e7d6416d502fc9341ae8ef32"
+    },
+    {
+      "path": "pipeline/artifacts/response_guardrail_slices/2026-11-12-method-prevalence-v1/runtime_candidates.csv",
+      "bytes": 176150,
+      "sha256": "c3c04c227cc6211dadf81d89f9e1968884c1b8beffcf8ef168f660f7d3d900cc",
+      "git_blob_bytes": 176150,
+      "git_blob_sha256": "c3c04c227cc6211dadf81d89f9e1968884c1b8beffcf8ef168f660f7d3d900cc"
+    },
+    {
+      "path": "pipeline/artifacts/response_guardrail_slices/2026-11-12-method-prevalence-v1/summary.json",
+      "bytes": 23091,
+      "sha256": "ec9e062a9909cca3ebf00780ae76761f301acc930876ca3606b68339e8cecde3",
+      "git_blob_bytes": 23091,
+      "git_blob_sha256": "ec9e062a9909cca3ebf00780ae76761f301acc930876ca3606b68339e8cecde3"
+    },
+    {
+      "path": "pipeline/artifacts/response_guardrail_slices/2026-11-12-method-prevalence-v1/test_suite_candidates.csv",
+      "bytes": 435622,
+      "sha256": "dff7e687f70c22f4f7271808a73849040ba7c3215c0e942d9b864bfc2da7ca98",
+      "git_blob_bytes": 435622,
+      "git_blob_sha256": "dff7e687f70c22f4f7271808a73849040ba7c3215c0e942d9b864bfc2da7ca98"
+    },
+    {
+      "path": "pipeline/artifacts/response_guardrail_slices/2026-11-12-method-prevalence-v1/unresolved_candidates.csv",
+      "bytes": 70166,
+      "sha256": "5ef92fbe7b56d1f0864908d2d1cd4b928decd0099fef87cb12e97a6fad4ef9c8",
+      "git_blob_bytes": 70166,
+      "git_blob_sha256": "5ef92fbe7b56d1f0864908d2d1cd4b928decd0099fef87cb12e97a6fad4ef9c8"
+    },
+    {
+      "path": "pipeline/artifacts/response_guardrail_slices/2026-11-12-method-prevalence-v1/verified_guardrails.csv",
+      "bytes": 500777,
+      "sha256": "ee0b8fa5055754b528439e8bd544196d0d3268abb1bacd80380a7cd70fbee074",
+      "git_blob_bytes": 500777,
+      "git_blob_sha256": "ee0b8fa5055754b528439e8bd544196d0d3268abb1bacd80380a7cd70fbee074"
+    },
+    {
+      "path": "pipeline/artifacts/response_guardrail_slices/2026-11-12-prevalence-source-audit-v1/adjudication.json",
+      "bytes": 1811,
+      "sha256": "2cc6d0ed97639d93edce6ce1bcaec7c2b17cd67c43d501f617a2b306a8d641b6",
+      "git_blob_bytes": 1811,
+      "git_blob_sha256": "2cc6d0ed97639d93edce6ce1bcaec7c2b17cd67c43d501f617a2b306a8d641b6"
+    },
+    {
+      "path": "pipeline/artifacts/response_guardrail_slices/2026-11-12-prevalence-source-audit-v1/annotations.csv",
+      "bytes": 1013703,
+      "sha256": "6a74144145824b50f6de5063f130f4586ba9f29bbf4af8589a84000efa5d0fef",
+      "git_blob_bytes": 1013703,
+      "git_blob_sha256": "6a74144145824b50f6de5063f130f4586ba9f29bbf4af8589a84000efa5d0fef"
+    },
+    {
+      "path": "pipeline/artifacts/response_guardrail_slices/2026-11-12-prevalence-source-audit-v1/remaining_mapped_tests.json",
+      "bytes": 267601,
+      "sha256": "48984550c4d8fec54543befff992443ad85a34af85b911d85ee4ca833a3a5927",
+      "git_blob_bytes": 267601,
+      "git_blob_sha256": "48984550c4d8fec54543befff992443ad85a34af85b911d85ee4ca833a3a5927"
+    },
+    {
+      "path": "pipeline/artifacts/response_guardrail_slices/2026-11-12-prevalence-source-audit-v1/remaining_test_annotations.csv",
+      "bytes": 431114,
+      "sha256": "5eb54c9e7284b2dc29af78f2fe964457fd3730fe17883a199c3ec29fea94b86b",
+      "git_blob_bytes": 431114,
+      "git_blob_sha256": "5eb54c9e7284b2dc29af78f2fe964457fd3730fe17883a199c3ec29fea94b86b"
+    },
+    {
+      "path": "pipeline/artifacts/response_guardrail_slices/2026-11-12-prevalence-source-audit-v1/runtime_candidates.json",
+      "bytes": 173398,
+      "sha256": "216dba5521dbb8e1cbd80ea554bee37f59bf301e59bbd5407cb47c3747e11c1a",
+      "git_blob_bytes": 173398,
+      "git_blob_sha256": "216dba5521dbb8e1cbd80ea554bee37f59bf301e59bbd5407cb47c3747e11c1a"
+    },
+    {
+      "path": "pipeline/artifacts/response_guardrail_slices/2026-11-12-prevalence-source-audit-v1/runtime_extra_annotations.csv",
+      "bytes": 89936,
+      "sha256": "39c0a2ca55db18be291678a36623d458f83aaf093c22fc91aeb1ec986d94206a",
+      "git_blob_bytes": 89936,
+      "git_blob_sha256": "39c0a2ca55db18be291678a36623d458f83aaf093c22fc91aeb1ec986d94206a"
+    },
+    {
+      "path": "pipeline/artifacts/response_guardrail_slices/2026-11-12-prevalence-source-audit-v1/runtime_extra_candidates.json",
+      "bytes": 147826,
+      "sha256": "7d7d289f86c137b52c56fc78f339e6d56709dd02dca0926895a195d664b07195",
+      "git_blob_bytes": 147826,
+      "git_blob_sha256": "7d7d289f86c137b52c56fc78f339e6d56709dd02dca0926895a195d664b07195"
+    },
+    {
+      "path": "pipeline/artifacts/response_guardrail_slices/2026-11-12-prevalence-source-audit-v1/runtime_extra_source_evidence.json",
+      "bytes": 124440,
+      "sha256": "dc0540c8d12791364c2bd766f6c73251357a3058f4db258f49f99b9b7ce31de3",
+      "git_blob_bytes": 124440,
+      "git_blob_sha256": "dc0540c8d12791364c2bd766f6c73251357a3058f4db258f49f99b9b7ce31de3"
+    },
+    {
+      "path": "pipeline/artifacts/response_guardrail_slices/2026-11-12-prevalence-source-audit-v1/runtime_strict_annotations.csv",
+      "bytes": 127006,
+      "sha256": "c289b729b895441e0c7d57e91d5b61ab10184cb4d67a3be4cbfa108c461e648a",
+      "git_blob_bytes": 127006,
+      "git_blob_sha256": "c289b729b895441e0c7d57e91d5b61ab10184cb4d67a3be4cbfa108c461e648a"
+    },
+    {
+      "path": "pipeline/artifacts/response_guardrail_slices/2026-11-12-prevalence-source-audit-v1/runtime_supplemental_annotations.csv",
+      "bytes": 24531,
+      "sha256": "c0e4dd3165b4abe91a77e2376753346807fc790d8f5db08a26f78027d4b03bd2",
+      "git_blob_bytes": 24531,
+      "git_blob_sha256": "c0e4dd3165b4abe91a77e2376753346807fc790d8f5db08a26f78027d4b03bd2"
+    },
+    {
+      "path": "pipeline/artifacts/response_guardrail_slices/2026-11-12-prevalence-source-audit-v1/sensitivity.json",
+      "bytes": 777,
+      "sha256": "d45bbadd4c21d75609ebc98271d8d1db9b6362cca90fde680330b537b3456683",
+      "git_blob_bytes": 777,
+      "git_blob_sha256": "d45bbadd4c21d75609ebc98271d8d1db9b6362cca90fde680330b537b3456683"
+    },
+    {
+      "path": "pipeline/artifacts/response_guardrail_slices/2026-11-12-prevalence-source-audit-v1/test_annotations.csv",
+      "bytes": 328576,
+      "sha256": "8d24458001f0009d0bac4012c6cd80481a91cdc7b1b776b95188e761b17a539e",
+      "git_blob_bytes": 328576,
+      "git_blob_sha256": "8d24458001f0009d0bac4012c6cd80481a91cdc7b1b776b95188e761b17a539e"
+    },
+    {
+      "path": "pipeline/artifacts/response_guardrail_slices/2026-11-12-prevalence-source-audit-v1/test_candidates.json",
+      "bytes": 215545,
+      "sha256": "4330af478ac205f024b5ae7003fb3c5c53b73a80368a8b4dde30b5811808b931",
+      "git_blob_bytes": 215545,
+      "git_blob_sha256": "4330af478ac205f024b5ae7003fb3c5c53b73a80368a8b4dde30b5811808b931"
+    },
+    {
+      "path": "pipeline/artifacts/response_guardrail_slices/2026-11-12-prevalence-source-audit-v1/test_source_review_summary.json",
+      "bytes": 19411,
+      "sha256": "c01351634a2eb5321f182083ecdccc23e6dcdcf4f9a6cb5bf62ed4219ba627e9",
+      "git_blob_bytes": 19411,
+      "git_blob_sha256": "c01351634a2eb5321f182083ecdccc23e6dcdcf4f9a6cb5bf62ed4219ba627e9"
+    },
+    {
+      "path": "pipeline/artifacts/response_guardrail_slices/2026-11-12-test-complex-checks-v1/cases.csv",
+      "bytes": 2222,
+      "sha256": "908c3bd72679119aa530a6cdbd055611242026e598b3206b0d3c64838efd1bcf",
+      "git_blob_bytes": 2222,
+      "git_blob_sha256": "908c3bd72679119aa530a6cdbd055611242026e598b3206b0d3c64838efd1bcf"
+    },
+    {
+      "path": "pipeline/artifacts/response_guardrail_slices/2026-11-12-test-complex-checks-v1/evidence.json",
+      "bytes": 32893,
+      "sha256": "ea0a8027768b634eadfae4044eec586b79562532bdb144b82f496255b8c002b8",
+      "git_blob_bytes": 32893,
+      "git_blob_sha256": "ea0a8027768b634eadfae4044eec586b79562532bdb144b82f496255b8c002b8"
+    },
+    {
+      "path": "pipeline/artifacts/response_guardrail_slices/2026-11-12-two-arm-methodology-v1/codebook.json",
+      "bytes": 9441,
+      "sha256": "16518b3b320952233734d511e991b4b08e012855f0efa2560e76d1634113580b",
+      "git_blob_bytes": 9441,
+      "git_blob_sha256": "16518b3b320952233734d511e991b4b08e012855f0efa2560e76d1634113580b"
+    },
+    {
+      "path": "pipeline/artifacts/response_guardrail_slices/2026-11-12-two-arm-methodology-v1/manifest.json",
+      "bytes": 1081,
+      "sha256": "23b52e95c9125b809b6a2247ee3c9b8675d667bdb03f0469dfe90dbb06d0fd73",
+      "git_blob_bytes": 1081,
+      "git_blob_sha256": "23b52e95c9125b809b6a2247ee3c9b8675d667bdb03f0469dfe90dbb06d0fd73"
+    },
+    {
+      "path": "pipeline/artifacts/response_guardrail_slices/2026-11-12-two-arm-methodology-v1/mapped_test_edges.csv",
+      "bytes": 206703,
+      "sha256": "c553c2d4dd5967e65e9b0ff81bfd404e3636d3a95f50126f81496bf38f4893b5",
+      "git_blob_bytes": 206703,
+      "git_blob_sha256": "c553c2d4dd5967e65e9b0ff81bfd404e3636d3a95f50126f81496bf38f4893b5"
+    },
+    {
+      "path": "pipeline/artifacts/response_guardrail_slices/2026-11-12-two-arm-methodology-v1/method_assessment.csv",
+      "bytes": 2798815,
+      "sha256": "67c1dc6fa113b30afdb07b913fc29a2a527e561239c5caaa1e4f931d272fc445",
+      "git_blob_bytes": 2798815,
+      "git_blob_sha256": "67c1dc6fa113b30afdb07b913fc29a2a527e561239c5caaa1e4f931d272fc445"
+    },
+    {
+      "path": "pipeline/artifacts/response_guardrail_slices/2026-11-12-two-arm-methodology-v1/readiness.json",
+      "bytes": 970,
+      "sha256": "59e39990488771f2375843168e619dd3126f063bdb7c97bc1651384f779eeb7b",
+      "git_blob_bytes": 970,
+      "git_blob_sha256": "59e39990488771f2375843168e619dd3126f063bdb7c97bc1651384f779eeb7b"
+    }
+  ],
+  "counts": {
+    "frame_methods": 7642,
+    "frame_repos": 571,
+    "mapped_methods": 220,
+    "mapped_tests": 461,
+    "runtime_identified_methods": 86,
+    "runtime_simple_only": 74,
+    "runtime_complex_only": 10,
+    "runtime_both": 2,
+    "test_identified_methods": 121,
+    "test_mapped_simple_only": 121,
+    "test_mapped_complex_identified": 0,
+    "unmapped_complex_test_example": "GenseeAI/open_deep_research::src/legacy/tests/test_report_quality.py::test_response_criteria_evaluation::140",
+    "annotations": 742,
+    "annotation_source_files_with_portable_excerpts": 473,
+    "supplemental_gensee_source_files_with_excerpts": 3
+  },
+  "validation": {
+    "python_version": "3.14.3",
+    "python_tests_passed": 23,
+    "node_tests_passed": 11,
+    "node_symlink_subtests_skipped": 1,
+    "artifact_secret_pattern_scan_hits": 0,
+    "models_or_apps_or_joern_executed": false
+  },
+  "limitations": [
+    "Source-reviewed detections, not final population prevalence or independent human labels.",
+    "Rates precede uncertainty-recovery code; no full rerun after fix.",
+    "Human sampling and response-use applicability classification are pending.",
+    "Portable excerpts preserve reviewed source ranges plus context, not full clones or slices.",
+    "Original manifests may refer to gitignored PC-only raw inputs and absolute source paths; use reduced portable frame/edges.",
+    "Zero complex in mapped method arm does not negate confirmed unmapped Gensee complex test.",
+    "No existing CSV bytes were edited during packaging; restoration of three prior rationale additions was authorized and completed before packaging."
+  ],
+  "hash_convention": "sha256/bytes describe original working-file bytes at packaging; git_blob_sha256/git_blob_bytes describe staged repository bytes for cross-machine verification. Existing text inputs may use CRLF conversion; byte-preserved artifacts match both."
+}

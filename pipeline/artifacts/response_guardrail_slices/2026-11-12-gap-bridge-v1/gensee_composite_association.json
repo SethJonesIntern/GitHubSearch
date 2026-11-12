@@ -1,0 +1,118 @@
+{
+  "schema_version": "supplemental-composite-test-association-v1",
+  "repo": "GenseeAI/open_deep_research",
+  "test": {
+    "file": "src/legacy/tests/test_report_quality.py",
+    "method": "test_response_criteria_evaluation",
+    "line": 140
+  },
+  "guardrail": {
+    "oracle_type": "complex",
+    "classification_basis": "Assistant original-source review of model evaluator prompt/input/verdict -> assertion; deterministic recovery tool does not classify semantics.",
+    "evaluation_call_line": 240,
+    "assertion_line": 294,
+    "review_status": "source_reviewed_not_independent_human_validation",
+    "runtime_execution_verified": false
+  },
+  "primary_mapping": {
+    "status": "focal_file_only",
+    "file": "src/legacy/multi_agent.py",
+    "import_rule": true,
+    "method": null,
+    "primary_method_numerator_change": 0
+  },
+  "association_type": "branch_conditioned_composite_report_content_contributors",
+  "links": [
+    {
+      "method_id": "GenseeAI/open_deep_research::src/legacy/multi_agent.py::188",
+      "branch": "multi_agent",
+      "role": "supervisor supplies generated introduction/conclusion and assembles report"
+    },
+    {
+      "method_id": "GenseeAI/open_deep_research::src/legacy/multi_agent.py::353",
+      "branch": "multi_agent",
+      "role": "research agent supplies generated completed sections"
+    },
+    {
+      "method_id": "GenseeAI/open_deep_research::src/legacy/graph.py::268",
+      "branch": "graph",
+      "role": "write_section supplies generated section content"
+    },
+    {
+      "method_id": "GenseeAI/open_deep_research::src/legacy/graph.py::356",
+      "branch": "graph",
+      "role": "write_final_sections supplies remaining generated section content"
+    }
+  ],
+  "source_evidence": [
+    {
+      "rel_path": "src/legacy/tests/test_report_quality.py",
+      "line": 32,
+      "line_end": 47,
+      "sha256": "76cbeb84c923a69bbc9081e5fc41995b0c6b4204ac7b329293eeca43125a5ec8",
+      "role": "evaluation_model_construction"
+    },
+    {
+      "rel_path": "src/legacy/tests/test_report_quality.py",
+      "line": 83,
+      "line_end": 100,
+      "sha256": "76cbeb84c923a69bbc9081e5fc41995b0c6b4204ac7b329293eeca43125a5ec8",
+      "role": "default_branch_configuration"
+    },
+    {
+      "rel_path": "src/legacy/tests/test_report_quality.py",
+      "line": 140,
+      "line_end": 243,
+      "sha256": "76cbeb84c923a69bbc9081e5fc41995b0c6b4204ac7b329293eeca43125a5ec8",
+      "role": "report_generation_to_evaluator"
+    },
+    {
+      "rel_path": "src/legacy/tests/test_report_quality.py",
+      "line": 276,
+      "line_end": 294,
+      "sha256": "76cbeb84c923a69bbc9081e5fc41995b0c6b4204ac7b329293eeca43125a5ec8",
+      "role": "verdict_to_assertion"
+    },
+    {
+      "rel_path": "src/legacy/multi_agent.py",
+      "line": 188,
+      "line_end": 327,
+      "sha256": "59e1949c238a0827f53b9d9be39f0c3cc3761effa48c73d8b9e6232dd04dcb21",
+      "role": "multi_agent_report_contribution_and_assembly"
+    },
+    {
+      "rel_path": "src/legacy/multi_agent.py",
+      "line": 353,
+      "line_end": 441,
+      "sha256": "59e1949c238a0827f53b9d9be39f0c3cc3761effa48c73d8b9e6232dd04dcb21",
+      "role": "research_agent_section_contribution"
+    },
+    {
+      "rel_path": "src/legacy/graph.py",
+      "line": 268,
+      "line_end": 311,
+      "sha256": "9e0f2f24d95da74ab15dfc383a3fb10a1a1f297bc36cc99c4589ef66e4c95ce0",
+      "role": "graph_section_contribution"
+    },
+    {
+      "rel_path": "src/legacy/graph.py",
+      "line": 356,
+      "line_end": 449,
+      "sha256": "9e0f2f24d95da74ab15dfc383a3fb10a1a1f297bc36cc99c4589ef66e4c95ce0",
+      "role": "final_sections_and_report_assembly"
+    },
+    {
+      "rel_path": "src/legacy/graph.py",
+      "line": 474,
+      "line_end": 501,
+      "sha256": "9e0f2f24d95da74ab15dfc383a3fb10a1a1f297bc36cc99c4589ef66e4c95ce0",
+      "role": "graph_wiring"
+    }
+  ],
+  "limitations": [
+    "Contributor links are composite E2E source associations, not direct focal-method mappings or execution coverage.",
+    "Do not count four independently targeted methods from one aggregate report test.",
+    "Configuration selects branch; default is multi_agent. Optional graph path is retained conditionally.",
+    "No primary prevalence numerator or CSV data changed by this evidence artifact."
+  ]
+}

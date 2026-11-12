@@ -66,6 +66,105 @@ def run_cli(artifacts, repos, output, rows, extra=()):
 
 
 class ResponseGuardrailContract(unittest.TestCase):
+    def test_display_callback_retains_later_assertion_as_explicit_uncertainty(self):
+        # Mirrors the mined Gensee pattern without importing or running Rich,
+        # a model, or application code. A display-looking name is not proof of
+        # purity: retain the discovery candidate, never silently verify it.
+        source = (
+            "from rich.panel import Panel\n"
+            "def f():\n"
+            "    eval_result = evaluator.invoke(report)\n"
+            "    console.print(Panel(eval_result.justification, title='Why'))\n"
+            "    t.log_outputs({'grade': eval_result.grade})\n"
+            "    assert eval_result.grade\n"
+        )
+        row = subject.analyze_source(source, [call(3, 18)])[0]
+        self.assertEqual(row["checks"], [])
+        candidates = [route for route in row["routes"]
+                      if route["route_kind"] == "uncertain_flow_assertion_candidate"]
+        self.assertEqual(len(candidates), 1)
+        candidate = candidates[0]
+        self.assertEqual(candidate["sink_line"], 6)
+        self.assertIn("eval_result.grade", candidate["sink_source"])
+        self.assertTrue({3, 4, 6}.issubset(candidate["trace_lines"]))
+        self.assertTrue(any("Panel:4" in reason for reason in candidate["uncertainty_sources"]))
+        self.assertTrue(any("uncertain_flow_after_unknown_call" in limitation
+                            for limitation in row["limitations"]))
+
+    def test_unknown_mutator_never_becomes_verified_response_check(self):
+        for callback in ["mutate(r)", "helper.change(r)", "r.clear()"]:
+            source = ("def f():\n    r = llm.invoke(x)\n"
+                      "    alias = r\n    " + callback + "\n    assert alias\n")
+            with self.subTest(callback=callback):
+                row = subject.analyze_source(source, [call()])[0]
+                self.assertEqual(row["checks"], [])
+                self.assertTrue(row["limitations"])
+                for candidate in row["routes"]:
+                    if candidate["sink_line"] == 5:
+                        self.assertEqual(candidate["route_kind"],
+                                         "uncertain_flow_assertion_candidate")
+
+    def test_callback_inside_assertion_cannot_leave_earlier_operand_verified(self):
+        source = "def f():\n    r = llm.invoke(x)\n    assert r and mutate(r)\n"
+        row = subject.analyze_source(source, [call()])[0]
+        self.assertEqual(row["checks"], [])
+        candidates = [route for route in row["routes"]
+                      if route["route_kind"] == "uncertain_flow_assertion_candidate"]
+        self.assertEqual(len(candidates), 1)
+        self.assertEqual(candidates[0]["sink_line"], 3)
+        self.assertTrue(candidates[0]["uncertainty_sources"])
+
+    def test_unknown_callback_receiving_literal_container_is_not_pure(self):
+        for callback in ["mutate({'object': r})", "mutate([r])",
+                         "mutate(data={'nested': [r]})"]:
+            source = ("def f():\n    r = llm.invoke(x)\n    " + callback
+                      + "\n    assert r.grade\n")
+            with self.subTest(callback=callback):
+                row = subject.analyze_source(source, [call()])[0]
+                self.assertEqual(row["checks"], [])
+                candidates = [route for route in row["routes"]
+                              if route["route_kind"] == "uncertain_flow_assertion_candidate"]
+                self.assertEqual(len(candidates), 1)
+                self.assertEqual(candidates[0]["sink_line"], 4)
+                self.assertTrue({2, 3, 4}.issubset(candidates[0]["trace_lines"]))
+                self.assertTrue(candidates[0]["uncertainty_sources"])
+
+        source = "def f():\n    r = llm.invoke(x)\n    assert r.grade == mutate(r)\n"
+        row = subject.analyze_source(source, [call()])[0]
+        self.assertEqual(row["checks"], [])
+        self.assertTrue(any(route["route_kind"] == "uncertain_flow_assertion_candidate"
+                            for route in row["routes"]))
+
+    def test_display_import_aliases_and_shadowing_do_not_imply_purity(self):
+        variants = [
+            ("from rich.panel import Panel as Display\n", "Display", ""),
+            ("import rich.panel as panels\n", "panels.Panel", ""),
+            ("from rich.panel import Panel as Display\n", "Display",
+             "    Display = mutating_helper\n"),
+            ("import rich.panel as panels\n", "panels.Panel",
+             "    panels = custom_namespace\n"),
+        ]
+        for imports, display, rebind in variants:
+            source = (imports + "def f():\n    r = llm.invoke(x)\n" + rebind
+                      + "    " + display + "(r.justification)\n    assert r.grade\n")
+            with self.subTest(display=display, rebind=rebind):
+                row = subject.analyze_source(source, [call(3, 8)])[0]
+                self.assertEqual(row["checks"], [])
+                assertion_line = 6 if rebind else 5
+                self.assertTrue(any(route["sink_line"] == assertion_line
+                                    and route["route_kind"] == "uncertain_flow_assertion_candidate"
+                                    for route in row["routes"]))
+
+    def test_overwrite_or_explicit_write_cannot_recover_uncertain_origin(self):
+        for overwrite in ["r = fixed", "r.grade = True", "r['grade'] = True", "del r"]:
+            source = ("def f():\n    r = llm.invoke(x)\n    display(r)\n    "
+                      + overwrite + "\n    assert r\n")
+            with self.subTest(overwrite=overwrite):
+                row = subject.analyze_source(source, [call()])[0]
+                self.assertEqual(row["checks"], [])
+                self.assertFalse(any(route["sink_line"] == 5 for route in row["routes"]),
+                                 "Known overwrites must remove even uncertain response provenance")
+
     def test_assertions_follow_response_origins_and_ignore_constant_conditions(self):
         positive = "def f():\n    r = llm.invoke(x)\n    assert r is not None\n"
         result = subject.analyze_source(positive, [call()])[0]
@@ -242,6 +341,39 @@ class ResponseGuardrailContract(unittest.TestCase):
             self.assertTrue(manifest["python"])
             self.assertIn("options", manifest)
             self.assertTrue((output / "REPORT.md").read_text(encoding="utf-8"))
+
+    def test_cli_uncertain_test_candidate_has_separate_review_lane_without_mapping(self):
+        # Only the four slicing tables exist; no focal mappings are supplied.
+        # Original-source test context must still discover this candidate even
+        # when the saved call label remains production.
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            artifacts, repos = fixture(root, slices=False)
+            source_path = repos / "acme_app" / "app.py"
+            source_path.write_text(
+                "def test_report_quality():\n    r = llm.invoke(x)\n"
+                "    display({'grade': r.grade})\n    assert r.grade\n", encoding="utf-8")
+            before = {p: hashlib.sha256(p.read_bytes()).hexdigest()
+                      for p in [*artifacts.iterdir(), source_path]}
+            output = root / "review-result"
+            self.assertEqual(run_cli(artifacts, repos, output, [call()]), 0)
+            summary = json.loads((output / "summary.json").read_text(encoding="utf-8"))
+            self.assertEqual(summary["checks"]["total"], 0)
+            self.assertEqual(summary["calls"]["with_source_check"], 0)
+            self.assertEqual(summary["calls"]["with_runtime_intervention"], 0)
+            self.assertEqual(summary["uncertain_review_candidates"], {
+                "rows": 1, "calls": 1, "test_context_calls": 1,
+                "by_route_kind": {"uncertain_flow_assertion_candidate": 1},
+                "excluded_from_check_counts": True,
+            })
+            with (output / "routes.csv").open(encoding="utf-8-sig", newline="") as stream:
+                routes = list(csv.DictReader(stream))
+            self.assertEqual(len(routes), 1)
+            self.assertEqual(routes[0]["route_kind"], "uncertain_flow_assertion_candidate")
+            self.assertTrue(json.loads(routes[0]["uncertainty_sources"]))
+            self.assertEqual(json.loads(routes[0]["trace_lines"]), [2, 3, 4])
+            self.assertEqual({p: hashlib.sha256(p.read_bytes()).hexdigest() for p in before}, before)
+            self.assertIn("uncertain", (output / "REPORT.md").read_text(encoding="utf-8").lower())
 
     def test_cli_existing_output_refuses_before_loading_and_empty_subset_keeps_headers(self):
         with tempfile.TemporaryDirectory() as directory:
