@@ -1,0 +1,1836 @@
+[
+ {
+  "site_no": 29,
+  "call_id": "OpenGradient_tee-gateway/tee_gateway/controllers/chat_controller.py::218::13",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "TEE gateway chat-completion controller; _invoke_anthropic_structured (183-236) called from _create_non_streaming_response:326 and streaming path:517.",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "structured = model.with_structured_output(...include_raw=True) on a LangChain chat model; .invoke at 218 calls Anthropic.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "OpenGradient_tee-gateway/tee_gateway/controllers/chat_controller.py::218::13",
+    "protected_output": "structured-output result dict (parsed JSON for client's json_schema)",
+    "checked_property": "structured output parsed against schema without parsing_error (schema validation outcome)",
+    "oracle_type": "simple",
+    "evaluator": "if isinstance(result, dict) and result.get('parsing_error'): raise ValueError",
+    "verdict_location": "tee_gateway/controllers/chat_controller.py:221",
+    "check_location": "tee_gateway/controllers/chat_controller.py:221",
+    "enforcement_location": "tee_gateway/controllers/chat_controller.py:222",
+    "failure_consequence": "raise ValueError; caught at 428 and returned as HTTP 500 error instead of a signed completion",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "459813"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "tee_gateway/controllers/chat_controller.py",
+      "line": 218,
+      "line_end": 218,
+      "role": "output"
+     },
+     {
+      "rel_path": "tee_gateway/controllers/chat_controller.py",
+      "line": 221,
+      "line_end": 221,
+      "role": "check"
+     },
+     {
+      "rel_path": "tee_gateway/controllers/chat_controller.py",
+      "line": 222,
+      "line_end": 222,
+      "role": "enforcement"
+     },
+     {
+      "rel_path": "tee_gateway/controllers/chat_controller.py",
+      "line": 428,
+      "line_end": 434,
+      "role": "support"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "LangChain structured-output call with include_raw=True; a parsing_error (schema-parse failure) raises before the message is wrapped and returned. The caller converts the exception to a 500 error, so an unparseable output is never returned as success. Simple schema/presence oracle."
+ },
+ {
+  "site_no": 37,
+  "call_id": "RenqiChen_Virtual-Scientists-v2/camel-master/camel/agents/critic_agent.py::118::30",
+  "actual_context": "production",
+  "context_flags": [
+   "vendored_framework_copy"
+  ],
+  "context_evidence": "File is inside camel-master/, a vendored copy of the CAMEL framework source within the Virtual-Scientists-v2 app repo. CriticAgent.get_option (104-149).",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "self.step(...) is camel ChatAgent.step, which calls the configured LLM backend.",
+  "site_role": "judge_evaluator",
+  "guards": [
+   {
+    "protected_producer_call_id": "RenqiChen_Virtual-Scientists-v2/camel-master/camel/agents/critic_agent.py::118::30",
+    "protected_output": "critic's own ChatAgentResponse (its verdict/choice)",
+    "checked_property": "msgs non-empty",
+    "oracle_type": "simple",
+    "evaluator": "if critic_response.msgs is None or len(...)==0: raise",
+    "verdict_location": "camel-master/camel/agents/critic_agent.py:120",
+    "check_location": "camel-master/camel/agents/critic_agent.py:120",
+    "enforcement_location": "camel-master/camel/agents/critic_agent.py:121",
+    "failure_consequence": "raise RuntimeError",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": true,
+    "qualifies": "no",
+    "nonqualifying_reason": "auxiliary_judge_plumbing",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "563795"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "camel-master/camel/agents/critic_agent.py",
+      "line": 118,
+      "line_end": 118,
+      "role": "output"
+     },
+     {
+      "rel_path": "camel-master/camel/agents/critic_agent.py",
+      "line": 120,
+      "line_end": 121,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "RenqiChen_Virtual-Scientists-v2/camel-master/camel/agents/critic_agent.py::118::30",
+    "protected_output": "critic's own ChatAgentResponse",
+    "checked_property": "step not terminated",
+    "oracle_type": "simple",
+    "evaluator": "if critic_response.terminated: raise",
+    "verdict_location": "camel-master/camel/agents/critic_agent.py:122",
+    "check_location": "camel-master/camel/agents/critic_agent.py:122",
+    "enforcement_location": "camel-master/camel/agents/critic_agent.py:123",
+    "failure_consequence": "raise RuntimeError",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": true,
+    "qualifies": "no",
+    "nonqualifying_reason": "auxiliary_judge_plumbing",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "563795"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "camel-master/camel/agents/critic_agent.py",
+      "line": 122,
+      "line_end": 123,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "RenqiChen_Virtual-Scientists-v2/camel-master/camel/agents/critic_agent.py::118::30",
+    "protected_output": "critic's parsed choice",
+    "checked_property": "choice is a member of options_dict",
+    "oracle_type": "simple",
+    "evaluator": "if choice in self.options_dict: return ... else re-prompt 'Invalid choice. Please choose again.'",
+    "verdict_location": "camel-master/camel/agents/critic_agent.py:131",
+    "check_location": "camel-master/camel/agents/critic_agent.py:133",
+    "enforcement_location": "camel-master/camel/agents/critic_agent.py:136-148",
+    "failure_consequence": "re-prompt critic; after retry_attempts return random option (warning)",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": true,
+    "qualifies": "no",
+    "nonqualifying_reason": "auxiliary_judge_plumbing",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "563795"
+    ],
+    "retry_budget_bypass": "no",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "camel-master/camel/agents/critic_agent.py",
+      "line": 131,
+      "line_end": 149,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "RenqiChen_Virtual-Scientists-v2/camel-master/camel/societies/role_playing.py::513::29",
+    "protected_output": "candidate assistant/user messages (n>1 options) produced at role_playing.py:513 (assistant) and :492 (user)",
+    "checked_property": "which candidate is best per critic criteria",
+    "oracle_type": "complex",
+    "evaluator": "CriticAgent LLM (same ChatAgent backend) picks one option via reduce_step in RolePlaying._reduce_message_options (role_playing.py:404-429)",
+    "verdict_location": "camel-master/camel/agents/critic_agent.py:118",
+    "check_location": "camel-master/camel/societies/role_playing.py:429",
+    "enforcement_location": "camel-master/camel/societies/role_playing.py:404-440",
+    "failure_consequence": "non-selected candidates are dropped (best-of-n selection), not rejection of an unacceptable output",
+    "before_acceptance": "unresolved",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "unresolved",
+    "nonqualifying_reason": "other:best_of_n_selection_not_clear_rejection;only_with_critic_in_the_loop_and_n_gt_1",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "yes",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "camel-master/camel/societies/role_playing.py",
+      "line": 404,
+      "line_end": 440,
+      "role": "enforcement"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "The critic is itself an evaluator; presence/terminated/membership checks only validate the critic's own verdict, so they are auxiliary plumbing. Its verdict selects among candidate generations in RolePlaying only when with_critic_in_the_loop and n>1; whether best-of-n selection counts as rejection is left unresolved."
+ },
+ {
+  "site_no": 38,
+  "call_id": "RenqiChen_Virtual-Scientists-v2/camel-master/camel/agents/deductive_reasoner_agent.py::247::19",
+  "actual_context": "production",
+  "context_flags": [
+   "vendored_framework_copy"
+  ],
+  "context_evidence": "File is inside camel-master/, a vendored copy of the CAMEL framework source within the Virtual-Scientists-v2 app repo. DeductiveReasonerAgent.deduce_conditions_and_quality (167-300).",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "self.step(...) is camel ChatAgent.step, which calls the configured LLM backend.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "RenqiChen_Virtual-Scientists-v2/camel-master/camel/agents/deductive_reasoner_agent.py::247::19",
+    "protected_output": "deduction response message",
+    "checked_property": "step not terminated (token-limit exceeded or response terminator fired)",
+    "oracle_type": "simple",
+    "evaluator": "if response.terminated: raise RuntimeError('Deduction failed...')",
+    "verdict_location": "camel-master/camel/agents/deductive_reasoner_agent.py:251",
+    "check_location": "camel-master/camel/agents/deductive_reasoner_agent.py:251",
+    "enforcement_location": "camel-master/camel/agents/deductive_reasoner_agent.py:252-254",
+    "failure_consequence": "raise RuntimeError before regex extraction/return",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "563815"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "camel-master/camel/agents/deductive_reasoner_agent.py",
+      "line": 247,
+      "line_end": 249,
+      "role": "output"
+     },
+     {
+      "rel_path": "camel-master/camel/agents/deductive_reasoner_agent.py",
+      "line": 251,
+      "line_end": 254,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "A deterministic terminated-status check raises before the message is parsed and returned. Subsequent regex extraction ([0], next()) only fails implicitly and is parse-only. Simple status oracle; the terminated flag mostly signals token-limit/terminator failure rather than content quality."
+ },
+ {
+  "site_no": 39,
+  "call_id": "RenqiChen_Virtual-Scientists-v2/camel-master/camel/agents/embodied_agent.py::147::19",
+  "actual_context": "production",
+  "context_flags": [
+   "vendored_framework_copy"
+  ],
+  "context_evidence": "File is inside camel-master/, a vendored copy of the CAMEL framework source within the Virtual-Scientists-v2 app repo. EmbodiedAgent.step (136-201).",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "super().step(input_message) is camel ChatAgent.step (LLM backend).",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "RenqiChen_Virtual-Scientists-v2/camel-master/camel/agents/embodied_agent.py::147::19",
+    "protected_output": "agent response whose code blocks are then executed",
+    "checked_property": "msgs non-empty",
+    "oracle_type": "simple",
+    "evaluator": "if response.msgs is None or len(response.msgs)==0: raise",
+    "verdict_location": "camel-master/camel/agents/embodied_agent.py:149",
+    "check_location": "camel-master/camel/agents/embodied_agent.py:149",
+    "enforcement_location": "camel-master/camel/agents/embodied_agent.py:150",
+    "failure_consequence": "raise RuntimeError before code extraction/execution",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "563840"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "camel-master/camel/agents/embodied_agent.py",
+      "line": 147,
+      "line_end": 147,
+      "role": "output"
+     },
+     {
+      "rel_path": "camel-master/camel/agents/embodied_agent.py",
+      "line": 149,
+      "line_end": 150,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "RenqiChen_Virtual-Scientists-v2/camel-master/camel/agents/embodied_agent.py::147::19",
+    "protected_output": "agent response whose code blocks are then executed",
+    "checked_property": "step not terminated",
+    "oracle_type": "simple",
+    "evaluator": "if response.terminated: raise",
+    "verdict_location": "camel-master/camel/agents/embodied_agent.py:151",
+    "check_location": "camel-master/camel/agents/embodied_agent.py:151",
+    "enforcement_location": "camel-master/camel/agents/embodied_agent.py:152",
+    "failure_consequence": "raise RuntimeError before code execution",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "563840"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "camel-master/camel/agents/embodied_agent.py",
+      "line": 151,
+      "line_end": 152,
+      "role": "check"
+     },
+     {
+      "rel_path": "camel-master/camel/agents/embodied_agent.py",
+      "line": 170,
+      "line_end": 180,
+      "role": "support"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "Presence and terminated checks raise before the response's code is extracted and executed by the interpreter. Both are simple rule-based oracles in the same saved response slice."
+ },
+ {
+  "site_no": 40,
+  "call_id": "RenqiChen_Virtual-Scientists-v2/camel-master/camel/agents/role_assignment_agent.py::105::19",
+  "actual_context": "production",
+  "context_flags": [
+   "vendored_framework_copy"
+  ],
+  "context_evidence": "File is inside camel-master/, a vendored copy of the CAMEL framework source within the Virtual-Scientists-v2 app repo. RoleAssignmentAgent.run (61-141).",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "self.step(...) is camel ChatAgent.step, which calls the configured LLM backend.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "RenqiChen_Virtual-Scientists-v2/camel-master/camel/agents/role_assignment_agent.py::105::19",
+    "protected_output": "role names/descriptions extracted from the response",
+    "checked_property": "exactly num_roles names and descriptions extracted",
+    "oracle_type": "simple",
+    "evaluator": "if len(role_names)!=num_roles or len(role_descriptions)!=num_roles: raise",
+    "verdict_location": "camel-master/camel/agents/role_assignment_agent.py:129",
+    "check_location": "camel-master/camel/agents/role_assignment_agent.py:129",
+    "enforcement_location": "camel-master/camel/agents/role_assignment_agent.py:130-132",
+    "failure_consequence": "raise RuntimeError before dict is returned",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "camel-master/camel/agents/role_assignment_agent.py",
+      "line": 105,
+      "line_end": 108,
+      "role": "output"
+     },
+     {
+      "rel_path": "camel-master/camel/agents/role_assignment_agent.py",
+      "line": 129,
+      "line_end": 132,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "RenqiChen_Virtual-Scientists-v2/camel-master/camel/agents/role_assignment_agent.py::105::19",
+    "protected_output": "role assignment response",
+    "checked_property": "step not terminated",
+    "oracle_type": "simple",
+    "evaluator": "if terminated: raise RuntimeError('Role assignment failed.')",
+    "verdict_location": "camel-master/camel/agents/role_assignment_agent.py:133",
+    "check_location": "camel-master/camel/agents/role_assignment_agent.py:133",
+    "enforcement_location": "camel-master/camel/agents/role_assignment_agent.py:134",
+    "failure_consequence": "raise RuntimeError",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "camel-master/camel/agents/role_assignment_agent.py",
+      "line": 108,
+      "line_end": 108,
+      "role": "output"
+     },
+     {
+      "rel_path": "camel-master/camel/agents/role_assignment_agent.py",
+      "line": 133,
+      "line_end": 134,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "Count/format check on the regex-extracted roles and a terminated check both raise before the role dict is returned. Simple oracles; no saved slice contains the check lines."
+ },
+ {
+  "site_no": 41,
+  "call_id": "RenqiChen_Virtual-Scientists-v2/camel-master/camel/agents/search_agent.py::130::19",
+  "actual_context": "production",
+  "context_flags": [
+   "vendored_framework_copy"
+  ],
+  "context_evidence": "File is inside camel-master/, a vendored copy of the CAMEL framework source within the Virtual-Scientists-v2 app repo. SearchAgent.continue_search (108-133); no caller anywhere in the repo.",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "self.step(...) is camel ChatAgent.step, which calls the configured LLM backend.",
+  "site_role": "judge_evaluator",
+  "guards": [
+   {
+    "protected_producer_call_id": "not_in_frozen_inventory:camel-master/camel/agents/search_agent.py:(answer argument; no in-repo producer)",
+    "protected_output": "an answer passed as argument",
+    "checked_property": "whether ANSWER answers QUERY",
+    "oracle_type": "complex",
+    "evaluator": "LLM yes/no judgment, verdict parsed with 'yes' in response.lower()",
+    "verdict_location": "camel-master/camel/agents/search_agent.py:131",
+    "check_location": "camel-master/camel/agents/search_agent.py:131",
+    "enforcement_location": "none in repo",
+    "failure_consequence": "returns bool only; no in-repo caller acts on it",
+    "before_acceptance": "unresolved",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "no_consequence",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "563996"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "camel-master/camel/agents/search_agent.py",
+      "line": 130,
+      "line_end": 133,
+      "role": "verdict"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "The call is an LLM judge asking whether an answer suffices; the 'yes' substring test only converts its verdict into a boolean. No caller in the repo consumes continue_search, so no intervention is established."
+ },
+ {
+  "site_no": 42,
+  "call_id": "RenqiChen_Virtual-Scientists-v2/camel-master/camel/agents/task_agent.py::118::29",
+  "actual_context": "production",
+  "context_flags": [
+   "vendored_framework_copy"
+  ],
+  "context_evidence": "File is inside camel-master/, a vendored copy of the CAMEL framework source within the Virtual-Scientists-v2 app repo. TaskSpecifyAgent.run (93-127).",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "self.step(...) is camel ChatAgent.step, which calls the configured LLM backend.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "RenqiChen_Virtual-Scientists-v2/camel-master/camel/agents/task_agent.py::118::29",
+    "protected_output": "task specification response",
+    "checked_property": "step not terminated",
+    "oracle_type": "simple",
+    "evaluator": "if task_response.terminated: raise",
+    "verdict_location": "camel-master/camel/agents/task_agent.py:120",
+    "check_location": "camel-master/camel/agents/task_agent.py:120",
+    "enforcement_location": "camel-master/camel/agents/task_agent.py:121",
+    "failure_consequence": "raise RuntimeError before msgs[0] is returned",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "camel-master/camel/agents/task_agent.py",
+      "line": 118,
+      "line_end": 118,
+      "role": "output"
+     },
+     {
+      "rel_path": "camel-master/camel/agents/task_agent.py",
+      "line": 120,
+      "line_end": 121,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "RenqiChen_Virtual-Scientists-v2/camel-master/camel/agents/task_agent.py::118::29",
+    "protected_output": "task specification response",
+    "checked_property": "at least one output message",
+    "oracle_type": "simple",
+    "evaluator": "if len(task_response.msgs)==0: raise",
+    "verdict_location": "camel-master/camel/agents/task_agent.py:122",
+    "check_location": "camel-master/camel/agents/task_agent.py:122",
+    "enforcement_location": "camel-master/camel/agents/task_agent.py:123",
+    "failure_consequence": "raise RuntimeError before msgs[0] is returned",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "camel-master/camel/agents/task_agent.py",
+      "line": 122,
+      "line_end": 123,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "Terminated and non-empty-messages checks raise before the generated text is wrapped and returned. Simple presence/status oracles. No saved slice for this call."
+ },
+ {
+  "site_no": 43,
+  "call_id": "RenqiChen_Virtual-Scientists-v2/camel-master/camel/agents/task_agent.py::189::24",
+  "actual_context": "production",
+  "context_flags": [
+   "vendored_framework_copy"
+  ],
+  "context_evidence": "File is inside camel-master/, a vendored copy of the CAMEL framework source within the Virtual-Scientists-v2 app repo. TaskPlannerAgent.run (168-197).",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "self.step(...) is camel ChatAgent.step, which calls the configured LLM backend.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "RenqiChen_Virtual-Scientists-v2/camel-master/camel/agents/task_agent.py::189::24",
+    "protected_output": "task planning response",
+    "checked_property": "step not terminated",
+    "oracle_type": "simple",
+    "evaluator": "if task_response.terminated: raise",
+    "verdict_location": "camel-master/camel/agents/task_agent.py:191",
+    "check_location": "camel-master/camel/agents/task_agent.py:191",
+    "enforcement_location": "camel-master/camel/agents/task_agent.py:192",
+    "failure_consequence": "raise RuntimeError before msgs[0] is returned",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "camel-master/camel/agents/task_agent.py",
+      "line": 189,
+      "line_end": 189,
+      "role": "output"
+     },
+     {
+      "rel_path": "camel-master/camel/agents/task_agent.py",
+      "line": 191,
+      "line_end": 192,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "RenqiChen_Virtual-Scientists-v2/camel-master/camel/agents/task_agent.py::189::24",
+    "protected_output": "task planning response",
+    "checked_property": "at least one output message",
+    "oracle_type": "simple",
+    "evaluator": "if len(task_response.msgs)==0: raise",
+    "verdict_location": "camel-master/camel/agents/task_agent.py:193",
+    "check_location": "camel-master/camel/agents/task_agent.py:193",
+    "enforcement_location": "camel-master/camel/agents/task_agent.py:194",
+    "failure_consequence": "raise RuntimeError before msgs[0] is returned",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "camel-master/camel/agents/task_agent.py",
+      "line": 193,
+      "line_end": 194,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "Terminated and non-empty-messages checks raise before the generated text is wrapped and returned. Simple presence/status oracles. No saved slice for this call."
+ },
+ {
+  "site_no": 44,
+  "call_id": "RenqiChen_Virtual-Scientists-v2/camel-master/camel/agents/task_agent.py::304::24",
+  "actual_context": "production",
+  "context_flags": [
+   "vendored_framework_copy"
+  ],
+  "context_evidence": "File is inside camel-master/, a vendored copy of the CAMEL framework source within the Virtual-Scientists-v2 app repo. TaskCreationAgent.run (277-312).",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "self.step(...) is camel ChatAgent.step, which calls the configured LLM backend.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "RenqiChen_Virtual-Scientists-v2/camel-master/camel/agents/task_agent.py::304::24",
+    "protected_output": "task creation response",
+    "checked_property": "step not terminated",
+    "oracle_type": "simple",
+    "evaluator": "if task_response.terminated: raise",
+    "verdict_location": "camel-master/camel/agents/task_agent.py:306",
+    "check_location": "camel-master/camel/agents/task_agent.py:306",
+    "enforcement_location": "camel-master/camel/agents/task_agent.py:307",
+    "failure_consequence": "raise RuntimeError before msgs[0] is returned",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "camel-master/camel/agents/task_agent.py",
+      "line": 304,
+      "line_end": 304,
+      "role": "output"
+     },
+     {
+      "rel_path": "camel-master/camel/agents/task_agent.py",
+      "line": 306,
+      "line_end": 307,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "RenqiChen_Virtual-Scientists-v2/camel-master/camel/agents/task_agent.py::304::24",
+    "protected_output": "task creation response",
+    "checked_property": "at least one output message",
+    "oracle_type": "simple",
+    "evaluator": "if len(task_response.msgs)==0: raise",
+    "verdict_location": "camel-master/camel/agents/task_agent.py:308",
+    "check_location": "camel-master/camel/agents/task_agent.py:308",
+    "enforcement_location": "camel-master/camel/agents/task_agent.py:309",
+    "failure_consequence": "raise RuntimeError before msgs[0] is returned",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "camel-master/camel/agents/task_agent.py",
+      "line": 308,
+      "line_end": 309,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "Terminated and non-empty-messages checks raise before the generated text is wrapped and returned. Simple presence/status oracles. No saved slice for this call."
+ },
+ {
+  "site_no": 45,
+  "call_id": "RenqiChen_Virtual-Scientists-v2/camel-master/camel/agents/task_agent.py::402::24",
+  "actual_context": "production",
+  "context_flags": [
+   "vendored_framework_copy"
+  ],
+  "context_evidence": "File is inside camel-master/, a vendored copy of the CAMEL framework source within the Virtual-Scientists-v2 app repo. TaskPrioritizationAgent.run (382-410).",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "self.step(...) is camel ChatAgent.step, which calls the configured LLM backend.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "RenqiChen_Virtual-Scientists-v2/camel-master/camel/agents/task_agent.py::402::24",
+    "protected_output": "task prioritization response",
+    "checked_property": "step not terminated",
+    "oracle_type": "simple",
+    "evaluator": "if task_response.terminated: raise",
+    "verdict_location": "camel-master/camel/agents/task_agent.py:404",
+    "check_location": "camel-master/camel/agents/task_agent.py:404",
+    "enforcement_location": "camel-master/camel/agents/task_agent.py:405",
+    "failure_consequence": "raise RuntimeError before msgs[0] is returned",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "564008"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "camel-master/camel/agents/task_agent.py",
+      "line": 402,
+      "line_end": 402,
+      "role": "output"
+     },
+     {
+      "rel_path": "camel-master/camel/agents/task_agent.py",
+      "line": 404,
+      "line_end": 405,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "RenqiChen_Virtual-Scientists-v2/camel-master/camel/agents/task_agent.py::402::24",
+    "protected_output": "task prioritization response",
+    "checked_property": "at least one output message",
+    "oracle_type": "simple",
+    "evaluator": "if len(task_response.msgs)==0: raise",
+    "verdict_location": "camel-master/camel/agents/task_agent.py:406",
+    "check_location": "camel-master/camel/agents/task_agent.py:406",
+    "enforcement_location": "camel-master/camel/agents/task_agent.py:407",
+    "failure_consequence": "raise RuntimeError before msgs[0] is returned",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "564008"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "camel-master/camel/agents/task_agent.py",
+      "line": 406,
+      "line_end": 407,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "Terminated and non-empty-messages checks raise before the generated text is wrapped and returned. Simple presence/status oracles. Both checks lie in saved response slice 564008."
+ },
+ {
+  "site_no": 48,
+  "call_id": "Tianyi-Billy-Ma_AutoData/autodata/extras/browser_use/chat_utils.py::153::33",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "ChatLangchain.ainvoke adapter (130-235) bridging browser-use to LangChain models.",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "self.chat is a LangChain BaseChatModel; ainvoke at 153 calls the LLM.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "Tianyi-Billy-Ma_AutoData/autodata/extras/browser_use/chat_utils.py::153::33",
+    "protected_output": "string completion returned to browser-use",
+    "checked_property": "response is a LangChain AIMessage",
+    "oracle_type": "simple",
+    "evaluator": "if not isinstance(response, AIMessage): raise ModelProviderError",
+    "verdict_location": "autodata/extras/browser_use/chat_utils.py:157",
+    "check_location": "autodata/extras/browser_use/chat_utils.py:157",
+    "enforcement_location": "autodata/extras/browser_use/chat_utils.py:158-161",
+    "failure_consequence": "raise ModelProviderError (re-wrapped at 230-235) instead of returning ChatInvokeCompletion",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "750610"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "autodata/extras/browser_use/chat_utils.py",
+      "line": 153,
+      "line_end": 153,
+      "role": "output"
+     },
+     {
+      "rel_path": "autodata/extras/browser_use/chat_utils.py",
+      "line": 157,
+      "line_end": 161,
+      "role": "check"
+     },
+     {
+      "rel_path": "autodata/extras/browser_use/chat_utils.py",
+      "line": 230,
+      "line_end": 235,
+      "role": "enforcement"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "A type check on the model response raises before the completion is returned. Simple type oracle in the same saved slice. It mainly guards against provider/adapter misbehavior, not content."
+ },
+ {
+  "site_no": 49,
+  "call_id": "Tianyi-Billy-Ma_AutoData/autodata/extras/browser_use/chat_utils.py::189::37",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "ChatLangchain.ainvoke fallback branch (AttributeError when with_structured_output is unavailable).",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "self.chat.ainvoke at 189 calls the LangChain chat model.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "Tianyi-Billy-Ma_AutoData/autodata/extras/browser_use/chat_utils.py::189::37",
+    "protected_output": "structured output object returned to browser-use",
+    "checked_property": "response is a LangChain AIMessage",
+    "oracle_type": "simple",
+    "evaluator": "if not isinstance(response, AIMessage): raise ModelProviderError",
+    "verdict_location": "autodata/extras/browser_use/chat_utils.py:193",
+    "check_location": "autodata/extras/browser_use/chat_utils.py:193",
+    "enforcement_location": "autodata/extras/browser_use/chat_utils.py:194-197",
+    "failure_consequence": "raise ModelProviderError",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "750610"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "autodata/extras/browser_use/chat_utils.py",
+      "line": 189,
+      "line_end": 189,
+      "role": "output"
+     },
+     {
+      "rel_path": "autodata/extras/browser_use/chat_utils.py",
+      "line": 193,
+      "line_end": 197,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "Tianyi-Billy-Ma_AutoData/autodata/extras/browser_use/chat_utils.py::189::37",
+    "protected_output": "structured output object returned to browser-use",
+    "checked_property": "content is a JSON dict that validates against output_format Pydantic model",
+    "oracle_type": "simple",
+    "evaluator": "json.loads + isinstance dict + output_format(**parsed_data); failures raise ModelProviderError",
+    "verdict_location": "autodata/extras/browser_use/chat_utils.py:211",
+    "check_location": "autodata/extras/browser_use/chat_utils.py:207-216",
+    "enforcement_location": "autodata/extras/browser_use/chat_utils.py:218-222",
+    "failure_consequence": "raise ModelProviderError instead of returning completion",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "partial",
+    "joern_slice_ids": [
+     "750610"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "autodata/extras/browser_use/chat_utils.py",
+      "line": 207,
+      "line_end": 216,
+      "role": "check"
+     },
+     {
+      "rel_path": "autodata/extras/browser_use/chat_utils.py",
+      "line": 218,
+      "line_end": 222,
+      "role": "enforcement"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "Type check plus JSON/Pydantic schema validation raise before the parsed object is returned. Both simple oracles; reachable only on the AttributeError fallback path."
+ },
+ {
+  "site_no": 121,
+  "call_id": "ikamensh_kodo/kodo/coach.py::409::21",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "FilteredCoach._filter_message (405-419); FilteredCoach instantiated in kodo/orchestrators/base.py:206-219 when enable_coach.",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "pydantic_ai Agent(make_fresh_model(...), output_type=FilterVerdict).run_sync calls an LLM (default claude-haiku).",
+  "site_role": "judge_evaluator",
+  "guards": [
+   {
+    "protected_producer_call_id": "ikamensh_kodo/kodo/coach.py::302::21",
+    "protected_output": "coach agent's proposed send_feedback message (tool-call argument produced by coach agent run at coach.py:302)",
+    "checked_property": "whether the feedback is strategically relevant (pass/block)",
+    "oracle_type": "complex",
+    "evaluator": "LLM filter agent (pydantic_ai, default anthropic claude-haiku-4-5) returns FilterVerdict.decision",
+    "verdict_location": "kodo/coach.py:415",
+    "check_location": "kodo/coach.py:437",
+    "enforcement_location": "kodo/coach.py:437-439",
+    "failure_consequence": "message is not pushed to the orchestrator queue; 'Not delivered. Reason' returned to the coach as tool result (request correction)",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "yes",
+    "configuration_dependent": "yes",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "kodo/coach.py",
+      "line": 409,
+      "line_end": 415,
+      "role": "verdict"
+     },
+     {
+      "rel_path": "kodo/coach.py",
+      "line": 436,
+      "line_end": 441,
+      "role": "enforcement"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "ikamensh_kodo/kodo/coach.py::409::21",
+    "protected_output": "FilterVerdict object",
+    "checked_property": "pydantic output_type schema / decision=='pass'",
+    "oracle_type": "simple",
+    "evaluator": "pydantic_ai output_type=FilterVerdict; result.output.decision == 'pass'",
+    "verdict_location": "kodo/coach.py:415",
+    "check_location": "kodo/coach.py:415",
+    "enforcement_location": "kodo/coach.py:416",
+    "failure_consequence": "returns None (accept) or reason",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": true,
+    "qualifies": "no",
+    "nonqualifying_reason": "auxiliary_judge_plumbing",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "1732459"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "yes",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "kodo/coach.py",
+      "line": 415,
+      "line_end": 418,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guard_attributed_to_other_producer_only",
+  "rationale": "The site is an LLM gate judging the coach agent's proposed feedback; a 'block' verdict prevents delivery to the orchestrator queue and returns the reason to the coach. Complex guard attributed to the coach run at coach.py:302. It fails open (exception returns None, i.e. accept) and is active only with enable_coach."
+ },
+ {
+  "site_no": 134,
+  "call_id": "ob-labs_agentseek-api/examples/run_sample_graphs.py::29::19",
+  "actual_context": "test_support",
+  "context_flags": [
+   "example_or_tutorial"
+  ],
+  "context_evidence": "Local smoke-test script ('Run every sample graph once... to prove they import and execute'), functions _run_stress_test (28-35).",
+  "invocation": "false_positive_non_llm",
+  "invocation_evidence": "graph is a scripted/deterministic LangGraph sample (examples/graphs/*/graph.py docstrings: 'scripted call_model', 'without any provider dependency'); no LLM is invoked.",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "ob-labs_agentseek-api/examples/run_sample_graphs.py::29::19",
+    "protected_output": "final graph message",
+    "checked_property": "assert payload[\"status\"] == \"completed\"",
+    "oracle_type": "simple",
+    "evaluator": "assert payload[\"status\"] == \"completed\"",
+    "verdict_location": "examples/run_sample_graphs.py:33",
+    "check_location": "examples/run_sample_graphs.py:33",
+    "enforcement_location": "examples/run_sample_graphs.py:33",
+    "failure_consequence": "AssertionError aborts smoke run",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "false_positive_invocation",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": true,
+    "evidence_lines": [
+     {
+      "rel_path": "examples/run_sample_graphs.py",
+      "line": 33,
+      "line_end": 33,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "ob-labs_agentseek-api/examples/run_sample_graphs.py::29::19",
+    "protected_output": "final graph message",
+    "checked_property": "assert payload[\"steps_completed\"] == 2",
+    "oracle_type": "simple",
+    "evaluator": "assert payload[\"steps_completed\"] == 2",
+    "verdict_location": "examples/run_sample_graphs.py:34",
+    "check_location": "examples/run_sample_graphs.py:34",
+    "enforcement_location": "examples/run_sample_graphs.py:34",
+    "failure_consequence": "AssertionError aborts smoke run",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "false_positive_invocation",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": true,
+    "evidence_lines": [
+     {
+      "rel_path": "examples/run_sample_graphs.py",
+      "line": 34,
+      "line_end": 34,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "The matched .ainvoke runs a deterministic sample LangGraph with no model, inside a smoke-test script. The asserts check the scripted output, so they cannot guard an LLM output."
+ },
+ {
+  "site_no": 135,
+  "call_id": "ob-labs_agentseek-api/examples/run_sample_graphs.py::39::19",
+  "actual_context": "test_support",
+  "context_flags": [
+   "example_or_tutorial"
+  ],
+  "context_evidence": "Local smoke-test script ('Run every sample graph once... to prove they import and execute'), functions _run_subgraph_agent (38-44).",
+  "invocation": "false_positive_non_llm",
+  "invocation_evidence": "graph is a scripted/deterministic LangGraph sample (examples/graphs/*/graph.py docstrings: 'scripted call_model', 'without any provider dependency'); no LLM is invoked.",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "ob-labs_agentseek-api/examples/run_sample_graphs.py::39::19",
+    "protected_output": "final graph message",
+    "checked_property": "assert final[\"status\"] == \"completed\"",
+    "oracle_type": "simple",
+    "evaluator": "assert final[\"status\"] == \"completed\"",
+    "verdict_location": "examples/run_sample_graphs.py:43",
+    "check_location": "examples/run_sample_graphs.py:43",
+    "enforcement_location": "examples/run_sample_graphs.py:43",
+    "failure_consequence": "AssertionError aborts smoke run",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "false_positive_invocation",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": true,
+    "evidence_lines": [
+     {
+      "rel_path": "examples/run_sample_graphs.py",
+      "line": 43,
+      "line_end": 43,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "The matched .ainvoke runs a deterministic sample LangGraph with no model, inside a smoke-test script. The asserts check the scripted output, so they cannot guard an LLM output."
+ },
+ {
+  "site_no": 136,
+  "call_id": "ob-labs_agentseek-api/examples/run_sample_graphs.py::48::19",
+  "actual_context": "test_support",
+  "context_flags": [
+   "example_or_tutorial"
+  ],
+  "context_evidence": "Local smoke-test script ('Run every sample graph once... to prove they import and execute'), functions _run_react_agent (47-53).",
+  "invocation": "false_positive_non_llm",
+  "invocation_evidence": "graph is a scripted/deterministic LangGraph sample (examples/graphs/*/graph.py docstrings: 'scripted call_model', 'without any provider dependency'); no LLM is invoked.",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "ob-labs_agentseek-api/examples/run_sample_graphs.py::48::19",
+    "protected_output": "final graph message",
+    "checked_property": "assert \"42\" in final",
+    "oracle_type": "simple",
+    "evaluator": "assert \"42\" in final",
+    "verdict_location": "examples/run_sample_graphs.py:52",
+    "check_location": "examples/run_sample_graphs.py:52",
+    "enforcement_location": "examples/run_sample_graphs.py:52",
+    "failure_consequence": "AssertionError aborts smoke run",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "false_positive_invocation",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": true,
+    "evidence_lines": [
+     {
+      "rel_path": "examples/run_sample_graphs.py",
+      "line": 52,
+      "line_end": 52,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "The matched .ainvoke runs a deterministic sample LangGraph with no model, inside a smoke-test script. The asserts check the scripted output, so they cannot guard an LLM output."
+ },
+ {
+  "site_no": 137,
+  "call_id": "ob-labs_agentseek-api/examples/run_sample_graphs.py::57::19",
+  "actual_context": "test_support",
+  "context_flags": [
+   "example_or_tutorial"
+  ],
+  "context_evidence": "Local smoke-test script ('Run every sample graph once... to prove they import and execute'), functions _run_stress_tool_agent (56-65).",
+  "invocation": "false_positive_non_llm",
+  "invocation_evidence": "graph is a scripted/deterministic LangGraph sample (examples/graphs/*/graph.py docstrings: 'scripted call_model', 'without any provider dependency'); no LLM is invoked.",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "ob-labs_agentseek-api/examples/run_sample_graphs.py::57::19",
+    "protected_output": "final graph message",
+    "checked_property": "assert payload[\"status\"] == \"completed\"",
+    "oracle_type": "simple",
+    "evaluator": "assert payload[\"status\"] == \"completed\"",
+    "verdict_location": "examples/run_sample_graphs.py:61",
+    "check_location": "examples/run_sample_graphs.py:61",
+    "enforcement_location": "examples/run_sample_graphs.py:61",
+    "failure_consequence": "AssertionError aborts smoke run",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "false_positive_invocation",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": true,
+    "evidence_lines": [
+     {
+      "rel_path": "examples/run_sample_graphs.py",
+      "line": 61,
+      "line_end": 61,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "ob-labs_agentseek-api/examples/run_sample_graphs.py::57::19",
+    "protected_output": "final graph message",
+    "checked_property": "assert payload[\"steps_completed\"] == 3",
+    "oracle_type": "simple",
+    "evaluator": "assert payload[\"steps_completed\"] == 3",
+    "verdict_location": "examples/run_sample_graphs.py:62",
+    "check_location": "examples/run_sample_graphs.py:62",
+    "enforcement_location": "examples/run_sample_graphs.py:62",
+    "failure_consequence": "AssertionError aborts smoke run",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "false_positive_invocation",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": true,
+    "evidence_lines": [
+     {
+      "rel_path": "examples/run_sample_graphs.py",
+      "line": 62,
+      "line_end": 62,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "The matched .ainvoke runs a deterministic sample LangGraph with no model, inside a smoke-test script. The asserts check the scripted output, so they cannot guard an LLM output."
+ },
+ {
+  "site_no": 141,
+  "call_id": "oracle_agent-spec/docs/pyagentspec/source/code_examples/adapter_agent_framework_quickstart.py::59::23",
+  "actual_context": "production",
+  "context_flags": [
+   "example_or_tutorial"
+  ],
+  "context_evidence": "Documentation code example under docs/.../code_examples; main() (50-63) is an interactive REPL; the anyio.run(main) line is commented out.",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "assistant is an Agent Framework agent loaded from an Agent Spec config with an LLM; .run sends the user input to it.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "oracle_agent-spec/docs/pyagentspec/source/code_examples/adapter_agent_framework_quickstart.py::59::23",
+    "protected_output": "last content of the agent's final message, printed to the user",
+    "checked_property": "agent_message is an agent_framework Content",
+    "oracle_type": "simple",
+    "evaluator": "if not isinstance(agent_message, Content): raise ValueError",
+    "verdict_location": "docs/pyagentspec/source/code_examples/adapter_agent_framework_quickstart.py:61",
+    "check_location": "docs/pyagentspec/source/code_examples/adapter_agent_framework_quickstart.py:61",
+    "enforcement_location": "docs/pyagentspec/source/code_examples/adapter_agent_framework_quickstart.py:62",
+    "failure_consequence": "raise ValueError before printing",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "docs/pyagentspec/source/code_examples/adapter_agent_framework_quickstart.py",
+      "line": 59,
+      "line_end": 60,
+      "role": "output"
+     },
+     {
+      "rel_path": "docs/pyagentspec/source/code_examples/adapter_agent_framework_quickstart.py",
+      "line": 61,
+      "line_end": 62,
+      "role": "check"
+     },
+     {
+      "rel_path": "docs/pyagentspec/source/code_examples/adapter_agent_framework_quickstart.py",
+      "line": 63,
+      "line_end": 63,
+      "role": "support"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "A type check on the agent's last message content raises before it is printed. Simple type oracle, but it lives in a documentation example and guards structure, not content."
+ },
+ {
+  "site_no": 142,
+  "call_id": "oracle_agent-spec/pyagentspec/src/pyagentspec/adapters/crewai/_node_execution.py::212::28",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "LlmNodeExecutor._execute (208-224) in the pyagentspec CrewAI adapter (library source of this repo).",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "self.llm is a CrewAI LLM; .call(rendered_prompt) invokes the model.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "oracle_agent-spec/pyagentspec/src/pyagentspec/adapters/crewai/_node_execution.py::212::28",
+    "protected_output": "structured node output dict",
+    "checked_property": "generated message is a Pydantic BaseModel when a response_format is set",
+    "oracle_type": "simple",
+    "evaluator": "if not isinstance(generated_message, BaseModel): raise TypeError",
+    "verdict_location": "pyagentspec/src/pyagentspec/adapters/crewai/_node_execution.py:215",
+    "check_location": "pyagentspec/src/pyagentspec/adapters/crewai/_node_execution.py:215",
+    "enforcement_location": "pyagentspec/src/pyagentspec/adapters/crewai/_node_execution.py:216-218",
+    "failure_consequence": "raise TypeError before outputs are returned to the flow",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "yes",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "pyagentspec/src/pyagentspec/adapters/crewai/_node_execution.py",
+      "line": 212,
+      "line_end": 212,
+      "role": "output"
+     },
+     {
+      "rel_path": "pyagentspec/src/pyagentspec/adapters/crewai/_node_execution.py",
+      "line": 214,
+      "line_end": 218,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "When the node needs structured output, a type check raises before the output dict is returned. Simple oracle; active only when response_format is set (non-single-string outputs)."
+ },
+ {
+  "site_no": 144,
+  "call_id": "rocketride-org_rocketride-server/packages/ai/src/ai/common/context.py::47::21",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "Context.highlight_semantic_documents (32-78).",
+  "invocation": "false_positive_non_llm",
+  "invocation_evidence": "self.reader is a Haystack ExtractiveReader (extractive QA span model, line 29), not a generative LLM; .run returns answer spans.",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "rocketride-org_rocketride-server/packages/ai/src/ai/common/context.py::47::21",
+    "protected_output": "extractive reader answers",
+    "checked_property": "answers non-empty",
+    "oracle_type": "simple",
+    "evaluator": "if answers is None or not len(answers): raise Exception",
+    "verdict_location": "packages/ai/src/ai/common/context.py:51",
+    "check_location": "packages/ai/src/ai/common/context.py:51",
+    "enforcement_location": "packages/ai/src/ai/common/context.py:52",
+    "failure_consequence": "raise Exception",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "false_positive_invocation",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "packages/ai/src/ai/common/context.py",
+      "line": 47,
+      "line_end": 48,
+      "role": "output"
+     },
+     {
+      "rel_path": "packages/ai/src/ai/common/context.py",
+      "line": 51,
+      "line_end": 52,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "The matched .run belongs to a Haystack ExtractiveReader, a span-extraction model rather than an LLM generation. The presence check therefore does not guard an in-scope LLM output."
+ },
+ {
+  "site_no": 197,
+  "call_id": "wsargent_groundedllm/hayhooks/pipelines/analyze_trace/pipeline_wrapper.py::66::17",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "Hayhooks PipelineWrapper.run_api endpoint.",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "self.pipeline is a Haystack Pipeline whose 'llm' component is an OpenAIGenerator; Pipeline.run executes the generation.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "wsargent_groundedllm/hayhooks/pipelines/analyze_trace/pipeline_wrapper.py::66::17",
+    "protected_output": "LLM reply returned from the API",
+    "checked_property": "result['llm']['replies'] present and non-empty",
+    "oracle_type": "simple",
+    "evaluator": "if 'llm' in result and 'replies' in result['llm'] and result['llm']['replies']: return reply else raise",
+    "verdict_location": "hayhooks/pipelines/analyze_trace/pipeline_wrapper.py:69",
+    "check_location": "hayhooks/pipelines/analyze_trace/pipeline_wrapper.py:69",
+    "enforcement_location": "hayhooks/pipelines/analyze_trace/pipeline_wrapper.py:74",
+    "failure_consequence": "raise RuntimeError (propagates to hayhooks API)",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "2894250"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "hayhooks/pipelines/analyze_trace/pipeline_wrapper.py",
+      "line": 66,
+      "line_end": 66,
+      "role": "output"
+     },
+     {
+      "rel_path": "hayhooks/pipelines/analyze_trace/pipeline_wrapper.py",
+      "line": 69,
+      "line_end": 74,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "Presence/non-empty check on the generator replies; an empty result raises instead of returning a reply. Simple presence oracle."
+ },
+ {
+  "site_no": 198,
+  "call_id": "wsargent_groundedllm/hayhooks/pipelines/excerpt/pipeline_wrapper.py::167::21",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "Hayhooks PipelineWrapper.run_api endpoint.",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "self.pipeline is a Haystack Pipeline whose 'llm' component is an OpenAIGenerator; Pipeline.run executes the generation.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "wsargent_groundedllm/hayhooks/pipelines/excerpt/pipeline_wrapper.py::167::21",
+    "protected_output": "LLM reply returned from the API",
+    "checked_property": "result['llm']['replies'] present and non-empty",
+    "oracle_type": "simple",
+    "evaluator": "if 'llm' in result and 'replies' in result['llm'] and result['llm']['replies']: return reply else raise",
+    "verdict_location": "hayhooks/pipelines/excerpt/pipeline_wrapper.py:174",
+    "check_location": "hayhooks/pipelines/excerpt/pipeline_wrapper.py:174",
+    "enforcement_location": "hayhooks/pipelines/excerpt/pipeline_wrapper.py:179",
+    "failure_consequence": "raise RuntimeError, caught at 180-181 and replaced with an 'Error: ...' string (fallback)",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "hayhooks/pipelines/excerpt/pipeline_wrapper.py",
+      "line": 167,
+      "line_end": 167,
+      "role": "output"
+     },
+     {
+      "rel_path": "hayhooks/pipelines/excerpt/pipeline_wrapper.py",
+      "line": 174,
+      "line_end": 179,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "Presence/non-empty check on the generator replies; an empty result raises instead of returning a reply. Simple presence oracle. The RuntimeError is caught at 180 and replaced by an 'Error: ...' string return."
+ },
+ {
+  "site_no": 199,
+  "call_id": "wsargent_groundedllm/hayhooks/pipelines/search/pipeline_wrapper.py::190::17",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "Hayhooks PipelineWrapper.run_api endpoint.",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "self.pipeline is a Haystack Pipeline whose 'llm' component is an OpenAIGenerator; Pipeline.run executes the generation.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "wsargent_groundedllm/hayhooks/pipelines/search/pipeline_wrapper.py::190::17",
+    "protected_output": "LLM reply returned from the API",
+    "checked_property": "result['llm']['replies'] present and non-empty",
+    "oracle_type": "simple",
+    "evaluator": "if 'llm' in result and 'replies' in result['llm'] and result['llm']['replies']: return reply else raise",
+    "verdict_location": "hayhooks/pipelines/search/pipeline_wrapper.py:218",
+    "check_location": "hayhooks/pipelines/search/pipeline_wrapper.py:218",
+    "enforcement_location": "hayhooks/pipelines/search/pipeline_wrapper.py:222",
+    "failure_consequence": "raise RuntimeError",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "hayhooks/pipelines/search/pipeline_wrapper.py",
+      "line": 190,
+      "line_end": 190,
+      "role": "output"
+     },
+     {
+      "rel_path": "hayhooks/pipelines/search/pipeline_wrapper.py",
+      "line": 218,
+      "line_end": 222,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "Presence/non-empty check on the generator replies; an empty result raises instead of returning a reply. Simple presence oracle."
+ },
+ {
+  "site_no": 200,
+  "call_id": "wsargent_groundedllm/hayhooks/pipelines/search_stackoverflow/pipeline_wrapper.py::70::17",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "Hayhooks PipelineWrapper.run_api endpoint.",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "self.pipeline is a Haystack Pipeline whose 'llm' component is an OpenAIGenerator; Pipeline.run executes the generation.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "wsargent_groundedllm/hayhooks/pipelines/search_stackoverflow/pipeline_wrapper.py::70::17",
+    "protected_output": "LLM reply returned from the API",
+    "checked_property": "result['llm']['replies'] present and non-empty",
+    "oracle_type": "simple",
+    "evaluator": "if 'llm' in result and 'replies' in result['llm'] and result['llm']['replies']: return reply else raise",
+    "verdict_location": "hayhooks/pipelines/search_stackoverflow/pipeline_wrapper.py:76",
+    "check_location": "hayhooks/pipelines/search_stackoverflow/pipeline_wrapper.py:76",
+    "enforcement_location": "hayhooks/pipelines/search_stackoverflow/pipeline_wrapper.py:81",
+    "failure_consequence": "raise RuntimeError",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "2894317"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "hayhooks/pipelines/search_stackoverflow/pipeline_wrapper.py",
+      "line": 70,
+      "line_end": 70,
+      "role": "output"
+     },
+     {
+      "rel_path": "hayhooks/pipelines/search_stackoverflow/pipeline_wrapper.py",
+      "line": 76,
+      "line_end": 81,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "Presence/non-empty check on the generator replies; an empty result raises instead of returning a reply. Simple presence oracle."
+ },
+ {
+  "site_no": 209,
+  "call_id": "UiPath_uipath-integrations-python/packages/uipath-pydantic-ai/samples/graph-flow/main.py::107::23",
+  "actual_context": "production",
+  "context_flags": [
+   "demo_or_sample_app",
+   "example_or_tutorial"
+  ],
+  "context_evidence": "samples/graph-flow sample app; WriteDraft.run (98-114) node of a write-review graph.",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "writer_agent is a pydantic_ai Agent on UiPathChatOpenAI gpt-4o-mini with output_type=BlogPost.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "UiPath_uipath-integrations-python/packages/uipath-pydantic-ai/samples/graph-flow/main.py::107::23",
+    "protected_output": "blog post draft (BlogPost) produced by writer_agent",
+    "checked_property": "draft quality approved by reviewer (score>=8 per instructions)",
+    "oracle_type": "complex",
+    "evaluator": "reviewer_agent (pydantic_ai Agent, same UiPath gpt-4o-mini, output_type=ReviewFeedback) at main.py:125; review.approved",
+    "verdict_location": "packages/uipath-pydantic-ai/samples/graph-flow/main.py:126",
+    "check_location": "packages/uipath-pydantic-ai/samples/graph-flow/main.py:129",
+    "enforcement_location": "packages/uipath-pydantic-ai/samples/graph-flow/main.py:129-133",
+    "failure_consequence": "regenerate: return WriteDraft(feedback=...) for revision; End(draft) only if approved",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "yes",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "packages/uipath-pydantic-ai/samples/graph-flow/main.py",
+      "line": 107,
+      "line_end": 113,
+      "role": "output"
+     },
+     {
+      "rel_path": "packages/uipath-pydantic-ai/samples/graph-flow/main.py",
+      "line": 125,
+      "line_end": 126,
+      "role": "verdict"
+     },
+     {
+      "rel_path": "packages/uipath-pydantic-ai/samples/graph-flow/main.py",
+      "line": 129,
+      "line_end": 133,
+      "role": "enforcement"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "UiPath_uipath-integrations-python/packages/uipath-pydantic-ai/samples/graph-flow/main.py::107::23",
+    "protected_output": "writer_agent output",
+    "checked_property": "BlogPost Pydantic schema via output_type",
+    "oracle_type": "simple",
+    "evaluator": "pydantic_ai framework-internal validation of output_type=BlogPost (not visible in app code)",
+    "verdict_location": "framework-internal",
+    "check_location": "packages/uipath-pydantic-ai/samples/graph-flow/main.py:64-66",
+    "enforcement_location": "framework-internal",
+    "failure_consequence": "pydantic_ai retries/raises on validation failure (framework behavior, not app code)",
+    "before_acceptance": "unresolved",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "unresolved",
+    "nonqualifying_reason": "other:framework_internal_output_type_validation",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": []
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "An LLM reviewer judges each draft, and an unapproved draft is sent back for regeneration with feedback. The draft is accepted unapproved once max_revisions (3) is reached, which is a retry-budget bypass. Sample app."
+ },
+ {
+  "site_no": 214,
+  "call_id": "kjgpta_tracesage/examples/showcase/23_reflexion_writer/after.py::78::22",
+  "actual_context": "production",
+  "context_flags": [
+   "example_or_tutorial",
+   "demo_or_sample_app",
+   "duplicate_copy_of_other_file"
+  ],
+  "context_evidence": "Showcase example write_node (77-81) of a reflexion writer graph (after.py = before.py plus tracesage instrumentation).",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "writer is ChatPromptTemplate | init_chat_model(gpt-4o-mini) | StrOutputParser; .ainvoke generates a draft.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "kjgpta_tracesage/examples/showcase/23_reflexion_writer/after.py::78::22",
+    "protected_output": "draft paragraph stored in graph state",
+    "checked_property": "critic score >= TARGET_SCORE (8)",
+    "oracle_type": "complex",
+    "evaluator": "critic chain (same init_chat_model LLM) at kjgpta_tracesage/examples/showcase/23_reflexion_writer/after.py::84::24; score parsed by regex SCORE:\\s*(\\d+) (missing -> 0)",
+    "verdict_location": "examples/showcase/23_reflexion_writer/after.py:85",
+    "check_location": "examples/showcase/23_reflexion_writer/after.py:91",
+    "enforcement_location": "examples/showcase/23_reflexion_writer/after.py:100",
+    "failure_consequence": "conditional edge routes back to write node: draft regenerated with feedback",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "yes",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "examples/showcase/23_reflexion_writer/after.py",
+      "line": 78,
+      "line_end": 80,
+      "role": "output"
+     },
+     {
+      "rel_path": "examples/showcase/23_reflexion_writer/after.py",
+      "line": 84,
+      "line_end": 87,
+      "role": "verdict"
+     },
+     {
+      "rel_path": "examples/showcase/23_reflexion_writer/after.py",
+      "line": 91,
+      "line_end": 93,
+      "role": "check"
+     },
+     {
+      "rel_path": "examples/showcase/23_reflexion_writer/after.py",
+      "line": 100,
+      "line_end": 100,
+      "role": "enforcement"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "An LLM critic scores each draft; below 8 the graph routes back to regenerate with feedback. After MAX_ITERS=3 the last draft is accepted regardless, which is a retry-budget bypass. A missing score parses as 0, so a malformed verdict fails closed. Tutorial example."
+ },
+ {
+  "site_no": 215,
+  "call_id": "kjgpta_tracesage/examples/showcase/23_reflexion_writer/before.py::68::22",
+  "actual_context": "production",
+  "context_flags": [
+   "example_or_tutorial",
+   "demo_or_sample_app"
+  ],
+  "context_evidence": "Showcase example write_node (67-71) of a reflexion writer graph.",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "writer is ChatPromptTemplate | init_chat_model(gpt-4o-mini) | StrOutputParser; .ainvoke generates a draft.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "kjgpta_tracesage/examples/showcase/23_reflexion_writer/before.py::68::22",
+    "protected_output": "draft paragraph stored in graph state",
+    "checked_property": "critic score >= TARGET_SCORE (8)",
+    "oracle_type": "complex",
+    "evaluator": "critic chain (same init_chat_model LLM) at kjgpta_tracesage/examples/showcase/23_reflexion_writer/before.py::74::24; score parsed by regex SCORE:\\s*(\\d+) (missing -> 0)",
+    "verdict_location": "examples/showcase/23_reflexion_writer/before.py:75",
+    "check_location": "examples/showcase/23_reflexion_writer/before.py:81",
+    "enforcement_location": "examples/showcase/23_reflexion_writer/before.py:90",
+    "failure_consequence": "conditional edge routes back to write node: draft regenerated with feedback",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "yes",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "examples/showcase/23_reflexion_writer/before.py",
+      "line": 68,
+      "line_end": 70,
+      "role": "output"
+     },
+     {
+      "rel_path": "examples/showcase/23_reflexion_writer/before.py",
+      "line": 74,
+      "line_end": 77,
+      "role": "verdict"
+     },
+     {
+      "rel_path": "examples/showcase/23_reflexion_writer/before.py",
+      "line": 81,
+      "line_end": 83,
+      "role": "check"
+     },
+     {
+      "rel_path": "examples/showcase/23_reflexion_writer/before.py",
+      "line": 90,
+      "line_end": 90,
+      "role": "enforcement"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "An LLM critic scores each draft; below 8 the graph routes back to regenerate with feedback. After MAX_ITERS=3 the last draft is accepted regardless, which is a retry-budget bypass. A missing score parses as 0, so a malformed verdict fails closed. Tutorial example."
+ }
+]

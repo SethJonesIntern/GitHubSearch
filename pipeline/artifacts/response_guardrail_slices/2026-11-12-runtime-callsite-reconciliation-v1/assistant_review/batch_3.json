@@ -1,0 +1,1519 @@
+[
+ {
+  "site_no": 1,
+  "call_id": "BjornMelin_docmind-ai-llm/src/agents/supervisor_graph.py::421::23",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "call_supervisor node inside build_multi_agent_supervisor_graph (supervisor_graph.py:357-441).",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "supervisor_agent = create_agent(model, tools=[dispatch_tool], ...) at :402; LLM agent .ainvoke at :421.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "BjornMelin_docmind-ai-llm/src/agents/supervisor_graph.py::421::23",
+    "protected_output": "supervisor agent graph result (output)",
+    "checked_property": "result is a dict",
+    "oracle_type": "simple",
+    "evaluator": "if not isinstance(output, dict): raise TypeError",
+    "verdict_location": "src/agents/supervisor_graph.py:428",
+    "check_location": "src/agents/supervisor_graph.py:428",
+    "enforcement_location": "src/agents/supervisor_graph.py:429",
+    "failure_consequence": "raise TypeError before messages are extracted and returned to parent graph",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "79990"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "src/agents/supervisor_graph.py",
+      "line": 421,
+      "line_end": 425,
+      "role": "output"
+     },
+     {
+      "rel_path": "src/agents/supervisor_graph.py",
+      "line": 428,
+      "line_end": 429,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "BjornMelin_docmind-ai-llm/src/agents/supervisor_graph.py::421::23",
+    "protected_output": "supervisor result messages",
+    "checked_property": "output['messages'] is a list",
+    "oracle_type": "simple",
+    "evaluator": "if not isinstance(updated_messages, list): raise TypeError",
+    "verdict_location": "src/agents/supervisor_graph.py:432",
+    "check_location": "src/agents/supervisor_graph.py:432",
+    "enforcement_location": "src/agents/supervisor_graph.py:433",
+    "failure_consequence": "raise TypeError before messages are selected and returned",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "partial",
+    "joern_slice_ids": [
+     "79990"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "src/agents/supervisor_graph.py",
+      "line": 431,
+      "line_end": 433,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "Structural type checks on the supervisor agent's result raise before the output is merged into parent graph state. Simple isinstance oracle intervening before consumption; Command results pass through unchecked."
+ },
+ {
+  "site_no": 2,
+  "call_id": "BjornMelin_docmind-ai-llm/src/agents/tools/memory.py::878::19",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "_invoke_extraction_llm (memory.py:859-894), called from memory extraction at :957.",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "structured_llm = llm.with_structured_output(MemoryExtractionResult) (:869); .invoke at :878 is a LangChain chat-model call.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "BjornMelin_docmind-ai-llm/src/agents/tools/memory.py::878::19",
+    "protected_output": "structured memory extraction result",
+    "checked_property": "is MemoryExtractionResult or dict validating against it (Pydantic)",
+    "oracle_type": "simple",
+    "evaluator": "isinstance(response, MemoryExtractionResult) / MemoryExtractionResult.model_validate(response) / else return None",
+    "verdict_location": "src/agents/tools/memory.py:882",
+    "check_location": "src/agents/tools/memory.py:879",
+    "enforcement_location": "src/agents/tools/memory.py:883",
+    "failure_consequence": "ValidationError (caught at :962 -> return []) or return None (-> caller returns []); extraction suppressed",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "80004"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "src/agents/tools/memory.py",
+      "line": 878,
+      "line_end": 878,
+      "role": "output"
+     },
+     {
+      "rel_path": "src/agents/tools/memory.py",
+      "line": 879,
+      "line_end": 883,
+      "role": "check"
+     },
+     {
+      "rel_path": "src/agents/tools/memory.py",
+      "line": 957,
+      "line_end": 964,
+      "role": "enforcement"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "Schema/type validation of the structured extraction output; invalid output raises or yields None and the caller drops the extraction (returns []) before memory candidates are built and stored."
+ },
+ {
+  "site_no": 26,
+  "call_id": "Kasma-Inc_Sagi/src/Sagi/workflows/planning_html/planning_html_orchestrator.py::207::17",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "PlanningHtmlOrchestrator._stream_from_model (:191-231).",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "autogen_core ChatCompletionClient.create_stream on model_client.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "Kasma-Inc_Sagi/src/Sagi/workflows/planning_html/planning_html_orchestrator.py::207::17",
+    "protected_output": "stream handle",
+    "checked_property": "stream is None",
+    "oracle_type": "simple",
+    "evaluator": "if stream is None: return ''",
+    "verdict_location": "src/Sagi/workflows/planning_html/planning_html_orchestrator.py:214",
+    "check_location": "src/Sagi/workflows/planning_html/planning_html_orchestrator.py:214",
+    "enforcement_location": "src/Sagi/workflows/planning_html/planning_html_orchestrator.py:215",
+    "failure_consequence": "return empty string",
+    "before_acceptance": "unresolved",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "other:null_check_on_stream_handle_not_output_acceptability",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "332887"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "src/Sagi/workflows/planning_html/planning_html_orchestrator.py",
+      "line": 214,
+      "line_end": 215,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "Kasma-Inc_Sagi/src/Sagi/workflows/planning_html/planning_html_orchestrator.py::207::17",
+    "protected_output": "final streamed content",
+    "checked_property": "final content is a str (e.g. not function calls)",
+    "oracle_type": "simple",
+    "evaluator": "assert isinstance(content, str)",
+    "verdict_location": "src/Sagi/workflows/planning_html/planning_html_orchestrator.py:230",
+    "check_location": "src/Sagi/workflows/planning_html/planning_html_orchestrator.py:230",
+    "enforcement_location": "src/Sagi/workflows/planning_html/planning_html_orchestrator.py:230",
+    "failure_consequence": "AssertionError before content is returned",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "partial",
+    "joern_slice_ids": [
+     "332887"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": true,
+    "evidence_lines": [
+     {
+      "rel_path": "src/Sagi/workflows/planning_html/planning_html_orchestrator.py",
+      "line": 228,
+      "line_end": 228,
+      "role": "output"
+     },
+     {
+      "rel_path": "src/Sagi/workflows/planning_html/planning_html_orchestrator.py",
+      "line": 230,
+      "line_end": 230,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "The None check is on the stream handle, not an acceptability check on output. The assert isinstance(content, str) rejects non-text final model results before return; simple, but disabled under python -O."
+ },
+ {
+  "site_no": 75,
+  "call_id": "baserow_baserow/enterprise/backend/src/baserow_enterprise/assistant/tools/database/tools.py::921::19",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "generate_formula assistant tool (tools.py:860-994).",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "pydantic_ai Agent formula_generation_agent (tools/database/agents.py, output_type=FormulaGenerationResult) .run_sync.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "baserow_baserow/enterprise/backend/src/baserow_enterprise/assistant/tools/database/tools.py::921::19",
+    "protected_output": "generated formula result",
+    "checked_property": "model-reported is_formula_valid flag is true",
+    "oracle_type": "simple",
+    "evaluator": "if not result.is_formula_valid: raise Exception",
+    "verdict_location": "enterprise/backend/src/baserow_enterprise/assistant/tools/database/tools.py:930",
+    "check_location": "enterprise/backend/src/baserow_enterprise/assistant/tools/database/tools.py:930",
+    "enforcement_location": "enterprise/backend/src/baserow_enterprise/assistant/tools/database/tools.py:931",
+    "failure_consequence": "raise before formula field is created/updated",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "partial",
+    "joern_slice_ids": [
+     "1003100"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "enterprise/backend/src/baserow_enterprise/assistant/tools/database/tools.py",
+      "line": 928,
+      "line_end": 928,
+      "role": "output"
+     },
+     {
+      "rel_path": "enterprise/backend/src/baserow_enterprise/assistant/tools/database/tools.py",
+      "line": 930,
+      "line_end": 931,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "baserow_baserow/enterprise/backend/src/baserow_enterprise/assistant/tools/database/tools.py::921::19",
+    "protected_output": "generated formula target table_id",
+    "checked_property": "table_id is one of the database's tables (membership)",
+    "oracle_type": "simple",
+    "evaluator": "next((t for t in database_tables if t.id == result.table_id), None) is None -> raise",
+    "verdict_location": "enterprise/backend/src/baserow_enterprise/assistant/tools/database/tools.py:933",
+    "check_location": "enterprise/backend/src/baserow_enterprise/assistant/tools/database/tools.py:934",
+    "enforcement_location": "enterprise/backend/src/baserow_enterprise/assistant/tools/database/tools.py:935",
+    "failure_consequence": "raise before field is saved",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "enterprise/backend/src/baserow_enterprise/assistant/tools/database/tools.py",
+      "line": 933,
+      "line_end": 938,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "Agent output is rejected if its validity flag is false or its table_id is not among the database's tables, before the formula is saved via Create/UpdateFieldActionType. The validity flag is self-reported by the model (informed by a formula-type validation tool); the table membership check is a deterministic domain constraint."
+ },
+ {
+  "site_no": 80,
+  "call_id": "crestalnetwork_intentkit/intentkit/core/summarization.py::394::25",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "_summarize_once in summarization middleware, called by _summarize (:328-346).",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "self.summary_model is a BaseChatModel (:148,153); .ainvoke generates a summary.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "crestalnetwork_intentkit/intentkit/core/summarization.py::394::25",
+    "protected_output": "summary text",
+    "checked_property": "non-empty text",
+    "oracle_type": "simple",
+    "evaluator": "if not text: raise ValueError",
+    "verdict_location": "intentkit/core/summarization.py:399",
+    "check_location": "intentkit/core/summarization.py:399",
+    "enforcement_location": "intentkit/core/summarization.py:400",
+    "failure_consequence": "ValueError caught in _summarize -> returns None -> full history kept (summary discarded)",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "partial",
+    "joern_slice_ids": [
+     "1308058"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "intentkit/core/summarization.py",
+      "line": 398,
+      "line_end": 398,
+      "role": "output"
+     },
+     {
+      "rel_path": "intentkit/core/summarization.py",
+      "line": 399,
+      "line_end": 400,
+      "role": "check"
+     },
+     {
+      "rel_path": "intentkit/core/summarization.py",
+      "line": 340,
+      "line_end": 346,
+      "role": "enforcement"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "Empty-summary presence check raises; the caller catches it and falls back to keeping the full history rather than using the summary."
+ },
+ {
+  "site_no": 81,
+  "call_id": "crestalnetwork_intentkit/intentkit/tools/aave_v3/utils.py::62::20",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "intentkit on-chain DeFi tool code (intentkit/tools/aave_v3/utils.py:47-81).",
+  "invocation": "false_positive_non_llm",
+  "invocation_evidence": "web3 contract.functions.allowance().call() is a blockchain RPC read, not an LLM call; '.call' matched the langchain_core pattern.",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "crestalnetwork_intentkit/intentkit/tools/aave_v3/utils.py::62::20",
+    "protected_output": "blockchain RPC result of allowance()",
+    "checked_property": "on-chain state predicate",
+    "oracle_type": "simple",
+    "evaluator": "if current >= amount: return",
+    "verdict_location": "intentkit/tools/aave_v3/utils.py:67",
+    "check_location": "intentkit/tools/aave_v3/utils.py:67",
+    "enforcement_location": "intentkit/tools/aave_v3/utils.py:68",
+    "failure_consequence": "return/continue/raise in tool workflow",
+    "before_acceptance": "unresolved",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "false_positive_invocation",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "1308255",
+     "1308256"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "intentkit/tools/aave_v3/utils.py",
+      "line": 62,
+      "line_end": 62,
+      "role": "output"
+     },
+     {
+      "rel_path": "intentkit/tools/aave_v3/utils.py",
+      "line": 67,
+      "line_end": 68,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "The matched call is a web3 contract read (allowance()), not an LLM invocation; the check validates on-chain state, so it cannot be an LLM output guardrail."
+ },
+ {
+  "site_no": 82,
+  "call_id": "crestalnetwork_intentkit/intentkit/tools/aerodrome/add_liquidity.py::134::33",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "intentkit on-chain DeFi tool code (intentkit/tools/aerodrome/add_liquidity.py:80-230).",
+  "invocation": "false_positive_non_llm",
+  "invocation_evidence": "web3 contract.functions.factory getPool().call() is a blockchain RPC read, not an LLM call; '.call' matched the langchain_core pattern.",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "crestalnetwork_intentkit/intentkit/tools/aerodrome/add_liquidity.py::134::33",
+    "protected_output": "blockchain RPC result of factory getPool()",
+    "checked_property": "on-chain state predicate",
+    "oracle_type": "simple",
+    "evaluator": "if pool_address == zero address: raise ToolException",
+    "verdict_location": "intentkit/tools/aerodrome/add_liquidity.py:137",
+    "check_location": "intentkit/tools/aerodrome/add_liquidity.py:137",
+    "enforcement_location": "intentkit/tools/aerodrome/add_liquidity.py:138",
+    "failure_consequence": "return/continue/raise in tool workflow",
+    "before_acceptance": "unresolved",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "false_positive_invocation",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "1308315"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "intentkit/tools/aerodrome/add_liquidity.py",
+      "line": 134,
+      "line_end": 134,
+      "role": "output"
+     },
+     {
+      "rel_path": "intentkit/tools/aerodrome/add_liquidity.py",
+      "line": 137,
+      "line_end": 138,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "The matched call is a web3 contract read (factory getPool()), not an LLM invocation; the check validates on-chain state, so it cannot be an LLM output guardrail."
+ },
+ {
+  "site_no": 83,
+  "call_id": "crestalnetwork_intentkit/intentkit/tools/aerodrome/add_liquidity.py::239::34",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "intentkit on-chain DeFi tool code (intentkit/tools/aerodrome/add_liquidity.py:232-246).",
+  "invocation": "false_positive_non_llm",
+  "invocation_evidence": "web3 contract.functions.voter gauges().call() is a blockchain RPC read, not an LLM call; '.call' matched the langchain_core pattern.",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "crestalnetwork_intentkit/intentkit/tools/aerodrome/add_liquidity.py::239::34",
+    "protected_output": "blockchain RPC result of voter gauges()",
+    "checked_property": "on-chain state predicate",
+    "oracle_type": "simple",
+    "evaluator": "if gauge_address == zero address: return None",
+    "verdict_location": "intentkit/tools/aerodrome/add_liquidity.py:242",
+    "check_location": "intentkit/tools/aerodrome/add_liquidity.py:242",
+    "enforcement_location": "intentkit/tools/aerodrome/add_liquidity.py:243",
+    "failure_consequence": "return/continue/raise in tool workflow",
+    "before_acceptance": "unresolved",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "false_positive_invocation",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "1308338"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "intentkit/tools/aerodrome/add_liquidity.py",
+      "line": 239,
+      "line_end": 239,
+      "role": "output"
+     },
+     {
+      "rel_path": "intentkit/tools/aerodrome/add_liquidity.py",
+      "line": 242,
+      "line_end": 243,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "The matched call is a web3 contract read (voter gauges()), not an LLM invocation; the check validates on-chain state, so it cannot be an LLM output guardrail."
+ },
+ {
+  "site_no": 84,
+  "call_id": "crestalnetwork_intentkit/intentkit/tools/aerodrome/get_positions.py::95::42",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "intentkit on-chain DeFi tool code (intentkit/tools/aerodrome/get_positions.py:48-126).",
+  "invocation": "false_positive_non_llm",
+  "invocation_evidence": "web3 contract.functions.gauge stakedContains().call() is a blockchain RPC read, not an LLM call; '.call' matched the langchain_core pattern.",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "crestalnetwork_intentkit/intentkit/tools/aerodrome/get_positions.py::95::42",
+    "protected_output": "blockchain RPC result of gauge stakedContains()",
+    "checked_property": "on-chain state predicate",
+    "oracle_type": "simple",
+    "evaluator": "if not is_staked: continue",
+    "verdict_location": "intentkit/tools/aerodrome/get_positions.py:98",
+    "check_location": "intentkit/tools/aerodrome/get_positions.py:98",
+    "enforcement_location": "intentkit/tools/aerodrome/get_positions.py:99",
+    "failure_consequence": "return/continue/raise in tool workflow",
+    "before_acceptance": "unresolved",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "false_positive_invocation",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "1308344",
+     "1308347",
+     "1308352",
+     "1308361"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "intentkit/tools/aerodrome/get_positions.py",
+      "line": 95,
+      "line_end": 95,
+      "role": "output"
+     },
+     {
+      "rel_path": "intentkit/tools/aerodrome/get_positions.py",
+      "line": 98,
+      "line_end": 99,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "The matched call is a web3 contract read (gauge stakedContains()), not an LLM invocation; the check validates on-chain state, so it cannot be an LLM output guardrail."
+ },
+ {
+  "site_no": 85,
+  "call_id": "crestalnetwork_intentkit/intentkit/tools/aerodrome/remove_liquidity.py::120::29",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "intentkit on-chain DeFi tool code (intentkit/tools/aerodrome/remove_liquidity.py:60-199).",
+  "invocation": "false_positive_non_llm",
+  "invocation_evidence": "web3 contract.functions.position manager positions().call() is a blockchain RPC read, not an LLM call; '.call' matched the langchain_core pattern.",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "crestalnetwork_intentkit/intentkit/tools/aerodrome/remove_liquidity.py::120::29",
+    "protected_output": "blockchain RPC result of position manager positions()",
+    "checked_property": "on-chain state predicate",
+    "oracle_type": "simple",
+    "evaluator": "if liquidity == 0: raise ToolException",
+    "verdict_location": "intentkit/tools/aerodrome/remove_liquidity.py:126",
+    "check_location": "intentkit/tools/aerodrome/remove_liquidity.py:126",
+    "enforcement_location": "intentkit/tools/aerodrome/remove_liquidity.py:127",
+    "failure_consequence": "return/continue/raise in tool workflow",
+    "before_acceptance": "unresolved",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "false_positive_invocation",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "intentkit/tools/aerodrome/remove_liquidity.py",
+      "line": 120,
+      "line_end": 120,
+      "role": "output"
+     },
+     {
+      "rel_path": "intentkit/tools/aerodrome/remove_liquidity.py",
+      "line": 126,
+      "line_end": 127,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "The matched call is a web3 contract read (position manager positions()), not an LLM invocation; the check validates on-chain state, so it cannot be an LLM output guardrail."
+ },
+ {
+  "site_no": 86,
+  "call_id": "crestalnetwork_intentkit/intentkit/tools/aerodrome/utils.py::81::20",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "intentkit on-chain DeFi tool code (intentkit/tools/aerodrome/utils.py:69-94).",
+  "invocation": "false_positive_non_llm",
+  "invocation_evidence": "web3 contract.functions.allowance().call() is a blockchain RPC read, not an LLM call; '.call' matched the langchain_core pattern.",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "crestalnetwork_intentkit/intentkit/tools/aerodrome/utils.py::81::20",
+    "protected_output": "blockchain RPC result of allowance()",
+    "checked_property": "on-chain state predicate",
+    "oracle_type": "simple",
+    "evaluator": "if current >= amount: return",
+    "verdict_location": "intentkit/tools/aerodrome/utils.py:86",
+    "check_location": "intentkit/tools/aerodrome/utils.py:86",
+    "enforcement_location": "intentkit/tools/aerodrome/utils.py:87",
+    "failure_consequence": "return/continue/raise in tool workflow",
+    "before_acceptance": "unresolved",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "false_positive_invocation",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "1308486",
+     "1308487"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "intentkit/tools/aerodrome/utils.py",
+      "line": 81,
+      "line_end": 81,
+      "role": "output"
+     },
+     {
+      "rel_path": "intentkit/tools/aerodrome/utils.py",
+      "line": 86,
+      "line_end": 87,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "The matched call is a web3 contract read (allowance()), not an LLM invocation; the check validates on-chain state, so it cannot be an LLM output guardrail."
+ },
+ {
+  "site_no": 87,
+  "call_id": "crestalnetwork_intentkit/intentkit/tools/image/grok.py::35::23",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "GrokImageBase._generate_native (grok.py:25-53), image generation tool.",
+  "invocation": "false_positive_non_llm",
+  "invocation_evidence": "client = openai.OpenAI(base_url='https://api.x.ai/v1'); client.images.generate is a raw OpenAI-SDK image-generation call, not a langchain_core invocation; raw SDKs are out of scope.",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "crestalnetwork_intentkit/intentkit/tools/image/grok.py::35::23",
+    "protected_output": "image API response",
+    "checked_property": "response.data non-empty; image URL present (:44-50)",
+    "oracle_type": "simple",
+    "evaluator": "if not response.data: raise ToolException",
+    "verdict_location": "intentkit/tools/image/grok.py:42",
+    "check_location": "intentkit/tools/image/grok.py:42",
+    "enforcement_location": "intentkit/tools/image/grok.py:43",
+    "failure_consequence": "raise ToolException",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "false_positive_invocation",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "1308556"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "intentkit/tools/image/grok.py",
+      "line": 35,
+      "line_end": 39,
+      "role": "output"
+     },
+     {
+      "rel_path": "intentkit/tools/image/grok.py",
+      "line": 42,
+      "line_end": 50,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "A presence check on the raw OpenAI-SDK image response intervenes before use, but the matched '.generate' is not a framework LLM invocation (raw SDK, out of scope), so it does not count."
+ },
+ {
+  "site_no": 88,
+  "call_id": "crestalnetwork_intentkit/intentkit/tools/opensea/onchain_base.py::78::28",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "intentkit on-chain DeFi tool code (intentkit/tools/opensea/onchain_base.py:63-97).",
+  "invocation": "false_positive_non_llm",
+  "invocation_evidence": "web3 contract.functions.isApprovedForAll().call() is a blockchain RPC read, not an LLM call; '.call' matched the langchain_core pattern.",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "crestalnetwork_intentkit/intentkit/tools/opensea/onchain_base.py::78::28",
+    "protected_output": "blockchain RPC result of isApprovedForAll()",
+    "checked_property": "on-chain state predicate",
+    "oracle_type": "simple",
+    "evaluator": "if is_approved: return None",
+    "verdict_location": "intentkit/tools/opensea/onchain_base.py:83",
+    "check_location": "intentkit/tools/opensea/onchain_base.py:83",
+    "enforcement_location": "intentkit/tools/opensea/onchain_base.py:84",
+    "failure_consequence": "return/continue/raise in tool workflow",
+    "before_acceptance": "unresolved",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "false_positive_invocation",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "1308830",
+     "1308831"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "intentkit/tools/opensea/onchain_base.py",
+      "line": 78,
+      "line_end": 78,
+      "role": "output"
+     },
+     {
+      "rel_path": "intentkit/tools/opensea/onchain_base.py",
+      "line": 83,
+      "line_end": 84,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "The matched call is a web3 contract read (isApprovedForAll()), not an LLM invocation; the check validates on-chain state, so it cannot be an LLM output guardrail."
+ },
+ {
+  "site_no": 89,
+  "call_id": "crestalnetwork_intentkit/intentkit/tools/pancakeswap/add_liquidity.py::133::33",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "intentkit on-chain DeFi tool code (intentkit/tools/pancakeswap/add_liquidity.py:76-244).",
+  "invocation": "false_positive_non_llm",
+  "invocation_evidence": "web3 contract.functions.factory getPool().call() is a blockchain RPC read, not an LLM call; '.call' matched the langchain_core pattern.",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "crestalnetwork_intentkit/intentkit/tools/pancakeswap/add_liquidity.py::133::33",
+    "protected_output": "blockchain RPC result of factory getPool()",
+    "checked_property": "on-chain state predicate",
+    "oracle_type": "simple",
+    "evaluator": "if pool_address == zero address: raise ToolException",
+    "verdict_location": "intentkit/tools/pancakeswap/add_liquidity.py:136",
+    "check_location": "intentkit/tools/pancakeswap/add_liquidity.py:136",
+    "enforcement_location": "intentkit/tools/pancakeswap/add_liquidity.py:137",
+    "failure_consequence": "return/continue/raise in tool workflow",
+    "before_acceptance": "unresolved",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "false_positive_invocation",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "1308891"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "intentkit/tools/pancakeswap/add_liquidity.py",
+      "line": 133,
+      "line_end": 133,
+      "role": "output"
+     },
+     {
+      "rel_path": "intentkit/tools/pancakeswap/add_liquidity.py",
+      "line": 136,
+      "line_end": 137,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "The matched call is a web3 contract read (factory getPool()), not an LLM invocation; the check validates on-chain state, so it cannot be an LLM output guardrail."
+ },
+ {
+  "site_no": 90,
+  "call_id": "crestalnetwork_intentkit/intentkit/tools/pancakeswap/get_positions.py::90::46",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "intentkit on-chain DeFi tool code (intentkit/tools/pancakeswap/get_positions.py:44-122).",
+  "invocation": "false_positive_non_llm",
+  "invocation_evidence": "web3 contract.functions.masterchef userPositionInfos().call() is a blockchain RPC read, not an LLM call; '.call' matched the langchain_core pattern.",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "crestalnetwork_intentkit/intentkit/tools/pancakeswap/get_positions.py::90::46",
+    "protected_output": "blockchain RPC result of masterchef userPositionInfos()",
+    "checked_property": "on-chain state predicate",
+    "oracle_type": "simple",
+    "evaluator": "if user_info[6] != wallet_address: continue",
+    "verdict_location": "intentkit/tools/pancakeswap/get_positions.py:94",
+    "check_location": "intentkit/tools/pancakeswap/get_positions.py:94",
+    "enforcement_location": "intentkit/tools/pancakeswap/get_positions.py:95",
+    "failure_consequence": "return/continue/raise in tool workflow",
+    "before_acceptance": "unresolved",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "false_positive_invocation",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "1308923",
+     "1308931",
+     "1308932"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "intentkit/tools/pancakeswap/get_positions.py",
+      "line": 90,
+      "line_end": 90,
+      "role": "output"
+     },
+     {
+      "rel_path": "intentkit/tools/pancakeswap/get_positions.py",
+      "line": 94,
+      "line_end": 95,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "The matched call is a web3 contract read (masterchef userPositionInfos()), not an LLM invocation; the check validates on-chain state, so it cannot be an LLM output guardrail."
+ },
+ {
+  "site_no": 91,
+  "call_id": "crestalnetwork_intentkit/intentkit/tools/pancakeswap/remove_liquidity.py::119::29",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "intentkit on-chain DeFi tool code (intentkit/tools/pancakeswap/remove_liquidity.py:59-199).",
+  "invocation": "false_positive_non_llm",
+  "invocation_evidence": "web3 contract.functions.position manager positions().call() is a blockchain RPC read, not an LLM call; '.call' matched the langchain_core pattern.",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "crestalnetwork_intentkit/intentkit/tools/pancakeswap/remove_liquidity.py::119::29",
+    "protected_output": "blockchain RPC result of position manager positions()",
+    "checked_property": "on-chain state predicate",
+    "oracle_type": "simple",
+    "evaluator": "if liquidity == 0: raise ToolException",
+    "verdict_location": "intentkit/tools/pancakeswap/remove_liquidity.py:125",
+    "check_location": "intentkit/tools/pancakeswap/remove_liquidity.py:125",
+    "enforcement_location": "intentkit/tools/pancakeswap/remove_liquidity.py:126",
+    "failure_consequence": "return/continue/raise in tool workflow",
+    "before_acceptance": "unresolved",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "false_positive_invocation",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "intentkit/tools/pancakeswap/remove_liquidity.py",
+      "line": 119,
+      "line_end": 119,
+      "role": "output"
+     },
+     {
+      "rel_path": "intentkit/tools/pancakeswap/remove_liquidity.py",
+      "line": 125,
+      "line_end": 126,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "The matched call is a web3 contract read (position manager positions()), not an LLM invocation; the check validates on-chain state, so it cannot be an LLM output guardrail."
+ },
+ {
+  "site_no": 92,
+  "call_id": "crestalnetwork_intentkit/intentkit/tools/pancakeswap/utils.py::76::20",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "intentkit on-chain DeFi tool code (intentkit/tools/pancakeswap/utils.py:64-89).",
+  "invocation": "false_positive_non_llm",
+  "invocation_evidence": "web3 contract.functions.allowance().call() is a blockchain RPC read, not an LLM call; '.call' matched the langchain_core pattern.",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "crestalnetwork_intentkit/intentkit/tools/pancakeswap/utils.py::76::20",
+    "protected_output": "blockchain RPC result of allowance()",
+    "checked_property": "on-chain state predicate",
+    "oracle_type": "simple",
+    "evaluator": "if current >= amount: return",
+    "verdict_location": "intentkit/tools/pancakeswap/utils.py:81",
+    "check_location": "intentkit/tools/pancakeswap/utils.py:81",
+    "enforcement_location": "intentkit/tools/pancakeswap/utils.py:82",
+    "failure_consequence": "return/continue/raise in tool workflow",
+    "before_acceptance": "unresolved",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "false_positive_invocation",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "1309068",
+     "1309069"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "intentkit/tools/pancakeswap/utils.py",
+      "line": 76,
+      "line_end": 76,
+      "role": "output"
+     },
+     {
+      "rel_path": "intentkit/tools/pancakeswap/utils.py",
+      "line": 81,
+      "line_end": 82,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "The matched call is a web3 contract read (allowance()), not an LLM invocation; the check validates on-chain state, so it cannot be an LLM output guardrail."
+ },
+ {
+  "site_no": 93,
+  "call_id": "crestalnetwork_intentkit/intentkit/tools/uniswap/add_liquidity.py::135::33",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "intentkit on-chain DeFi tool code (intentkit/tools/uniswap/add_liquidity.py:74-237).",
+  "invocation": "false_positive_non_llm",
+  "invocation_evidence": "web3 contract.functions.factory getPool().call() is a blockchain RPC read, not an LLM call; '.call' matched the langchain_core pattern.",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "crestalnetwork_intentkit/intentkit/tools/uniswap/add_liquidity.py::135::33",
+    "protected_output": "blockchain RPC result of factory getPool()",
+    "checked_property": "on-chain state predicate",
+    "oracle_type": "simple",
+    "evaluator": "if pool_address == zero address: raise ToolException",
+    "verdict_location": "intentkit/tools/uniswap/add_liquidity.py:138",
+    "check_location": "intentkit/tools/uniswap/add_liquidity.py:138",
+    "enforcement_location": "intentkit/tools/uniswap/add_liquidity.py:139",
+    "failure_consequence": "return/continue/raise in tool workflow",
+    "before_acceptance": "unresolved",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "false_positive_invocation",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "1309108"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "intentkit/tools/uniswap/add_liquidity.py",
+      "line": 135,
+      "line_end": 135,
+      "role": "output"
+     },
+     {
+      "rel_path": "intentkit/tools/uniswap/add_liquidity.py",
+      "line": 138,
+      "line_end": 139,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "The matched call is a web3 contract read (factory getPool()), not an LLM invocation; the check validates on-chain state, so it cannot be an LLM output guardrail."
+ },
+ {
+  "site_no": 94,
+  "call_id": "crestalnetwork_intentkit/intentkit/tools/uniswap/remove_liquidity.py::74::29",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "intentkit on-chain DeFi tool code (intentkit/tools/uniswap/remove_liquidity.py:49-151).",
+  "invocation": "false_positive_non_llm",
+  "invocation_evidence": "web3 contract.functions.position manager positions().call() is a blockchain RPC read, not an LLM call; '.call' matched the langchain_core pattern.",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "crestalnetwork_intentkit/intentkit/tools/uniswap/remove_liquidity.py::74::29",
+    "protected_output": "blockchain RPC result of position manager positions()",
+    "checked_property": "on-chain state predicate",
+    "oracle_type": "simple",
+    "evaluator": "if liquidity == 0: raise ToolException",
+    "verdict_location": "intentkit/tools/uniswap/remove_liquidity.py:80",
+    "check_location": "intentkit/tools/uniswap/remove_liquidity.py:80",
+    "enforcement_location": "intentkit/tools/uniswap/remove_liquidity.py:81",
+    "failure_consequence": "return/continue/raise in tool workflow",
+    "before_acceptance": "unresolved",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "false_positive_invocation",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "intentkit/tools/uniswap/remove_liquidity.py",
+      "line": 74,
+      "line_end": 74,
+      "role": "output"
+     },
+     {
+      "rel_path": "intentkit/tools/uniswap/remove_liquidity.py",
+      "line": 80,
+      "line_end": 81,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "The matched call is a web3 contract read (position manager positions()), not an LLM invocation; the check validates on-chain state, so it cannot be an LLM output guardrail."
+ },
+ {
+  "site_no": 95,
+  "call_id": "crestalnetwork_intentkit/intentkit/tools/uniswap/utils.py::77::20",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "intentkit on-chain DeFi tool code (intentkit/tools/uniswap/utils.py:65-90).",
+  "invocation": "false_positive_non_llm",
+  "invocation_evidence": "web3 contract.functions.allowance().call() is a blockchain RPC read, not an LLM call; '.call' matched the langchain_core pattern.",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "crestalnetwork_intentkit/intentkit/tools/uniswap/utils.py::77::20",
+    "protected_output": "blockchain RPC result of allowance()",
+    "checked_property": "on-chain state predicate",
+    "oracle_type": "simple",
+    "evaluator": "if current >= amount: return",
+    "verdict_location": "intentkit/tools/uniswap/utils.py:82",
+    "check_location": "intentkit/tools/uniswap/utils.py:82",
+    "enforcement_location": "intentkit/tools/uniswap/utils.py:83",
+    "failure_consequence": "return/continue/raise in tool workflow",
+    "before_acceptance": "unresolved",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "false_positive_invocation",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "1309274",
+     "1309275"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "intentkit/tools/uniswap/utils.py",
+      "line": 77,
+      "line_end": 77,
+      "role": "output"
+     },
+     {
+      "rel_path": "intentkit/tools/uniswap/utils.py",
+      "line": 82,
+      "line_end": 83,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "The matched call is a web3 contract read (allowance()), not an LLM invocation; the check validates on-chain state, so it cannot be an LLM output guardrail."
+ },
+ {
+  "site_no": 96,
+  "call_id": "crestalnetwork_intentkit/intentkit/tools/xmtp/transfer.py::100::37",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "intentkit on-chain DeFi tool code (intentkit/tools/xmtp/transfer.py:44-212).",
+  "invocation": "false_positive_non_llm",
+  "invocation_evidence": "web3 contract.functions.ERC20 symbol().call() is a blockchain RPC read, not an LLM call; '.call' matched the langchain_core pattern.",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "crestalnetwork_intentkit/intentkit/tools/xmtp/transfer.py::100::37",
+    "protected_output": "blockchain RPC result of ERC20 symbol()",
+    "checked_property": "on-chain state predicate",
+    "oracle_type": "simple",
+    "evaluator": "if token_symbol.upper() != currency.upper(): raise ToolException",
+    "verdict_location": "intentkit/tools/xmtp/transfer.py:104",
+    "check_location": "intentkit/tools/xmtp/transfer.py:104",
+    "enforcement_location": "intentkit/tools/xmtp/transfer.py:105",
+    "failure_consequence": "return/continue/raise in tool workflow",
+    "before_acceptance": "unresolved",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "false_positive_invocation",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "1309337"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "intentkit/tools/xmtp/transfer.py",
+      "line": 100,
+      "line_end": 100,
+      "role": "output"
+     },
+     {
+      "rel_path": "intentkit/tools/xmtp/transfer.py",
+      "line": 104,
+      "line_end": 105,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "The matched call is a web3 contract read (ERC20 symbol()), not an LLM invocation; the check validates on-chain state, so it cannot be an LLM output guardrail."
+ },
+ {
+  "site_no": 131,
+  "call_id": "mindroom-ai_mindroom/src/mindroom/routing.py::109::25",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "suggest_responder routing function (routing.py:36-133).",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "agno Agent(model=..., output_schema=_RoutingSuggestion) at :101; .arun at :109.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "mindroom-ai_mindroom/src/mindroom/routing.py::109::25",
+    "protected_output": "routing suggestion",
+    "checked_property": "conforms to _RoutingSuggestion schema",
+    "oracle_type": "simple",
+    "evaluator": "_RoutingSuggestion.model_validate(response.content) except ValidationError",
+    "verdict_location": "src/mindroom/routing.py:111",
+    "check_location": "src/mindroom/routing.py:111",
+    "enforcement_location": "src/mindroom/routing.py:118",
+    "failure_consequence": "warning + return None (no routing suggestion used)",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "2140921"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "src/mindroom/routing.py",
+      "line": 109,
+      "line_end": 109,
+      "role": "output"
+     },
+     {
+      "rel_path": "src/mindroom/routing.py",
+      "line": 110,
+      "line_end": 118,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "mindroom-ai_mindroom/src/mindroom/routing.py::109::25",
+    "protected_output": "suggested entity_name",
+    "checked_property": "membership in available_entity_names",
+    "oracle_type": "simple",
+    "evaluator": "if suggestion.entity_name not in available_entity_names",
+    "verdict_location": "src/mindroom/routing.py:120",
+    "check_location": "src/mindroom/routing.py:120",
+    "enforcement_location": "src/mindroom/routing.py:126",
+    "failure_consequence": "warning + return None (invalid routing target suppressed)",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "src/mindroom/routing.py",
+      "line": 120,
+      "line_end": 126,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "Router agent output is schema-validated and its suggested entity must be in the allowed set; otherwise the suggestion is suppressed (return None) before routing uses it."
+ },
+ {
+  "site_no": 132,
+  "call_id": "neul-labs_fast-langgraph/scripts/benchmark_rust_channels.py::134::17",
+  "actual_context": "production",
+  "context_flags": [
+   "benchmark_or_eval_harness"
+  ],
+  "context_evidence": "scripts/benchmark_rust_channels.py benchmark loop (:83-146).",
+  "invocation": "false_positive_non_llm",
+  "invocation_evidence": "Compiled StateGraph whose nodes are pure arithmetic functions (increment/double/decrement); no LLM.",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "neul-labs_fast-langgraph/scripts/benchmark_rust_channels.py::134::17",
+    "protected_output": "graph state result",
+    "checked_property": "value/count equal expected arithmetic",
+    "oracle_type": "simple",
+    "evaluator": "assert result[...] == expected",
+    "verdict_location": "scripts/benchmark_rust_channels.py:137",
+    "check_location": "scripts/benchmark_rust_channels.py:137",
+    "enforcement_location": "scripts/benchmark_rust_channels.py:138",
+    "failure_consequence": "AssertionError in benchmark",
+    "before_acceptance": "unresolved",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "false_positive_invocation",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "2247141"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": true,
+    "evidence_lines": [
+     {
+      "rel_path": "scripts/benchmark_rust_channels.py",
+      "line": 134,
+      "line_end": 134,
+      "role": "output"
+     },
+     {
+      "rel_path": "scripts/benchmark_rust_channels.py",
+      "line": 137,
+      "line_end": 138,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "Benchmark of a non-LLM LangGraph graph; the asserts check deterministic arithmetic, not LLM output."
+ },
+ {
+  "site_no": 133,
+  "call_id": "neul-labs_fast-langgraph/scripts/benchmark_rust_channels.py::68::17",
+  "actual_context": "production",
+  "context_flags": [
+   "benchmark_or_eval_harness"
+  ],
+  "context_evidence": "scripts/benchmark_rust_channels.py benchmark loop (:28-80).",
+  "invocation": "false_positive_non_llm",
+  "invocation_evidence": "Compiled StateGraph whose nodes are pure arithmetic functions (increment/double/decrement); no LLM.",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "neul-labs_fast-langgraph/scripts/benchmark_rust_channels.py::68::17",
+    "protected_output": "graph state result",
+    "checked_property": "value/count equal expected arithmetic",
+    "oracle_type": "simple",
+    "evaluator": "assert result[...] == expected",
+    "verdict_location": "scripts/benchmark_rust_channels.py:71",
+    "check_location": "scripts/benchmark_rust_channels.py:71",
+    "enforcement_location": "scripts/benchmark_rust_channels.py:72",
+    "failure_consequence": "AssertionError in benchmark",
+    "before_acceptance": "unresolved",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "false_positive_invocation",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "2247133"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": true,
+    "evidence_lines": [
+     {
+      "rel_path": "scripts/benchmark_rust_channels.py",
+      "line": 68,
+      "line_end": 68,
+      "role": "output"
+     },
+     {
+      "rel_path": "scripts/benchmark_rust_channels.py",
+      "line": 71,
+      "line_end": 72,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "Benchmark of a non-LLM LangGraph graph; the asserts check deterministic arithmetic, not LLM output."
+ },
+ {
+  "site_no": 196,
+  "call_id": "timbal-ai_timbal/benchmarks/langchain/bench_long_conversation.py::440::19",
+  "actual_context": "production",
+  "context_flags": [
+   "benchmark_or_eval_harness"
+  ],
+  "context_evidence": "benchmarks/langchain/bench_long_conversation.py _verify (:429-454).",
+  "invocation": "false_positive_non_llm",
+  "invocation_evidence": "lg_graph from _make_lc_graph uses _FakeLLM(FakeMessagesListChatModel) (:135-157) returning canned text; no real LLM.",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "timbal-ai_timbal/benchmarks/langchain/bench_long_conversation.py::440::19",
+    "protected_output": "fake-LLM graph last message",
+    "checked_property": "contains '10 msgs seen'",
+    "oracle_type": "simple",
+    "evaluator": "assert \"10 msgs seen\" in lg_text",
+    "verdict_location": "benchmarks/langchain/bench_long_conversation.py:444",
+    "check_location": "benchmarks/langchain/bench_long_conversation.py:444",
+    "enforcement_location": "benchmarks/langchain/bench_long_conversation.py:444",
+    "failure_consequence": "AssertionError in benchmark verification",
+    "before_acceptance": "unresolved",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "false_positive_invocation",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": true,
+    "evidence_lines": [
+     {
+      "rel_path": "benchmarks/langchain/bench_long_conversation.py",
+      "line": 440,
+      "line_end": 441,
+      "role": "output"
+     },
+     {
+      "rel_path": "benchmarks/langchain/bench_long_conversation.py",
+      "line": 444,
+      "line_end": 444,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "Benchmark verification against a fake chat model; the assert checks history accumulation, not real LLM output."
+ },
+ {
+  "site_no": 204,
+  "call_id": "zyhuang-gif_agent_project/backend/app/utils/factory.py::46::19",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "DashScopeEmbeddingsWrapper.embed_documents (factory.py:40-55).",
+  "invocation": "false_positive_non_llm",
+  "invocation_evidence": "dashscope.TextEmbedding.call is an embedding API via the dashscope SDK, not an LLM generation through langchain_ollama.",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "zyhuang-gif_agent_project/backend/app/utils/factory.py::46::19",
+    "protected_output": "embedding API response",
+    "checked_property": "status_code == 200",
+    "oracle_type": "simple",
+    "evaluator": "resp.status_code check -> raise RuntimeError",
+    "verdict_location": "backend/app/utils/factory.py:50",
+    "check_location": "backend/app/utils/factory.py:50",
+    "enforcement_location": "backend/app/utils/factory.py:54",
+    "failure_consequence": "raise RuntimeError",
+    "before_acceptance": "unresolved",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "false_positive_invocation",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "2954990"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "backend/app/utils/factory.py",
+      "line": 46,
+      "line_end": 46,
+      "role": "output"
+     },
+     {
+      "rel_path": "backend/app/utils/factory.py",
+      "line": 50,
+      "line_end": 54,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "Embedding API status check, not an LLM output guardrail; the invocation is out of scope."
+ },
+ {
+  "site_no": 205,
+  "call_id": "zyhuang-gif_agent_project/backend/app/utils/factory.py::59::15",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "DashScopeEmbeddingsWrapper.embed_query (factory.py:57-69).",
+  "invocation": "false_positive_non_llm",
+  "invocation_evidence": "dashscope.TextEmbedding.call is an embedding API via the dashscope SDK, not an LLM generation through langchain_ollama.",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "zyhuang-gif_agent_project/backend/app/utils/factory.py::59::15",
+    "protected_output": "embedding API response",
+    "checked_property": "status_code == 200; non-empty embeddings (:67-68)",
+    "oracle_type": "simple",
+    "evaluator": "resp.status_code check -> raise RuntimeError",
+    "verdict_location": "backend/app/utils/factory.py:63",
+    "check_location": "backend/app/utils/factory.py:63",
+    "enforcement_location": "backend/app/utils/factory.py:64",
+    "failure_consequence": "raise RuntimeError",
+    "before_acceptance": "unresolved",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "false_positive_invocation",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "2954994"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "backend/app/utils/factory.py",
+      "line": 59,
+      "line_end": 59,
+      "role": "output"
+     },
+     {
+      "rel_path": "backend/app/utils/factory.py",
+      "line": 63,
+      "line_end": 64,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "Embedding API status check, not an LLM output guardrail; the invocation is out of scope."
+ }
+]

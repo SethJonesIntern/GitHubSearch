@@ -1,0 +1,1976 @@
+[
+ {
+  "site_no": 4,
+  "call_id": "Certora_AIComposer/composer/prover/analysis.py::35::16",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "analyze_cex_raw in composer/prover (lines 9-38), no test markers",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "llm is a langchain Runnable[LanguageModelInput, BaseMessage] chat model; ainvoke on counterexample analysis messages (line 35)",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "Certora_AIComposer/composer/prover/analysis.py::35::16",
+    "protected_output": "AIMessage returned by the CEX-analysis LLM call",
+    "checked_property": "result is an AIMessage (type)",
+    "oracle_type": "simple",
+    "evaluator": "if not isinstance(res, AIMessage): return None",
+    "verdict_location": "composer/prover/analysis.py:36",
+    "check_location": "composer/prover/analysis.py:36",
+    "enforcement_location": "composer/prover/analysis.py:37",
+    "failure_consequence": "suppress: returns None instead of the analysis text",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "81766"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "composer/prover/analysis.py",
+      "line": 35,
+      "line_end": 35,
+      "role": "output"
+     },
+     {
+      "rel_path": "composer/prover/analysis.py",
+      "line": 36,
+      "line_end": 36,
+      "role": "check"
+     },
+     {
+      "rel_path": "composer/prover/analysis.py",
+      "line": 37,
+      "line_end": 37,
+      "role": "enforcement"
+     },
+     {
+      "rel_path": "composer/prover/analysis.py",
+      "line": 38,
+      "line_end": 38,
+      "role": "support"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "A rule-based type check on the model response gates whether res.text is returned; a non-AIMessage response is suppressed (None) before being returned. Simple oracle, weak but intervening; Joern slice 81766 holds both lines."
+ },
+ {
+  "site_no": 5,
+  "call_id": "Certora_AIComposer/composer/spec/refinement.py::97::20",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "llm_echo node inside refinement_loop (lines 72-105), production module",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "bound_llm = llm.bind_tools(tools) on a BaseChatModel (line 88); ainvoke on conversation messages (line 97) as a LangGraph node",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "Certora_AIComposer/composer/spec/refinement.py::97::20",
+    "protected_output": "AIMessage from tool-bound chat model before it is appended to graph state",
+    "checked_property": "response is an AIMessage (type)",
+    "oracle_type": "simple",
+    "evaluator": "assert isinstance(res, AIMessage)",
+    "verdict_location": "composer/spec/refinement.py:98",
+    "check_location": "composer/spec/refinement.py:98",
+    "enforcement_location": "composer/spec/refinement.py:98",
+    "failure_consequence": "AssertionError raised inside the graph node; message is not returned to state",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "82043"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": true,
+    "evidence_lines": [
+     {
+      "rel_path": "composer/spec/refinement.py",
+      "line": 97,
+      "line_end": 97,
+      "role": "output"
+     },
+     {
+      "rel_path": "composer/spec/refinement.py",
+      "line": 98,
+      "line_end": 98,
+      "role": "check"
+     },
+     {
+      "rel_path": "composer/spec/refinement.py",
+      "line": 103,
+      "line_end": 105,
+      "role": "support"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "Assert-based type check on the LLM response, which aborts the node before the message enters graph state. Simple oracle, disabled under -O."
+ },
+ {
+  "site_no": 6,
+  "call_id": "Certora_AIComposer/composer/spec/source/report/grouping.py::92::19",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "call_grouping_llm (77-94), called from run_autoprove_report in build.py:44",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "llm.with_structured_output(GroupingResult) on BaseChatModel, ainvoke at line 92",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "Certora_AIComposer/composer/spec/source/report/grouping.py::92::19",
+    "protected_output": "GroupingResult structured output",
+    "checked_property": "result is a GroupingResult (type)",
+    "oracle_type": "simple",
+    "evaluator": "assert isinstance(result, GroupingResult)",
+    "verdict_location": "composer/spec/source/report/grouping.py:93",
+    "check_location": "composer/spec/source/report/grouping.py:93",
+    "enforcement_location": "composer/spec/source/report/build.py:55",
+    "failure_consequence": "AssertionError caught by caller's except Exception -> fallback 'general' grouping replaces LLM grouping",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "82308"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": true,
+    "evidence_lines": [
+     {
+      "rel_path": "composer/spec/source/report/grouping.py",
+      "line": 92,
+      "line_end": 92,
+      "role": "output"
+     },
+     {
+      "rel_path": "composer/spec/source/report/grouping.py",
+      "line": 93,
+      "line_end": 93,
+      "role": "check"
+     },
+     {
+      "rel_path": "composer/spec/source/report/build.py",
+      "line": 43,
+      "line_end": 68,
+      "role": "enforcement"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "Certora_AIComposer/composer/spec/source/report/grouping.py::92::19",
+    "protected_output": "LLM property grouping",
+    "checked_property": "every property in at most one group; no group references nonexistent property (partition constraint)",
+    "oracle_type": "simple",
+    "evaluator": "coverage.validate raises ValidationError on duplicate or unknown property keys",
+    "verdict_location": "composer/spec/source/report/coverage.py:44",
+    "check_location": "composer/spec/source/report/coverage.py:44",
+    "enforcement_location": "composer/spec/source/report/build.py:55",
+    "failure_consequence": "ValidationError -> fallback grouping replaces LLM grouping; report marked FALLBACK GROUPING APPLIED",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "composer/spec/source/report/build.py",
+      "line": 48,
+      "line_end": 51,
+      "role": "check"
+     },
+     {
+      "rel_path": "composer/spec/source/report/coverage.py",
+      "line": 44,
+      "line_end": 50,
+      "role": "verdict"
+     },
+     {
+      "rel_path": "composer/spec/source/report/build.py",
+      "line": 55,
+      "line_end": 68,
+      "role": "enforcement"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "Certora_AIComposer/composer/spec/source/report/grouping.py::92::19",
+    "protected_output": "LLM property grouping",
+    "checked_property": "grouping covers at least one property (non-empty)",
+    "oracle_type": "simple",
+    "evaluator": "if properties and not grouped: raise ValidationError",
+    "verdict_location": "composer/spec/source/report/build.py:53",
+    "check_location": "composer/spec/source/report/build.py:53",
+    "enforcement_location": "composer/spec/source/report/build.py:54",
+    "failure_consequence": "raise -> fallback grouping replaces LLM grouping",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "composer/spec/source/report/build.py",
+      "line": 52,
+      "line_end": 54,
+      "role": "check"
+     },
+     {
+      "rel_path": "composer/spec/source/report/build.py",
+      "line": 55,
+      "line_end": 68,
+      "role": "enforcement"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "Three rule-based checks (type assert, partition validation, non-empty coverage) all route into the caller's fallback that replaces the LLM grouping before the report is built. Deterministic domain constraints, simple oracle."
+ },
+ {
+  "site_no": 7,
+  "call_id": "Certora_AIComposer/composer/workflow/meta.py::31::16",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "create_resume_commentary (21-33) called from workflow executor.py:414",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "llm.with_structured_output(ResumeCommentary) on BaseChatModel, ainvoke line 31",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "Certora_AIComposer/composer/workflow/meta.py::31::16",
+    "protected_output": "ResumeCommentary structured output",
+    "checked_property": "result is a ResumeCommentary (type)",
+    "oracle_type": "simple",
+    "evaluator": "assert isinstance(res, ResumeCommentary)",
+    "verdict_location": "composer/workflow/meta.py:32",
+    "check_location": "composer/workflow/meta.py:32",
+    "enforcement_location": "composer/workflow/executor.py:421",
+    "failure_consequence": "AssertionError propagates; executor's except shows error and skips audit_db.register_complete/success path",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "82444"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": true,
+    "evidence_lines": [
+     {
+      "rel_path": "composer/workflow/meta.py",
+      "line": 31,
+      "line_end": 31,
+      "role": "output"
+     },
+     {
+      "rel_path": "composer/workflow/meta.py",
+      "line": 32,
+      "line_end": 32,
+      "role": "check"
+     },
+     {
+      "rel_path": "composer/workflow/executor.py",
+      "line": 414,
+      "line_end": 420,
+      "role": "support"
+     },
+     {
+      "rel_path": "composer/workflow/executor.py",
+      "line": 421,
+      "line_end": 422,
+      "role": "enforcement"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "Assert type check on the structured output precedes its storage via register_complete; failure raises and the workflow goes to the error path. Simple, -O sensitive."
+ },
+ {
+  "site_no": 9,
+  "call_id": "FusionBrainLab_gigaevo-core/gigaevo/llm/agents/lineage.py::342::32",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "LineageAgent.arun (307-347), production agent module",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "self.graph is a compiled LangGraph (base.py:162-182) build_prompt -> call_llm (llm.ainvoke, base.py:105) -> parse_response; ainvoke runs the LLM",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "FusionBrainLab_gigaevo-core/gigaevo/llm/agents/lineage.py::342::32",
+    "protected_output": "TransitionAnalysis from the lineage graph run",
+    "checked_property": "full_analysis is a TransitionAnalysis (type)",
+    "oracle_type": "simple",
+    "evaluator": "assert isinstance(analysis, TransitionAnalysis)",
+    "verdict_location": "gigaevo/llm/agents/lineage.py:344",
+    "check_location": "gigaevo/llm/agents/lineage.py:344",
+    "enforcement_location": "gigaevo/llm/agents/lineage.py:344",
+    "failure_consequence": "AssertionError before analysis is appended to returned list",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": true,
+    "evidence_lines": [
+     {
+      "rel_path": "gigaevo/llm/agents/lineage.py",
+      "line": 342,
+      "line_end": 342,
+      "role": "output"
+     },
+     {
+      "rel_path": "gigaevo/llm/agents/lineage.py",
+      "line": 343,
+      "line_end": 343,
+      "role": "support"
+     },
+     {
+      "rel_path": "gigaevo/llm/agents/lineage.py",
+      "line": 344,
+      "line_end": 344,
+      "role": "check"
+     },
+     {
+      "rel_path": "gigaevo/llm/agents/lineage.py",
+      "line": 345,
+      "line_end": 345,
+      "role": "support"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "FusionBrainLab_gigaevo-core/gigaevo/llm/agents/base.py::105::33",
+    "protected_output": "llm_response from the inner chat model call",
+    "checked_property": "response is TransitionInsights (type)",
+    "oracle_type": "simple",
+    "evaluator": "if not isinstance(llm_response, TransitionInsights): raise ValueError",
+    "verdict_location": "gigaevo/llm/agents/lineage.py:286",
+    "check_location": "gigaevo/llm/agents/lineage.py:286",
+    "enforcement_location": "gigaevo/llm/agents/lineage.py:287",
+    "failure_consequence": "raise ValueError inside graph; analysis not built",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "gigaevo/llm/agents/base.py",
+      "line": 105,
+      "line_end": 105,
+      "role": "output"
+     },
+     {
+      "rel_path": "gigaevo/llm/agents/lineage.py",
+      "line": 286,
+      "line_end": 287,
+      "role": "check"
+     },
+     {
+      "rel_path": "gigaevo/llm/agents/lineage.py",
+      "line": 294,
+      "line_end": 303,
+      "role": "support"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "The graph output is type-checked by assert before it is accepted into analyses (weak, effectively redundant since parse_response already enforces TransitionInsights and builds the object via model_validate). The parse_response type check protects the inner llm.ainvoke at base.py:105. No joint Joern slice for line 344."
+ },
+ {
+  "site_no": 30,
+  "call_id": "PostHog_posthog/ee/hogai/chat_agent/query_planner/nodes.py::105::25",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "QueryPlannerNode.run (95-139) in ee/hogai production assistant",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "chain = prompt | merge_message_runs() | MaxChatOpenAI tool-bound model (lines 99, 141-145); invoke line 105",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "PostHog_posthog/ee/hogai/chat_agent/query_planner/nodes.py::105::25",
+    "protected_output": "AIMessage with planned tool call",
+    "checked_property": "tool_calls non-empty (presence)",
+    "oracle_type": "simple",
+    "evaluator": "if not output_message.tool_calls: raise ValueError",
+    "verdict_location": "ee/hogai/chat_agent/query_planner/nodes.py:129",
+    "check_location": "ee/hogai/chat_agent/query_planner/nodes.py:129",
+    "enforcement_location": "ee/hogai/chat_agent/query_planner/nodes.py:130",
+    "failure_consequence": "raise ValueError before AgentAction is built and stored in state",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "ee/hogai/chat_agent/query_planner/nodes.py",
+      "line": 105,
+      "line_end": 105,
+      "role": "output"
+     },
+     {
+      "rel_path": "ee/hogai/chat_agent/query_planner/nodes.py",
+      "line": 129,
+      "line_end": 130,
+      "role": "check"
+     },
+     {
+      "rel_path": "ee/hogai/chat_agent/query_planner/nodes.py",
+      "line": 132,
+      "line_end": 139,
+      "role": "support"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "Presence check on tool calls rejects a response without an action before it is turned into an AgentAction and stored. Simple oracle; no saved Joern slice."
+ },
+ {
+  "site_no": 31,
+  "call_id": "PostHog_posthog/ee/hogai/chat_agent/rag/nodes.py::90::22",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "InsightRagContextNode.run (64-95)",
+  "invocation": "false_positive_non_llm",
+  "invocation_evidence": "chain is RunnableLambda(_get_embedding) | RunnableLambda(_search_actions) | RunnableLambda(_retrieve_actions): embedding + vector search + DB retrieval, no LLM generation (lines 84-90, 97-140)",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "PostHog_posthog/ee/hogai/chat_agent/rag/nodes.py::90::22",
+    "protected_output": "RAG context from embedding/vector search",
+    "checked_property": "rag_context truthy",
+    "oracle_type": "simple",
+    "evaluator": "if not rag_context: return None",
+    "verdict_location": "ee/hogai/chat_agent/rag/nodes.py:92",
+    "check_location": "ee/hogai/chat_agent/rag/nodes.py:92",
+    "enforcement_location": "ee/hogai/chat_agent/rag/nodes.py:93",
+    "failure_consequence": "returns None",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "false_positive_invocation",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "ee/hogai/chat_agent/rag/nodes.py",
+      "line": 84,
+      "line_end": 90,
+      "role": "support"
+     },
+     {
+      "rel_path": "ee/hogai/chat_agent/rag/nodes.py",
+      "line": 92,
+      "line_end": 93,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "The matched .invoke runs a chain of RunnableLambdas doing embedding, vector search and DB lookups, not an LLM generation. The empty check is a retrieval-result branch."
+ },
+ {
+  "site_no": 32,
+  "call_id": "PostHog_posthog/ee/hogai/chat_agent/taxonomy/nodes.py::129::25",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "TaxonomyAgentNode.run (117-159)",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "chain = conversation | merge_message_runs() | self._get_model(state) chat model; invoke line 129",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "PostHog_posthog/ee/hogai/chat_agent/taxonomy/nodes.py::129::25",
+    "protected_output": "AIMessage with taxonomy tool calls",
+    "checked_property": "tool_calls non-empty (presence)",
+    "oracle_type": "simple",
+    "evaluator": "if not output_message.tool_calls: raise ValueError",
+    "verdict_location": "ee/hogai/chat_agent/taxonomy/nodes.py:137",
+    "check_location": "ee/hogai/chat_agent/taxonomy/nodes.py:137",
+    "enforcement_location": "ee/hogai/chat_agent/taxonomy/nodes.py:138",
+    "failure_consequence": "raise ValueError before tool calls become intermediate steps",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "ee/hogai/chat_agent/taxonomy/nodes.py",
+      "line": 129,
+      "line_end": 129,
+      "role": "output"
+     },
+     {
+      "rel_path": "ee/hogai/chat_agent/taxonomy/nodes.py",
+      "line": 137,
+      "line_end": 138,
+      "role": "check"
+     },
+     {
+      "rel_path": "ee/hogai/chat_agent/taxonomy/nodes.py",
+      "line": 140,
+      "line_end": 159,
+      "role": "support"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "Presence check rejects a response lacking tool calls before they are converted to AgentActions and stored. Simple oracle; no saved Joern slice."
+ },
+ {
+  "site_no": 33,
+  "call_id": "PostHog_posthog/ee/hogai/utils/helpers.py::211::15",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "_process_events_data helper (201-271)",
+  "invocation": "false_positive_non_llm",
+  "invocation_evidence": "TeamTaxonomyQueryRunner(query, team).run(ExecutionMode...) is a HogQL/ClickHouse query runner, not an LLM",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "PostHog_posthog/ee/hogai/utils/helpers.py::211::15",
+    "protected_output": "TeamTaxonomyQuery result",
+    "checked_property": "response is CachedTeamTaxonomyQueryResponse (type)",
+    "oracle_type": "simple",
+    "evaluator": "if not isinstance(response, CachedTeamTaxonomyQueryResponse): raise ValueError",
+    "verdict_location": "ee/hogai/utils/helpers.py:217",
+    "check_location": "ee/hogai/utils/helpers.py:217",
+    "enforcement_location": "ee/hogai/utils/helpers.py:218",
+    "failure_consequence": "raise ValueError",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "false_positive_invocation",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "ee/hogai/utils/helpers.py",
+      "line": 211,
+      "line_end": 215,
+      "role": "output"
+     },
+     {
+      "rel_path": "ee/hogai/utils/helpers.py",
+      "line": 217,
+      "line_end": 218,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "The .run receiver is a database query runner; the type check guards a DB result, not LLM output."
+ },
+ {
+  "site_no": 34,
+  "call_id": "PostHog_posthog/products/cdp/backend/max_tools.py::193::25",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "CreateHogFunctionFiltersTool._run_impl, PostHog CDP Max tool, production backend",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "self._model is MaxChatOpenAI (langchain BaseChatModel, gpt-4.1); invoke line 193",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "PostHog_posthog/products/cdp/backend/max_tools.py::193::25",
+    "protected_output": "generated hog function filters JSON",
+    "checked_property": "result.content is str (type)",
+    "oracle_type": "simple",
+    "evaluator": "assert isinstance(result.content, str)",
+    "verdict_location": "products/cdp/backend/max_tools.py:194",
+    "check_location": "products/cdp/backend/max_tools.py:194",
+    "enforcement_location": "products/cdp/backend/max_tools.py:194",
+    "failure_consequence": "AssertionError (not caught by the PydanticOutputParserException retry handler) propagates; tool fails",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": true,
+    "evidence_lines": [
+     {
+      "rel_path": "products/cdp/backend/max_tools.py",
+      "line": 193,
+      "line_end": 193,
+      "role": "output"
+     },
+     {
+      "rel_path": "products/cdp/backend/max_tools.py",
+      "line": 194,
+      "line_end": 194,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "PostHog_posthog/products/cdp/backend/max_tools.py::193::25",
+    "protected_output": "generated hog function filters JSON",
+    "checked_property": "extracted filters non-empty",
+    "oracle_type": "simple",
+    "evaluator": "if not json_str: raise PydanticOutputParserException",
+    "verdict_location": "products/cdp/backend/max_tools.py:232",
+    "check_location": "products/cdp/backend/max_tools.py:232",
+    "enforcement_location": "products/cdp/backend/max_tools.py:197",
+    "failure_consequence": "PydanticOutputParserException -> retry with error feedback appended to system prompt, up to 3 attempts, then raise final_error",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "no",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "products/cdp/backend/max_tools.py",
+      "line": 195,
+      "line_end": 195,
+      "role": "check"
+     },
+     {
+      "rel_path": "products/cdp/backend/max_tools.py",
+      "line": 232,
+      "line_end": 232,
+      "role": "verdict"
+     },
+     {
+      "rel_path": "products/cdp/backend/max_tools.py",
+      "line": 197,
+      "line_end": 204,
+      "role": "enforcement"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "PostHog_posthog/products/cdp/backend/max_tools.py::193::25",
+    "protected_output": "generated hog function filters JSON",
+    "checked_property": "filters string is valid JSON",
+    "oracle_type": "simple",
+    "evaluator": "json.loads; JSONDecodeError -> raise PydanticOutputParserException",
+    "verdict_location": "products/cdp/backend/max_tools.py:239",
+    "check_location": "products/cdp/backend/max_tools.py:239",
+    "enforcement_location": "products/cdp/backend/max_tools.py:197",
+    "failure_consequence": "PydanticOutputParserException -> retry with error feedback appended to system prompt, up to 3 attempts, then raise final_error",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "no",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "products/cdp/backend/max_tools.py",
+      "line": 195,
+      "line_end": 195,
+      "role": "check"
+     },
+     {
+      "rel_path": "products/cdp/backend/max_tools.py",
+      "line": 239,
+      "line_end": 239,
+      "role": "verdict"
+     },
+     {
+      "rel_path": "products/cdp/backend/max_tools.py",
+      "line": 197,
+      "line_end": 204,
+      "role": "enforcement"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "Generation is parsed by _parse_output, whose rule-based checks (non-empty, valid JSON) raise and trigger regeneration with feedback; after 3 failures the error is raised, never accepted. The type assert additionally aborts on non-string content. Final HogFunctionFiltersOutput(filters: dict) Pydantic construction would also reject a non-dict, but that error is not retried."
+ },
+ {
+  "site_no": 35,
+  "call_id": "PostHog_posthog/products/cdp/backend/max_tools.py::281::25",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "CreateHogFunctionInputsTool._run_impl, PostHog CDP Max tool, production backend",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "self._model is MaxChatOpenAI (langchain BaseChatModel, gpt-4.1); invoke line 281",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "PostHog_posthog/products/cdp/backend/max_tools.py::281::25",
+    "protected_output": "generated hog function inputs schema",
+    "checked_property": "result.content is str (type)",
+    "oracle_type": "simple",
+    "evaluator": "assert isinstance(result.content, str)",
+    "verdict_location": "products/cdp/backend/max_tools.py:282",
+    "check_location": "products/cdp/backend/max_tools.py:282",
+    "enforcement_location": "products/cdp/backend/max_tools.py:282",
+    "failure_consequence": "AssertionError (not caught by the PydanticOutputParserException retry handler) propagates; tool fails",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": true,
+    "evidence_lines": [
+     {
+      "rel_path": "products/cdp/backend/max_tools.py",
+      "line": 281,
+      "line_end": 281,
+      "role": "output"
+     },
+     {
+      "rel_path": "products/cdp/backend/max_tools.py",
+      "line": 282,
+      "line_end": 282,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "PostHog_posthog/products/cdp/backend/max_tools.py::281::25",
+    "protected_output": "generated hog function inputs schema",
+    "checked_property": "inputs_schema block present",
+    "oracle_type": "simple",
+    "evaluator": "regex match for <inputs_schema> or JSON array, else raise PydanticOutputParserException",
+    "verdict_location": "products/cdp/backend/max_tools.py:320",
+    "check_location": "products/cdp/backend/max_tools.py:320",
+    "enforcement_location": "products/cdp/backend/max_tools.py:285",
+    "failure_consequence": "PydanticOutputParserException -> retry with error feedback appended to system prompt, up to 3 attempts, then raise final_error",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "no",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "products/cdp/backend/max_tools.py",
+      "line": 283,
+      "line_end": 283,
+      "role": "check"
+     },
+     {
+      "rel_path": "products/cdp/backend/max_tools.py",
+      "line": 320,
+      "line_end": 320,
+      "role": "verdict"
+     },
+     {
+      "rel_path": "products/cdp/backend/max_tools.py",
+      "line": 285,
+      "line_end": 292,
+      "role": "enforcement"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "PostHog_posthog/products/cdp/backend/max_tools.py::281::25",
+    "protected_output": "generated hog function inputs schema",
+    "checked_property": "inputs schema is a JSON list",
+    "oracle_type": "simple",
+    "evaluator": "json.loads + isinstance(list); else raise PydanticOutputParserException",
+    "verdict_location": "products/cdp/backend/max_tools.py:328",
+    "check_location": "products/cdp/backend/max_tools.py:328",
+    "enforcement_location": "products/cdp/backend/max_tools.py:285",
+    "failure_consequence": "PydanticOutputParserException -> retry with error feedback appended to system prompt, up to 3 attempts, then raise final_error",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "no",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "products/cdp/backend/max_tools.py",
+      "line": 283,
+      "line_end": 283,
+      "role": "check"
+     },
+     {
+      "rel_path": "products/cdp/backend/max_tools.py",
+      "line": 328,
+      "line_end": 328,
+      "role": "verdict"
+     },
+     {
+      "rel_path": "products/cdp/backend/max_tools.py",
+      "line": 285,
+      "line_end": 292,
+      "role": "enforcement"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "Generation is parsed by _parse_output, whose rule-based checks (presence of schema block, valid JSON, list type) raise and trigger regeneration with feedback; after 3 failures the error is raised, never accepted. The type assert additionally aborts on non-string content. "
+ },
+ {
+  "site_no": 36,
+  "call_id": "PostHog_posthog/products/cdp/backend/max_tools.py::95::25",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "HogTransformationTool._run_impl, PostHog CDP Max tool, production backend",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "self._model is MaxChatOpenAI (langchain BaseChatModel, gpt-4.1); invoke line 95",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "PostHog_posthog/products/cdp/backend/max_tools.py::95::25",
+    "protected_output": "generated Hog transformation code",
+    "checked_property": "result.content is str (type)",
+    "oracle_type": "simple",
+    "evaluator": "assert isinstance(result.content, str)",
+    "verdict_location": "products/cdp/backend/max_tools.py:96",
+    "check_location": "products/cdp/backend/max_tools.py:96",
+    "enforcement_location": "products/cdp/backend/max_tools.py:96",
+    "failure_consequence": "AssertionError (not caught by the PydanticOutputParserException retry handler) propagates; tool fails",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": true,
+    "evidence_lines": [
+     {
+      "rel_path": "products/cdp/backend/max_tools.py",
+      "line": 95,
+      "line_end": 95,
+      "role": "output"
+     },
+     {
+      "rel_path": "products/cdp/backend/max_tools.py",
+      "line": 96,
+      "line_end": 96,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "PostHog_posthog/products/cdp/backend/max_tools.py::95::25",
+    "protected_output": "generated Hog transformation code",
+    "checked_property": "extracted hog code non-empty",
+    "oracle_type": "simple",
+    "evaluator": "if not hog_code: raise PydanticOutputParserException",
+    "verdict_location": "products/cdp/backend/max_tools.py:132",
+    "check_location": "products/cdp/backend/max_tools.py:132",
+    "enforcement_location": "products/cdp/backend/max_tools.py:99",
+    "failure_consequence": "PydanticOutputParserException -> retry with error feedback appended to system prompt, up to 3 attempts, then raise final_error",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "no",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "products/cdp/backend/max_tools.py",
+      "line": 97,
+      "line_end": 97,
+      "role": "check"
+     },
+     {
+      "rel_path": "products/cdp/backend/max_tools.py",
+      "line": 132,
+      "line_end": 132,
+      "role": "verdict"
+     },
+     {
+      "rel_path": "products/cdp/backend/max_tools.py",
+      "line": 99,
+      "line_end": 106,
+      "role": "enforcement"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "PostHog_posthog/products/cdp/backend/max_tools.py::95::25",
+    "protected_output": "generated Hog transformation code",
+    "checked_property": "hog code compiles",
+    "oracle_type": "simple",
+    "evaluator": "compile_hog(hog_code) / parse_program; failure -> raise PydanticOutputParserException",
+    "verdict_location": "products/cdp/backend/max_tools.py:138",
+    "check_location": "products/cdp/backend/max_tools.py:138",
+    "enforcement_location": "products/cdp/backend/max_tools.py:99",
+    "failure_consequence": "PydanticOutputParserException -> retry with error feedback appended to system prompt, up to 3 attempts, then raise final_error",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "no",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "products/cdp/backend/max_tools.py",
+      "line": 97,
+      "line_end": 97,
+      "role": "check"
+     },
+     {
+      "rel_path": "products/cdp/backend/max_tools.py",
+      "line": 138,
+      "line_end": 138,
+      "role": "verdict"
+     },
+     {
+      "rel_path": "products/cdp/backend/max_tools.py",
+      "line": 99,
+      "line_end": 106,
+      "role": "enforcement"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "Generation is parsed by _parse_output, whose rule-based checks (non-empty, compiles with the Hog compiler) raise and trigger regeneration with feedback; after 3 failures the error is raised, never accepted. The type assert additionally aborts on non-string content. Compilation is a deterministic oracle (compiler), still simple."
+ },
+ {
+  "site_no": 46,
+  "call_id": "Rvosy_Sakura/third_party/mem0/mem0/vector_stores/opensearch.py::321::23",
+  "actual_context": "production",
+  "context_flags": [
+   "vendored_framework_copy"
+  ],
+  "context_evidence": "file is under third_party/mem0, a vendored copy of mem0's own vector store source",
+  "invocation": "false_positive_non_llm",
+  "invocation_evidence": "self.client.search(index=..., body=...) is an OpenSearch client query (line 321), not an LLM",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "Rvosy_Sakura/third_party/mem0/mem0/vector_stores/opensearch.py::321::23",
+    "protected_output": "OpenSearch hits",
+    "checked_property": "hits non-empty",
+    "oracle_type": "simple",
+    "evaluator": "if not hits: return None",
+    "verdict_location": "third_party/mem0/mem0/vector_stores/opensearch.py:325",
+    "check_location": "third_party/mem0/mem0/vector_stores/opensearch.py:325",
+    "enforcement_location": "third_party/mem0/mem0/vector_stores/opensearch.py:326",
+    "failure_consequence": "returns None",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "false_positive_invocation",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "third_party/mem0/mem0/vector_stores/opensearch.py",
+      "line": 321,
+      "line_end": 321,
+      "role": "output"
+     },
+     {
+      "rel_path": "third_party/mem0/mem0/vector_stores/opensearch.py",
+      "line": 323,
+      "line_end": 323,
+      "role": "support"
+     },
+     {
+      "rel_path": "third_party/mem0/mem0/vector_stores/opensearch.py",
+      "line": 325,
+      "line_end": 326,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "The .search pattern matched an OpenSearch vector-store query in vendored mem0 code; the empty-hits check is a DB result branch."
+ },
+ {
+  "site_no": 119,
+  "call_id": "ibm-granite-community_granite-playground-agents/granite_core/granite_core/research/researcher.py::263::29",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "Researcher._get_language (260-277), production research agent",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "self.structured_chat_model is a beeai_framework ChatModel; .run(..., response_format=LanguageIdentificationSchema) calls the LLM (framework label langchain_core is a misattribution; beeai is an agentic framework)",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "ibm-granite-community_granite-playground-agents/granite_core/granite_core/research/researcher.py::263::29",
+    "protected_output": "structured language-identification output",
+    "checked_property": "output_structured is LanguageIdentificationSchema (type)",
+    "oracle_type": "simple",
+    "evaluator": "assert isinstance(response.output_structured, LanguageIdentificationSchema) inside try",
+    "verdict_location": "granite_core/granite_core/research/researcher.py:269",
+    "check_location": "granite_core/granite_core/research/researcher.py:269",
+    "enforcement_location": "granite_core/granite_core/research/researcher.py:275",
+    "failure_consequence": "AssertionError caught -> fallback language 'English' replaces model output",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "1730099"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": true,
+    "evidence_lines": [
+     {
+      "rel_path": "granite_core/granite_core/research/researcher.py",
+      "line": 263,
+      "line_end": 263,
+      "role": "output"
+     },
+     {
+      "rel_path": "granite_core/granite_core/research/researcher.py",
+      "line": 269,
+      "line_end": 269,
+      "role": "check"
+     },
+     {
+      "rel_path": "granite_core/granite_core/research/researcher.py",
+      "line": 275,
+      "line_end": 277,
+      "role": "enforcement"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "A type check on the structured output routes failures to a fixed fallback ('English') before the identified language is used. Simple; under -O the assert vanishes but an AttributeError would still hit the same fallback."
+ },
+ {
+  "site_no": 120,
+  "call_id": "ibm-granite-community_granite-playground-agents/granite_core/granite_core/research/researcher.py::329::29",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "Researcher._generate_research_plan (320-335)",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "beeai_framework structured ChatModel.run with response_format=ResearchPlanSchema",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "ibm-granite-community_granite-playground-agents/granite_core/granite_core/research/researcher.py::329::29",
+    "protected_output": "structured research plan",
+    "checked_property": "output_structured is ResearchPlanSchema (type)",
+    "oracle_type": "simple",
+    "evaluator": "assert isinstance(response.output_structured, ResearchPlanSchema)",
+    "verdict_location": "granite_core/granite_core/research/researcher.py:334",
+    "check_location": "granite_core/granite_core/research/researcher.py:334",
+    "enforcement_location": "granite_core/granite_core/research/researcher.py:334",
+    "failure_consequence": "AssertionError raised before the questions are returned",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "1730108"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": true,
+    "evidence_lines": [
+     {
+      "rel_path": "granite_core/granite_core/research/researcher.py",
+      "line": 329,
+      "line_end": 329,
+      "role": "output"
+     },
+     {
+      "rel_path": "granite_core/granite_core/research/researcher.py",
+      "line": 334,
+      "line_end": 334,
+      "role": "check"
+     },
+     {
+      "rel_path": "granite_core/granite_core/research/researcher.py",
+      "line": 335,
+      "line_end": 335,
+      "role": "support"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "Assert type check on the structured plan precedes returning its questions. Simple, -O sensitive."
+ },
+ {
+  "site_no": 124,
+  "call_id": "julienlucas_agentic-rag-multiagent/backend/retriever/contextual_compression.py::76::23",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "ContextualCompressionRetriever._extract_relevant_content (59-101)",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "ChatMistralAI (langchain) .invoke(prompt) at line 76",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "julienlucas_agentic-rag-multiagent/backend/retriever/contextual_compression.py::76::23",
+    "protected_output": "extracted relevant passages",
+    "checked_property": "not 'AUCUN', length >= 50, no 'aucun passage'",
+    "oracle_type": "simple",
+    "evaluator": "extracted.upper()=='AUCUN' or len(extracted)<min_relevance_length or 'aucun passage' in text -> return None",
+    "verdict_location": "backend/retriever/contextual_compression.py:80",
+    "check_location": "backend/retriever/contextual_compression.py:80",
+    "enforcement_location": "backend/retriever/contextual_compression.py:85",
+    "failure_consequence": "document dropped (None) instead of compressed doc",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "workflow_branch_not_acceptability",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "yes",
+    "configuration_dependent": "yes",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "backend/retriever/contextual_compression.py",
+      "line": 76,
+      "line_end": 76,
+      "role": "output"
+     },
+     {
+      "rel_path": "backend/retriever/contextual_compression.py",
+      "line": 77,
+      "line_end": 77,
+      "role": "support"
+     },
+     {
+      "rel_path": "backend/retriever/contextual_compression.py",
+      "line": 80,
+      "line_end": 85,
+      "role": "check"
+     },
+     {
+      "rel_path": "backend/retriever/contextual_compression.py",
+      "line": 99,
+      "line_end": 101,
+      "role": "support"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "The prompt makes the LLM a relevance filter ('AUCUN' when nothing is relevant); the check interprets that relevance decision (min-length is a relevance heuristic per line 46) and drops the document, which is a workflow branch rather than rejecting an invalid output. Borderline: the length threshold could be read as an acceptability rule. Feature is config-gated and exceptions fall back to the original doc."
+ },
+ {
+  "site_no": 128,
+  "call_id": "microsoft_semanticworkbench/libraries/python/guided-conversation/guided_conversation/functions/conversation_plan.py::242::19",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "conversation_plan_function (143-245) in guided-conversation library within the semanticworkbench repo",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "kernel.invoke on a prompt KernelFunction added via kernel.add_function(prompt=..., prompt_execution_settings) -> LLM completion",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "microsoft_semanticworkbench/libraries/python/guided-conversation/guided_conversation/functions/conversation_plan.py::242::19",
+    "protected_output": "FunctionResult of the prompt function",
+    "checked_property": "result is not None (presence)",
+    "oracle_type": "simple",
+    "evaluator": "if result is None: raise ValueError('Invalid kernel result.')",
+    "verdict_location": "libraries/python/guided-conversation/guided_conversation/functions/conversation_plan.py:243",
+    "check_location": "libraries/python/guided-conversation/guided_conversation/functions/conversation_plan.py:243",
+    "enforcement_location": "libraries/python/guided-conversation/guided_conversation/functions/conversation_plan.py:244",
+    "failure_consequence": "raise ValueError before result is returned",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "2133924"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "libraries/python/guided-conversation/guided_conversation/functions/conversation_plan.py",
+      "line": 242,
+      "line_end": 242,
+      "role": "output"
+     },
+     {
+      "rel_path": "libraries/python/guided-conversation/guided_conversation/functions/conversation_plan.py",
+      "line": 243,
+      "line_end": 244,
+      "role": "check"
+     },
+     {
+      "rel_path": "libraries/python/guided-conversation/guided_conversation/functions/conversation_plan.py",
+      "line": 245,
+      "line_end": 245,
+      "role": "support"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "A presence (non-None) check on the kernel result raises before it is returned. Minimal simple oracle, but it intervenes before acceptance; Joern slice holds call and check."
+ },
+ {
+  "site_no": 129,
+  "call_id": "microsoft_semanticworkbench/libraries/python/guided-conversation/guided_conversation/functions/execution.py::80::19",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "execution (46-83) in guided-conversation library within the semanticworkbench repo",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "kernel.invoke on a prompt KernelFunction added via kernel.add_function(prompt=..., prompt_execution_settings) -> LLM completion",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "microsoft_semanticworkbench/libraries/python/guided-conversation/guided_conversation/functions/execution.py::80::19",
+    "protected_output": "FunctionResult of the prompt function",
+    "checked_property": "result is not None (presence)",
+    "oracle_type": "simple",
+    "evaluator": "if result is None: raise ValueError('Invalid kernel result.')",
+    "verdict_location": "libraries/python/guided-conversation/guided_conversation/functions/execution.py:81",
+    "check_location": "libraries/python/guided-conversation/guided_conversation/functions/execution.py:81",
+    "enforcement_location": "libraries/python/guided-conversation/guided_conversation/functions/execution.py:82",
+    "failure_consequence": "raise ValueError before result is returned",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "2133936"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "libraries/python/guided-conversation/guided_conversation/functions/execution.py",
+      "line": 80,
+      "line_end": 80,
+      "role": "output"
+     },
+     {
+      "rel_path": "libraries/python/guided-conversation/guided_conversation/functions/execution.py",
+      "line": 81,
+      "line_end": 82,
+      "role": "check"
+     },
+     {
+      "rel_path": "libraries/python/guided-conversation/guided_conversation/functions/execution.py",
+      "line": 83,
+      "line_end": 83,
+      "role": "support"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "A presence (non-None) check on the kernel result raises before it is returned. Minimal simple oracle, but it intervenes before acceptance; Joern slice holds call and check."
+ },
+ {
+  "site_no": 130,
+  "call_id": "microsoft_semanticworkbench/libraries/python/guided-conversation/guided_conversation/functions/final_update_plan.py::100::19",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "final_update_plan_function (54-103) in guided-conversation library within the semanticworkbench repo",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "kernel.invoke on a prompt KernelFunction added via kernel.add_function(prompt=..., prompt_execution_settings) -> LLM completion",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "microsoft_semanticworkbench/libraries/python/guided-conversation/guided_conversation/functions/final_update_plan.py::100::19",
+    "protected_output": "FunctionResult of the prompt function",
+    "checked_property": "result is not None (presence)",
+    "oracle_type": "simple",
+    "evaluator": "if result is None: raise ValueError('Invalid kernel result.')",
+    "verdict_location": "libraries/python/guided-conversation/guided_conversation/functions/final_update_plan.py:101",
+    "check_location": "libraries/python/guided-conversation/guided_conversation/functions/final_update_plan.py:101",
+    "enforcement_location": "libraries/python/guided-conversation/guided_conversation/functions/final_update_plan.py:102",
+    "failure_consequence": "raise ValueError before result is returned",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "2133945"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "libraries/python/guided-conversation/guided_conversation/functions/final_update_plan.py",
+      "line": 100,
+      "line_end": 100,
+      "role": "output"
+     },
+     {
+      "rel_path": "libraries/python/guided-conversation/guided_conversation/functions/final_update_plan.py",
+      "line": 101,
+      "line_end": 102,
+      "role": "check"
+     },
+     {
+      "rel_path": "libraries/python/guided-conversation/guided_conversation/functions/final_update_plan.py",
+      "line": 103,
+      "line_end": 103,
+      "role": "support"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "A presence (non-None) check on the kernel result raises before it is returned. Minimal simple oracle, but it intervenes before acceptance; Joern slice holds call and check."
+ },
+ {
+  "site_no": 145,
+  "call_id": "sambanova_agents/backend/src/agents/components/datagen/node.py::52::31",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "agent_node (27-103) LangGraph node in datagen component",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "agent is ManualAgent/MessageCaptureAgent wrapping a chat model (llm_response captured, line 57-65); ainvoke runs the LLM agent",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "sambanova_agents/backend/src/agents/components/datagen/node.py::52::31",
+    "protected_output": "agent output message",
+    "checked_property": "output not None (presence)",
+    "oracle_type": "simple",
+    "evaluator": "if output_message is None: raise ValueError",
+    "verdict_location": "backend/src/agents/components/datagen/node.py:54",
+    "check_location": "backend/src/agents/components/datagen/node.py:54",
+    "enforcement_location": "backend/src/agents/components/datagen/node.py:90",
+    "failure_consequence": "raise caught -> error AIMessage written to internal_messages instead of state_key content",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "2508807"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "backend/src/agents/components/datagen/node.py",
+      "line": 52,
+      "line_end": 52,
+      "role": "output"
+     },
+     {
+      "rel_path": "backend/src/agents/components/datagen/node.py",
+      "line": 54,
+      "line_end": 55,
+      "role": "check"
+     },
+     {
+      "rel_path": "backend/src/agents/components/datagen/node.py",
+      "line": 82,
+      "line_end": 88,
+      "role": "support"
+     },
+     {
+      "rel_path": "backend/src/agents/components/datagen/node.py",
+      "line": 90,
+      "line_end": 103,
+      "role": "enforcement"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "A None check on the agent output raises before content is stored in state; the except replaces it with an error message. Simple presence oracle."
+ },
+ {
+  "site_no": 191,
+  "call_id": "temporalio_samples-python/openai_agents/agent_patterns/workflows/deterministic_workflow.py::63::43",
+  "actual_context": "production",
+  "context_flags": [
+   "example_or_tutorial",
+   "demo_or_sample_app"
+  ],
+  "context_evidence": "temporalio samples-python repo; docstring line 14 says adapted from the OpenAI Agents SDK example",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "Runner.run(outline_checker_agent(), ...) runs an OpenAI Agents SDK agent with output_type=OutlineCheckerOutput",
+  "site_role": "judge_evaluator",
+  "guards": [
+   {
+    "protected_producer_call_id": "temporalio_samples-python/openai_agents/agent_patterns/workflows/deterministic_workflow.py::63::43",
+    "protected_output": "outline checker verdict object",
+    "checked_property": "final_output is OutlineCheckerOutput (type)",
+    "oracle_type": "simple",
+    "evaluator": "assert isinstance(outline_checker_result.final_output, OutlineCheckerOutput)",
+    "verdict_location": "openai_agents/agent_patterns/workflows/deterministic_workflow.py:70",
+    "check_location": "openai_agents/agent_patterns/workflows/deterministic_workflow.py:70",
+    "enforcement_location": "openai_agents/agent_patterns/workflows/deterministic_workflow.py:70",
+    "failure_consequence": "AssertionError",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": true,
+    "qualifies": "no",
+    "nonqualifying_reason": "auxiliary_judge_plumbing",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "2684851"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": true,
+    "evidence_lines": [
+     {
+      "rel_path": "openai_agents/agent_patterns/workflows/deterministic_workflow.py",
+      "line": 63,
+      "line_end": 67,
+      "role": "output"
+     },
+     {
+      "rel_path": "openai_agents/agent_patterns/workflows/deterministic_workflow.py",
+      "line": 70,
+      "line_end": 70,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "temporalio_samples-python/openai_agents/agent_patterns/workflows/deterministic_workflow.py::55::35",
+    "protected_output": "story outline from story_outline_agent",
+    "checked_property": "outline good quality and is sci-fi",
+    "oracle_type": "complex",
+    "evaluator": "LLM judge outline_checker_agent (OpenAI Agents SDK, default model via RunConfig) returns good_quality/is_scifi booleans",
+    "verdict_location": "openai_agents/agent_patterns/workflows/deterministic_workflow.py:63",
+    "check_location": "openai_agents/agent_patterns/workflows/deterministic_workflow.py:71",
+    "enforcement_location": "openai_agents/agent_patterns/workflows/deterministic_workflow.py:73",
+    "failure_consequence": "stop: workflow returns a 'Story generation stopped' message; outline not passed to story_agent",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "2684849"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "openai_agents/agent_patterns/workflows/deterministic_workflow.py",
+      "line": 55,
+      "line_end": 59,
+      "role": "output"
+     },
+     {
+      "rel_path": "openai_agents/agent_patterns/workflows/deterministic_workflow.py",
+      "line": 63,
+      "line_end": 67,
+      "role": "verdict"
+     },
+     {
+      "rel_path": "openai_agents/agent_patterns/workflows/deterministic_workflow.py",
+      "line": 71,
+      "line_end": 77,
+      "role": "check"
+     },
+     {
+      "rel_path": "openai_agents/agent_patterns/workflows/deterministic_workflow.py",
+      "line": 84,
+      "line_end": 88,
+      "role": "support"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guard_attributed_to_other_producer_only",
+  "rationale": "This call is an LLM judge of the outline; its type assert only checks its own verdict object (auxiliary). The verdict-driven stop gate protects the outline generation at line 55, not this call."
+ },
+ {
+  "site_no": 192,
+  "call_id": "tigergraph_graphrag/graphrag/app/routers/ui.py::4004::31",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "test_llm_config FastAPI endpoint (3972-4150) is a production config connectivity test, not a test-suite test",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "llm_service.llm.invoke(...) on a langchain chat model built from candidate config (probe prompt)",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "tigergraph_graphrag/graphrag/app/routers/ui.py::4004::31",
+    "protected_output": "probe response",
+    "checked_property": "response non-empty",
+    "oracle_type": "simple",
+    "evaluator": "if not response or not str(response).strip(): raise ValueError",
+    "verdict_location": "graphrag/app/routers/ui.py:4005",
+    "check_location": "graphrag/app/routers/ui.py:4005",
+    "enforcement_location": "graphrag/app/routers/ui.py:4005",
+    "failure_consequence": "raise -> service status reported as 'error' in endpoint result",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "connectivity_probe",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "2737998"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "graphrag/app/routers/ui.py",
+      "line": 4004,
+      "line_end": 4004,
+      "role": "output"
+     },
+     {
+      "rel_path": "graphrag/app/routers/ui.py",
+      "line": 4005,
+      "line_end": 4006,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "The endpoint sends a fixed probe prompt to check provider connectivity; the empty-response check only sets a status report, and the output is never used as a generation."
+ },
+ {
+  "site_no": 193,
+  "call_id": "tigergraph_graphrag/graphrag/app/routers/ui.py::4030::27",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "test_llm_config FastAPI endpoint (3972-4150) is a production config connectivity test, not a test-suite test",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "llm_service.llm.invoke(...) on a langchain chat model built from candidate config (probe prompt)",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "tigergraph_graphrag/graphrag/app/routers/ui.py::4030::27",
+    "protected_output": "probe response",
+    "checked_property": "response non-empty",
+    "oracle_type": "simple",
+    "evaluator": "if not response or not str(response).strip(): raise ValueError",
+    "verdict_location": "graphrag/app/routers/ui.py:4031",
+    "check_location": "graphrag/app/routers/ui.py:4031",
+    "enforcement_location": "graphrag/app/routers/ui.py:4031",
+    "failure_consequence": "raise -> service status reported as 'error' in endpoint result",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "connectivity_probe",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "2737998"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "graphrag/app/routers/ui.py",
+      "line": 4030,
+      "line_end": 4030,
+      "role": "output"
+     },
+     {
+      "rel_path": "graphrag/app/routers/ui.py",
+      "line": 4031,
+      "line_end": 4032,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "The endpoint sends a fixed probe prompt to check provider connectivity; the empty-response check only sets a status report, and the output is never used as a generation."
+ },
+ {
+  "site_no": 194,
+  "call_id": "tigergraph_graphrag/graphrag/app/routers/ui.py::4047::27",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "test_llm_config FastAPI endpoint (3972-4150) is a production config connectivity test, not a test-suite test",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "llm_service.llm.invoke(...) on a langchain chat model built from candidate config (probe prompt)",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "tigergraph_graphrag/graphrag/app/routers/ui.py::4047::27",
+    "protected_output": "probe response",
+    "checked_property": "response non-empty",
+    "oracle_type": "simple",
+    "evaluator": "if not response or not str(response).strip(): raise ValueError",
+    "verdict_location": "graphrag/app/routers/ui.py:4048",
+    "check_location": "graphrag/app/routers/ui.py:4048",
+    "enforcement_location": "graphrag/app/routers/ui.py:4048",
+    "failure_consequence": "raise -> service status reported as 'error' in endpoint result",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "connectivity_probe",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "2737998"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "graphrag/app/routers/ui.py",
+      "line": 4047,
+      "line_end": 4047,
+      "role": "output"
+     },
+     {
+      "rel_path": "graphrag/app/routers/ui.py",
+      "line": 4048,
+      "line_end": 4049,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "The endpoint sends a fixed probe prompt to check provider connectivity; the empty-response check only sets a status report, and the output is never used as a generation."
+ },
+ {
+  "site_no": 195,
+  "call_id": "tigergraph_graphrag/graphrag/app/routers/ui.py::4117::27",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "test_llm_config FastAPI endpoint (3972-4150) is a production config connectivity test, not a test-suite test",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "llm_service.llm.invoke(...) on a langchain chat model built from candidate config (probe prompt)",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "tigergraph_graphrag/graphrag/app/routers/ui.py::4117::27",
+    "protected_output": "probe response",
+    "checked_property": "response non-empty",
+    "oracle_type": "simple",
+    "evaluator": "if not response or not str(response).strip(): raise ValueError",
+    "verdict_location": "graphrag/app/routers/ui.py:4118",
+    "check_location": "graphrag/app/routers/ui.py:4118",
+    "enforcement_location": "graphrag/app/routers/ui.py:4118",
+    "failure_consequence": "raise -> service status reported as 'error' in endpoint result",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "connectivity_probe",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "2737998"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "graphrag/app/routers/ui.py",
+      "line": 4117,
+      "line_end": 4117,
+      "role": "output"
+     },
+     {
+      "rel_path": "graphrag/app/routers/ui.py",
+      "line": 4118,
+      "line_end": 4119,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "The endpoint sends a fixed probe prompt to check provider connectivity; the empty-response check only sets a status report, and the output is never used as a generation."
+ },
+ {
+  "site_no": 210,
+  "call_id": "ai-forever_giga_agent/backend/giga_agent/modules/deep_research/nodes/compose.py::117::21",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "compose_node (58-132) in deep_research LangGraph module",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "llm from resolve_user_llm (langchain chat model) .ainvoke([SystemMessage, HumanMessage]) line 117",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "ai-forever_giga_agent/backend/giga_agent/modules/deep_research/nodes/compose.py::117::21",
+    "protected_output": "markdown report draft",
+    "checked_property": "draft non-empty",
+    "oracle_type": "simple",
+    "evaluator": "if not draft: draft = prev_draft or _fallback_report(...)",
+    "verdict_location": "backend/giga_agent/modules/deep_research/nodes/compose.py:121",
+    "check_location": "backend/giga_agent/modules/deep_research/nodes/compose.py:121",
+    "enforcement_location": "backend/giga_agent/modules/deep_research/nodes/compose.py:122",
+    "failure_consequence": "fallback: previous draft or template fallback report replaces empty generation",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "partial",
+    "joern_slice_ids": [
+     "939594"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "backend/giga_agent/modules/deep_research/nodes/compose.py",
+      "line": 117,
+      "line_end": 119,
+      "role": "output"
+     },
+     {
+      "rel_path": "backend/giga_agent/modules/deep_research/nodes/compose.py",
+      "line": 120,
+      "line_end": 120,
+      "role": "support"
+     },
+     {
+      "rel_path": "backend/giga_agent/modules/deep_research/nodes/compose.py",
+      "line": 121,
+      "line_end": 122,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "ai-forever_giga_agent/backend/giga_agent/modules/deep_research/nodes/compose.py::117::21",
+    "protected_output": "markdown report draft",
+    "checked_property": "report quality/correctness against task, plan and sources",
+    "oracle_type": "complex",
+    "evaluator": "LLM judge critique_node (critique.py:118, resolve_user_llm chat model forced to submit_critique tool) returns verdict accept|revise",
+    "verdict_location": "backend/giga_agent/modules/deep_research/nodes/critique.py:131",
+    "check_location": "backend/giga_agent/modules/deep_research/nodes/critique.py:155",
+    "enforcement_location": "backend/giga_agent/modules/deep_research/graph.py:54",
+    "failure_consequence": "regenerate: route_after_critique sends draft back to compose_node with critique for revision before finalize",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "yes",
+    "fail_open": "yes",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "backend/giga_agent/modules/deep_research/nodes/critique.py",
+      "line": 98,
+      "line_end": 102,
+      "role": "support"
+     },
+     {
+      "rel_path": "backend/giga_agent/modules/deep_research/nodes/critique.py",
+      "line": 118,
+      "line_end": 118,
+      "role": "verdict"
+     },
+     {
+      "rel_path": "backend/giga_agent/modules/deep_research/nodes/critique.py",
+      "line": 131,
+      "line_end": 145,
+      "role": "verdict"
+     },
+     {
+      "rel_path": "backend/giga_agent/modules/deep_research/nodes/critique.py",
+      "line": 148,
+      "line_end": 158,
+      "role": "check"
+     },
+     {
+      "rel_path": "backend/giga_agent/modules/deep_research/graph.py",
+      "line": 53,
+      "line_end": 58,
+      "role": "enforcement"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "Empty drafts are replaced with a fallback (simple). An LLM critique judge's revise verdict sends the draft back for regeneration before finalize (complex), but it accepts after max_revisions (default 1) and fails open when the judge errors or returns no tool call."
+ },
+ {
+  "site_no": 219,
+  "call_id": "temporalio_samples-python/openai_agents/agent_patterns/workflows/deterministic_workflow.py::55::35",
+  "actual_context": "production",
+  "context_flags": [
+   "example_or_tutorial",
+   "demo_or_sample_app"
+  ],
+  "context_evidence": "temporalio samples-python repo; sample adapted from the OpenAI Agents SDK example (line 14)",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "Runner.run(story_outline_agent(), input_prompt) runs an OpenAI Agents SDK agent producing the outline",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "temporalio_samples-python/openai_agents/agent_patterns/workflows/deterministic_workflow.py::55::35",
+    "protected_output": "story outline from story_outline_agent",
+    "checked_property": "outline good quality and is sci-fi",
+    "oracle_type": "complex",
+    "evaluator": "LLM judge outline_checker_agent (Runner.run line 63, output_type OutlineCheckerOutput) returns good_quality/is_scifi",
+    "verdict_location": "openai_agents/agent_patterns/workflows/deterministic_workflow.py:63",
+    "check_location": "openai_agents/agent_patterns/workflows/deterministic_workflow.py:71",
+    "enforcement_location": "openai_agents/agent_patterns/workflows/deterministic_workflow.py:73",
+    "failure_consequence": "stop: returns 'Story generation stopped' message; outline not consumed by story_agent",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "2684849"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "openai_agents/agent_patterns/workflows/deterministic_workflow.py",
+      "line": 55,
+      "line_end": 59,
+      "role": "output"
+     },
+     {
+      "rel_path": "openai_agents/agent_patterns/workflows/deterministic_workflow.py",
+      "line": 63,
+      "line_end": 67,
+      "role": "verdict"
+     },
+     {
+      "rel_path": "openai_agents/agent_patterns/workflows/deterministic_workflow.py",
+      "line": 70,
+      "line_end": 70,
+      "role": "support"
+     },
+     {
+      "rel_path": "openai_agents/agent_patterns/workflows/deterministic_workflow.py",
+      "line": 71,
+      "line_end": 77,
+      "role": "check"
+     },
+     {
+      "rel_path": "openai_agents/agent_patterns/workflows/deterministic_workflow.py",
+      "line": 84,
+      "line_end": 88,
+      "role": "enforcement"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "The outline is judged by a separate LLM agent; a negative quality or sci-fi verdict stops the workflow before the outline is fed to story_agent. Complex guard in a sample/tutorial workflow."
+ }
+]

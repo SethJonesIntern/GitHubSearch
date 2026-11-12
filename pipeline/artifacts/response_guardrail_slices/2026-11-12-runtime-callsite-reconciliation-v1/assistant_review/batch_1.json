@@ -1,0 +1,2138 @@
+[
+ {
+  "site_no": 13,
+  "call_id": "Haohao-end_openagent/api/internal/service/icon_generator_service.py::236::20",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "IconGeneratorService._generate_with_dalle (217-242), service code reached from generate_icon fallback chain (30-84).",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "langchain_community DallEAPIWrapper(model='dall-e-3').run(prompt) at 236: a generative image model call (DALL-E), not a text LLM; counted as a framework model invocation.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "Haohao-end_openagent/api/internal/service/icon_generator_service.py::236::20",
+    "protected_output": "image_url returned by DALL-E",
+    "checked_property": "presence/non-empty URL",
+    "oracle_type": "simple",
+    "evaluator": "if not image_url: raise FailException",
+    "verdict_location": "api/internal/service/icon_generator_service.py:238",
+    "check_location": "api/internal/service/icon_generator_service.py:238",
+    "enforcement_location": "api/internal/service/icon_generator_service.py:239",
+    "failure_consequence": "raise FailException; caught in generate_icon (77), logged, then final FailException (84) instead of returning an icon; URL never downloaded/uploaded (242)",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "253867"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "api/internal/service/icon_generator_service.py",
+      "line": 236,
+      "line_end": 236,
+      "role": "output"
+     },
+     {
+      "rel_path": "api/internal/service/icon_generator_service.py",
+      "line": 238,
+      "line_end": 239,
+      "role": "check"
+     },
+     {
+      "rel_path": "api/internal/service/icon_generator_service.py",
+      "line": 72,
+      "line_end": 84,
+      "role": "support"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "The DALL-E result is checked for presence and an empty URL raises before it is downloaded and uploaded; generate_icon converts the failure into an overall error rather than returning an icon. Invocation is an image-generation model via langchain_community, not a text LLM, which is a scope caveat."
+ },
+ {
+  "site_no": 73,
+  "call_id": "alibaba_loongsuite-python/examples/ecommerce-customer-service/workflow.py::201::27",
+  "actual_context": "production",
+  "context_flags": [
+   "example_or_tutorial"
+  ],
+  "context_evidence": "examples/ecommerce-customer-service/workflow.py: an example app in the loongsuite repo; _route_intent (198-233) is a LangGraph node.",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "self.classifier = model.with_structured_output(IntentDecision) (157-159); .invoke at 201 calls the chat model.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "alibaba_loongsuite-python/examples/ecommerce-customer-service/workflow.py::201::27",
+    "protected_output": "intent classification (IntentDecision)",
+    "checked_property": "schema: intent in Literal[presales,aftersales,other], confidence in [0,1], reason str",
+    "oracle_type": "simple",
+    "evaluator": "IntentDecision.model_validate(raw_decision) when output is not already an IntentDecision (Pydantic Literal + Field(ge=0,le=1))",
+    "verdict_location": "examples/ecommerce-customer-service/workflow.py:217",
+    "check_location": "examples/ecommerce-customer-service/workflow.py:214",
+    "enforcement_location": "examples/ecommerce-customer-service/workflow.py:218",
+    "failure_consequence": "ValidationError caught; decision replaced by fallback IntentDecision(intent='other', confidence=0) which routes to clarify",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "949651"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "examples/ecommerce-customer-service/workflow.py",
+      "line": 201,
+      "line_end": 213,
+      "role": "output"
+     },
+     {
+      "rel_path": "examples/ecommerce-customer-service/workflow.py",
+      "line": 214,
+      "line_end": 217,
+      "role": "check"
+     },
+     {
+      "rel_path": "examples/ecommerce-customer-service/workflow.py",
+      "line": 218,
+      "line_end": 223,
+      "role": "enforcement"
+     },
+     {
+      "rel_path": "examples/ecommerce-customer-service/workflow.py",
+      "line": 37,
+      "line_end": 42,
+      "role": "support"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "alibaba_loongsuite-python/examples/ecommerce-customer-service/workflow.py::201::27",
+    "protected_output": "intent classification confidence",
+    "checked_property": "range: confidence >= confidence_threshold (default 0.6)",
+    "oracle_type": "simple",
+    "evaluator": "select_route: if confidence < threshold return 'clarify'",
+    "verdict_location": "examples/ecommerce-customer-service/workflow.py:92",
+    "check_location": "examples/ecommerce-customer-service/workflow.py:92",
+    "enforcement_location": "examples/ecommerce-customer-service/workflow.py:93",
+    "failure_consequence": "low-confidence classification is not acted on; graph routes to the clarify node instead of a specialist",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "examples/ecommerce-customer-service/workflow.py",
+      "line": 88,
+      "line_end": 99,
+      "role": "check"
+     },
+     {
+      "rel_path": "examples/ecommerce-customer-service/workflow.py",
+      "line": 225,
+      "line_end": 228,
+      "role": "enforcement"
+     },
+     {
+      "rel_path": "examples/ecommerce-customer-service/workflow.py",
+      "line": 182,
+      "line_end": 190,
+      "role": "support"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "Structured classifier output is schema-validated with a fallback replacement on failure, and a deterministic confidence threshold rejects low-confidence classifications by routing to clarification. Both are rule-based and intervene before the intent is used for routing. Context is an example application."
+ },
+ {
+  "site_no": 102,
+  "call_id": "ericjiang18_Agent-Q-Mix/agent_baseline/agent-framework/python/packages/orchestrations/agent_framework_orchestrations/_magentic.py::592::40",
+  "actual_context": "production",
+  "context_flags": [
+   "vendored_framework_copy"
+  ],
+  "context_evidence": "agent_baseline/agent-framework/...: copy of Microsoft Agent Framework orchestration source; StandardMagenticManager._complete (583-598).",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "self._agent.run(messages, session=...) on a ChatAgent; returns AgentResponse from the model.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "ericjiang18_Agent-Q-Mix/agent_baseline/agent-framework/python/packages/orchestrations/agent_framework_orchestrations/_magentic.py::592::40",
+    "protected_output": "AgentResponse.messages",
+    "checked_property": "presence: response has >=1 message",
+    "oracle_type": "simple",
+    "evaluator": "if not response.messages: raise RuntimeError",
+    "verdict_location": "agent_baseline/agent-framework/python/packages/orchestrations/agent_framework_orchestrations/_magentic.py:593",
+    "check_location": "agent_baseline/agent-framework/python/packages/orchestrations/agent_framework_orchestrations/_magentic.py:593",
+    "enforcement_location": "agent_baseline/agent-framework/python/packages/orchestrations/agent_framework_orchestrations/_magentic.py:594",
+    "failure_consequence": "raise RuntimeError; no message returned to plan/replan callers",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "1498171"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "agent_baseline/agent-framework/python/packages/orchestrations/agent_framework_orchestrations/_magentic.py",
+      "line": 592,
+      "line_end": 592,
+      "role": "output"
+     },
+     {
+      "rel_path": "agent_baseline/agent-framework/python/packages/orchestrations/agent_framework_orchestrations/_magentic.py",
+      "line": 593,
+      "line_end": 594,
+      "role": "check"
+     },
+     {
+      "rel_path": "agent_baseline/agent-framework/python/packages/orchestrations/agent_framework_orchestrations/_magentic.py",
+      "line": 598,
+      "line_end": 598,
+      "role": "support"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "An empty agent response raises before the last message is returned and used as a facts/plan ledger entry. Rule-based presence check in a vendored framework copy."
+ },
+ {
+  "site_no": 103,
+  "call_id": "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/agbench/benchmarks/GAIA/Templates/ParallelAgents/scenario.py::256::25",
+  "actual_context": "production",
+  "context_flags": [
+   "vendored_framework_copy",
+   "benchmark_or_eval_harness"
+  ],
+  "context_evidence": "agbench GAIA scenario template (agent system run under the benchmark); aggregate_final_answer (154-264).",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "client is an autogen ChatCompletionClient; client.create(context) at 256.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/agbench/benchmarks/GAIA/Templates/ParallelAgents/scenario.py::256::25",
+    "protected_output": "aggregated final answer text (response.content)",
+    "checked_property": "type: content is str (not function calls)",
+    "oracle_type": "simple",
+    "evaluator": "assert isinstance(response.content, str)",
+    "verdict_location": "agent_baseline/autogen/python/packages/agbench/benchmarks/GAIA/Templates/ParallelAgents/scenario.py:257",
+    "check_location": "agent_baseline/autogen/python/packages/agbench/benchmarks/GAIA/Templates/ParallelAgents/scenario.py:257",
+    "enforcement_location": "agent_baseline/autogen/python/packages/agbench/benchmarks/GAIA/Templates/ParallelAgents/scenario.py:257",
+    "failure_consequence": "AssertionError aborts before re.sub/return of final answer",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "1501872"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": true,
+    "evidence_lines": [
+     {
+      "rel_path": "agent_baseline/autogen/python/packages/agbench/benchmarks/GAIA/Templates/ParallelAgents/scenario.py",
+      "line": 256,
+      "line_end": 256,
+      "role": "output"
+     },
+     {
+      "rel_path": "agent_baseline/autogen/python/packages/agbench/benchmarks/GAIA/Templates/ParallelAgents/scenario.py",
+      "line": 257,
+      "line_end": 257,
+      "role": "check"
+     },
+     {
+      "rel_path": "agent_baseline/autogen/python/packages/agbench/benchmarks/GAIA/Templates/ParallelAgents/scenario.py",
+      "line": 259,
+      "line_end": 264,
+      "role": "support"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "A type assertion rejects non-string model content before it is rewritten and returned as the final answer. Simple, assert-based (disabled under -O), in a benchmark scenario inside a vendored AutoGen copy."
+ },
+ {
+  "site_no": 104,
+  "call_id": "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_code_executor_agent.py::648::29",
+  "actual_context": "production",
+  "context_flags": [
+   "vendored_framework_copy"
+  ],
+  "context_evidence": "Under agent_baseline/autogen/python/packages: a copy of Microsoft AutoGen's own source inside the Agent-Q-Mix repo; non-test library code. CodeExecutorAgent.on_messages_stream (515-675).",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "model_client.create(messages=chat_context, json_output=RetryDecision) at 648: LLM call deciding whether to retry failed code.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_code_executor_agent.py::648::29",
+    "protected_output": "retry decision (response.content)",
+    "checked_property": "type: content is str",
+    "oracle_type": "simple",
+    "evaluator": "assert isinstance(response.content, str)",
+    "verdict_location": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_code_executor_agent.py:650",
+    "check_location": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_code_executor_agent.py:650",
+    "enforcement_location": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_code_executor_agent.py:650",
+    "failure_consequence": "AssertionError aborts the stream before the retry decision is used",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": true,
+    "evidence_lines": [
+     {
+      "rel_path": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_code_executor_agent.py",
+      "line": 648,
+      "line_end": 648,
+      "role": "output"
+     },
+     {
+      "rel_path": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_code_executor_agent.py",
+      "line": 650,
+      "line_end": 652,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_code_executor_agent.py::648::29",
+    "protected_output": "retry decision JSON",
+    "checked_property": "schema: RetryDecision (retry bool, reason)",
+    "oracle_type": "simple",
+    "evaluator": "RetryDecision.model_validate_json(str(response.content))",
+    "verdict_location": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_code_executor_agent.py:653",
+    "check_location": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_code_executor_agent.py:653",
+    "enforcement_location": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_code_executor_agent.py:653",
+    "failure_consequence": "ValidationError propagates (not caught) before should_retry_generation.retry is used (656)",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "1501981"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_code_executor_agent.py",
+      "line": 653,
+      "line_end": 653,
+      "role": "check"
+     },
+     {
+      "rel_path": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_code_executor_agent.py",
+      "line": 656,
+      "line_end": 657,
+      "role": "support"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "The retry-decision output is type-asserted and Pydantic-validated, each raising before the decision controls the retry loop. Both are simple; the assert is -O sensitive."
+ },
+ {
+  "site_no": 105,
+  "call_id": "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_society_of_mind_agent.py::235::31",
+  "actual_context": "production",
+  "context_flags": [
+   "vendored_framework_copy"
+  ],
+  "context_evidence": "Under agent_baseline/autogen/python/packages: a copy of Microsoft AutoGen's own source inside the Agent-Q-Mix repo; non-test library code. SocietyOfMindAgent.on_messages_stream (168-250).",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "self._model_client.create(messages=llm_messages) at 235 produces the outer response.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_society_of_mind_agent.py::235::31",
+    "protected_output": "summary response content",
+    "checked_property": "type: content is str",
+    "oracle_type": "simple",
+    "evaluator": "assert isinstance(completion.content, str)",
+    "verdict_location": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_society_of_mind_agent.py:236",
+    "check_location": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_society_of_mind_agent.py:236",
+    "enforcement_location": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_society_of_mind_agent.py:236",
+    "failure_consequence": "AssertionError before Response(TextMessage) is yielded (237)",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "1502019"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": true,
+    "evidence_lines": [
+     {
+      "rel_path": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_society_of_mind_agent.py",
+      "line": 235,
+      "line_end": 235,
+      "role": "output"
+     },
+     {
+      "rel_path": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_society_of_mind_agent.py",
+      "line": 236,
+      "line_end": 236,
+      "role": "check"
+     },
+     {
+      "rel_path": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_society_of_mind_agent.py",
+      "line": 237,
+      "line_end": 241,
+      "role": "support"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "A type assertion rejects non-string content before the completion is wrapped and yielded as the agent's response. Simple, -O sensitive."
+ },
+ {
+  "site_no": 106,
+  "call_id": "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_chat_agent_container.py::208::22",
+  "actual_context": "production",
+  "context_flags": [
+   "vendored_framework_copy"
+  ],
+  "context_evidence": "Under agent_baseline/autogen/python/packages: a copy of Microsoft AutoGen's own source inside the Agent-Q-Mix repo; non-test library code. ChatAgentContainer.load_state (204-213).",
+  "invocation": "false_positive_non_llm",
+  "invocation_evidence": "self._message_factory.create(message_data) at 208 deserializes a stored message dict via MessageFactory; no model call.",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_chat_agent_container.py::208::22",
+    "protected_output": "deserialized message from saved state",
+    "checked_property": "type: BaseChatMessage",
+    "oracle_type": "simple",
+    "evaluator": "isinstance(message, BaseChatMessage) else raise ValueError",
+    "verdict_location": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_chat_agent_container.py:209",
+    "check_location": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_chat_agent_container.py:209",
+    "enforcement_location": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_chat_agent_container.py:212",
+    "failure_consequence": "raise ValueError on invalid stored message type",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "false_positive_invocation",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "1502069"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_chat_agent_container.py",
+      "line": 208,
+      "line_end": 212,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "The matched .create is MessageFactory deserialization during state loading, not an LLM call. The type check validates restored state, not model output."
+ },
+ {
+  "site_no": 107,
+  "call_id": "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_magentic_one/_magentic_one_orchestrator.py::168::25",
+  "actual_context": "production",
+  "context_flags": [
+   "vendored_framework_copy"
+  ],
+  "context_evidence": "Under agent_baseline/autogen/python/packages: a copy of Microsoft AutoGen's own source inside the Agent-Q-Mix repo; non-test library code. MagenticOneOrchestrator.handle_start (135-190).",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "self._model_client.create(...) at 168: orchestrator ChatCompletionClient call.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_magentic_one/_magentic_one_orchestrator.py::168::25",
+    "protected_output": "orchestrator LLM text (facts/plan/final answer)",
+    "checked_property": "type: content is str",
+    "oracle_type": "simple",
+    "evaluator": "assert isinstance(response.content, str)",
+    "verdict_location": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_magentic_one/_magentic_one_orchestrator.py:172",
+    "check_location": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_magentic_one/_magentic_one_orchestrator.py:172",
+    "enforcement_location": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_magentic_one/_magentic_one_orchestrator.py:172",
+    "failure_consequence": "AssertionError before self._facts = response.content (173), appended to planning conversation",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "1502078"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": true,
+    "evidence_lines": [
+     {
+      "rel_path": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_magentic_one/_magentic_one_orchestrator.py",
+      "line": 168,
+      "line_end": 170,
+      "role": "output"
+     },
+     {
+      "rel_path": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_magentic_one/_magentic_one_orchestrator.py",
+      "line": 172,
+      "line_end": 172,
+      "role": "check"
+     },
+     {
+      "rel_path": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_magentic_one/_magentic_one_orchestrator.py",
+      "line": 173,
+      "line_end": 173,
+      "role": "support"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "A type assertion directly after the call rejects non-string (function-call) content before it is stored as orchestrator state or published. Simple and -O sensitive; vendored AutoGen copy."
+ },
+ {
+  "site_no": 108,
+  "call_id": "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_magentic_one/_magentic_one_orchestrator.py::181::25",
+  "actual_context": "production",
+  "context_flags": [
+   "vendored_framework_copy"
+  ],
+  "context_evidence": "Under agent_baseline/autogen/python/packages: a copy of Microsoft AutoGen's own source inside the Agent-Q-Mix repo; non-test library code. MagenticOneOrchestrator.handle_start (135-190).",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "self._model_client.create(...) at 181: orchestrator ChatCompletionClient call.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_magentic_one/_magentic_one_orchestrator.py::181::25",
+    "protected_output": "orchestrator LLM text (facts/plan/final answer)",
+    "checked_property": "type: content is str",
+    "oracle_type": "simple",
+    "evaluator": "assert isinstance(response.content, str)",
+    "verdict_location": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_magentic_one/_magentic_one_orchestrator.py:185",
+    "check_location": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_magentic_one/_magentic_one_orchestrator.py:185",
+    "enforcement_location": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_magentic_one/_magentic_one_orchestrator.py:185",
+    "failure_consequence": "AssertionError before self._plan = response.content (186)",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "1502078"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": true,
+    "evidence_lines": [
+     {
+      "rel_path": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_magentic_one/_magentic_one_orchestrator.py",
+      "line": 181,
+      "line_end": 183,
+      "role": "output"
+     },
+     {
+      "rel_path": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_magentic_one/_magentic_one_orchestrator.py",
+      "line": 185,
+      "line_end": 185,
+      "role": "check"
+     },
+     {
+      "rel_path": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_magentic_one/_magentic_one_orchestrator.py",
+      "line": 186,
+      "line_end": 186,
+      "role": "support"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "A type assertion directly after the call rejects non-string (function-call) content before it is stored as orchestrator state or published. Simple and -O sensitive; vendored AutoGen copy."
+ },
+ {
+  "site_no": 109,
+  "call_id": "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_magentic_one/_magentic_one_orchestrator.py::459::25",
+  "actual_context": "production",
+  "context_flags": [
+   "vendored_framework_copy"
+  ],
+  "context_evidence": "Under agent_baseline/autogen/python/packages: a copy of Microsoft AutoGen's own source inside the Agent-Q-Mix repo; non-test library code. MagenticOneOrchestrator._update_task_ledger (451-476).",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "self._model_client.create(...) at 459: orchestrator ChatCompletionClient call.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_magentic_one/_magentic_one_orchestrator.py::459::25",
+    "protected_output": "orchestrator LLM text (facts/plan/final answer)",
+    "checked_property": "type: content is str",
+    "oracle_type": "simple",
+    "evaluator": "assert isinstance(response.content, str)",
+    "verdict_location": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_magentic_one/_magentic_one_orchestrator.py:463",
+    "check_location": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_magentic_one/_magentic_one_orchestrator.py:463",
+    "enforcement_location": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_magentic_one/_magentic_one_orchestrator.py:463",
+    "failure_consequence": "AssertionError before self._facts = response.content (464)",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "1502101"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": true,
+    "evidence_lines": [
+     {
+      "rel_path": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_magentic_one/_magentic_one_orchestrator.py",
+      "line": 459,
+      "line_end": 461,
+      "role": "output"
+     },
+     {
+      "rel_path": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_magentic_one/_magentic_one_orchestrator.py",
+      "line": 463,
+      "line_end": 463,
+      "role": "check"
+     },
+     {
+      "rel_path": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_magentic_one/_magentic_one_orchestrator.py",
+      "line": 464,
+      "line_end": 464,
+      "role": "support"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "A type assertion directly after the call rejects non-string (function-call) content before it is stored as orchestrator state or published. Simple and -O sensitive; vendored AutoGen copy."
+ },
+ {
+  "site_no": 110,
+  "call_id": "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_magentic_one/_magentic_one_orchestrator.py::471::25",
+  "actual_context": "production",
+  "context_flags": [
+   "vendored_framework_copy"
+  ],
+  "context_evidence": "Under agent_baseline/autogen/python/packages: a copy of Microsoft AutoGen's own source inside the Agent-Q-Mix repo; non-test library code. MagenticOneOrchestrator._update_task_ledger (451-476).",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "self._model_client.create(...) at 471: orchestrator ChatCompletionClient call.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_magentic_one/_magentic_one_orchestrator.py::471::25",
+    "protected_output": "orchestrator LLM text (facts/plan/final answer)",
+    "checked_property": "type: content is str",
+    "oracle_type": "simple",
+    "evaluator": "assert isinstance(response.content, str)",
+    "verdict_location": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_magentic_one/_magentic_one_orchestrator.py:475",
+    "check_location": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_magentic_one/_magentic_one_orchestrator.py:475",
+    "enforcement_location": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_magentic_one/_magentic_one_orchestrator.py:475",
+    "failure_consequence": "AssertionError before self._plan = response.content (476)",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "1502101"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": true,
+    "evidence_lines": [
+     {
+      "rel_path": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_magentic_one/_magentic_one_orchestrator.py",
+      "line": 471,
+      "line_end": 473,
+      "role": "output"
+     },
+     {
+      "rel_path": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_magentic_one/_magentic_one_orchestrator.py",
+      "line": 475,
+      "line_end": 475,
+      "role": "check"
+     },
+     {
+      "rel_path": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_magentic_one/_magentic_one_orchestrator.py",
+      "line": 476,
+      "line_end": 476,
+      "role": "support"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "A type assertion directly after the call rejects non-string (function-call) content before it is stored as orchestrator state or published. Simple and -O sensitive; vendored AutoGen copy."
+ },
+ {
+  "site_no": 111,
+  "call_id": "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_magentic_one/_magentic_one_orchestrator.py::486::25",
+  "actual_context": "production",
+  "context_flags": [
+   "vendored_framework_copy"
+  ],
+  "context_evidence": "Under agent_baseline/autogen/python/packages: a copy of Microsoft AutoGen's own source inside the Agent-Q-Mix repo; non-test library code. MagenticOneOrchestrator._prepare_final_answer (478-512).",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "self._model_client.create(...) at 486: orchestrator ChatCompletionClient call.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_magentic_one/_magentic_one_orchestrator.py::486::25",
+    "protected_output": "orchestrator LLM text (facts/plan/final answer)",
+    "checked_property": "type: content is str",
+    "oracle_type": "simple",
+    "evaluator": "assert isinstance(response.content, str)",
+    "verdict_location": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_magentic_one/_magentic_one_orchestrator.py:489",
+    "check_location": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_magentic_one/_magentic_one_orchestrator.py:489",
+    "enforcement_location": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_magentic_one/_magentic_one_orchestrator.py:489",
+    "failure_consequence": "AssertionError before TextMessage(content=response.content) published as final answer (490-506)",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "1502109"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": true,
+    "evidence_lines": [
+     {
+      "rel_path": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_magentic_one/_magentic_one_orchestrator.py",
+      "line": 486,
+      "line_end": 488,
+      "role": "output"
+     },
+     {
+      "rel_path": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_magentic_one/_magentic_one_orchestrator.py",
+      "line": 489,
+      "line_end": 489,
+      "role": "check"
+     },
+     {
+      "rel_path": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_magentic_one/_magentic_one_orchestrator.py",
+      "line": 490,
+      "line_end": 490,
+      "role": "support"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "A type assertion directly after the call rejects non-string (function-call) content before it is stored as orchestrator state or published. Simple and -O sensitive; vendored AutoGen copy."
+ },
+ {
+  "site_no": 112,
+  "call_id": "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-ext/src/autogen_ext/experimental/task_centric_memory/_prompter.py::74::25",
+  "actual_context": "production",
+  "context_flags": [
+   "vendored_framework_copy"
+  ],
+  "context_evidence": "Under agent_baseline/autogen/python/packages: a copy of Microsoft AutoGen's own source inside the Agent-Q-Mix repo; non-test library code. task_centric_memory Prompter.call_model (41-92), generic generation helper.",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "self.client.create(input_messages) at 74 on an autogen ChatCompletionClient.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-ext/src/autogen_ext/experimental/task_centric_memory/_prompter.py::74::25",
+    "protected_output": "CreateResult object",
+    "checked_property": "type: CreateResult",
+    "oracle_type": "simple",
+    "evaluator": "assert isinstance(response, CreateResult)",
+    "verdict_location": "agent_baseline/autogen/python/packages/autogen-ext/src/autogen_ext/experimental/task_centric_memory/_prompter.py:75",
+    "check_location": "agent_baseline/autogen/python/packages/autogen-ext/src/autogen_ext/experimental/task_centric_memory/_prompter.py:75",
+    "enforcement_location": "agent_baseline/autogen/python/packages/autogen-ext/src/autogen_ext/experimental/task_centric_memory/_prompter.py:75",
+    "failure_consequence": "AssertionError before content used",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "1503644"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": true,
+    "evidence_lines": [
+     {
+      "rel_path": "agent_baseline/autogen/python/packages/autogen-ext/src/autogen_ext/experimental/task_centric_memory/_prompter.py",
+      "line": 74,
+      "line_end": 74,
+      "role": "output"
+     },
+     {
+      "rel_path": "agent_baseline/autogen/python/packages/autogen-ext/src/autogen_ext/experimental/task_centric_memory/_prompter.py",
+      "line": 75,
+      "line_end": 75,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-ext/src/autogen_ext/experimental/task_centric_memory/_prompter.py::74::25",
+    "protected_output": "response text",
+    "checked_property": "type: content is str",
+    "oracle_type": "simple",
+    "evaluator": "assert isinstance(response_string, str)",
+    "verdict_location": "agent_baseline/autogen/python/packages/autogen-ext/src/autogen_ext/experimental/task_centric_memory/_prompter.py:77",
+    "check_location": "agent_baseline/autogen/python/packages/autogen-ext/src/autogen_ext/experimental/task_centric_memory/_prompter.py:77",
+    "enforcement_location": "agent_baseline/autogen/python/packages/autogen-ext/src/autogen_ext/experimental/task_centric_memory/_prompter.py:77",
+    "failure_consequence": "AssertionError before chat history append (87-89) and return (92)",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "partial",
+    "joern_slice_ids": [
+     "1503644"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": true,
+    "evidence_lines": [
+     {
+      "rel_path": "agent_baseline/autogen/python/packages/autogen-ext/src/autogen_ext/experimental/task_centric_memory/_prompter.py",
+      "line": 76,
+      "line_end": 77,
+      "role": "check"
+     },
+     {
+      "rel_path": "agent_baseline/autogen/python/packages/autogen-ext/src/autogen_ext/experimental/task_centric_memory/_prompter.py",
+      "line": 87,
+      "line_end": 92,
+      "role": "support"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "Type assertions on the result object and its content raise before the text is stored in chat history or returned. Simple, -O sensitive."
+ },
+ {
+  "site_no": 113,
+  "call_id": "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-ext/src/autogen_ext/experimental/task_centric_memory/utils/apprentice.py::241::40",
+  "actual_context": "production",
+  "context_flags": [
+   "vendored_framework_copy"
+  ],
+  "context_evidence": "Under agent_baseline/autogen/python/packages: a copy of Microsoft AutoGen's own source inside the Agent-Q-Mix repo; non-test library code. Apprentice._assign_task_to_magentic_one (209-257).",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "MagenticOneGroupChat(...).run(task=task) at 241 runs an LLM agent team.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-ext/src/autogen_ext/experimental/task_centric_memory/utils/apprentice.py::241::40",
+    "protected_output": "team TaskResult",
+    "checked_property": "type: TaskResult",
+    "oracle_type": "simple",
+    "evaluator": "assert isinstance(task_result, TaskResult)",
+    "verdict_location": "agent_baseline/autogen/python/packages/autogen-ext/src/autogen_ext/experimental/task_centric_memory/utils/apprentice.py:243",
+    "check_location": "agent_baseline/autogen/python/packages/autogen-ext/src/autogen_ext/experimental/task_centric_memory/utils/apprentice.py:243",
+    "enforcement_location": "agent_baseline/autogen/python/packages/autogen-ext/src/autogen_ext/experimental/task_centric_memory/utils/apprentice.py:243",
+    "failure_consequence": "AssertionError before messages are concatenated and returned (244-257)",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "1503673"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": true,
+    "evidence_lines": [
+     {
+      "rel_path": "agent_baseline/autogen/python/packages/autogen-ext/src/autogen_ext/experimental/task_centric_memory/utils/apprentice.py",
+      "line": 241,
+      "line_end": 241,
+      "role": "output"
+     },
+     {
+      "rel_path": "agent_baseline/autogen/python/packages/autogen-ext/src/autogen_ext/experimental/task_centric_memory/utils/apprentice.py",
+      "line": 243,
+      "line_end": 243,
+      "role": "check"
+     },
+     {
+      "rel_path": "agent_baseline/autogen/python/packages/autogen-ext/src/autogen_ext/experimental/task_centric_memory/utils/apprentice.py",
+      "line": 244,
+      "line_end": 257,
+      "role": "support"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "A type assertion on the team result raises before its messages are consumed. It is a weak wrapper-type check (run is typed to return TaskResult), but it is an explicit rule-based check with a raise; -O sensitive."
+ },
+ {
+  "site_no": 114,
+  "call_id": "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-ext/src/autogen_ext/experimental/task_centric_memory/utils/grader.py::97::25",
+  "actual_context": "production",
+  "context_flags": [
+   "vendored_framework_copy"
+  ],
+  "context_evidence": "Under agent_baseline/autogen/python/packages: a copy of Microsoft AutoGen's own source inside the Agent-Q-Mix repo; non-test library code. task_centric_memory Grader.call_model (73-113), used by is_response_correct (121-180) to extract an answer and to judge it against a gold answer.",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "self.client.create(input_messages) at 97 on an autogen ChatCompletionClient.",
+  "site_role": "judge_evaluator",
+  "guards": [
+   {
+    "protected_producer_call_id": "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-ext/src/autogen_ext/experimental/task_centric_memory/utils/grader.py::97::25",
+    "protected_output": "grader's own model output (extracted answer / '1'/'0' correctness verdict)",
+    "checked_property": "type: CreateResult and str content",
+    "oracle_type": "simple",
+    "evaluator": "assert isinstance(response, CreateResult); assert isinstance(response_string, str)",
+    "verdict_location": "agent_baseline/autogen/python/packages/autogen-ext/src/autogen_ext/experimental/task_centric_memory/utils/grader.py:98",
+    "check_location": "agent_baseline/autogen/python/packages/autogen-ext/src/autogen_ext/experimental/task_centric_memory/utils/grader.py:98",
+    "enforcement_location": "agent_baseline/autogen/python/packages/autogen-ext/src/autogen_ext/experimental/task_centric_memory/utils/grader.py:100",
+    "failure_consequence": "AssertionError",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": true,
+    "qualifies": "no",
+    "nonqualifying_reason": "auxiliary_judge_plumbing",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "1503698"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": true,
+    "evidence_lines": [
+     {
+      "rel_path": "agent_baseline/autogen/python/packages/autogen-ext/src/autogen_ext/experimental/task_centric_memory/utils/grader.py",
+      "line": 97,
+      "line_end": 97,
+      "role": "output"
+     },
+     {
+      "rel_path": "agent_baseline/autogen/python/packages/autogen-ext/src/autogen_ext/experimental/task_centric_memory/utils/grader.py",
+      "line": 98,
+      "line_end": 100,
+      "role": "check"
+     },
+     {
+      "rel_path": "agent_baseline/autogen/python/packages/autogen-ext/src/autogen_ext/experimental/task_centric_memory/utils/grader.py",
+      "line": 171,
+      "line_end": 180,
+      "role": "support"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "not_in_frozen_inventory:agent_baseline/autogen/python/packages/autogen-ext/src/autogen_ext/experimental/task_centric_memory/memory_controller.py:task_assignment_callback",
+    "protected_output": "task response graded against expected answer",
+    "checked_property": "correctness vs gold answer",
+    "oracle_type": "complex",
+    "evaluator": "LLM grader (same ChatCompletionClient) answers '1'/'0'; decision == '1'",
+    "verdict_location": "agent_baseline/autogen/python/packages/autogen-ext/src/autogen_ext/experimental/task_centric_memory/utils/grader.py:180",
+    "check_location": "agent_baseline/autogen/python/packages/autogen-ext/src/autogen_ext/experimental/task_centric_memory/memory_controller.py:336",
+    "enforcement_location": "agent_baseline/autogen/python/packages/autogen-ext/src/autogen_ext/experimental/task_centric_memory/memory_controller.py:343",
+    "failure_consequence": "counts successes / marks failure_found to drive insight learning in a training loop; graded response is not gated",
+    "before_acceptance": "unresolved",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "other:gold-answer training/evaluation loop, verdict does not gate acceptance of the graded response",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "unresolved",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "agent_baseline/autogen/python/packages/autogen-ext/src/autogen_ext/experimental/task_centric_memory/utils/grader.py",
+      "line": 121,
+      "line_end": 180,
+      "role": "verdict"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "This helper serves the Grader, an LLM evaluator that extracts and judges answers against a gold answer. The type assertions only check the grader's own outputs (auxiliary plumbing), and the verdict feeds success counting / learning in a training loop rather than gating a response."
+ },
+ {
+  "site_no": 115,
+  "call_id": "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/samples/agentchat_streamlit/agent.py::21::25",
+  "actual_context": "production",
+  "context_flags": [
+   "vendored_framework_copy",
+   "demo_or_sample_app"
+  ],
+  "context_evidence": "samples/agentchat_streamlit/agent.py: AutoGen sample Streamlit app; Agent.chat (20-26).",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "AssistantAgent.on_messages(...) at 21 runs the LLM-backed assistant.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/samples/agentchat_streamlit/agent.py::21::25",
+    "protected_output": "agent response chat_message",
+    "checked_property": "type: TextMessage",
+    "oracle_type": "simple",
+    "evaluator": "assert isinstance(response.chat_message, TextMessage)",
+    "verdict_location": "agent_baseline/autogen/python/samples/agentchat_streamlit/agent.py:25",
+    "check_location": "agent_baseline/autogen/python/samples/agentchat_streamlit/agent.py:25",
+    "enforcement_location": "agent_baseline/autogen/python/samples/agentchat_streamlit/agent.py:25",
+    "failure_consequence": "AssertionError before content is returned to the UI (26)",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "1505231"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": true,
+    "evidence_lines": [
+     {
+      "rel_path": "agent_baseline/autogen/python/samples/agentchat_streamlit/agent.py",
+      "line": 21,
+      "line_end": 24,
+      "role": "output"
+     },
+     {
+      "rel_path": "agent_baseline/autogen/python/samples/agentchat_streamlit/agent.py",
+      "line": 25,
+      "line_end": 26,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "A type assertion rejects non-text agent responses before the content is returned. Simple, -O sensitive, sample app in a vendored AutoGen copy."
+ },
+ {
+  "site_no": 116,
+  "call_id": "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/samples/core_async_human_in_the_loop/main.py::182::25",
+  "actual_context": "production",
+  "context_flags": [
+   "vendored_framework_copy",
+   "demo_or_sample_app"
+  ],
+  "context_evidence": "samples/core_async_human_in_the_loop/main.py: AutoGen sample; SchedulingAssistantAgent.handle_message (178-203).",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "self._model_client.create(..., tools=tools) at 182.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/samples/core_async_human_in_the_loop/main.py::182::25",
+    "protected_output": "proposed tool calls (FunctionCall list)",
+    "checked_property": "membership: called tool name exists in tools",
+    "oracle_type": "simple",
+    "evaluator": "tool = next(... if tool.name == call.name); if tool is None: raise ValueError",
+    "verdict_location": "agent_baseline/autogen/python/samples/core_async_human_in_the_loop/main.py:189",
+    "check_location": "agent_baseline/autogen/python/samples/core_async_human_in_the_loop/main.py:189",
+    "enforcement_location": "agent_baseline/autogen/python/samples/core_async_human_in_the_loop/main.py:190",
+    "failure_consequence": "raise ValueError before tool.run_json executes the proposed call (192)",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "partial",
+    "joern_slice_ids": [
+     "1505239"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "agent_baseline/autogen/python/samples/core_async_human_in_the_loop/main.py",
+      "line": 186,
+      "line_end": 192,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/samples/core_async_human_in_the_loop/main.py::182::25",
+    "protected_output": "text response",
+    "checked_property": "type: content is str",
+    "oracle_type": "simple",
+    "evaluator": "assert isinstance(response.content, str)",
+    "verdict_location": "agent_baseline/autogen/python/samples/core_async_human_in_the_loop/main.py:199",
+    "check_location": "agent_baseline/autogen/python/samples/core_async_human_in_the_loop/main.py:199",
+    "enforcement_location": "agent_baseline/autogen/python/samples/core_async_human_in_the_loop/main.py:199",
+    "failure_consequence": "AssertionError before message stored in context and published (200-203)",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "1505236"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": true,
+    "evidence_lines": [
+     {
+      "rel_path": "agent_baseline/autogen/python/samples/core_async_human_in_the_loop/main.py",
+      "line": 199,
+      "line_end": 203,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "Proposed tool calls are checked against the known tool set and an unknown name raises before execution; non-tool content is type-asserted before being stored/published. Both simple."
+ },
+ {
+  "site_no": 117,
+  "call_id": "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/samples/core_distributed-group-chat/_agents.py::130::27",
+  "actual_context": "production",
+  "context_flags": [
+   "vendored_framework_copy",
+   "demo_or_sample_app"
+  ],
+  "context_evidence": "samples/core_distributed-group-chat/_agents.py: AutoGen sample; GroupChatManager.handle_message (90-155).",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "self._model_client.create([system_message]) at 130 selects next speaker.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/samples/core_distributed-group-chat/_agents.py::130::27",
+    "protected_output": "speaker-selection text",
+    "checked_property": "type: content is str",
+    "oracle_type": "simple",
+    "evaluator": "assert isinstance(completion.content, str)",
+    "verdict_location": "agent_baseline/autogen/python/samples/core_distributed-group-chat/_agents.py:132",
+    "check_location": "agent_baseline/autogen/python/samples/core_distributed-group-chat/_agents.py:132",
+    "enforcement_location": "agent_baseline/autogen/python/samples/core_distributed-group-chat/_agents.py:134",
+    "failure_consequence": "AssertionError before selection is used",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "1505288"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": true,
+    "evidence_lines": [
+     {
+      "rel_path": "agent_baseline/autogen/python/samples/core_distributed-group-chat/_agents.py",
+      "line": 130,
+      "line_end": 130,
+      "role": "output"
+     },
+     {
+      "rel_path": "agent_baseline/autogen/python/samples/core_distributed-group-chat/_agents.py",
+      "line": 132,
+      "line_end": 134,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/samples/core_distributed-group-chat/_agents.py::130::27",
+    "protected_output": "selected role",
+    "checked_property": "membership: output names a known participant topic (or FINISH)",
+    "oracle_type": "simple",
+    "evaluator": "loop over participant topic types; no match -> raise ValueError('Invalid role selected')",
+    "verdict_location": "agent_baseline/autogen/python/samples/core_distributed-group-chat/_agents.py:147",
+    "check_location": "agent_baseline/autogen/python/samples/core_distributed-group-chat/_agents.py:147",
+    "enforcement_location": "agent_baseline/autogen/python/samples/core_distributed-group-chat/_agents.py:155",
+    "failure_consequence": "raise ValueError instead of publishing RequestToSpeak",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "1505288"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "agent_baseline/autogen/python/samples/core_distributed-group-chat/_agents.py",
+      "line": 136,
+      "line_end": 155,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "The selector output is type-asserted and then checked for membership in the participant set; an invalid role raises before any participant is asked to speak. Both simple."
+ },
+ {
+  "site_no": 118,
+  "call_id": "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/samples/core_distributed-group-chat/_agents.py::53::27",
+  "actual_context": "production",
+  "context_flags": [
+   "vendored_framework_copy",
+   "demo_or_sample_app"
+  ],
+  "context_evidence": "samples/core_distributed-group-chat/_agents.py: AutoGen sample; BaseGroupChatAgent.handle_request_to_speak (49-66).",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "self._model_client.create(...) at 53.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/samples/core_distributed-group-chat/_agents.py::53::27",
+    "protected_output": "agent reply text",
+    "checked_property": "type: content is str",
+    "oracle_type": "simple",
+    "evaluator": "assert isinstance(completion.content, str)",
+    "verdict_location": "agent_baseline/autogen/python/samples/core_distributed-group-chat/_agents.py:54",
+    "check_location": "agent_baseline/autogen/python/samples/core_distributed-group-chat/_agents.py:54",
+    "enforcement_location": "agent_baseline/autogen/python/samples/core_distributed-group-chat/_agents.py:54",
+    "failure_consequence": "AssertionError before history append (55) and publish to UI/backend (60-65)",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "1505284"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": true,
+    "evidence_lines": [
+     {
+      "rel_path": "agent_baseline/autogen/python/samples/core_distributed-group-chat/_agents.py",
+      "line": 53,
+      "line_end": 54,
+      "role": "check"
+     },
+     {
+      "rel_path": "agent_baseline/autogen/python/samples/core_distributed-group-chat/_agents.py",
+      "line": 55,
+      "line_end": 65,
+      "role": "support"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "Type assertion on the reply content raises before it is stored and published. Simple, -O sensitive."
+ },
+ {
+  "site_no": 122,
+  "call_id": "itbench-hub_ITBench-CISO-CAA-Agent/src/ciso_agent/agents/kubernetes_kyverno.py::144::17",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "src/ciso_agent/agents: CISO compliance agent's run_scenario; non-test agent code.",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "crewai Crew(...).kickoff(inputs) at 144 runs an LLM agent crew.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "itbench-hub_ITBench-CISO-CAA-Agent/src/ciso_agent/agents/kubernetes_kyverno.py::144::17",
+    "protected_output": "crew raw output",
+    "checked_property": "presence: non-empty string",
+    "oracle_type": "simple",
+    "evaluator": "if not result_str: raise ValueError('crew agent returned an empty string.')",
+    "verdict_location": "src/ciso_agent/agents/kubernetes_kyverno.py:146",
+    "check_location": "src/ciso_agent/agents/kubernetes_kyverno.py:146",
+    "enforcement_location": "src/ciso_agent/agents/kubernetes_kyverno.py:147",
+    "failure_consequence": "raise ValueError before parsing/return",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "partial",
+    "joern_slice_ids": [
+     "1740950"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "src/ciso_agent/agents/kubernetes_kyverno.py",
+      "line": 144,
+      "line_end": 145,
+      "role": "output"
+     },
+     {
+      "rel_path": "src/ciso_agent/agents/kubernetes_kyverno.py",
+      "line": 146,
+      "line_end": 147,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "itbench-hub_ITBench-CISO-CAA-Agent/src/ciso_agent/agents/kubernetes_kyverno.py::144::17",
+    "protected_output": "extracted JSON code text",
+    "checked_property": "presence: non-empty after code-block extraction",
+    "oracle_type": "simple",
+    "evaluator": "if not result_str: raise ValueError('crew agent returned an invalid string...')",
+    "verdict_location": "src/ciso_agent/agents/kubernetes_kyverno.py:153",
+    "check_location": "src/ciso_agent/agents/kubernetes_kyverno.py:153",
+    "enforcement_location": "src/ciso_agent/agents/kubernetes_kyverno.py:154",
+    "failure_consequence": "raise ValueError before JSON parse/return",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "1740950"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "src/ciso_agent/agents/kubernetes_kyverno.py",
+      "line": 149,
+      "line_end": 154,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "itbench-hub_ITBench-CISO-CAA-Agent/src/ciso_agent/agents/kubernetes_kyverno.py::144::17",
+    "protected_output": "parsed result dict",
+    "checked_property": "JSON parseability",
+    "oracle_type": "simple",
+    "evaluator": "try json.loads except: print to stderr",
+    "verdict_location": "src/ciso_agent/agents/kubernetes_kyverno.py:158",
+    "check_location": "src/ciso_agent/agents/kubernetes_kyverno.py:158",
+    "enforcement_location": "src/ciso_agent/agents/kubernetes_kyverno.py:160",
+    "failure_consequence": "prints error, continues with result={} and returns it as normal output",
+    "before_acceptance": "no",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "logging_or_reporting_only",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "yes",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "src/ciso_agent/agents/kubernetes_kyverno.py",
+      "line": 157,
+      "line_end": 160,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "Empty crew output, and empty output after code extraction, both raise before the result is parsed and returned. JSON parse failure is only printed and an empty dict is returned (fail-open), which does not qualify."
+ },
+ {
+  "site_no": 123,
+  "call_id": "itbench-hub_ITBench-CISO-CAA-Agent/src/ciso_agent/agents/kubernetes_kyverno_update.py::152::17",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "src/ciso_agent/agents: CISO compliance agent's run_scenario; non-test agent code.",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "crewai Crew(...).kickoff(inputs) at 152 runs an LLM agent crew.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "itbench-hub_ITBench-CISO-CAA-Agent/src/ciso_agent/agents/kubernetes_kyverno_update.py::152::17",
+    "protected_output": "crew raw output",
+    "checked_property": "presence: non-empty string",
+    "oracle_type": "simple",
+    "evaluator": "if not result_str: raise ValueError('crew agent returned an empty string.')",
+    "verdict_location": "src/ciso_agent/agents/kubernetes_kyverno_update.py:154",
+    "check_location": "src/ciso_agent/agents/kubernetes_kyverno_update.py:154",
+    "enforcement_location": "src/ciso_agent/agents/kubernetes_kyverno_update.py:155",
+    "failure_consequence": "raise ValueError before parsing/return",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "partial",
+    "joern_slice_ids": [
+     "1740967"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "src/ciso_agent/agents/kubernetes_kyverno_update.py",
+      "line": 152,
+      "line_end": 153,
+      "role": "output"
+     },
+     {
+      "rel_path": "src/ciso_agent/agents/kubernetes_kyverno_update.py",
+      "line": 154,
+      "line_end": 155,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "itbench-hub_ITBench-CISO-CAA-Agent/src/ciso_agent/agents/kubernetes_kyverno_update.py::152::17",
+    "protected_output": "extracted JSON code text",
+    "checked_property": "presence: non-empty after code-block extraction",
+    "oracle_type": "simple",
+    "evaluator": "if not result_str: raise ValueError('crew agent returned an invalid string...')",
+    "verdict_location": "src/ciso_agent/agents/kubernetes_kyverno_update.py:161",
+    "check_location": "src/ciso_agent/agents/kubernetes_kyverno_update.py:161",
+    "enforcement_location": "src/ciso_agent/agents/kubernetes_kyverno_update.py:162",
+    "failure_consequence": "raise ValueError before JSON parse/return",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "1740967"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "src/ciso_agent/agents/kubernetes_kyverno_update.py",
+      "line": 157,
+      "line_end": 162,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "itbench-hub_ITBench-CISO-CAA-Agent/src/ciso_agent/agents/kubernetes_kyverno_update.py::152::17",
+    "protected_output": "parsed result dict",
+    "checked_property": "JSON parseability",
+    "oracle_type": "simple",
+    "evaluator": "try json.loads except: print to stderr",
+    "verdict_location": "src/ciso_agent/agents/kubernetes_kyverno_update.py:166",
+    "check_location": "src/ciso_agent/agents/kubernetes_kyverno_update.py:166",
+    "enforcement_location": "src/ciso_agent/agents/kubernetes_kyverno_update.py:168",
+    "failure_consequence": "prints error, continues with result={} and returns it as normal output",
+    "before_acceptance": "no",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "logging_or_reporting_only",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "yes",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "src/ciso_agent/agents/kubernetes_kyverno_update.py",
+      "line": 165,
+      "line_end": 168,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "Empty crew output, and empty output after code extraction, both raise before the result is parsed and returned. JSON parse failure is only printed and an empty dict is returned (fail-open), which does not qualify."
+ },
+ {
+  "site_no": 126,
+  "call_id": "michaelalbada_BuildingApplicationsWithAIAgents/src/frameworks/langgraph_agents/supply_chain/ray_supply_chain_multi_agent.py::244::15",
+  "actual_context": "production",
+  "context_flags": [
+   "example_or_tutorial"
+  ],
+  "context_evidence": "Companion code for the book 'Building Applications with AI Agents'; supervisor_invoke (227-259) in a Ray demo script.",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "module-level llm = ChatOpenAI(model='gpt-4o') (153); llm.invoke(full) at 244.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "michaelalbada_BuildingApplicationsWithAIAgents/src/frameworks/langgraph_agents/supply_chain/ray_supply_chain_multi_agent.py::244::15",
+    "protected_output": "selected specialist name",
+    "checked_property": "membership: name in llms dict",
+    "oracle_type": "simple",
+    "evaluator": "if agent_name not in llms: raise ValueError",
+    "verdict_location": "src/frameworks/langgraph_agents/supply_chain/ray_supply_chain_multi_agent.py:247",
+    "check_location": "src/frameworks/langgraph_agents/supply_chain/ray_supply_chain_multi_agent.py:247",
+    "enforcement_location": "src/frameworks/langgraph_agents/supply_chain/ray_supply_chain_multi_agent.py:248",
+    "failure_consequence": "raise ValueError before dispatching to a specialist actor",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "partial",
+    "joern_slice_ids": [
+     "2110288"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "src/frameworks/langgraph_agents/supply_chain/ray_supply_chain_multi_agent.py",
+      "line": 244,
+      "line_end": 245,
+      "role": "output"
+     },
+     {
+      "rel_path": "src/frameworks/langgraph_agents/supply_chain/ray_supply_chain_multi_agent.py",
+      "line": 247,
+      "line_end": 248,
+      "role": "check"
+     },
+     {
+      "rel_path": "src/frameworks/langgraph_agents/supply_chain/ray_supply_chain_multi_agent.py",
+      "line": 251,
+      "line_end": 258,
+      "role": "support"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "The supervisor's routing output is checked for membership in the known specialists and an unknown name raises before dispatch. Simple rule, tutorial/book example code."
+ },
+ {
+  "site_no": 186,
+  "call_id": "sourangshupal_Agentic-RAG-project/src/services/agents/nodes/rewrite_query_node.py::89::43",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "src/services/agents/nodes/rewrite_query_node.py: LangGraph node in the RAG service.",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "llm.with_structured_output(QueryRewriteOutput).ainvoke(prompt) at 89.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "sourangshupal_Agentic-RAG-project/src/services/agents/nodes/rewrite_query_node.py::89::43",
+    "protected_output": "structured rewrite result",
+    "checked_property": "presence: result and rewritten_query present",
+    "oracle_type": "simple",
+    "evaluator": "if not result or not result.rewritten_query: raise ValueError",
+    "verdict_location": "src/services/agents/nodes/rewrite_query_node.py:92",
+    "check_location": "src/services/agents/nodes/rewrite_query_node.py:92",
+    "enforcement_location": "src/services/agents/nodes/rewrite_query_node.py:93",
+    "failure_consequence": "ValueError caught (108); rewritten query replaced by keyword-expansion fallback (112)",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "2633083"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "src/services/agents/nodes/rewrite_query_node.py",
+      "line": 89,
+      "line_end": 89,
+      "role": "output"
+     },
+     {
+      "rel_path": "src/services/agents/nodes/rewrite_query_node.py",
+      "line": 92,
+      "line_end": 93,
+      "role": "check"
+     },
+     {
+      "rel_path": "src/services/agents/nodes/rewrite_query_node.py",
+      "line": 108,
+      "line_end": 113,
+      "role": "enforcement"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "sourangshupal_Agentic-RAG-project/src/services/agents/nodes/rewrite_query_node.py::89::43",
+    "protected_output": "stripped rewritten query",
+    "checked_property": "non-empty after strip",
+    "oracle_type": "simple",
+    "evaluator": "if not rewritten_query: raise ValueError",
+    "verdict_location": "src/services/agents/nodes/rewrite_query_node.py:96",
+    "check_location": "src/services/agents/nodes/rewrite_query_node.py:96",
+    "enforcement_location": "src/services/agents/nodes/rewrite_query_node.py:97",
+    "failure_consequence": "ValueError caught; fallback expansion replaces output",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "partial",
+    "joern_slice_ids": [
+     "2633083"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "src/services/agents/nodes/rewrite_query_node.py",
+      "line": 95,
+      "line_end": 97,
+      "role": "check"
+     },
+     {
+      "rel_path": "src/services/agents/nodes/rewrite_query_node.py",
+      "line": 108,
+      "line_end": 113,
+      "role": "enforcement"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "Missing or empty rewritten queries raise and are replaced by a deterministic fallback before the query enters graph state. Simple presence checks."
+ },
+ {
+  "site_no": 201,
+  "call_id": "xunharry4-source_AnimoCerebro/src/zentex/tasks/decomposition/pydantic_ai_decomposer.py::179::27",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "zentex task decomposition plugin; decompose_mission (131-229).",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "pydantic_ai Agent(model, output_type=PromptedOutput(...)).run(prompt) at 179.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "xunharry4-source_AnimoCerebro/src/zentex/tasks/decomposition/pydantic_ai_decomposer.py::179::27",
+    "protected_output": "task breakdown (subtasks)",
+    "checked_property": "schema + dependency-graph constraints (Literal types, lengths, step-N ids, unique ids, backward-only deps)",
+    "oracle_type": "simple",
+    "evaluator": "PydanticAIAtomicTaskBreakdown.model_validate(result.output) with field/model validators (26-79)",
+    "verdict_location": "src/zentex/tasks/decomposition/pydantic_ai_decomposer.py:180",
+    "check_location": "src/zentex/tasks/decomposition/pydantic_ai_decomposer.py:180",
+    "enforcement_location": "src/zentex/tasks/decomposition/pydantic_ai_decomposer.py:229",
+    "failure_consequence": "ValidationError -> caught, logged, re-raised as RuntimeError; subtasks not returned",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "2903321"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "src/zentex/tasks/decomposition/pydantic_ai_decomposer.py",
+      "line": 179,
+      "line_end": 180,
+      "role": "check"
+     },
+     {
+      "rel_path": "src/zentex/tasks/decomposition/pydantic_ai_decomposer.py",
+      "line": 26,
+      "line_end": 79,
+      "role": "support"
+     },
+     {
+      "rel_path": "src/zentex/tasks/decomposition/pydantic_ai_decomposer.py",
+      "line": 210,
+      "line_end": 229,
+      "role": "enforcement"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "xunharry4-source_AnimoCerebro/src/zentex/tasks/decomposition/pydantic_ai_decomposer.py::179::27",
+    "protected_output": "generated subtasks",
+    "checked_property": "deterministic atomicity rules: acceptance criteria present and strong, concrete resources, single action, valid deps, retry budget",
+    "oracle_type": "simple",
+    "evaluator": "PydanticAIAtomicSubtaskReviewer.review_generated_subtasks(...).raise_if_rejected() (reviewer.py 112-185, rule-based, no LLM)",
+    "verdict_location": "src/zentex/tasks/decomposition/pydantic_ai_decomposer.py:181",
+    "check_location": "src/zentex/tasks/decomposition/reviewer.py:112",
+    "enforcement_location": "src/zentex/tasks/decomposition/pydantic_ai_decomposer.py:181",
+    "failure_consequence": "RuntimeError -> re-raised; subtasks not created",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "partial",
+    "joern_slice_ids": [
+     "2903321"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "src/zentex/tasks/decomposition/pydantic_ai_decomposer.py",
+      "line": 181,
+      "line_end": 181,
+      "role": "check"
+     },
+     {
+      "rel_path": "src/zentex/tasks/decomposition/reviewer.py",
+      "line": 22,
+      "line_end": 26,
+      "role": "enforcement"
+     },
+     {
+      "rel_path": "src/zentex/tasks/decomposition/reviewer.py",
+      "line": 112,
+      "line_end": 185,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "xunharry4-source_AnimoCerebro/src/zentex/tasks/decomposition/pydantic_ai_decomposer.py::179::27",
+    "protected_output": "generated subtasks",
+    "checked_property": "alignment with Q9 objective/requirements/prohibitions",
+    "oracle_type": "complex",
+    "evaluator": "pydantic_ai LLM reviewer (same model, temperature 0) returns accepted + scores; schema validator forces accepted=False on low scores (91-99)",
+    "verdict_location": "src/zentex/tasks/decomposition/pydantic_ai_decomposer.py:298",
+    "check_location": "src/zentex/tasks/decomposition/pydantic_ai_decomposer.py:285",
+    "enforcement_location": "src/zentex/tasks/decomposition/pydantic_ai_decomposer.py:299",
+    "failure_consequence": "RuntimeError raised and re-raised by decompose_mission; subtasks not returned",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "src/zentex/tasks/decomposition/pydantic_ai_decomposer.py",
+      "line": 182,
+      "line_end": 193,
+      "role": "check"
+     },
+     {
+      "rel_path": "src/zentex/tasks/decomposition/pydantic_ai_decomposer.py",
+      "line": 285,
+      "line_end": 286,
+      "role": "verdict"
+     },
+     {
+      "rel_path": "src/zentex/tasks/decomposition/pydantic_ai_decomposer.py",
+      "line": 298,
+      "line_end": 299,
+      "role": "enforcement"
+     },
+     {
+      "rel_path": "src/zentex/tasks/decomposition/pydantic_ai_decomposer.py",
+      "line": 91,
+      "line_end": 99,
+      "role": "support"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "The decomposition output passes three gates before subtasks are returned: Pydantic schema/graph validation, a deterministic rule reviewer, and an LLM alignment judge (site 285) whose rejection raises. Simple and complex checks both apply ('both'). pydantic_ai output_retries=3 also retries schema failures inside the framework."
+ },
+ {
+  "site_no": 202,
+  "call_id": "xunharry4-source_AnimoCerebro/src/zentex/tasks/decomposition/pydantic_ai_decomposer.py::285::23",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "zentex decomposer; _review_q9_alignment (231-300), called from decompose_mission (182).",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "pydantic_ai Agent(...).run(prompt) at 285, an LLM reviewer of generated subtasks.",
+  "site_role": "judge_evaluator",
+  "guards": [
+   {
+    "protected_producer_call_id": "xunharry4-source_AnimoCerebro/src/zentex/tasks/decomposition/pydantic_ai_decomposer.py::285::23",
+    "protected_output": "judge's own review object",
+    "checked_property": "schema of PydanticAIQ9SubtaskAlignmentReview",
+    "oracle_type": "simple",
+    "evaluator": "model_validate(result.output)",
+    "verdict_location": "src/zentex/tasks/decomposition/pydantic_ai_decomposer.py:286",
+    "check_location": "src/zentex/tasks/decomposition/pydantic_ai_decomposer.py:286",
+    "enforcement_location": "src/zentex/tasks/decomposition/pydantic_ai_decomposer.py:229",
+    "failure_consequence": "ValidationError -> RuntimeError",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": true,
+    "qualifies": "no",
+    "nonqualifying_reason": "auxiliary_judge_plumbing",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "2903336"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "src/zentex/tasks/decomposition/pydantic_ai_decomposer.py",
+      "line": 285,
+      "line_end": 286,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "xunharry4-source_AnimoCerebro/src/zentex/tasks/decomposition/pydantic_ai_decomposer.py::179::27",
+    "protected_output": "generated subtasks from decomposition call (179)",
+    "checked_property": "Q9 alignment (objective, prohibitions, coverage)",
+    "oracle_type": "complex",
+    "evaluator": "this LLM judge's accepted flag plus score thresholds in validator (91-99)",
+    "verdict_location": "src/zentex/tasks/decomposition/pydantic_ai_decomposer.py:298",
+    "check_location": "src/zentex/tasks/decomposition/pydantic_ai_decomposer.py:298",
+    "enforcement_location": "src/zentex/tasks/decomposition/pydantic_ai_decomposer.py:299",
+    "failure_consequence": "raise RuntimeError; decompose_mission re-raises; subtasks not returned",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "src/zentex/tasks/decomposition/pydantic_ai_decomposer.py",
+      "line": 285,
+      "line_end": 286,
+      "role": "verdict"
+     },
+     {
+      "rel_path": "src/zentex/tasks/decomposition/pydantic_ai_decomposer.py",
+      "line": 298,
+      "line_end": 299,
+      "role": "enforcement"
+     },
+     {
+      "rel_path": "src/zentex/tasks/decomposition/pydantic_ai_decomposer.py",
+      "line": 182,
+      "line_end": 193,
+      "role": "support"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guard_attributed_to_other_producer_only",
+  "rationale": "This call is the LLM alignment judge; its schema validation is auxiliary plumbing. Its rejection raises and blocks the subtasks generated at line 179, so the complex guard is attributed to that producer."
+ },
+ {
+  "site_no": 211,
+  "call_id": "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_code_executor_agent.py::808::31",
+  "actual_context": "production",
+  "context_flags": [
+   "vendored_framework_copy"
+  ],
+  "context_evidence": "Under agent_baseline/autogen/python/packages: a copy of Microsoft AutoGen's own source inside the Agent-Q-Mix repo; non-test library code. CodeExecutorAgent._call_llm streaming branch (806-819), consumed by on_messages_stream (556-590).",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "model_client.create_stream(llm_messages, tools=[]) at 808.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_code_executor_agent.py::808::31",
+    "protected_output": "stream chunks",
+    "checked_property": "type: chunk is CreateResult or str",
+    "oracle_type": "simple",
+    "evaluator": "else: raise RuntimeError('Invalid chunk type')",
+    "verdict_location": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_code_executor_agent.py:811",
+    "check_location": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_code_executor_agent.py:811",
+    "enforcement_location": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_code_executor_agent.py:816",
+    "failure_consequence": "raise RuntimeError before result yielded",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "1501989"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_code_executor_agent.py",
+      "line": 808,
+      "line_end": 816,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_code_executor_agent.py::808::31",
+    "protected_output": "final CreateResult",
+    "checked_property": "presence of final result",
+    "oracle_type": "simple",
+    "evaluator": "if model_result is None: raise RuntimeError",
+    "verdict_location": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_code_executor_agent.py:817",
+    "check_location": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_code_executor_agent.py:817",
+    "enforcement_location": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_code_executor_agent.py:818",
+    "failure_consequence": "raise RuntimeError before yield",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "partial",
+    "joern_slice_ids": [
+     "1501994"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_code_executor_agent.py",
+      "line": 817,
+      "line_end": 818,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_code_executor_agent.py::808::31",
+    "protected_output": "model_result.content (code-bearing text)",
+    "checked_property": "type: content is str",
+    "oracle_type": "simple",
+    "evaluator": "assert isinstance(model_result.content, str)",
+    "verdict_location": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_code_executor_agent.py:589",
+    "check_location": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_code_executor_agent.py:589",
+    "enforcement_location": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_code_executor_agent.py:589",
+    "failure_consequence": "AssertionError before code extraction/execution, but after the result was added to model context (580)",
+    "before_acceptance": "unresolved",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "unresolved",
+    "nonqualifying_reason": "",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": true,
+    "evidence_lines": [
+     {
+      "rel_path": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_code_executor_agent.py",
+      "line": 580,
+      "line_end": 589,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "Streaming output is checked for chunk type and for a final result, both raising before the result is yielded to the agent loop. A later content-type assert runs after the message is already stored in model context, so its timing is unresolved."
+ },
+ {
+  "site_no": 212,
+  "call_id": "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_code_executor_agent.py::821::33",
+  "actual_context": "production",
+  "context_flags": [
+   "vendored_framework_copy"
+  ],
+  "context_evidence": "Under agent_baseline/autogen/python/packages: a copy of Microsoft AutoGen's own source inside the Agent-Q-Mix repo; non-test library code. CodeExecutorAgent._call_llm non-streaming branch (820-822), consumed by on_messages_stream (556-590).",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "model_client.create(llm_messages, tools=[]) at 821.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_code_executor_agent.py::821::33",
+    "protected_output": "CreateResult yielded from _call_llm",
+    "checked_property": "presence: model_result is not None",
+    "oracle_type": "simple",
+    "evaluator": "assert model_result is not None",
+    "verdict_location": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_code_executor_agent.py:571",
+    "check_location": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_code_executor_agent.py:571",
+    "enforcement_location": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_code_executor_agent.py:571",
+    "failure_consequence": "AssertionError before result added to model context (580) or used for code execution",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": true,
+    "evidence_lines": [
+     {
+      "rel_path": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_code_executor_agent.py",
+      "line": 556,
+      "line_end": 571,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_code_executor_agent.py::821::33",
+    "protected_output": "model_result.content (code-bearing text)",
+    "checked_property": "type: content is str",
+    "oracle_type": "simple",
+    "evaluator": "assert isinstance(model_result.content, str)",
+    "verdict_location": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_code_executor_agent.py:589",
+    "check_location": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_code_executor_agent.py:589",
+    "enforcement_location": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_code_executor_agent.py:589",
+    "failure_consequence": "AssertionError before code extraction/execution, but after the result was added to model context (580)",
+    "before_acceptance": "unresolved",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "unresolved",
+    "nonqualifying_reason": "",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": true,
+    "evidence_lines": [
+     {
+      "rel_path": "agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_code_executor_agent.py",
+      "line": 580,
+      "line_end": 589,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "In the caller, a presence assertion on the yielded result raises before it is stored or used; this is a weak check for the non-streaming path (create always returns a result). The content-type assert comes after storage in model context, so its timing is unresolved."
+ },
+ {
+  "site_no": 216,
+  "call_id": "lucebert_langchain-doc-graph/src/self_rag/graph.py::50::17",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "src/self_rag/graph.py: Self-RAG LangGraph app; generate node (34-51).",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "rag_chain = prompt | ChatOpenAI(gpt-4o-mini) | StrOutputParser (nodes/generate.py 11-21); .invoke at 50.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "lucebert_langchain-doc-graph/src/self_rag/graph.py::50::17",
+    "protected_output": "generated answer",
+    "checked_property": "groundedness in retrieved documents, then answers question",
+    "oracle_type": "complex",
+    "evaluator": "hallucination_grader and answer_grader: ChatOpenAI gpt-4o-mini with_structured_output binary_score yes/no (nodes/hallucination_grader.py, nodes/answer_grader.py); judge calls at 161 and 175",
+    "verdict_location": "src/self_rag/graph.py:171",
+    "check_location": "src/self_rag/graph.py:171",
+    "enforcement_location": "src/self_rag/graph.py:185",
+    "failure_consequence": "'not supported' -> regenerate (generate node); 'not useful' -> transform_query and retrieve again; only 'useful' reaches END",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "yes",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "src/self_rag/graph.py",
+      "line": 50,
+      "line_end": 51,
+      "role": "output"
+     },
+     {
+      "rel_path": "src/self_rag/graph.py",
+      "line": 161,
+      "line_end": 164,
+      "role": "verdict"
+     },
+     {
+      "rel_path": "src/self_rag/graph.py",
+      "line": 166,
+      "line_end": 168,
+      "role": "support"
+     },
+     {
+      "rel_path": "src/self_rag/graph.py",
+      "line": 171,
+      "line_end": 185,
+      "role": "enforcement"
+     },
+     {
+      "rel_path": "src/self_rag/graph.py",
+      "line": 214,
+      "line_end": 222,
+      "role": "enforcement"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "The generation is judged by two LLM graders (groundedness, answer relevance) whose verdicts route back to regeneration or query rewriting before the graph ends. The guard is bypassed once total_iterations > 3, when the output is accepted as 'useful' regardless of grade."
+ }
+]

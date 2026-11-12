@@ -1,0 +1,2400 @@
+[
+ {
+  "site_no": 10,
+  "call_id": "Grigorij-Dudnik_Clean-Coder-AI/src/agents/frontend_feedback.py::53::15",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "src/agents/frontend_feedback.py:40 write_screenshot_codes, agent module of the app",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "llm (init_llms_medium_intelligence with_fallbacks).with_structured_output(ScreenshotCodingStructure).invoke(prompt) at lines 52-53",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "Grigorij-Dudnik_Clean-Coder-AI/src/agents/frontend_feedback.py::53::15",
+    "protected_output": "structured ScreenshotCodingStructure response (playwright screenshot code)",
+    "checked_property": "screenshot_code == 'No screenshot needed' sentinel",
+    "oracle_type": "simple",
+    "evaluator": "equality with the sentinel string the schema asks the model to emit when no screenshot is needed",
+    "verdict_location": "src/agents/frontend_feedback.py:55",
+    "check_location": "src/agents/frontend_feedback.py:55",
+    "enforcement_location": "src/agents/frontend_feedback.py:56",
+    "failure_consequence": "return None (no screenshot code built)",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "workflow_branch_not_acceptability",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "239913"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "src/agents/frontend_feedback.py",
+      "line": 53,
+      "line_end": 53,
+      "role": "output"
+     },
+     {
+      "rel_path": "src/agents/frontend_feedback.py",
+      "line": 55,
+      "line_end": 56,
+      "role": "check"
+     },
+     {
+      "rel_path": "src/agents/frontend_feedback.py",
+      "line": 79,
+      "line_end": 81,
+      "role": "support"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "The only check is a sentinel-equality branch implementing the model's legitimate 'no screenshot needed' answer; it is a workflow branch, not rejection of an invalid output. The screenshot code is otherwise embedded into a playwright script unchecked (structured-output parsing is framework-internal, not an app-level check)."
+ },
+ {
+  "site_no": 47,
+  "call_id": "THUIR_MemoryBench/baselines/mem0/mem0/vector_stores/opensearch.py::223::23",
+  "actual_context": "production",
+  "context_flags": [
+   "vendored_framework_copy",
+   "benchmark_or_eval_harness"
+  ],
+  "context_evidence": "baselines/mem0/mem0/vector_stores/opensearch.py is a copy of mem0's own vector-store source inside the MemoryBench benchmark repo",
+  "invocation": "false_positive_non_llm",
+  "invocation_evidence": "self.client.search(index=..., body=...) at line 223 is an OpenSearch client query, not an LLM/mem0 memory search",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "THUIR_MemoryBench/baselines/mem0/mem0/vector_stores/opensearch.py::223::23",
+    "protected_output": "OpenSearch search hits",
+    "checked_property": "hits list non-empty",
+    "oracle_type": "simple",
+    "evaluator": "if not hits",
+    "verdict_location": "baselines/mem0/mem0/vector_stores/opensearch.py:227",
+    "check_location": "baselines/mem0/mem0/vector_stores/opensearch.py:227",
+    "enforcement_location": "baselines/mem0/mem0/vector_stores/opensearch.py:228",
+    "failure_consequence": "return None",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "false_positive_invocation",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "baselines/mem0/mem0/vector_stores/opensearch.py",
+      "line": 223,
+      "line_end": 228,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "The matched .search is an OpenSearch database query in a vendored copy of mem0, not an LLM call. The empty-hits check is ordinary DB result handling."
+ },
+ {
+  "site_no": 50,
+  "call_id": "XAIHT_Tlamatini/Tlamatini/agent/rag/interface.py::399::19",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "Tlamatini/agent/rag/interface.py production RAG interface; classifier helper used to gate file access",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "llm = _get_classifier_llm() builds an OllamaLLM (langchain_ollama); llm.invoke(classification_prompt) at line 399",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "XAIHT_Tlamatini/Tlamatini/agent/rag/interface.py::399::19",
+    "protected_output": "classifier label text (INTENT / NOT-INTENT) for the user's question",
+    "checked_property": "label parsing: 'NOT-INTENT'/'NOT INTENT' in output -> False; 'INTENT' in output -> True",
+    "oracle_type": "simple",
+    "evaluator": "substring/prefix label match",
+    "verdict_location": "Tlamatini/agent/rag/interface.py:403",
+    "check_location": "Tlamatini/agent/rag/interface.py:403",
+    "enforcement_location": "Tlamatini/agent/rag/interface.py:404",
+    "failure_consequence": "return False/True according to label",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "parse_only",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "Tlamatini/agent/rag/interface.py",
+      "line": 399,
+      "line_end": 400,
+      "role": "output"
+     },
+     {
+      "rel_path": "Tlamatini/agent/rag/interface.py",
+      "line": 403,
+      "line_end": 406,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "XAIHT_Tlamatini/Tlamatini/agent/rag/interface.py::399::19",
+    "protected_output": "classifier label text (INTENT / NOT-INTENT)",
+    "checked_property": "output contains a recognised label (membership in the allowed label set)",
+    "oracle_type": "simple",
+    "evaluator": "neither label branch matched -> ambiguous output",
+    "verdict_location": "Tlamatini/agent/rag/interface.py:405",
+    "check_location": "Tlamatini/agent/rag/interface.py:405",
+    "enforcement_location": "Tlamatini/agent/rag/interface.py:408",
+    "failure_consequence": "fallback: ambiguous/unrecognised output replaced by fail-safe default True (assume file access intended), so the security gate errs closed",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "Tlamatini/agent/rag/interface.py",
+      "line": 405,
+      "line_end": 408,
+      "role": "enforcement"
+     },
+     {
+      "rel_path": "Tlamatini/agent/rag/interface.py",
+      "line": 409,
+      "line_end": 411,
+      "role": "support"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "The LLM classifies the user question; the explicit label branches are parsing, but an unrecognised/ambiguous output is not accepted and is replaced by a conservative fail-safe default before it gates file access. This is a weak rule-based membership guard with fallback (borderline with parse_only); the classifier itself screens user input, it does not judge another LLM generation."
+ },
+ {
+  "site_no": 51,
+  "call_id": "XAIHT_Tlamatini/Tlamatini/agent/rag/interface.py::487::19",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "Tlamatini/agent/rag/interface.py production RAG interface; classifier helper used to gate file access",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "llm = _get_classifier_llm() builds an OllamaLLM (langchain_ollama); llm.invoke(classification_prompt) at line 487",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "XAIHT_Tlamatini/Tlamatini/agent/rag/interface.py::487::19",
+    "protected_output": "classifier label text (YES / NO) for the user's question",
+    "checked_property": "label parsing: startswith NO or (NO and not YES) -> False; YES -> True",
+    "oracle_type": "simple",
+    "evaluator": "substring/prefix label match",
+    "verdict_location": "Tlamatini/agent/rag/interface.py:491",
+    "check_location": "Tlamatini/agent/rag/interface.py:491",
+    "enforcement_location": "Tlamatini/agent/rag/interface.py:492",
+    "failure_consequence": "return False/True according to label",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "parse_only",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "Tlamatini/agent/rag/interface.py",
+      "line": 487,
+      "line_end": 488,
+      "role": "output"
+     },
+     {
+      "rel_path": "Tlamatini/agent/rag/interface.py",
+      "line": 491,
+      "line_end": 494,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "XAIHT_Tlamatini/Tlamatini/agent/rag/interface.py::487::19",
+    "protected_output": "classifier label text (YES / NO)",
+    "checked_property": "output contains a recognised label (membership in the allowed label set)",
+    "oracle_type": "simple",
+    "evaluator": "neither label branch matched -> ambiguous output",
+    "verdict_location": "Tlamatini/agent/rag/interface.py:493",
+    "check_location": "Tlamatini/agent/rag/interface.py:493",
+    "enforcement_location": "Tlamatini/agent/rag/interface.py:496",
+    "failure_consequence": "fallback: ambiguous/unrecognised output replaced by fail-safe default True (assume file access intended), so the security gate errs closed",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "Tlamatini/agent/rag/interface.py",
+      "line": 493,
+      "line_end": 496,
+      "role": "enforcement"
+     },
+     {
+      "rel_path": "Tlamatini/agent/rag/interface.py",
+      "line": 497,
+      "line_end": 499,
+      "role": "support"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "The LLM classifies the user question; the explicit label branches are parsing, but an unrecognised/ambiguous output is not accepted and is replaced by a conservative fail-safe default before it gates file access. This is a weak rule-based membership guard with fallback (borderline with parse_only); the classifier itself screens user input, it does not judge another LLM generation."
+ },
+ {
+  "site_no": 52,
+  "call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::1053::17",
+  "actual_context": "test",
+  "context_flags": [],
+  "context_evidence": "Tlamatini/agent/tests.py:987 test_acpx_and_skill_tools_are_captured_with_correct_keys_and_commands in unittest TestCase ExecReportCaptureTests",
+  "invocation": "unresolved",
+  "invocation_evidence": "MultiTurnToolAgentExecutor (app class, agent/mcp_agent.py:745) built in the test with a scripted _FakeLLM/_Fake test double; exe.invoke runs the app loop but no real LLM",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::1053::17",
+    "protected_output": "result of the test-invoked stubbed agent/chain",
+    "checked_property": "self.assertEqual(len(entries), 4)",
+    "oracle_type": "simple",
+    "evaluator": "unittest assertion: self.assertEqual(len(entries), 4)",
+    "verdict_location": "Tlamatini/agent/tests.py:1057",
+    "check_location": "Tlamatini/agent/tests.py:1057",
+    "enforcement_location": "Tlamatini/agent/tests.py:1057",
+    "failure_consequence": "test failure (AssertionError)",
+    "before_acceptance": "no",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "test_or_test_support_context",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 1053,
+      "line_end": 1053,
+      "role": "output"
+     },
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 1057,
+      "line_end": 1057,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "Unit-test method in Tlamatini/agent/tests.py (mislabelled production); the assertions are test oracles on a test-double-driven result, not runtime guardrails. The executor's LLM is a scripted _FakeLLM, so no genuine LLM output is checked."
+ },
+ {
+  "site_no": 53,
+  "call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::1109::17",
+  "actual_context": "test",
+  "context_flags": [],
+  "context_evidence": "Tlamatini/agent/tests.py:1074 test_acpx_failure_and_skill_failure_are_captured_with_success_false in unittest TestCase ExecReportCaptureTests",
+  "invocation": "unresolved",
+  "invocation_evidence": "MultiTurnToolAgentExecutor (app class, agent/mcp_agent.py:745) built in the test with a scripted _FakeLLM/_Fake test double; exe.invoke runs the app loop but no real LLM",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::1109::17",
+    "protected_output": "result of the test-invoked stubbed agent/chain",
+    "checked_property": "self.assertEqual(len(entries), 2)",
+    "oracle_type": "simple",
+    "evaluator": "unittest assertion: self.assertEqual(len(entries), 2)",
+    "verdict_location": "Tlamatini/agent/tests.py:1112",
+    "check_location": "Tlamatini/agent/tests.py:1112",
+    "enforcement_location": "Tlamatini/agent/tests.py:1112",
+    "failure_consequence": "test failure (AssertionError)",
+    "before_acceptance": "no",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "test_or_test_support_context",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 1109,
+      "line_end": 1109,
+      "role": "output"
+     },
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 1112,
+      "line_end": 1112,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::1109::17",
+    "protected_output": "result of the test-invoked stubbed agent/chain",
+    "checked_property": "self.assertEqual(entries[0]['agent_key'], 'acpx')",
+    "oracle_type": "simple",
+    "evaluator": "unittest assertion: self.assertEqual(entries[0]['agent_key'], 'acpx')",
+    "verdict_location": "Tlamatini/agent/tests.py:1113",
+    "check_location": "Tlamatini/agent/tests.py:1113",
+    "enforcement_location": "Tlamatini/agent/tests.py:1113",
+    "failure_consequence": "test failure (AssertionError)",
+    "before_acceptance": "no",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "test_or_test_support_context",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 1109,
+      "line_end": 1109,
+      "role": "output"
+     },
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 1113,
+      "line_end": 1113,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "Unit-test method in Tlamatini/agent/tests.py (mislabelled production); the assertions are test oracles on a test-double-driven result, not runtime guardrails. The executor's LLM is a scripted _FakeLLM."
+ },
+ {
+  "site_no": 54,
+  "call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::1284::17",
+  "actual_context": "test",
+  "context_flags": [],
+  "context_evidence": "Tlamatini/agent/tests.py:1248 test_guard_nudges_and_sends_when_notification_was_skipped in unittest TestCase NotificationDebtGuardTests",
+  "invocation": "unresolved",
+  "invocation_evidence": "MultiTurnToolAgentExecutor (app class, agent/mcp_agent.py:745) built in the test with a scripted _FakeLLM/_Fake test double; exe.invoke runs the app loop but no real LLM (scripted _Fake at line 1254)",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::1284::17",
+    "protected_output": "result of the test-invoked stubbed agent/chain",
+    "checked_property": "self.assertIn('FLOWPILLS SECURITY ANALYSIS', result['output'])",
+    "oracle_type": "simple",
+    "evaluator": "unittest assertion: self.assertIn('FLOWPILLS SECURITY ANALYSIS', result['output'])",
+    "verdict_location": "Tlamatini/agent/tests.py:1293",
+    "check_location": "Tlamatini/agent/tests.py:1293",
+    "enforcement_location": "Tlamatini/agent/tests.py:1293",
+    "failure_consequence": "test failure (AssertionError)",
+    "before_acceptance": "no",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "test_or_test_support_context",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "799552"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 1284,
+      "line_end": 1284,
+      "role": "output"
+     },
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 1293,
+      "line_end": 1293,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "Unit-test method in Tlamatini/agent/tests.py (mislabelled production); the assertions are test oracles on a test-double-driven result, not runtime guardrails. It tests the app's notification-debt nudge, but the check at this site is only the test assertion."
+ },
+ {
+  "site_no": 55,
+  "call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::1305::17",
+  "actual_context": "test",
+  "context_flags": [],
+  "context_evidence": "Tlamatini/agent/tests.py:1295 test_guard_silent_when_notification_not_requested in unittest TestCase NotificationDebtGuardTests",
+  "invocation": "unresolved",
+  "invocation_evidence": "MultiTurnToolAgentExecutor (app class, agent/mcp_agent.py:745) built in the test with a scripted _FakeLLM/_Fake test double; exe.invoke runs the app loop but no real LLM (scripted _Fake at line 1297)",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::1305::17",
+    "protected_output": "result of the test-invoked stubbed agent/chain",
+    "checked_property": "self.assertEqual(result['exec_report_entries'], [])",
+    "oracle_type": "simple",
+    "evaluator": "unittest assertion: self.assertEqual(result['exec_report_entries'], [])",
+    "verdict_location": "Tlamatini/agent/tests.py:1309",
+    "check_location": "Tlamatini/agent/tests.py:1309",
+    "enforcement_location": "Tlamatini/agent/tests.py:1309",
+    "failure_consequence": "test failure (AssertionError)",
+    "before_acceptance": "no",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "test_or_test_support_context",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "799555"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 1305,
+      "line_end": 1305,
+      "role": "output"
+     },
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 1309,
+      "line_end": 1309,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::1305::17",
+    "protected_output": "result of the test-invoked stubbed agent/chain",
+    "checked_property": "self.assertIn('summary', result['output'])",
+    "oracle_type": "simple",
+    "evaluator": "unittest assertion: self.assertIn('summary', result['output'])",
+    "verdict_location": "Tlamatini/agent/tests.py:1310",
+    "check_location": "Tlamatini/agent/tests.py:1310",
+    "enforcement_location": "Tlamatini/agent/tests.py:1310",
+    "failure_consequence": "test failure (AssertionError)",
+    "before_acceptance": "no",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "test_or_test_support_context",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "799555"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 1305,
+      "line_end": 1305,
+      "role": "output"
+     },
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 1310,
+      "line_end": 1310,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "Unit-test method in Tlamatini/agent/tests.py (mislabelled production); the assertions are test oracles on a test-double-driven result, not runtime guardrails. "
+ },
+ {
+  "site_no": 56,
+  "call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::1332::17",
+  "actual_context": "test",
+  "context_flags": [],
+  "context_evidence": "Tlamatini/agent/tests.py:1312 test_guard_does_not_double_send_when_already_notified in unittest TestCase NotificationDebtGuardTests",
+  "invocation": "unresolved",
+  "invocation_evidence": "MultiTurnToolAgentExecutor (app class, agent/mcp_agent.py:745) built in the test with a scripted _FakeLLM/_Fake test double; exe.invoke runs the app loop but no real LLM (scripted _Fake at line 1315)",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::1332::17",
+    "protected_output": "result of the test-invoked stubbed agent/chain",
+    "checked_property": "self.assertIn('notified', result['output'])",
+    "oracle_type": "simple",
+    "evaluator": "unittest assertion: self.assertIn('notified', result['output'])",
+    "verdict_location": "Tlamatini/agent/tests.py:1338",
+    "check_location": "Tlamatini/agent/tests.py:1338",
+    "enforcement_location": "Tlamatini/agent/tests.py:1338",
+    "failure_consequence": "test failure (AssertionError)",
+    "before_acceptance": "no",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "test_or_test_support_context",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "799558"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 1332,
+      "line_end": 1332,
+      "role": "output"
+     },
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 1338,
+      "line_end": 1338,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "Unit-test method in Tlamatini/agent/tests.py (mislabelled production); the assertions are test oracles on a test-double-driven result, not runtime guardrails. "
+ },
+ {
+  "site_no": 57,
+  "call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::2168::17",
+  "actual_context": "test",
+  "context_flags": [],
+  "context_evidence": "Tlamatini/agent/tests.py:2146 test_unified_agent_chain_forwards_global_execution_plan_to_executor in unittest TestCase AskRagMultiTurnTests",
+  "invocation": "unresolved",
+  "invocation_evidence": "UnifiedAgentChain (app class, rag/chains/unified.py:212) with unified_agent replaced by a _FakeAgent test double; no real LLM",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::2168::17",
+    "protected_output": "result of the test-invoked stubbed agent/chain",
+    "checked_property": "self.assertEqual(result['answer'], 'ok')",
+    "oracle_type": "simple",
+    "evaluator": "unittest assertion: self.assertEqual(result['answer'], 'ok')",
+    "verdict_location": "Tlamatini/agent/tests.py:2176",
+    "check_location": "Tlamatini/agent/tests.py:2176",
+    "enforcement_location": "Tlamatini/agent/tests.py:2176",
+    "failure_consequence": "test failure (AssertionError)",
+    "before_acceptance": "no",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "test_or_test_support_context",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "799686"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 2168,
+      "line_end": 2168,
+      "role": "output"
+     },
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 2176,
+      "line_end": 2176,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "Unit-test method in Tlamatini/agent/tests.py (mislabelled production); the assertions are test oracles on a test-double-driven result, not runtime guardrails. "
+ },
+ {
+  "site_no": 58,
+  "call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::3936::25",
+  "actual_context": "test",
+  "context_flags": [],
+  "context_evidence": "Tlamatini/agent/tests.py:3934 test_list_acp_agents_returns_ok_envelope in unittest TestCase AcpxToolEnvelopeTests",
+  "invocation": "false_positive_non_llm",
+  "invocation_evidence": "LangChain @tool from agent.acpx invoked directly via .invoke(dict): tool execution, not an LLM call (list_acp_agents)",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::3936::25",
+    "protected_output": "result of the test-invoked tool/skill",
+    "checked_property": "self.assertTrue(out[\"ok\"])",
+    "oracle_type": "simple",
+    "evaluator": "unittest assertion: self.assertTrue(out[\"ok\"])",
+    "verdict_location": "Tlamatini/agent/tests.py:3937",
+    "check_location": "Tlamatini/agent/tests.py:3937",
+    "enforcement_location": "Tlamatini/agent/tests.py:3937",
+    "failure_consequence": "test failure (AssertionError)",
+    "before_acceptance": "no",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "test_or_test_support_context",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "799975"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 3936,
+      "line_end": 3936,
+      "role": "output"
+     },
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 3937,
+      "line_end": 3937,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::3936::25",
+    "protected_output": "result of the test-invoked tool/skill",
+    "checked_property": "self.assertIsInstance(out[\"agents\"], list)",
+    "oracle_type": "simple",
+    "evaluator": "unittest assertion: self.assertIsInstance(out[\"agents\"], list)",
+    "verdict_location": "Tlamatini/agent/tests.py:3938",
+    "check_location": "Tlamatini/agent/tests.py:3938",
+    "enforcement_location": "Tlamatini/agent/tests.py:3938",
+    "failure_consequence": "test failure (AssertionError)",
+    "before_acceptance": "no",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "test_or_test_support_context",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "799975"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 3936,
+      "line_end": 3936,
+      "role": "output"
+     },
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 3938,
+      "line_end": 3938,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::3936::25",
+    "protected_output": "result of the test-invoked tool/skill",
+    "checked_property": "self.assertGreaterEqual(len(out[\"agents\"]), 13)",
+    "oracle_type": "simple",
+    "evaluator": "unittest assertion: self.assertGreaterEqual(len(out[\"agents\"]), 13)",
+    "verdict_location": "Tlamatini/agent/tests.py:3939",
+    "check_location": "Tlamatini/agent/tests.py:3939",
+    "enforcement_location": "Tlamatini/agent/tests.py:3939",
+    "failure_consequence": "test failure (AssertionError)",
+    "before_acceptance": "no",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "test_or_test_support_context",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "799975"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 3936,
+      "line_end": 3936,
+      "role": "output"
+     },
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 3939,
+      "line_end": 3939,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "Unit-test method in Tlamatini/agent/tests.py (mislabelled production); the assertions are test oracles on a test-double-driven result, not runtime guardrails. "
+ },
+ {
+  "site_no": 59,
+  "call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::3943::25",
+  "actual_context": "test",
+  "context_flags": [],
+  "context_evidence": "Tlamatini/agent/tests.py:3941 test_list_skills_returns_ok_envelope in unittest TestCase AcpxToolEnvelopeTests",
+  "invocation": "false_positive_non_llm",
+  "invocation_evidence": "LangChain @tool from agent.acpx invoked directly via .invoke(dict): tool execution, not an LLM call (list_skills)",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::3943::25",
+    "protected_output": "result of the test-invoked tool/skill",
+    "checked_property": "self.assertTrue(out[\"ok\"])",
+    "oracle_type": "simple",
+    "evaluator": "unittest assertion: self.assertTrue(out[\"ok\"])",
+    "verdict_location": "Tlamatini/agent/tests.py:3944",
+    "check_location": "Tlamatini/agent/tests.py:3944",
+    "enforcement_location": "Tlamatini/agent/tests.py:3944",
+    "failure_consequence": "test failure (AssertionError)",
+    "before_acceptance": "no",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "test_or_test_support_context",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "799976"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 3943,
+      "line_end": 3943,
+      "role": "output"
+     },
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 3944,
+      "line_end": 3944,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::3943::25",
+    "protected_output": "result of the test-invoked tool/skill",
+    "checked_property": "self.assertIsInstance(out[\"skills\"], list)",
+    "oracle_type": "simple",
+    "evaluator": "unittest assertion: self.assertIsInstance(out[\"skills\"], list)",
+    "verdict_location": "Tlamatini/agent/tests.py:3945",
+    "check_location": "Tlamatini/agent/tests.py:3945",
+    "enforcement_location": "Tlamatini/agent/tests.py:3945",
+    "failure_consequence": "test failure (AssertionError)",
+    "before_acceptance": "no",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "test_or_test_support_context",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "799976"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 3943,
+      "line_end": 3943,
+      "role": "output"
+     },
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 3945,
+      "line_end": 3945,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::3943::25",
+    "protected_output": "result of the test-invoked tool/skill",
+    "checked_property": "self.assertGreaterEqual(len(out[\"skills\"]), 1)",
+    "oracle_type": "simple",
+    "evaluator": "unittest assertion: self.assertGreaterEqual(len(out[\"skills\"]), 1)",
+    "verdict_location": "Tlamatini/agent/tests.py:3946",
+    "check_location": "Tlamatini/agent/tests.py:3946",
+    "enforcement_location": "Tlamatini/agent/tests.py:3946",
+    "failure_consequence": "test failure (AssertionError)",
+    "before_acceptance": "no",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "test_or_test_support_context",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "799976"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 3943,
+      "line_end": 3943,
+      "role": "output"
+     },
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 3946,
+      "line_end": 3946,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "Unit-test method in Tlamatini/agent/tests.py (mislabelled production); the assertions are test oracles on a test-double-driven result, not runtime guardrails. "
+ },
+ {
+  "site_no": 60,
+  "call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::3966::25",
+  "actual_context": "test",
+  "context_flags": [],
+  "context_evidence": "Tlamatini/agent/tests.py:3964 test_acp_doctor_returns_status_dict in unittest TestCase AcpxToolEnvelopeTests",
+  "invocation": "false_positive_non_llm",
+  "invocation_evidence": "LangChain @tool from agent.acpx invoked directly via .invoke(dict): tool execution, not an LLM call (acp_doctor)",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::3966::25",
+    "protected_output": "result of the test-invoked tool/skill",
+    "checked_property": "self.assertIn(\"ok\", out)",
+    "oracle_type": "simple",
+    "evaluator": "unittest assertion: self.assertIn(\"ok\", out)",
+    "verdict_location": "Tlamatini/agent/tests.py:3967",
+    "check_location": "Tlamatini/agent/tests.py:3967",
+    "enforcement_location": "Tlamatini/agent/tests.py:3967",
+    "failure_consequence": "test failure (AssertionError)",
+    "before_acceptance": "no",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "test_or_test_support_context",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "799979"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 3966,
+      "line_end": 3966,
+      "role": "output"
+     },
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 3967,
+      "line_end": 3967,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::3966::25",
+    "protected_output": "result of the test-invoked tool/skill",
+    "checked_property": "self.assertIn(\"message\", out)",
+    "oracle_type": "simple",
+    "evaluator": "unittest assertion: self.assertIn(\"message\", out)",
+    "verdict_location": "Tlamatini/agent/tests.py:3968",
+    "check_location": "Tlamatini/agent/tests.py:3968",
+    "enforcement_location": "Tlamatini/agent/tests.py:3968",
+    "failure_consequence": "test failure (AssertionError)",
+    "before_acceptance": "no",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "test_or_test_support_context",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "799979"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 3966,
+      "line_end": 3966,
+      "role": "output"
+     },
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 3968,
+      "line_end": 3968,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "Unit-test method in Tlamatini/agent/tests.py (mislabelled production); the assertions are test oracles on a test-double-driven result, not runtime guardrails. "
+ },
+ {
+  "site_no": 61,
+  "call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::4122::17",
+  "actual_context": "test",
+  "context_flags": [],
+  "context_evidence": "Tlamatini/agent/tests.py:4116 test_invoke_hello_world_returns_ok_envelope in unittest TestCase SkillHarnessDjangoTests",
+  "invocation": "false_positive_non_llm",
+  "invocation_evidence": "SkillHarness(skill).invoke(args) is the app's in-process skill runner (agent/skills/harness.py:158, no LLM reference); not an LLM call",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::4122::17",
+    "protected_output": "result of the test-invoked tool/skill",
+    "checked_property": "self.assertTrue(result[\"ok\"])",
+    "oracle_type": "simple",
+    "evaluator": "unittest assertion: self.assertTrue(result[\"ok\"])",
+    "verdict_location": "Tlamatini/agent/tests.py:4123",
+    "check_location": "Tlamatini/agent/tests.py:4123",
+    "enforcement_location": "Tlamatini/agent/tests.py:4123",
+    "failure_consequence": "test failure (AssertionError)",
+    "before_acceptance": "no",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "test_or_test_support_context",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "800003"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 4122,
+      "line_end": 4122,
+      "role": "output"
+     },
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 4123,
+      "line_end": 4123,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::4122::17",
+    "protected_output": "result of the test-invoked tool/skill",
+    "checked_property": "self.assertEqual(result[\"skill\"], \"hello-world\")",
+    "oracle_type": "simple",
+    "evaluator": "unittest assertion: self.assertEqual(result[\"skill\"], \"hello-world\")",
+    "verdict_location": "Tlamatini/agent/tests.py:4124",
+    "check_location": "Tlamatini/agent/tests.py:4124",
+    "enforcement_location": "Tlamatini/agent/tests.py:4124",
+    "failure_consequence": "test failure (AssertionError)",
+    "before_acceptance": "no",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "test_or_test_support_context",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "800003"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 4122,
+      "line_end": 4122,
+      "role": "output"
+     },
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 4124,
+      "line_end": 4124,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::4122::17",
+    "protected_output": "result of the test-invoked tool/skill",
+    "checked_property": "self.assertEqual(result[\"runtime\"], \"in-process\")",
+    "oracle_type": "simple",
+    "evaluator": "unittest assertion: self.assertEqual(result[\"runtime\"], \"in-process\")",
+    "verdict_location": "Tlamatini/agent/tests.py:4125",
+    "check_location": "Tlamatini/agent/tests.py:4125",
+    "enforcement_location": "Tlamatini/agent/tests.py:4125",
+    "failure_consequence": "test failure (AssertionError)",
+    "before_acceptance": "no",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "test_or_test_support_context",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "800003"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 4122,
+      "line_end": 4122,
+      "role": "output"
+     },
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 4125,
+      "line_end": 4125,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::4122::17",
+    "protected_output": "result of the test-invoked tool/skill",
+    "checked_property": "self.assertIn(\"greeting\", result[\"output\"])",
+    "oracle_type": "simple",
+    "evaluator": "unittest assertion: self.assertIn(\"greeting\", result[\"output\"])",
+    "verdict_location": "Tlamatini/agent/tests.py:4126",
+    "check_location": "Tlamatini/agent/tests.py:4126",
+    "enforcement_location": "Tlamatini/agent/tests.py:4126",
+    "failure_consequence": "test failure (AssertionError)",
+    "before_acceptance": "no",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "test_or_test_support_context",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "800003"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 4122,
+      "line_end": 4122,
+      "role": "output"
+     },
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 4126,
+      "line_end": 4126,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::4122::17",
+    "protected_output": "result of the test-invoked tool/skill",
+    "checked_property": "self.assertIn(\"audit_id\", result)",
+    "oracle_type": "simple",
+    "evaluator": "unittest assertion: self.assertIn(\"audit_id\", result)",
+    "verdict_location": "Tlamatini/agent/tests.py:4127",
+    "check_location": "Tlamatini/agent/tests.py:4127",
+    "enforcement_location": "Tlamatini/agent/tests.py:4127",
+    "failure_consequence": "test failure (AssertionError)",
+    "before_acceptance": "no",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "test_or_test_support_context",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "800003"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 4122,
+      "line_end": 4122,
+      "role": "output"
+     },
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 4127,
+      "line_end": 4127,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "Unit-test method in Tlamatini/agent/tests.py (mislabelled production); the assertions are test oracles on a test-double-driven result, not runtime guardrails. "
+ },
+ {
+  "site_no": 62,
+  "call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::4145::17",
+  "actual_context": "test",
+  "context_flags": [],
+  "context_evidence": "Tlamatini/agent/tests.py:4140 test_envelope_includes_permissions_block in unittest TestCase SkillHarnessDjangoTests",
+  "invocation": "false_positive_non_llm",
+  "invocation_evidence": "SkillHarness(skill).invoke(args) is the app's in-process skill runner (agent/skills/harness.py:158, no LLM reference); not an LLM call",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::4145::17",
+    "protected_output": "result of the test-invoked tool/skill",
+    "checked_property": "self.assertTrue(result[\"ok\"])",
+    "oracle_type": "simple",
+    "evaluator": "unittest assertion: self.assertTrue(result[\"ok\"])",
+    "verdict_location": "Tlamatini/agent/tests.py:4146",
+    "check_location": "Tlamatini/agent/tests.py:4146",
+    "enforcement_location": "Tlamatini/agent/tests.py:4146",
+    "failure_consequence": "test failure (AssertionError)",
+    "before_acceptance": "no",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "test_or_test_support_context",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "800008"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 4145,
+      "line_end": 4145,
+      "role": "output"
+     },
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 4146,
+      "line_end": 4146,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::4145::17",
+    "protected_output": "result of the test-invoked tool/skill",
+    "checked_property": "self.assertIn(\"permissions\", env)",
+    "oracle_type": "simple",
+    "evaluator": "unittest assertion: self.assertIn(\"permissions\", env)",
+    "verdict_location": "Tlamatini/agent/tests.py:4148",
+    "check_location": "Tlamatini/agent/tests.py:4148",
+    "enforcement_location": "Tlamatini/agent/tests.py:4148",
+    "failure_consequence": "test failure (AssertionError)",
+    "before_acceptance": "no",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "test_or_test_support_context",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 4145,
+      "line_end": 4145,
+      "role": "output"
+     },
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 4148,
+      "line_end": 4148,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::4145::17",
+    "protected_output": "result of the test-invoked tool/skill",
+    "checked_property": "self.assertIn(\"requires_tools\", env)",
+    "oracle_type": "simple",
+    "evaluator": "unittest assertion: self.assertIn(\"requires_tools\", env)",
+    "verdict_location": "Tlamatini/agent/tests.py:4149",
+    "check_location": "Tlamatini/agent/tests.py:4149",
+    "enforcement_location": "Tlamatini/agent/tests.py:4149",
+    "failure_consequence": "test failure (AssertionError)",
+    "before_acceptance": "no",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "test_or_test_support_context",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 4145,
+      "line_end": 4145,
+      "role": "output"
+     },
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 4149,
+      "line_end": 4149,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "Unit-test method in Tlamatini/agent/tests.py (mislabelled production); the assertions are test oracles on a test-double-driven result, not runtime guardrails. "
+ },
+ {
+  "site_no": 63,
+  "call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::6172::17",
+  "actual_context": "test",
+  "context_flags": [],
+  "context_evidence": "Tlamatini/agent/tests.py:6154 test_unified_agent_chain_marks_loaded_context_as_user_project in unittest TestCase LoadedContextPriorityTests",
+  "invocation": "unresolved",
+  "invocation_evidence": "UnifiedAgentChain (app class, rag/chains/unified.py:212) with unified_agent replaced by a _FakeAgent test double; no real LLM",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::6172::17",
+    "protected_output": "result of the test-invoked stubbed agent/chain",
+    "checked_property": "self.assertEqual(result['answer'], 'ok')",
+    "oracle_type": "simple",
+    "evaluator": "unittest assertion: self.assertEqual(result['answer'], 'ok')",
+    "verdict_location": "Tlamatini/agent/tests.py:6177",
+    "check_location": "Tlamatini/agent/tests.py:6177",
+    "enforcement_location": "Tlamatini/agent/tests.py:6177",
+    "failure_consequence": "test failure (AssertionError)",
+    "before_acceptance": "no",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "test_or_test_support_context",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "800340"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 6172,
+      "line_end": 6172,
+      "role": "output"
+     },
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 6177,
+      "line_end": 6177,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "Unit-test method in Tlamatini/agent/tests.py (mislabelled production); the assertions are test oracles on a test-double-driven result, not runtime guardrails. "
+ },
+ {
+  "site_no": 64,
+  "call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::649::17",
+  "actual_context": "test",
+  "context_flags": [],
+  "context_evidence": "Tlamatini/agent/tests.py:640 test_basic_prompt_only_chain_uses_loaded_context_in_answer_payload in unittest TestCase LoadedContextFallbackTests",
+  "invocation": "unresolved",
+  "invocation_evidence": "BasicPromptOnlyChain (app class) with answer_chain replaced by SimpleNamespace(invoke=lambda payload: payload); no real LLM",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::649::17",
+    "protected_output": "result of the test-invoked stubbed agent/chain",
+    "checked_property": "self.assertIn('example.py', result['answer']['context'])",
+    "oracle_type": "simple",
+    "evaluator": "unittest assertion: self.assertIn('example.py', result['answer']['context'])",
+    "verdict_location": "Tlamatini/agent/tests.py:651",
+    "check_location": "Tlamatini/agent/tests.py:651",
+    "enforcement_location": "Tlamatini/agent/tests.py:651",
+    "failure_consequence": "test failure (AssertionError)",
+    "before_acceptance": "no",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "test_or_test_support_context",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "799491"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 649,
+      "line_end": 649,
+      "role": "output"
+     },
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 651,
+      "line_end": 651,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::649::17",
+    "protected_output": "result of the test-invoked stubbed agent/chain",
+    "checked_property": "self.assertIn('def example(): return 42', result['answer']['context'])",
+    "oracle_type": "simple",
+    "evaluator": "unittest assertion: self.assertIn('def example(): return 42', result['answer']['context'])",
+    "verdict_location": "Tlamatini/agent/tests.py:652",
+    "check_location": "Tlamatini/agent/tests.py:652",
+    "enforcement_location": "Tlamatini/agent/tests.py:652",
+    "failure_consequence": "test failure (AssertionError)",
+    "before_acceptance": "no",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "test_or_test_support_context",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "799491"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 649,
+      "line_end": 649,
+      "role": "output"
+     },
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 652,
+      "line_end": 652,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "Unit-test method in Tlamatini/agent/tests.py (mislabelled production); the assertions are test oracles on a test-double-driven result, not runtime guardrails. "
+ },
+ {
+  "site_no": 65,
+  "call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::669::17",
+  "actual_context": "test",
+  "context_flags": [],
+  "context_evidence": "Tlamatini/agent/tests.py:654 test_unified_agent_chain_injects_loaded_context_into_agent_input in unittest TestCase LoadedContextFallbackTests",
+  "invocation": "unresolved",
+  "invocation_evidence": "UnifiedAgentChain (app class, rag/chains/unified.py:212) with unified_agent replaced by a _FakeAgent test double; no real LLM",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::669::17",
+    "protected_output": "result of the test-invoked stubbed agent/chain",
+    "checked_property": "self.assertEqual(result['answer'], 'ok')",
+    "oracle_type": "simple",
+    "evaluator": "unittest assertion: self.assertEqual(result['answer'], 'ok')",
+    "verdict_location": "Tlamatini/agent/tests.py:671",
+    "check_location": "Tlamatini/agent/tests.py:671",
+    "enforcement_location": "Tlamatini/agent/tests.py:671",
+    "failure_consequence": "test failure (AssertionError)",
+    "before_acceptance": "no",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "test_or_test_support_context",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "799494"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 669,
+      "line_end": 669,
+      "role": "output"
+     },
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 671,
+      "line_end": 671,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "Unit-test method in Tlamatini/agent/tests.py (mislabelled production); the assertions are test oracles on a test-double-driven result, not runtime guardrails. "
+ },
+ {
+  "site_no": 66,
+  "call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::6827::17",
+  "actual_context": "test",
+  "context_flags": [],
+  "context_evidence": "Tlamatini/agent/tests.py:6821 test_deny_on_first_tool_halts_chain_and_records_denial in unittest TestCase AskExecsExecutorGateTests",
+  "invocation": "unresolved",
+  "invocation_evidence": "MultiTurnToolAgentExecutor invoked in AskExecsExecutorGateTests with a test-double LLM",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::6827::17",
+    "protected_output": "result of the test-invoked stubbed agent/chain",
+    "checked_property": "self.assertEqual(result['exec_report_entries'], [])",
+    "oracle_type": "simple",
+    "evaluator": "unittest assertion: self.assertEqual(result['exec_report_entries'], [])",
+    "verdict_location": "Tlamatini/agent/tests.py:6834",
+    "check_location": "Tlamatini/agent/tests.py:6834",
+    "enforcement_location": "Tlamatini/agent/tests.py:6834",
+    "failure_consequence": "test failure (AssertionError)",
+    "before_acceptance": "no",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "test_or_test_support_context",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "800415"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 6827,
+      "line_end": 6827,
+      "role": "output"
+     },
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 6834,
+      "line_end": 6834,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "Unit-test method in Tlamatini/agent/tests.py (mislabelled production); the assertions are test oracles on a test-double-driven result, not runtime guardrails. "
+ },
+ {
+  "site_no": 67,
+  "call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::6873::17",
+  "actual_context": "test",
+  "context_flags": [],
+  "context_evidence": "Tlamatini/agent/tests.py:6860 test_deny_on_second_tool_keeps_first_execution_in_report in unittest TestCase AskExecsExecutorGateTests",
+  "invocation": "unresolved",
+  "invocation_evidence": "MultiTurnToolAgentExecutor invoked in AskExecsExecutorGateTests with a test-double LLM",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::6873::17",
+    "protected_output": "result of the test-invoked stubbed agent/chain",
+    "checked_property": "self.assertEqual(len(result['exec_report_entries']), 1)",
+    "oracle_type": "simple",
+    "evaluator": "unittest assertion: self.assertEqual(len(result['exec_report_entries']), 1)",
+    "verdict_location": "Tlamatini/agent/tests.py:6880",
+    "check_location": "Tlamatini/agent/tests.py:6880",
+    "enforcement_location": "Tlamatini/agent/tests.py:6880",
+    "failure_consequence": "test failure (AssertionError)",
+    "before_acceptance": "no",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "test_or_test_support_context",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "800420"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 6873,
+      "line_end": 6873,
+      "role": "output"
+     },
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 6880,
+      "line_end": 6880,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::6873::17",
+    "protected_output": "result of the test-invoked stubbed agent/chain",
+    "checked_property": "self.assertEqual(result['exec_report_entries'][0]['agent_key'], 'executer')",
+    "oracle_type": "simple",
+    "evaluator": "unittest assertion: self.assertEqual(result['exec_report_entries'][0]['agent_key'], 'executer')",
+    "verdict_location": "Tlamatini/agent/tests.py:6881",
+    "check_location": "Tlamatini/agent/tests.py:6881",
+    "enforcement_location": "Tlamatini/agent/tests.py:6881",
+    "failure_consequence": "test failure (AssertionError)",
+    "before_acceptance": "no",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "test_or_test_support_context",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "800420"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 6873,
+      "line_end": 6873,
+      "role": "output"
+     },
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 6881,
+      "line_end": 6881,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "Unit-test method in Tlamatini/agent/tests.py (mislabelled production); the assertions are test oracles on a test-double-driven result, not runtime guardrails. "
+ },
+ {
+  "site_no": 68,
+  "call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::691::17",
+  "actual_context": "test",
+  "context_flags": [],
+  "context_evidence": "Tlamatini/agent/tests.py:676 test_unified_agent_chain_forwards_multi_turn_flag_to_executor in unittest TestCase LoadedContextFallbackTests",
+  "invocation": "unresolved",
+  "invocation_evidence": "UnifiedAgentChain (app class, rag/chains/unified.py:212) with unified_agent replaced by a _FakeAgent test double; no real LLM",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::691::17",
+    "protected_output": "result of the test-invoked stubbed agent/chain",
+    "checked_property": "self.assertEqual(result['answer'], 'ok')",
+    "oracle_type": "simple",
+    "evaluator": "unittest assertion: self.assertEqual(result['answer'], 'ok')",
+    "verdict_location": "Tlamatini/agent/tests.py:697",
+    "check_location": "Tlamatini/agent/tests.py:697",
+    "enforcement_location": "Tlamatini/agent/tests.py:697",
+    "failure_consequence": "test failure (AssertionError)",
+    "before_acceptance": "no",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "test_or_test_support_context",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "799497"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 691,
+      "line_end": 691,
+      "role": "output"
+     },
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 697,
+      "line_end": 697,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "Unit-test method in Tlamatini/agent/tests.py (mislabelled production); the assertions are test oracles on a test-double-driven result, not runtime guardrails. "
+ },
+ {
+  "site_no": 69,
+  "call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::7076::17",
+  "actual_context": "test",
+  "context_flags": [],
+  "context_evidence": "Tlamatini/agent/tests.py:7050 test_chain_forwards_ask_execs_and_round_trips_denial in unittest TestCase AskExecsChainPropagationTests",
+  "invocation": "unresolved",
+  "invocation_evidence": "app chain/executor invoked in AskExecsChainPropagationTests with a test-double agent/LLM",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::7076::17",
+    "protected_output": "result of the test-invoked stubbed agent/chain",
+    "checked_property": "self.assertIn('exec_report_denied', result)",
+    "oracle_type": "simple",
+    "evaluator": "unittest assertion: self.assertIn('exec_report_denied', result)",
+    "verdict_location": "Tlamatini/agent/tests.py:7088",
+    "check_location": "Tlamatini/agent/tests.py:7088",
+    "enforcement_location": "Tlamatini/agent/tests.py:7088",
+    "failure_consequence": "test failure (AssertionError)",
+    "before_acceptance": "no",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "test_or_test_support_context",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "800431"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 7076,
+      "line_end": 7076,
+      "role": "output"
+     },
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 7088,
+      "line_end": 7088,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::7076::17",
+    "protected_output": "result of the test-invoked stubbed agent/chain",
+    "checked_property": "self.assertEqual(result['exec_report_denied']['command'], 'rm -rf /')",
+    "oracle_type": "simple",
+    "evaluator": "unittest assertion: self.assertEqual(result['exec_report_denied']['command'], 'rm -rf /')",
+    "verdict_location": "Tlamatini/agent/tests.py:7089",
+    "check_location": "Tlamatini/agent/tests.py:7089",
+    "enforcement_location": "Tlamatini/agent/tests.py:7089",
+    "failure_consequence": "test failure (AssertionError)",
+    "before_acceptance": "no",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "test_or_test_support_context",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "800431"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 7076,
+      "line_end": 7076,
+      "role": "output"
+     },
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 7089,
+      "line_end": 7089,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "Unit-test method in Tlamatini/agent/tests.py (mislabelled production); the assertions are test oracles on a test-double-driven result, not runtime guardrails. "
+ },
+ {
+  "site_no": 70,
+  "call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::841::17",
+  "actual_context": "test",
+  "context_flags": [],
+  "context_evidence": "Tlamatini/agent/tests.py:821 test_direct_executer_and_pythonxer_are_captured_with_correct_agent_keys in unittest TestCase ExecReportCaptureTests",
+  "invocation": "unresolved",
+  "invocation_evidence": "MultiTurnToolAgentExecutor (app class, agent/mcp_agent.py:745) built in the test with a scripted _FakeLLM/_Fake test double; exe.invoke runs the app loop but no real LLM",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::841::17",
+    "protected_output": "result of the test-invoked stubbed agent/chain",
+    "checked_property": "self.assertEqual(len(entries), 2)",
+    "oracle_type": "simple",
+    "evaluator": "unittest assertion: self.assertEqual(len(entries), 2)",
+    "verdict_location": "Tlamatini/agent/tests.py:844",
+    "check_location": "Tlamatini/agent/tests.py:844",
+    "enforcement_location": "Tlamatini/agent/tests.py:844",
+    "failure_consequence": "test failure (AssertionError)",
+    "before_acceptance": "no",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "test_or_test_support_context",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 841,
+      "line_end": 841,
+      "role": "output"
+     },
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 844,
+      "line_end": 844,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::841::17",
+    "protected_output": "result of the test-invoked stubbed agent/chain",
+    "checked_property": "self.assertEqual(entries[0]['agent_key'], 'executer')",
+    "oracle_type": "simple",
+    "evaluator": "unittest assertion: self.assertEqual(entries[0]['agent_key'], 'executer')",
+    "verdict_location": "Tlamatini/agent/tests.py:845",
+    "check_location": "Tlamatini/agent/tests.py:845",
+    "enforcement_location": "Tlamatini/agent/tests.py:845",
+    "failure_consequence": "test failure (AssertionError)",
+    "before_acceptance": "no",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "test_or_test_support_context",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 841,
+      "line_end": 841,
+      "role": "output"
+     },
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 845,
+      "line_end": 845,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::841::17",
+    "protected_output": "result of the test-invoked stubbed agent/chain",
+    "checked_property": "self.assertEqual(entries[0]['agent_display'], 'Executer')",
+    "oracle_type": "simple",
+    "evaluator": "unittest assertion: self.assertEqual(entries[0]['agent_display'], 'Executer')",
+    "verdict_location": "Tlamatini/agent/tests.py:846",
+    "check_location": "Tlamatini/agent/tests.py:846",
+    "enforcement_location": "Tlamatini/agent/tests.py:846",
+    "failure_consequence": "test failure (AssertionError)",
+    "before_acceptance": "no",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "test_or_test_support_context",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 841,
+      "line_end": 841,
+      "role": "output"
+     },
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 846,
+      "line_end": 846,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::841::17",
+    "protected_output": "result of the test-invoked stubbed agent/chain",
+    "checked_property": "self.assertEqual(entries[0]['command'], 'git status')",
+    "oracle_type": "simple",
+    "evaluator": "unittest assertion: self.assertEqual(entries[0]['command'], 'git status')",
+    "verdict_location": "Tlamatini/agent/tests.py:847",
+    "check_location": "Tlamatini/agent/tests.py:847",
+    "enforcement_location": "Tlamatini/agent/tests.py:847",
+    "failure_consequence": "test failure (AssertionError)",
+    "before_acceptance": "no",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "test_or_test_support_context",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 841,
+      "line_end": 841,
+      "role": "output"
+     },
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 847,
+      "line_end": 847,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::841::17",
+    "protected_output": "result of the test-invoked stubbed agent/chain",
+    "checked_property": "self.assertTrue(entries[0]['success'])",
+    "oracle_type": "simple",
+    "evaluator": "unittest assertion: self.assertTrue(entries[0]['success'])",
+    "verdict_location": "Tlamatini/agent/tests.py:848",
+    "check_location": "Tlamatini/agent/tests.py:848",
+    "enforcement_location": "Tlamatini/agent/tests.py:848",
+    "failure_consequence": "test failure (AssertionError)",
+    "before_acceptance": "no",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "test_or_test_support_context",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 841,
+      "line_end": 841,
+      "role": "output"
+     },
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 848,
+      "line_end": 848,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::841::17",
+    "protected_output": "result of the test-invoked stubbed agent/chain",
+    "checked_property": "self.assertEqual(entries[1]['agent_key'], 'pythonxer')",
+    "oracle_type": "simple",
+    "evaluator": "unittest assertion: self.assertEqual(entries[1]['agent_key'], 'pythonxer')",
+    "verdict_location": "Tlamatini/agent/tests.py:849",
+    "check_location": "Tlamatini/agent/tests.py:849",
+    "enforcement_location": "Tlamatini/agent/tests.py:849",
+    "failure_consequence": "test failure (AssertionError)",
+    "before_acceptance": "no",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "test_or_test_support_context",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 841,
+      "line_end": 841,
+      "role": "output"
+     },
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 849,
+      "line_end": 849,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::841::17",
+    "protected_output": "result of the test-invoked stubbed agent/chain",
+    "checked_property": "self.assertEqual(entries[1]['agent_display'], 'Pythonxer')",
+    "oracle_type": "simple",
+    "evaluator": "unittest assertion: self.assertEqual(entries[1]['agent_display'], 'Pythonxer')",
+    "verdict_location": "Tlamatini/agent/tests.py:850",
+    "check_location": "Tlamatini/agent/tests.py:850",
+    "enforcement_location": "Tlamatini/agent/tests.py:850",
+    "failure_consequence": "test failure (AssertionError)",
+    "before_acceptance": "no",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "test_or_test_support_context",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 841,
+      "line_end": 841,
+      "role": "output"
+     },
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 850,
+      "line_end": 850,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "Unit-test method in Tlamatini/agent/tests.py (mislabelled production); the assertions are test oracles on a test-double-driven result, not runtime guardrails. "
+ },
+ {
+  "site_no": 71,
+  "call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::919::17",
+  "actual_context": "test",
+  "context_flags": [],
+  "context_evidence": "Tlamatini/agent/tests.py:890 test_observational_agent_captured_but_management_and_direct_readonly_not in unittest TestCase ExecReportCaptureTests",
+  "invocation": "unresolved",
+  "invocation_evidence": "MultiTurnToolAgentExecutor (app class, agent/mcp_agent.py:745) built in the test with a scripted _FakeLLM/_Fake test double; exe.invoke runs the app loop but no real LLM",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::919::17",
+    "protected_output": "result of the test-invoked stubbed agent/chain",
+    "checked_property": "self.assertEqual(result['exec_report_entries'][0]['agent_display'], 'Crawler')",
+    "oracle_type": "simple",
+    "evaluator": "unittest assertion: self.assertEqual(result['exec_report_entries'][0]['agent_display'], 'Crawler')",
+    "verdict_location": "Tlamatini/agent/tests.py:924",
+    "check_location": "Tlamatini/agent/tests.py:924",
+    "enforcement_location": "Tlamatini/agent/tests.py:924",
+    "failure_consequence": "test failure (AssertionError)",
+    "before_acceptance": "no",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "test_or_test_support_context",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "799513"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 919,
+      "line_end": 919,
+      "role": "output"
+     },
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 924,
+      "line_end": 924,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "Unit-test method in Tlamatini/agent/tests.py (mislabelled production); the assertions are test oracles on a test-double-driven result, not runtime guardrails. "
+ },
+ {
+  "site_no": 72,
+  "call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::982::17",
+  "actual_context": "test",
+  "context_flags": [],
+  "context_evidence": "Tlamatini/agent/tests.py:967 test_failing_tool_is_captured_with_success_false in unittest TestCase ExecReportCaptureTests",
+  "invocation": "unresolved",
+  "invocation_evidence": "MultiTurnToolAgentExecutor (app class, agent/mcp_agent.py:745) built in the test with a scripted _FakeLLM/_Fake test double; exe.invoke runs the app loop but no real LLM",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::982::17",
+    "protected_output": "result of the test-invoked stubbed agent/chain",
+    "checked_property": "self.assertEqual(len(result['exec_report_entries']), 1)",
+    "oracle_type": "simple",
+    "evaluator": "unittest assertion: self.assertEqual(len(result['exec_report_entries']), 1)",
+    "verdict_location": "Tlamatini/agent/tests.py:984",
+    "check_location": "Tlamatini/agent/tests.py:984",
+    "enforcement_location": "Tlamatini/agent/tests.py:984",
+    "failure_consequence": "test failure (AssertionError)",
+    "before_acceptance": "no",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "test_or_test_support_context",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "799521"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 982,
+      "line_end": 982,
+      "role": "output"
+     },
+     {
+      "rel_path": "Tlamatini/agent/tests.py",
+      "line": 984,
+      "line_end": 984,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "Unit-test method in Tlamatini/agent/tests.py (mislabelled production); the assertions are test oracles on a test-double-driven result, not runtime guardrails. "
+ },
+ {
+  "site_no": 125,
+  "call_id": "jupyter-naas_abi/libs/naas-abi-core/naas_abi_core/services/ontology/adaptors/secondary/OntologyService_SecondaryAdaptor_NERPort.py::30::19",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "libs/naas-abi-core/.../OntologyService_SecondaryAdaptor_NERPort.py:13 named_entity_recognition, core library adaptor of the app",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "self.__chat_model is a langchain BaseChatModel; .invoke(messages) at line 30 generates Turtle NER output",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "jupyter-naas_abi/libs/naas-abi-core/naas_abi_core/services/ontology/adaptors/secondary/OntologyService_SecondaryAdaptor_NERPort.py::30::19",
+    "protected_output": "chat model response content (Turtle text)",
+    "checked_property": "response.content is a str",
+    "oracle_type": "simple",
+    "evaluator": "assert isinstance(response.content, str)",
+    "verdict_location": "libs/naas-abi-core/naas_abi_core/services/ontology/adaptors/secondary/OntologyService_SecondaryAdaptor_NERPort.py:31",
+    "check_location": "libs/naas-abi-core/naas_abi_core/services/ontology/adaptors/secondary/OntologyService_SecondaryAdaptor_NERPort.py:31",
+    "enforcement_location": "libs/naas-abi-core/naas_abi_core/services/ontology/adaptors/secondary/OntologyService_SecondaryAdaptor_NERPort.py:31",
+    "failure_consequence": "AssertionError raised before content is sanitized and parsed into the graph",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "1746097"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": true,
+    "evidence_lines": [
+     {
+      "rel_path": "libs/naas-abi-core/naas_abi_core/services/ontology/adaptors/secondary/OntologyService_SecondaryAdaptor_NERPort.py",
+      "line": 30,
+      "line_end": 30,
+      "role": "output"
+     },
+     {
+      "rel_path": "libs/naas-abi-core/naas_abi_core/services/ontology/adaptors/secondary/OntologyService_SecondaryAdaptor_NERPort.py",
+      "line": 31,
+      "line_end": 31,
+      "role": "check"
+     },
+     {
+      "rel_path": "libs/naas-abi-core/naas_abi_core/services/ontology/adaptors/secondary/OntologyService_SecondaryAdaptor_NERPort.py",
+      "line": 32,
+      "line_end": 37,
+      "role": "support"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "jupyter-naas_abi/libs/naas-abi-core/naas_abi_core/services/ontology/adaptors/secondary/OntologyService_SecondaryAdaptor_NERPort.py::30::19",
+    "protected_output": "sanitized Turtle text",
+    "checked_property": "parses as Turtle",
+    "oracle_type": "simple",
+    "evaluator": "rdflib Graph.parse(format='turtle') raises on malformed Turtle",
+    "verdict_location": "libs/naas-abi-core/naas_abi_core/services/ontology/adaptors/secondary/OntologyService_SecondaryAdaptor_NERPort.py:36",
+    "check_location": "libs/naas-abi-core/naas_abi_core/services/ontology/adaptors/secondary/OntologyService_SecondaryAdaptor_NERPort.py:36",
+    "enforcement_location": "libs/naas-abi-core/naas_abi_core/services/ontology/adaptors/secondary/OntologyService_SecondaryAdaptor_NERPort.py:36",
+    "failure_consequence": "exception propagates (implicit; no explicit handling)",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "parse_only",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "libs/naas-abi-core/naas_abi_core/services/ontology/adaptors/secondary/OntologyService_SecondaryAdaptor_NERPort.py",
+      "line": 35,
+      "line_end": 36,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "An explicit type assertion on the LLM response content raises before the content is consumed; it is a simple type guard (disabled under python -O). The subsequent rdflib Turtle parse is parsing only."
+ },
+ {
+  "site_no": 150,
+  "call_id": "seanchatmangpt_dspygen/src/dspygen/modules/fsm_trigger_module.py::42::21",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "src/dspygen/modules/fsm_trigger_module.py:40 fsm_trigger_call, library module of the dspygen app",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "FSMTriggerModule is a dspy.Module; .forward calls json_call -> JsonModule.forward -> dspy.Predict(GenerateJSONFromText) (json_module.py:79-80), returning the chosen trigger",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "seanchatmangpt_dspygen/src/dspygen/modules/fsm_trigger_module.py::42::21",
+    "protected_output": "LLM-chosen FSM trigger name (proposed action)",
+    "checked_property": "non-empty and an attribute of the FSM (valid trigger)",
+    "oracle_type": "simple",
+    "evaluator": "if chosen_trigger and hasattr(fsm, chosen_trigger)",
+    "verdict_location": "src/dspygen/modules/fsm_trigger_module.py:43",
+    "check_location": "src/dspygen/modules/fsm_trigger_module.py:43",
+    "enforcement_location": "src/dspygen/modules/fsm_trigger_module.py:47",
+    "failure_consequence": "raise ValueError; the action is not executed",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "2537512",
+     "2537513",
+     "2537516"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "src/dspygen/modules/fsm_trigger_module.py",
+      "line": 42,
+      "line_end": 42,
+      "role": "output"
+     },
+     {
+      "rel_path": "src/dspygen/modules/fsm_trigger_module.py",
+      "line": 43,
+      "line_end": 47,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "seanchatmangpt_dspygen/src/dspygen/modules/json_module.py::101::17",
+    "protected_output": "JSON dict extracted from the dspy prediction",
+    "checked_property": "conforms to ChosenTrigger Pydantic schema",
+    "oracle_type": "simple",
+    "evaluator": "model.model_validate(model_dict) (json_module.py:102)",
+    "verdict_location": "src/dspygen/modules/json_module.py:102",
+    "check_location": "src/dspygen/modules/json_module.py:102",
+    "enforcement_location": "src/dspygen/modules/json_module.py:102",
+    "failure_consequence": "ValidationError raised before the instance is returned",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "src/dspygen/modules/json_module.py",
+      "line": 101,
+      "line_end": 103,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "The LLM-proposed trigger is checked for membership among the FSM's attributes before it is executed, raising otherwise: a simple guard on a proposed action. Upstream, json_call Pydantic-validates the JSON produced by JsonModule.forward, a separate simple guard on that producer. hasattr is a weak membership test (any FSM attribute, not only triggers)."
+ },
+ {
+  "site_no": 213,
+  "call_id": "gtesei_agentic_design_patterns/foundational_design_patterns/4_reflection/src/reflection_stateful_loop.py::185::16",
+  "actual_context": "production",
+  "context_flags": [
+   "example_or_tutorial"
+  ],
+  "context_evidence": "agentic_design_patterns repo, foundational_design_patterns/4_reflection example script (module docstring lines 1-4: 'This example demonstrates...')",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "(WRITER_PROMPT | ChatOpenAI | StrOutputParser()).invoke(...) at line 185 generates the initial blog draft",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "gtesei_agentic_design_patterns/foundational_design_patterns/4_reflection/src/reflection_stateful_loop.py::185::16",
+    "protected_output": "initial blog draft (state['draft'])",
+    "checked_property": "publication readiness and quality score >= 8.0",
+    "oracle_type": "complex",
+    "evaluator": "LLM judge: ChatOpenAI(temperature=0).with_structured_output(BlogCritique) in critic_node (lines 233-243) scores the draft; is_publication_ready and overall_quality drive should_continue",
+    "verdict_location": "foundational_design_patterns/4_reflection/src/reflection_stateful_loop.py:343",
+    "check_location": "foundational_design_patterns/4_reflection/src/reflection_stateful_loop.py:343",
+    "enforcement_location": "foundational_design_patterns/4_reflection/src/reflection_stateful_loop.py:358",
+    "failure_consequence": "route back to writer_node, which regenerates (rewrites) the draft from the critique (lines 202-213) instead of ending",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "yes",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "foundational_design_patterns/4_reflection/src/reflection_stateful_loop.py",
+      "line": 185,
+      "line_end": 196,
+      "role": "output"
+     },
+     {
+      "rel_path": "foundational_design_patterns/4_reflection/src/reflection_stateful_loop.py",
+      "line": 235,
+      "line_end": 243,
+      "role": "verdict"
+     },
+     {
+      "rel_path": "foundational_design_patterns/4_reflection/src/reflection_stateful_loop.py",
+      "line": 343,
+      "line_end": 345,
+      "role": "check"
+     },
+     {
+      "rel_path": "foundational_design_patterns/4_reflection/src/reflection_stateful_loop.py",
+      "line": 348,
+      "line_end": 358,
+      "role": "enforcement"
+     },
+     {
+      "rel_path": "foundational_design_patterns/4_reflection/src/reflection_stateful_loop.py",
+      "line": 375,
+      "line_end": 386,
+      "role": "support"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "gtesei_agentic_design_patterns/foundational_design_patterns/4_reflection/src/reflection_stateful_loop.py::235::36",
+    "protected_output": "BlogCritique verdict object of the judge",
+    "checked_property": "Pydantic schema/range constraints (ge=0, le=10) of BlogCritique via with_structured_output",
+    "oracle_type": "simple",
+    "evaluator": "framework structured-output Pydantic validation of the judge's own verdict",
+    "verdict_location": "foundational_design_patterns/4_reflection/src/reflection_stateful_loop.py:233",
+    "check_location": "foundational_design_patterns/4_reflection/src/reflection_stateful_loop.py:233",
+    "enforcement_location": "foundational_design_patterns/4_reflection/src/reflection_stateful_loop.py:235",
+    "failure_consequence": "parse/validation error",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": true,
+    "qualifies": "no",
+    "nonqualifying_reason": "auxiliary_judge_plumbing",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "n/a",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "foundational_design_patterns/4_reflection/src/reflection_stateful_loop.py",
+      "line": 55,
+      "line_end": 85,
+      "role": "support"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "In this LangGraph reflection example an LLM critic judges each draft and the router regenerates it when it is not publication-ready with score >= 8.0, so the initial draft is protected by a complex guard. The loop accepts the last draft once max_iterations is reached regardless of verdict (retry-budget bypass). Context is a tutorial/example script."
+ }
+]

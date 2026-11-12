@@ -1,0 +1,665 @@
+{
+ "schema": "runtime-callsite-reconciliation-v1",
+ "date": "2026-11-12",
+ "status": "PRELIMINARY. Assistant source classifications; no independent human validation. Not a corrected population prevalence.",
+ "unit": "unique frozen call_id: detected direct framework LLM call site, production-labelled (Nov 4 calls.csv)",
+ "historical_frozen": {
+  "label": "Historical Nov 4 static candidate tier (unchanged): explicit check candidate with matching saved response slice.",
+  "numerator": 106,
+  "denominator": 10922,
+  "pct": 0.970518,
+  "mechanism_counts": {
+   "assertion": 47,
+   "rejection_branch": 52,
+   "schema_validation": 7
+  },
+  "not_comparable_to": "source-confirmed guardrails; mechanism counts are syntax/API categories, not simple/complex classes"
+ },
+ "frozen_reconstruction": {
+  "tier_counts": {
+   "call_sites": 10922,
+   "all_check_candidates": 205,
+   "explicit_check_candidates": 175,
+   "explicit_slice_supported": 106,
+   "explicit_outside_obvious_test_context": 150,
+   "explicit_slice_outside_obvious_test_context": 84,
+   "weaker_only_candidates": 30
+  },
+  "matches_saved_tier_table": {
+   "call_sites": true,
+   "all_check_candidates": true,
+   "explicit_check_candidates": true,
+   "explicit_slice_supported": true,
+   "explicit_outside_obvious_test_context": true,
+   "explicit_slice_outside_obvious_test_context": true,
+   "weaker_only_candidates": true
+  },
+  "mechanism_counts_one_per_site": {
+   "assertion": 47,
+   "rejection_branch": 52,
+   "schema_validation": 7
+  },
+  "mechanism_check_rows": {
+   "assertion": 62,
+   "rejection_branch": 59,
+   "schema_validation": 7
+  }
+ },
+ "frozen_106_reconciliation": {
+  "total": 106,
+  "outcome": {
+   "confirmed_guardrail_on_this_call": 54,
+   "unresolved": 1,
+   "rejected_nonqualifying_check": 9,
+   "judge_call_guard_attributed_to_earlier_generation": 4,
+   "rejected_false_positive_invocation": 23,
+   "rejected_test_or_test_support_context": 15
+  },
+  "outcome_by_mechanism": {
+   "assertion": {
+    "confirmed_guardrail_on_this_call": 22,
+    "rejected_test_or_test_support_context": 15,
+    "rejected_false_positive_invocation": 7,
+    "rejected_nonqualifying_check": 1,
+    "judge_call_guard_attributed_to_earlier_generation": 2
+   },
+   "rejection_branch": {
+    "confirmed_guardrail_on_this_call": 27,
+    "unresolved": 1,
+    "rejected_nonqualifying_check": 7,
+    "judge_call_guard_attributed_to_earlier_generation": 1,
+    "rejected_false_positive_invocation": 16
+   },
+   "schema_validation": {
+    "confirmed_guardrail_on_this_call": 5,
+    "rejected_nonqualifying_check": 1,
+    "judge_call_guard_attributed_to_earlier_generation": 1
+   }
+  },
+  "reviewed_context": {
+   "production": 86,
+   "test": 18,
+   "test_support": 2
+  },
+  "invocation": {
+   "genuine_in_scope_llm": 69,
+   "unresolved": 14,
+   "false_positive_non_llm": 23
+  },
+  "nov4_test_context_flag_x_reviewed_context": {
+   "True": {
+    "test": 18,
+    "production": 4
+   },
+   "False": {
+    "production": 82,
+    "test_support": 2
+   }
+  },
+  "confirmed_class": {
+   "simple_only": 53,
+   "both": 1
+  },
+  "in_nov12_frame": 92,
+  "context_flags": {
+   "vendored_framework_copy": 26,
+   "example_or_tutorial": 3,
+   "demo_or_sample_app": 8,
+   "benchmark_or_eval_harness": 5,
+   "duplicate_copy_of_other_file": 3
+  }
+ },
+ "uniform_candidate_review": {
+  "reviewed_uniform_sites": 205,
+  "by_tier": {
+   "explicit_slice_supported": {
+    "guardrail_protects_this_site": 54,
+    "unresolved": 1,
+    "nonqualifying": 47,
+    "guard_attributed_to_other_producer_only": 4
+   },
+   "explicit_not_slice_supported": {
+    "nonqualifying": 42,
+    "guardrail_protects_this_site": 27
+   },
+   "weaker_only": {
+    "guardrail_protects_this_site": 4,
+    "nonqualifying": 25,
+    "guard_attributed_to_other_producer_only": 1
+   }
+  },
+  "invocation": {
+   "genuine_in_scope_llm": 111,
+   "false_positive_non_llm": 77,
+   "unresolved": 17
+  },
+  "context": {
+   "production": 178,
+   "test": 21,
+   "test_support": 6
+  }
+ },
+ "presentation": {
+  "recommended_primary": {
+   "label": "Uniform discovery: every production-labelled site with a Nov 4 static check candidate (205) was source-reviewed; numerator = distinct protected producer call sites with >=1 source-confirmed runtime guardrail, eligible as genuine framework LLM calls in production context. Denominator = all 10,922 production-labelled detected call sites, NOT corrected for false-positive invocations or mislabelled test code (no consistent correction exists).",
+   "unit": "unique frozen call_id (production-labelled direct framework call site)",
+   "denominator": 10922,
+   "pie1_three_slice": {
+    "detected_source_confirmed": {
+     "count": 93,
+     "pct": 0.851492
+    },
+    "unresolved_candidate": {
+     "count": 2,
+     "pct": 0.018312
+    },
+    "no_detected": {
+     "count": 10827,
+     "pct": 99.130196
+    }
+   },
+   "pie1_two_slice": {
+    "detected_source_confirmed": {
+     "count": 93,
+     "pct": 0.851492
+    },
+    "no_confirmed_detection": {
+     "count": 10829,
+     "pct": 99.148508
+    }
+   },
+   "pie2_composition_of_detected": {
+    "simple_only": {
+     "count": 86,
+     "pct_of_numerator": 92.473118
+    },
+    "complex_only": {
+     "count": 6,
+     "pct_of_numerator": 6.451613
+    },
+    "both": {
+     "count": 1,
+     "pct_of_numerator": 1.075269
+    },
+    "unresolved_oracle": {
+     "count": 0,
+     "pct_of_numerator": 0.0
+    }
+   },
+   "detected_flags": {
+    "vendored_framework_copy": 34,
+    "example_tutorial_demo": 12,
+    "joern_same_saved_slice": 59,
+    "retry_budget_bypass": 3,
+    "fail_open": 1,
+    "configuration_dependent": 6,
+    "assert_only_optimization_sensitive": 22
+   },
+   "unresolved_call_ids": [
+    "Haohao-end_openagent/api/internal/service/icon_generator_service.py::236::20",
+    "RenqiChen_Virtual-Scientists-v2/camel-master/camel/societies/role_playing.py::513::29"
+   ],
+   "detected_call_ids": [
+    "BjornMelin_docmind-ai-llm/src/agents/supervisor_graph.py::421::23",
+    "BjornMelin_docmind-ai-llm/src/agents/tools/memory.py::878::19",
+    "Certora_AIComposer/composer/prover/analysis.py::35::16",
+    "Certora_AIComposer/composer/spec/refinement.py::97::20",
+    "Certora_AIComposer/composer/spec/source/report/grouping.py::92::19",
+    "Certora_AIComposer/composer/workflow/meta.py::31::16",
+    "FudanSELab_TripSphere/trip-itinerary-planner/src/itinerary_planner/agent/nodes.py::153::31",
+    "FusionBrainLab_gigaevo-core/gigaevo/llm/agents/base.py::105::33",
+    "FusionBrainLab_gigaevo-core/gigaevo/llm/agents/lineage.py::342::32",
+    "HKUDS_ViMax/agents/camera_image_generator.py::147::45",
+    "HKUDS_ViMax/agents/event_extractor.py::149::23",
+    "Insight-Services-APAC_ingenious/ingenious/models/ag_agents.py::129::34",
+    "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/agents/deductive_reasoner_agent.py::250::19",
+    "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/agents/embodied_agent.py::147::19",
+    "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/agents/role_assignment_agent.py::105::19",
+    "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/agents/task_agent.py::118::29",
+    "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/agents/task_agent.py::189::24",
+    "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/agents/task_agent.py::304::24",
+    "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/agents/task_agent.py::402::24",
+    "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/datagen/self_improving_cot.py::424::19",
+    "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/datagen/self_improving_cot.py::522::24",
+    "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/datagen/self_improving_cot.py::589::19",
+    "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/datasets/few_shot_generator.py::195::24",
+    "Kasma-Inc_Sagi/src/Sagi/workflows/planning_html/planning_html_orchestrator.py::207::17",
+    "OpenGradient_tee-gateway/tee_gateway/controllers/chat_controller.py::218::13",
+    "PostHog_posthog/ee/hogai/chat_agent/query_planner/nodes.py::105::25",
+    "PostHog_posthog/ee/hogai/chat_agent/taxonomy/nodes.py::129::25",
+    "PostHog_posthog/products/cdp/backend/max_tools.py::193::25",
+    "PostHog_posthog/products/cdp/backend/max_tools.py::281::25",
+    "PostHog_posthog/products/cdp/backend/max_tools.py::95::25",
+    "RenqiChen_Virtual-Scientists-v2/camel-master/camel/agents/deductive_reasoner_agent.py::247::19",
+    "RenqiChen_Virtual-Scientists-v2/camel-master/camel/agents/embodied_agent.py::147::19",
+    "RenqiChen_Virtual-Scientists-v2/camel-master/camel/agents/role_assignment_agent.py::105::19",
+    "RenqiChen_Virtual-Scientists-v2/camel-master/camel/agents/task_agent.py::118::29",
+    "RenqiChen_Virtual-Scientists-v2/camel-master/camel/agents/task_agent.py::189::24",
+    "RenqiChen_Virtual-Scientists-v2/camel-master/camel/agents/task_agent.py::304::24",
+    "RenqiChen_Virtual-Scientists-v2/camel-master/camel/agents/task_agent.py::402::24",
+    "Tianyi-Billy-Ma_AutoData/autodata/extras/browser_use/chat_utils.py::153::33",
+    "Tianyi-Billy-Ma_AutoData/autodata/extras/browser_use/chat_utils.py::189::37",
+    "alibaba_loongsuite-python/examples/ecommerce-customer-service/workflow.py::201::27",
+    "arm_metis/src/metis/engine/llm_runner.py::176::44",
+    "baserow_baserow/enterprise/backend/src/baserow_enterprise/assistant/tools/database/tools.py::921::19",
+    "crestalnetwork_intentkit/intentkit/core/summarization.py::394::25",
+    "datamllab_ltsm/multi_agents_pipeline/agents/Planning_Agent.py::32::25",
+    "datamllab_ltsm/multi_agents_pipeline/agents/QA_Agent.py::65::29",
+    "ericjiang18_Agent-Q-Mix/agent_baseline/agent-framework/python/packages/orchestrations/agent_framework_orchestrations/_magentic.py::592::40",
+    "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/agbench/benchmarks/GAIA/Templates/ParallelAgents/scenario.py::256::25",
+    "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_code_executor_agent.py::648::29",
+    "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_society_of_mind_agent.py::235::31",
+    "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_magentic_one/_magentic_one_orchestrator.py::168::25",
+    "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_magentic_one/_magentic_one_orchestrator.py::181::25",
+    "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_magentic_one/_magentic_one_orchestrator.py::459::25",
+    "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_magentic_one/_magentic_one_orchestrator.py::471::25",
+    "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_magentic_one/_magentic_one_orchestrator.py::486::25",
+    "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-ext/src/autogen_ext/experimental/task_centric_memory/_prompter.py::74::25",
+    "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-ext/src/autogen_ext/experimental/task_centric_memory/utils/apprentice.py::241::40",
+    "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/samples/agentchat_streamlit/agent.py::21::25",
+    "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/samples/core_async_human_in_the_loop/main.py::182::25",
+    "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/samples/core_distributed-group-chat/_agents.py::130::27",
+    "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/samples/core_distributed-group-chat/_agents.py::53::27",
+    "ibm-granite-community_granite-playground-agents/granite_core/granite_core/research/researcher.py::263::29",
+    "ibm-granite-community_granite-playground-agents/granite_core/granite_core/research/researcher.py::329::29",
+    "ikamensh_kodo/kodo/coach.py::302::21",
+    "itbench-hub_ITBench-CISO-CAA-Agent/src/ciso_agent/agents/kubernetes_kyverno.py::144::17",
+    "itbench-hub_ITBench-CISO-CAA-Agent/src/ciso_agent/agents/kubernetes_kyverno_update.py::152::17",
+    "jupyter-naas_abi/libs/naas-abi-core/naas_abi_core/services/ontology/adaptors/secondary/OntologyService_SecondaryAdaptor_NERPort.py::30::19",
+    "michaelalbada_BuildingApplicationsWithAIAgents/src/frameworks/langgraph_agents/supply_chain/ray_supply_chain_multi_agent.py::244::15",
+    "microsoft_Multi-Agent-Custom-Automation-Engine-Solution-Accelerator/src/backend/patches/magentic_duplicate_fc_id.py::54::36",
+    "microsoft_semanticworkbench/libraries/python/guided-conversation/guided_conversation/functions/conversation_plan.py::242::19",
+    "microsoft_semanticworkbench/libraries/python/guided-conversation/guided_conversation/functions/execution.py::80::19",
+    "microsoft_semanticworkbench/libraries/python/guided-conversation/guided_conversation/functions/final_update_plan.py::100::19",
+    "mindroom-ai_mindroom/src/mindroom/routing.py::109::25",
+    "oracle-devrel_technology-engineering/ai/gen-ai-agents/expense-validator/files/backend.py::66::19",
+    "oracle_agent-spec/docs/pyagentspec/source/code_examples/adapter_agent_framework_quickstart.py::59::23",
+    "oracle_agent-spec/pyagentspec/src/pyagentspec/adapters/crewai/_node_execution.py::212::28",
+    "robertwhiffin_ai-slide-generator/src/api/services/session_naming.py::40::19",
+    "sambanova_agents/backend/src/agents/components/datagen/node.py::52::31",
+    "seanchatmangpt_dslmodel/redteam_reports/src/dslmodel/dspy_modules/fsm_trigger_module.py::46::21",
+    "seanchatmangpt_dslmodel/redteam_reports/src/dslmodel/dspy_modules/tool_trigger_module.py::45::18",
+    "seanchatmangpt_dslmodel/src/dslmodel/dspy_modules/fsm_trigger_module.py::46::21",
+    "seanchatmangpt_dslmodel/src/dslmodel/dspy_modules/tool_trigger_module.py::45::18",
+    "seanchatmangpt_dspygen/src/dspygen/modules/fsm_trigger_module.py::42::21",
+    "seanchatmangpt_dspygen/src/dspygen/modules/json_module.py::101::17",
+    "skygazer42_Weaver/agent/workflows/viz_planner.py::216::23",
+    "sourangshupal_Agentic-RAG-project/src/services/agents/nodes/rewrite_query_node.py::89::43",
+    "splunk_splunk-sdk-python/splunklib/ai/engines/langchain.py::1508::23",
+    "splx-ai_agentic-radar/examples/openai-agents/agent_patterns/deterministic/deterministic.py::47::31",
+    "temporalio_samples-python/openai_agents/agent_patterns/workflows/deterministic_workflow.py::55::35",
+    "wsargent_groundedllm/hayhooks/pipelines/analyze_trace/pipeline_wrapper.py::66::17",
+    "wsargent_groundedllm/hayhooks/pipelines/excerpt/pipeline_wrapper.py::167::21",
+    "wsargent_groundedllm/hayhooks/pipelines/search/pipeline_wrapper.py::190::17",
+    "wsargent_groundedllm/hayhooks/pipelines/search_stackoverflow/pipeline_wrapper.py::70::17",
+    "xunharry4-source_AnimoCerebro/src/zentex/tasks/decomposition/pydantic_ai_decomposer.py::179::27"
+   ]
+  },
+  "sensitivity_test_context_both_sides": {
+   "label": "Recommended primary with the deterministic Nov 4 source_test_context flag removed from numerator AND denominator.",
+   "unit": "unique frozen call_id (production-labelled direct framework call site)",
+   "denominator": 10765,
+   "pie1_three_slice": {
+    "detected_source_confirmed": {
+     "count": 93,
+     "pct": 0.863911
+    },
+    "unresolved_candidate": {
+     "count": 2,
+     "pct": 0.018579
+    },
+    "no_detected": {
+     "count": 10670,
+     "pct": 99.11751
+    }
+   },
+   "pie1_two_slice": {
+    "detected_source_confirmed": {
+     "count": 93,
+     "pct": 0.863911
+    },
+    "no_confirmed_detection": {
+     "count": 10672,
+     "pct": 99.136089
+    }
+   },
+   "pie2_composition_of_detected": {
+    "simple_only": {
+     "count": 86,
+     "pct_of_numerator": 92.473118
+    },
+    "complex_only": {
+     "count": 6,
+     "pct_of_numerator": 6.451613
+    },
+    "both": {
+     "count": 1,
+     "pct_of_numerator": 1.075269
+    },
+    "unresolved_oracle": {
+     "count": 0,
+     "pct_of_numerator": 0.0
+    }
+   },
+   "detected_flags": {
+    "vendored_framework_copy": 34,
+    "example_tutorial_demo": 12,
+    "joern_same_saved_slice": 59,
+    "retry_budget_bypass": 3,
+    "fail_open": 1,
+    "configuration_dependent": 6,
+    "assert_only_optimization_sensitive": 22
+   },
+   "unresolved_call_ids": [
+    "Haohao-end_openagent/api/internal/service/icon_generator_service.py::236::20",
+    "RenqiChen_Virtual-Scientists-v2/camel-master/camel/societies/role_playing.py::513::29"
+   ],
+   "detected_call_ids": [
+    "BjornMelin_docmind-ai-llm/src/agents/supervisor_graph.py::421::23",
+    "BjornMelin_docmind-ai-llm/src/agents/tools/memory.py::878::19",
+    "Certora_AIComposer/composer/prover/analysis.py::35::16",
+    "Certora_AIComposer/composer/spec/refinement.py::97::20",
+    "Certora_AIComposer/composer/spec/source/report/grouping.py::92::19",
+    "Certora_AIComposer/composer/workflow/meta.py::31::16",
+    "FudanSELab_TripSphere/trip-itinerary-planner/src/itinerary_planner/agent/nodes.py::153::31",
+    "FusionBrainLab_gigaevo-core/gigaevo/llm/agents/base.py::105::33",
+    "FusionBrainLab_gigaevo-core/gigaevo/llm/agents/lineage.py::342::32",
+    "HKUDS_ViMax/agents/camera_image_generator.py::147::45",
+    "HKUDS_ViMax/agents/event_extractor.py::149::23",
+    "Insight-Services-APAC_ingenious/ingenious/models/ag_agents.py::129::34",
+    "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/agents/deductive_reasoner_agent.py::250::19",
+    "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/agents/embodied_agent.py::147::19",
+    "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/agents/role_assignment_agent.py::105::19",
+    "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/agents/task_agent.py::118::29",
+    "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/agents/task_agent.py::189::24",
+    "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/agents/task_agent.py::304::24",
+    "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/agents/task_agent.py::402::24",
+    "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/datagen/self_improving_cot.py::424::19",
+    "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/datagen/self_improving_cot.py::522::24",
+    "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/datagen/self_improving_cot.py::589::19",
+    "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/datasets/few_shot_generator.py::195::24",
+    "Kasma-Inc_Sagi/src/Sagi/workflows/planning_html/planning_html_orchestrator.py::207::17",
+    "OpenGradient_tee-gateway/tee_gateway/controllers/chat_controller.py::218::13",
+    "PostHog_posthog/ee/hogai/chat_agent/query_planner/nodes.py::105::25",
+    "PostHog_posthog/ee/hogai/chat_agent/taxonomy/nodes.py::129::25",
+    "PostHog_posthog/products/cdp/backend/max_tools.py::193::25",
+    "PostHog_posthog/products/cdp/backend/max_tools.py::281::25",
+    "PostHog_posthog/products/cdp/backend/max_tools.py::95::25",
+    "RenqiChen_Virtual-Scientists-v2/camel-master/camel/agents/deductive_reasoner_agent.py::247::19",
+    "RenqiChen_Virtual-Scientists-v2/camel-master/camel/agents/embodied_agent.py::147::19",
+    "RenqiChen_Virtual-Scientists-v2/camel-master/camel/agents/role_assignment_agent.py::105::19",
+    "RenqiChen_Virtual-Scientists-v2/camel-master/camel/agents/task_agent.py::118::29",
+    "RenqiChen_Virtual-Scientists-v2/camel-master/camel/agents/task_agent.py::189::24",
+    "RenqiChen_Virtual-Scientists-v2/camel-master/camel/agents/task_agent.py::304::24",
+    "RenqiChen_Virtual-Scientists-v2/camel-master/camel/agents/task_agent.py::402::24",
+    "Tianyi-Billy-Ma_AutoData/autodata/extras/browser_use/chat_utils.py::153::33",
+    "Tianyi-Billy-Ma_AutoData/autodata/extras/browser_use/chat_utils.py::189::37",
+    "alibaba_loongsuite-python/examples/ecommerce-customer-service/workflow.py::201::27",
+    "arm_metis/src/metis/engine/llm_runner.py::176::44",
+    "baserow_baserow/enterprise/backend/src/baserow_enterprise/assistant/tools/database/tools.py::921::19",
+    "crestalnetwork_intentkit/intentkit/core/summarization.py::394::25",
+    "datamllab_ltsm/multi_agents_pipeline/agents/Planning_Agent.py::32::25",
+    "datamllab_ltsm/multi_agents_pipeline/agents/QA_Agent.py::65::29",
+    "ericjiang18_Agent-Q-Mix/agent_baseline/agent-framework/python/packages/orchestrations/agent_framework_orchestrations/_magentic.py::592::40",
+    "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/agbench/benchmarks/GAIA/Templates/ParallelAgents/scenario.py::256::25",
+    "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_code_executor_agent.py::648::29",
+    "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_society_of_mind_agent.py::235::31",
+    "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_magentic_one/_magentic_one_orchestrator.py::168::25",
+    "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_magentic_one/_magentic_one_orchestrator.py::181::25",
+    "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_magentic_one/_magentic_one_orchestrator.py::459::25",
+    "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_magentic_one/_magentic_one_orchestrator.py::471::25",
+    "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_magentic_one/_magentic_one_orchestrator.py::486::25",
+    "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-ext/src/autogen_ext/experimental/task_centric_memory/_prompter.py::74::25",
+    "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-ext/src/autogen_ext/experimental/task_centric_memory/utils/apprentice.py::241::40",
+    "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/samples/agentchat_streamlit/agent.py::21::25",
+    "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/samples/core_async_human_in_the_loop/main.py::182::25",
+    "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/samples/core_distributed-group-chat/_agents.py::130::27",
+    "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/samples/core_distributed-group-chat/_agents.py::53::27",
+    "ibm-granite-community_granite-playground-agents/granite_core/granite_core/research/researcher.py::263::29",
+    "ibm-granite-community_granite-playground-agents/granite_core/granite_core/research/researcher.py::329::29",
+    "ikamensh_kodo/kodo/coach.py::302::21",
+    "itbench-hub_ITBench-CISO-CAA-Agent/src/ciso_agent/agents/kubernetes_kyverno.py::144::17",
+    "itbench-hub_ITBench-CISO-CAA-Agent/src/ciso_agent/agents/kubernetes_kyverno_update.py::152::17",
+    "jupyter-naas_abi/libs/naas-abi-core/naas_abi_core/services/ontology/adaptors/secondary/OntologyService_SecondaryAdaptor_NERPort.py::30::19",
+    "michaelalbada_BuildingApplicationsWithAIAgents/src/frameworks/langgraph_agents/supply_chain/ray_supply_chain_multi_agent.py::244::15",
+    "microsoft_Multi-Agent-Custom-Automation-Engine-Solution-Accelerator/src/backend/patches/magentic_duplicate_fc_id.py::54::36",
+    "microsoft_semanticworkbench/libraries/python/guided-conversation/guided_conversation/functions/conversation_plan.py::242::19",
+    "microsoft_semanticworkbench/libraries/python/guided-conversation/guided_conversation/functions/execution.py::80::19",
+    "microsoft_semanticworkbench/libraries/python/guided-conversation/guided_conversation/functions/final_update_plan.py::100::19",
+    "mindroom-ai_mindroom/src/mindroom/routing.py::109::25",
+    "oracle-devrel_technology-engineering/ai/gen-ai-agents/expense-validator/files/backend.py::66::19",
+    "oracle_agent-spec/docs/pyagentspec/source/code_examples/adapter_agent_framework_quickstart.py::59::23",
+    "oracle_agent-spec/pyagentspec/src/pyagentspec/adapters/crewai/_node_execution.py::212::28",
+    "robertwhiffin_ai-slide-generator/src/api/services/session_naming.py::40::19",
+    "sambanova_agents/backend/src/agents/components/datagen/node.py::52::31",
+    "seanchatmangpt_dslmodel/redteam_reports/src/dslmodel/dspy_modules/fsm_trigger_module.py::46::21",
+    "seanchatmangpt_dslmodel/redteam_reports/src/dslmodel/dspy_modules/tool_trigger_module.py::45::18",
+    "seanchatmangpt_dslmodel/src/dslmodel/dspy_modules/fsm_trigger_module.py::46::21",
+    "seanchatmangpt_dslmodel/src/dslmodel/dspy_modules/tool_trigger_module.py::45::18",
+    "seanchatmangpt_dspygen/src/dspygen/modules/fsm_trigger_module.py::42::21",
+    "seanchatmangpt_dspygen/src/dspygen/modules/json_module.py::101::17",
+    "skygazer42_Weaver/agent/workflows/viz_planner.py::216::23",
+    "sourangshupal_Agentic-RAG-project/src/services/agents/nodes/rewrite_query_node.py::89::43",
+    "splunk_splunk-sdk-python/splunklib/ai/engines/langchain.py::1508::23",
+    "splx-ai_agentic-radar/examples/openai-agents/agent_patterns/deterministic/deterministic.py::47::31",
+    "temporalio_samples-python/openai_agents/agent_patterns/workflows/deterministic_workflow.py::55::35",
+    "wsargent_groundedllm/hayhooks/pipelines/analyze_trace/pipeline_wrapper.py::66::17",
+    "wsargent_groundedllm/hayhooks/pipelines/excerpt/pipeline_wrapper.py::167::21",
+    "wsargent_groundedllm/hayhooks/pipelines/search/pipeline_wrapper.py::190::17",
+    "wsargent_groundedllm/hayhooks/pipelines/search_stackoverflow/pipeline_wrapper.py::70::17",
+    "xunharry4-source_AnimoCerebro/src/zentex/tasks/decomposition/pydantic_ai_decomposer.py::179::27"
+   ]
+  },
+  "sensitivity_plus_purposive": {
+   "label": "Uniform discovery plus purposive semantic-search additions (2026-11-12 supplemental catalog). Discovery is unequal: the purposive search targeted LLM-judge loops, so complex share is not comparable to uniform discovery.",
+   "unit": "unique frozen call_id (production-labelled direct framework call site)",
+   "denominator": 10922,
+   "pie1_three_slice": {
+    "detected_source_confirmed": {
+     "count": 105,
+     "pct": 0.961362
+    },
+    "unresolved_candidate": {
+     "count": 2,
+     "pct": 0.018312
+    },
+    "no_detected": {
+     "count": 10815,
+     "pct": 99.020326
+    }
+   },
+   "pie1_two_slice": {
+    "detected_source_confirmed": {
+     "count": 105,
+     "pct": 0.961362
+    },
+    "no_confirmed_detection": {
+     "count": 10817,
+     "pct": 99.038638
+    }
+   },
+   "pie2_composition_of_detected": {
+    "simple_only": {
+     "count": 89,
+     "pct_of_numerator": 84.761905
+    },
+    "complex_only": {
+     "count": 14,
+     "pct_of_numerator": 13.333333
+    },
+    "both": {
+     "count": 2,
+     "pct_of_numerator": 1.904762
+    },
+    "unresolved_oracle": {
+     "count": 0,
+     "pct_of_numerator": 0.0
+    }
+   },
+   "detected_flags": {
+    "vendored_framework_copy": 36,
+    "example_tutorial_demo": 19,
+    "joern_same_saved_slice": 61,
+    "retry_budget_bypass": 10,
+    "fail_open": 2,
+    "configuration_dependent": 6,
+    "assert_only_optimization_sensitive": 23
+   },
+   "unresolved_call_ids": [
+    "Haohao-end_openagent/api/internal/service/icon_generator_service.py::236::20",
+    "RenqiChen_Virtual-Scientists-v2/camel-master/camel/societies/role_playing.py::513::29"
+   ],
+   "detected_call_ids": [
+    "BjornMelin_docmind-ai-llm/src/agents/supervisor_graph.py::421::23",
+    "BjornMelin_docmind-ai-llm/src/agents/tools/memory.py::878::19",
+    "Certora_AIComposer/composer/prover/analysis.py::35::16",
+    "Certora_AIComposer/composer/spec/refinement.py::97::20",
+    "Certora_AIComposer/composer/spec/source/report/grouping.py::92::19",
+    "Certora_AIComposer/composer/workflow/meta.py::31::16",
+    "FudanSELab_TripSphere/trip-itinerary-planner/src/itinerary_planner/agent/nodes.py::153::31",
+    "FusionBrainLab_gigaevo-core/gigaevo/llm/agents/base.py::105::33",
+    "FusionBrainLab_gigaevo-core/gigaevo/llm/agents/lineage.py::342::32",
+    "GenseeAI_open_deep_research/src/legacy/graph.py::307::28",
+    "HKUDS_ViMax/agents/camera_image_generator.py::147::45",
+    "HKUDS_ViMax/agents/event_extractor.py::149::23",
+    "Insight-Services-APAC_ingenious/ingenious/models/ag_agents.py::129::34",
+    "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/agents/deductive_reasoner_agent.py::250::19",
+    "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/agents/embodied_agent.py::147::19",
+    "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/agents/role_assignment_agent.py::105::19",
+    "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/agents/task_agent.py::118::29",
+    "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/agents/task_agent.py::189::24",
+    "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/agents/task_agent.py::304::24",
+    "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/agents/task_agent.py::402::24",
+    "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/datagen/self_improving_cot.py::424::19",
+    "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/datagen/self_improving_cot.py::522::24",
+    "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/datagen/self_improving_cot.py::589::19",
+    "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/datasets/few_shot_generator.py::195::24",
+    "Kasma-Inc_Sagi/src/Sagi/workflows/planning_html/planning_html_orchestrator.py::207::17",
+    "OpenGradient_tee-gateway/tee_gateway/controllers/chat_controller.py::218::13",
+    "PostHog_posthog/ee/hogai/chat_agent/query_planner/nodes.py::105::25",
+    "PostHog_posthog/ee/hogai/chat_agent/taxonomy/nodes.py::129::25",
+    "PostHog_posthog/products/cdp/backend/max_tools.py::193::25",
+    "PostHog_posthog/products/cdp/backend/max_tools.py::281::25",
+    "PostHog_posthog/products/cdp/backend/max_tools.py::95::25",
+    "RenqiChen_Virtual-Scientists-v2/camel-master/camel/agents/deductive_reasoner_agent.py::247::19",
+    "RenqiChen_Virtual-Scientists-v2/camel-master/camel/agents/embodied_agent.py::147::19",
+    "RenqiChen_Virtual-Scientists-v2/camel-master/camel/agents/role_assignment_agent.py::105::19",
+    "RenqiChen_Virtual-Scientists-v2/camel-master/camel/agents/task_agent.py::118::29",
+    "RenqiChen_Virtual-Scientists-v2/camel-master/camel/agents/task_agent.py::189::24",
+    "RenqiChen_Virtual-Scientists-v2/camel-master/camel/agents/task_agent.py::304::24",
+    "RenqiChen_Virtual-Scientists-v2/camel-master/camel/agents/task_agent.py::402::24",
+    "Shubhamsaboo_awesome-llm-apps/advanced_ai_agents/autonomous_game_playing_agent_apps/ai_tic_tac_toe_agent/app.py::222::34",
+    "Shubhamsaboo_awesome-llm-apps/ai_agent_framework_crash_course/openai_sdk_crash_course/6_guardrails_validation/agent.py::133::27",
+    "Tianyi-Billy-Ma_AutoData/autodata/extras/browser_use/chat_utils.py::153::33",
+    "Tianyi-Billy-Ma_AutoData/autodata/extras/browser_use/chat_utils.py::189::37",
+    "UiPath_uipath-integrations-python/packages/uipath-pydantic-ai/samples/graph-flow/main.py::107::23",
+    "ai-forever_giga_agent/backend/giga_agent/modules/deep_research/nodes/compose.py::117::21",
+    "alibaba_loongsuite-python/examples/ecommerce-customer-service/workflow.py::201::27",
+    "arm_metis/src/metis/engine/llm_runner.py::176::44",
+    "baserow_baserow/enterprise/backend/src/baserow_enterprise/assistant/tools/database/tools.py::921::19",
+    "crestalnetwork_intentkit/intentkit/core/summarization.py::394::25",
+    "datamllab_ltsm/multi_agents_pipeline/agents/Planning_Agent.py::32::25",
+    "datamllab_ltsm/multi_agents_pipeline/agents/QA_Agent.py::65::29",
+    "ericjiang18_Agent-Q-Mix/agent_baseline/agent-framework/python/packages/orchestrations/agent_framework_orchestrations/_magentic.py::592::40",
+    "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/agbench/benchmarks/GAIA/Templates/ParallelAgents/scenario.py::256::25",
+    "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_code_executor_agent.py::648::29",
+    "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_code_executor_agent.py::808::31",
+    "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_code_executor_agent.py::821::33",
+    "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_society_of_mind_agent.py::235::31",
+    "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_magentic_one/_magentic_one_orchestrator.py::168::25",
+    "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_magentic_one/_magentic_one_orchestrator.py::181::25",
+    "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_magentic_one/_magentic_one_orchestrator.py::459::25",
+    "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_magentic_one/_magentic_one_orchestrator.py::471::25",
+    "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_magentic_one/_magentic_one_orchestrator.py::486::25",
+    "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-ext/src/autogen_ext/experimental/task_centric_memory/_prompter.py::74::25",
+    "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-ext/src/autogen_ext/experimental/task_centric_memory/utils/apprentice.py::241::40",
+    "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/samples/agentchat_streamlit/agent.py::21::25",
+    "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/samples/core_async_human_in_the_loop/main.py::182::25",
+    "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/samples/core_distributed-group-chat/_agents.py::130::27",
+    "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/samples/core_distributed-group-chat/_agents.py::53::27",
+    "gtesei_agentic_design_patterns/foundational_design_patterns/4_reflection/src/reflection_stateful_loop.py::185::16",
+    "ibm-granite-community_granite-playground-agents/granite_core/granite_core/research/researcher.py::263::29",
+    "ibm-granite-community_granite-playground-agents/granite_core/granite_core/research/researcher.py::329::29",
+    "ikamensh_kodo/kodo/coach.py::302::21",
+    "itbench-hub_ITBench-CISO-CAA-Agent/src/ciso_agent/agents/kubernetes_kyverno.py::144::17",
+    "itbench-hub_ITBench-CISO-CAA-Agent/src/ciso_agent/agents/kubernetes_kyverno_update.py::152::17",
+    "jupyter-naas_abi/libs/naas-abi-core/naas_abi_core/services/ontology/adaptors/secondary/OntologyService_SecondaryAdaptor_NERPort.py::30::19",
+    "kjgpta_tracesage/examples/showcase/23_reflexion_writer/after.py::78::22",
+    "kjgpta_tracesage/examples/showcase/23_reflexion_writer/before.py::68::22",
+    "lucebert_langchain-doc-graph/src/self_rag/graph.py::50::17",
+    "michaelalbada_BuildingApplicationsWithAIAgents/src/frameworks/langgraph_agents/supply_chain/ray_supply_chain_multi_agent.py::244::15",
+    "microsoft_Multi-Agent-Custom-Automation-Engine-Solution-Accelerator/src/backend/patches/magentic_duplicate_fc_id.py::54::36",
+    "microsoft_semanticworkbench/libraries/python/guided-conversation/guided_conversation/functions/conversation_plan.py::242::19",
+    "microsoft_semanticworkbench/libraries/python/guided-conversation/guided_conversation/functions/execution.py::80::19",
+    "microsoft_semanticworkbench/libraries/python/guided-conversation/guided_conversation/functions/final_update_plan.py::100::19",
+    "mindroom-ai_mindroom/src/mindroom/routing.py::109::25",
+    "oracle-devrel_technology-engineering/ai/gen-ai-agents/expense-validator/files/backend.py::66::19",
+    "oracle_agent-spec/docs/pyagentspec/source/code_examples/adapter_agent_framework_quickstart.py::59::23",
+    "oracle_agent-spec/pyagentspec/src/pyagentspec/adapters/crewai/_node_execution.py::212::28",
+    "rhesis-ai_rhesis/agents/visit-prep/src/visit_prep/pipeline.py::190::14",
+    "robertwhiffin_ai-slide-generator/src/api/services/session_naming.py::40::19",
+    "sambanova_agents/backend/src/agents/components/datagen/node.py::52::31",
+    "seanchatmangpt_dslmodel/redteam_reports/src/dslmodel/dspy_modules/fsm_trigger_module.py::46::21",
+    "seanchatmangpt_dslmodel/redteam_reports/src/dslmodel/dspy_modules/tool_trigger_module.py::45::18",
+    "seanchatmangpt_dslmodel/src/dslmodel/dspy_modules/fsm_trigger_module.py::46::21",
+    "seanchatmangpt_dslmodel/src/dslmodel/dspy_modules/tool_trigger_module.py::45::18",
+    "seanchatmangpt_dspygen/src/dspygen/modules/fsm_trigger_module.py::42::21",
+    "seanchatmangpt_dspygen/src/dspygen/modules/json_module.py::101::17",
+    "skygazer42_Weaver/agent/workflows/viz_planner.py::216::23",
+    "sourangshupal_Agentic-RAG-project/src/services/agents/nodes/rewrite_query_node.py::89::43",
+    "splunk_splunk-sdk-python/splunklib/ai/engines/langchain.py::1508::23",
+    "splx-ai_agentic-radar/examples/openai-agents/agent_patterns/deterministic/deterministic.py::47::31",
+    "temporalio_samples-python/openai_agents/agent_patterns/workflows/deterministic_workflow.py::55::35",
+    "wsargent_groundedllm/hayhooks/pipelines/analyze_trace/pipeline_wrapper.py::66::17",
+    "wsargent_groundedllm/hayhooks/pipelines/excerpt/pipeline_wrapper.py::167::21",
+    "wsargent_groundedllm/hayhooks/pipelines/search/pipeline_wrapper.py::190::17",
+    "wsargent_groundedllm/hayhooks/pipelines/search_stackoverflow/pipeline_wrapper.py::70::17",
+    "xunharry4-source_AnimoCerebro/src/zentex/tasks/decomposition/pydantic_ai_decomposer.py::179::27"
+   ]
+  }
+ },
+ "crosswalk_nov12": {
+  "nov12_runtime_annotation_rows": 201,
+  "nov12_verified_runtime_annotations": 88,
+  "nov12_verified_methods": 86,
+  "nov12_verified_producer_call_ids": 87,
+  "nov12_verified_producers_in_frozen_106": 44,
+  "nov12_verified_producers_in_uniform_205_not_106": 29,
+  "nov12_verified_producers_outside_205": 14,
+  "new_primary_producers": 93,
+  "new_primary_in_106": 54,
+  "new_primary_in_205_not_106": 31,
+  "new_primary_attributed_outside_205": 8,
+  "nov12_verified_still_confirmed": 86,
+  "nov12_verified_not_confirmed": [
+   "julienlucas_agentic-rag-multiagent/backend/retriever/contextual_compression.py::76::23"
+  ],
+  "new_confirmed_not_nov12_verified": [
+   "FusionBrainLab_gigaevo-core/gigaevo/llm/agents/base.py::105::33",
+   "FusionBrainLab_gigaevo-core/gigaevo/llm/agents/lineage.py::342::32",
+   "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/datagen/self_improving_cot.py::424::19",
+   "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/datagen/self_improving_cot.py::522::24",
+   "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/datagen/self_improving_cot.py::589::19",
+   "Kasma-Inc_Sagi/src/Sagi/workflows/planning_html/planning_html_orchestrator.py::207::17",
+   "Tianyi-Billy-Ma_AutoData/autodata/extras/browser_use/chat_utils.py::189::37",
+   "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_code_executor_agent.py::648::29",
+   "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_magentic_one/_magentic_one_orchestrator.py::181::25",
+   "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_magentic_one/_magentic_one_orchestrator.py::471::25",
+   "ikamensh_kodo/kodo/coach.py::302::21",
+   "jupyter-naas_abi/libs/naas-abi-core/naas_abi_core/services/ontology/adaptors/secondary/OntologyService_SecondaryAdaptor_NERPort.py::30::19",
+   "oracle-devrel_technology-engineering/ai/gen-ai-agents/expense-validator/files/backend.py::66::19",
+   "seanchatmangpt_dslmodel/redteam_reports/src/dslmodel/dspy_modules/fsm_trigger_module.py::46::21",
+   "seanchatmangpt_dslmodel/redteam_reports/src/dslmodel/dspy_modules/tool_trigger_module.py::45::18",
+   "seanchatmangpt_dslmodel/src/dslmodel/dspy_modules/fsm_trigger_module.py::46::21",
+   "seanchatmangpt_dslmodel/src/dslmodel/dspy_modules/tool_trigger_module.py::45::18",
+   "seanchatmangpt_dspygen/src/dspygen/modules/fsm_trigger_module.py::42::21",
+   "seanchatmangpt_dspygen/src/dspygen/modules/json_module.py::101::17"
+  ],
+  "presence_agreement_rows": {
+   "true": 200,
+   "false": 2
+  }
+ },
+ "pyan_used": false,
+ "executed_applications_models_joern_or_producers": false
+}

@@ -1,0 +1,1754 @@
+[
+ {
+  "site_no": 1,
+  "call_id": "BjornMelin_docmind-ai-llm/src/agents/supervisor_graph.py::421::23",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "BjornMelin/docmind-ai-llm",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 2,
+  "call_id": "BjornMelin_docmind-ai-llm/src/agents/tools/memory.py::878::19",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "BjornMelin/docmind-ai-llm",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 3,
+  "call_id": "CAI-testbooks_LLM-Course/LLM-Course-Assignments-2025/01-NLP/submissions/rag_system_qwen.py::461::23",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "CAI-testbooks/LLM-Course",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 4,
+  "call_id": "Certora_AIComposer/composer/prover/analysis.py::35::16",
+  "stratum": "uniform",
+  "tier": "weaker_only",
+  "repo": "Certora/AIComposer",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 5,
+  "call_id": "Certora_AIComposer/composer/spec/refinement.py::97::20",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "Certora/AIComposer",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 6,
+  "call_id": "Certora_AIComposer/composer/spec/source/report/grouping.py::92::19",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "Certora/AIComposer",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 7,
+  "call_id": "Certora_AIComposer/composer/workflow/meta.py::31::16",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "Certora/AIComposer",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 8,
+  "call_id": "FudanSELab_TripSphere/trip-itinerary-planner/src/itinerary_planner/agent/nodes.py::153::31",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "FudanSELab/TripSphere",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 9,
+  "call_id": "FusionBrainLab_gigaevo-core/gigaevo/llm/agents/lineage.py::342::32",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "FusionBrainLab/gigaevo-core",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 10,
+  "call_id": "Grigorij-Dudnik_Clean-Coder-AI/src/agents/frontend_feedback.py::53::15",
+  "stratum": "uniform",
+  "tier": "weaker_only",
+  "repo": "Grigorij-Dudnik/Clean-Coder-AI",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 11,
+  "call_id": "HKUDS_ViMax/agents/camera_image_generator.py::147::45",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "HKUDS/ViMax",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 12,
+  "call_id": "HKUDS_ViMax/agents/event_extractor.py::149::23",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "HKUDS/ViMax",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 13,
+  "call_id": "Haohao-end_openagent/api/internal/service/icon_generator_service.py::236::20",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "Haohao-end/openagent",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 14,
+  "call_id": "Insight-Services-APAC_ingenious/ingenious/models/ag_agents.py::129::34",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "Insight-Services-APAC/ingenious",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 15,
+  "call_id": "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/agents/critic_agent.py::118::30",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "InternScience/InternAgent",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 16,
+  "call_id": "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/agents/deductive_reasoner_agent.py::250::19",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "InternScience/InternAgent",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 17,
+  "call_id": "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/agents/embodied_agent.py::147::19",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "InternScience/InternAgent",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 18,
+  "call_id": "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/agents/role_assignment_agent.py::105::19",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "InternScience/InternAgent",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 19,
+  "call_id": "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/agents/search_agent.py::130::19",
+  "stratum": "uniform",
+  "tier": "weaker_only",
+  "repo": "InternScience/InternAgent",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 20,
+  "call_id": "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/agents/task_agent.py::118::29",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "InternScience/InternAgent",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 21,
+  "call_id": "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/agents/task_agent.py::189::24",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "InternScience/InternAgent",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 22,
+  "call_id": "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/agents/task_agent.py::304::24",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "InternScience/InternAgent",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 23,
+  "call_id": "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/agents/task_agent.py::402::24",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "InternScience/InternAgent",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 24,
+  "call_id": "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/datagen/self_improving_cot.py::483::23",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "InternScience/InternAgent",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 25,
+  "call_id": "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/datasets/few_shot_generator.py::195::24",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "InternScience/InternAgent",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 26,
+  "call_id": "Kasma-Inc_Sagi/src/Sagi/workflows/planning_html/planning_html_orchestrator.py::207::17",
+  "stratum": "uniform",
+  "tier": "weaker_only",
+  "repo": "Kasma-Inc/Sagi",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 27,
+  "call_id": "LearningCircuit_local-deep-research/src/local_deep_research/web_search_engines/engines/full_search.py::102::25",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "LearningCircuit/local-deep-research",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 28,
+  "call_id": "OpenDCAI_OpenResearchFlow/backend/src/modules/exp_gen_v2/workflow.py::2548::21",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "OpenDCAI/OpenResearchFlow",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 29,
+  "call_id": "OpenGradient_tee-gateway/tee_gateway/controllers/chat_controller.py::218::13",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "OpenGradient/tee-gateway",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 30,
+  "call_id": "PostHog_posthog/ee/hogai/chat_agent/query_planner/nodes.py::105::25",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "PostHog/posthog",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 31,
+  "call_id": "PostHog_posthog/ee/hogai/chat_agent/rag/nodes.py::90::22",
+  "stratum": "uniform",
+  "tier": "weaker_only",
+  "repo": "PostHog/posthog",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 32,
+  "call_id": "PostHog_posthog/ee/hogai/chat_agent/taxonomy/nodes.py::129::25",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "PostHog/posthog",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 33,
+  "call_id": "PostHog_posthog/ee/hogai/utils/helpers.py::211::15",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "PostHog/posthog",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 34,
+  "call_id": "PostHog_posthog/products/cdp/backend/max_tools.py::193::25",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "PostHog/posthog",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 35,
+  "call_id": "PostHog_posthog/products/cdp/backend/max_tools.py::281::25",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "PostHog/posthog",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 36,
+  "call_id": "PostHog_posthog/products/cdp/backend/max_tools.py::95::25",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "PostHog/posthog",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 37,
+  "call_id": "RenqiChen_Virtual-Scientists-v2/camel-master/camel/agents/critic_agent.py::118::30",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "RenqiChen/Virtual-Scientists-v2",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 38,
+  "call_id": "RenqiChen_Virtual-Scientists-v2/camel-master/camel/agents/deductive_reasoner_agent.py::247::19",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "RenqiChen/Virtual-Scientists-v2",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 39,
+  "call_id": "RenqiChen_Virtual-Scientists-v2/camel-master/camel/agents/embodied_agent.py::147::19",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "RenqiChen/Virtual-Scientists-v2",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 40,
+  "call_id": "RenqiChen_Virtual-Scientists-v2/camel-master/camel/agents/role_assignment_agent.py::105::19",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "RenqiChen/Virtual-Scientists-v2",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 41,
+  "call_id": "RenqiChen_Virtual-Scientists-v2/camel-master/camel/agents/search_agent.py::130::19",
+  "stratum": "uniform",
+  "tier": "weaker_only",
+  "repo": "RenqiChen/Virtual-Scientists-v2",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 42,
+  "call_id": "RenqiChen_Virtual-Scientists-v2/camel-master/camel/agents/task_agent.py::118::29",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "RenqiChen/Virtual-Scientists-v2",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 43,
+  "call_id": "RenqiChen_Virtual-Scientists-v2/camel-master/camel/agents/task_agent.py::189::24",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "RenqiChen/Virtual-Scientists-v2",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 44,
+  "call_id": "RenqiChen_Virtual-Scientists-v2/camel-master/camel/agents/task_agent.py::304::24",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "RenqiChen/Virtual-Scientists-v2",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 45,
+  "call_id": "RenqiChen_Virtual-Scientists-v2/camel-master/camel/agents/task_agent.py::402::24",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "RenqiChen/Virtual-Scientists-v2",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 46,
+  "call_id": "Rvosy_Sakura/third_party/mem0/mem0/vector_stores/opensearch.py::321::23",
+  "stratum": "uniform",
+  "tier": "weaker_only",
+  "repo": "Rvosy/Sakura",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 47,
+  "call_id": "THUIR_MemoryBench/baselines/mem0/mem0/vector_stores/opensearch.py::223::23",
+  "stratum": "uniform",
+  "tier": "weaker_only",
+  "repo": "THUIR/MemoryBench",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 48,
+  "call_id": "Tianyi-Billy-Ma_AutoData/autodata/extras/browser_use/chat_utils.py::153::33",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "Tianyi-Billy-Ma/AutoData",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 49,
+  "call_id": "Tianyi-Billy-Ma_AutoData/autodata/extras/browser_use/chat_utils.py::189::37",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "Tianyi-Billy-Ma/AutoData",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 50,
+  "call_id": "XAIHT_Tlamatini/Tlamatini/agent/rag/interface.py::399::19",
+  "stratum": "uniform",
+  "tier": "weaker_only",
+  "repo": "XAIHT/Tlamatini",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 51,
+  "call_id": "XAIHT_Tlamatini/Tlamatini/agent/rag/interface.py::487::19",
+  "stratum": "uniform",
+  "tier": "weaker_only",
+  "repo": "XAIHT/Tlamatini",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 52,
+  "call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::1053::17",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "XAIHT/Tlamatini",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 53,
+  "call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::1109::17",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "XAIHT/Tlamatini",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 54,
+  "call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::1284::17",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "XAIHT/Tlamatini",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 55,
+  "call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::1305::17",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "XAIHT/Tlamatini",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 56,
+  "call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::1332::17",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "XAIHT/Tlamatini",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 57,
+  "call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::2168::17",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "XAIHT/Tlamatini",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 58,
+  "call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::3936::25",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "XAIHT/Tlamatini",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 59,
+  "call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::3943::25",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "XAIHT/Tlamatini",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 60,
+  "call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::3966::25",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "XAIHT/Tlamatini",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 61,
+  "call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::4122::17",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "XAIHT/Tlamatini",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 62,
+  "call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::4145::17",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "XAIHT/Tlamatini",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 63,
+  "call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::6172::17",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "XAIHT/Tlamatini",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 64,
+  "call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::649::17",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "XAIHT/Tlamatini",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 65,
+  "call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::669::17",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "XAIHT/Tlamatini",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 66,
+  "call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::6827::17",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "XAIHT/Tlamatini",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 67,
+  "call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::6873::17",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "XAIHT/Tlamatini",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 68,
+  "call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::691::17",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "XAIHT/Tlamatini",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 69,
+  "call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::7076::17",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "XAIHT/Tlamatini",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 70,
+  "call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::841::17",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "XAIHT/Tlamatini",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 71,
+  "call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::919::17",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "XAIHT/Tlamatini",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 72,
+  "call_id": "XAIHT_Tlamatini/Tlamatini/agent/tests.py::982::17",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "XAIHT/Tlamatini",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 73,
+  "call_id": "alibaba_loongsuite-python/examples/ecommerce-customer-service/workflow.py::201::27",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "alibaba/loongsuite-python",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 74,
+  "call_id": "arm_metis/src/metis/engine/llm_runner.py::176::44",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "arm/metis",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 75,
+  "call_id": "baserow_baserow/enterprise/backend/src/baserow_enterprise/assistant/tools/database/tools.py::921::19",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "baserow/baserow",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 76,
+  "call_id": "cladius_agentic-ai/langgraph/Level5/level5.py::252::23",
+  "stratum": "uniform",
+  "tier": "weaker_only",
+  "repo": "cladius/agentic-ai",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 77,
+  "call_id": "codemie-ai_codemie/src/codemie/chains/kb_sources_selector_chain.py::38::17",
+  "stratum": "uniform",
+  "tier": "weaker_only",
+  "repo": "codemie-ai/codemie",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 78,
+  "call_id": "codemie-ai_codemie/src/codemie_tools/data_management/code_executor/session_factory.py::213::21",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "codemie-ai/codemie",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 79,
+  "call_id": "codemie-ai_codemie/src/codemie_tools/data_management/workspace/execute_workspace_script_tool.py::174::17",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "codemie-ai/codemie",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 80,
+  "call_id": "crestalnetwork_intentkit/intentkit/core/summarization.py::394::25",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "crestalnetwork/intentkit",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 81,
+  "call_id": "crestalnetwork_intentkit/intentkit/tools/aave_v3/utils.py::62::20",
+  "stratum": "uniform",
+  "tier": "weaker_only",
+  "repo": "crestalnetwork/intentkit",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 82,
+  "call_id": "crestalnetwork_intentkit/intentkit/tools/aerodrome/add_liquidity.py::134::33",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "crestalnetwork/intentkit",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 83,
+  "call_id": "crestalnetwork_intentkit/intentkit/tools/aerodrome/add_liquidity.py::239::34",
+  "stratum": "uniform",
+  "tier": "weaker_only",
+  "repo": "crestalnetwork/intentkit",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 84,
+  "call_id": "crestalnetwork_intentkit/intentkit/tools/aerodrome/get_positions.py::95::42",
+  "stratum": "uniform",
+  "tier": "weaker_only",
+  "repo": "crestalnetwork/intentkit",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 85,
+  "call_id": "crestalnetwork_intentkit/intentkit/tools/aerodrome/remove_liquidity.py::120::29",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "crestalnetwork/intentkit",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 86,
+  "call_id": "crestalnetwork_intentkit/intentkit/tools/aerodrome/utils.py::81::20",
+  "stratum": "uniform",
+  "tier": "weaker_only",
+  "repo": "crestalnetwork/intentkit",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 87,
+  "call_id": "crestalnetwork_intentkit/intentkit/tools/image/grok.py::35::23",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "crestalnetwork/intentkit",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 88,
+  "call_id": "crestalnetwork_intentkit/intentkit/tools/opensea/onchain_base.py::78::28",
+  "stratum": "uniform",
+  "tier": "weaker_only",
+  "repo": "crestalnetwork/intentkit",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 89,
+  "call_id": "crestalnetwork_intentkit/intentkit/tools/pancakeswap/add_liquidity.py::133::33",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "crestalnetwork/intentkit",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 90,
+  "call_id": "crestalnetwork_intentkit/intentkit/tools/pancakeswap/get_positions.py::90::46",
+  "stratum": "uniform",
+  "tier": "weaker_only",
+  "repo": "crestalnetwork/intentkit",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 91,
+  "call_id": "crestalnetwork_intentkit/intentkit/tools/pancakeswap/remove_liquidity.py::119::29",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "crestalnetwork/intentkit",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 92,
+  "call_id": "crestalnetwork_intentkit/intentkit/tools/pancakeswap/utils.py::76::20",
+  "stratum": "uniform",
+  "tier": "weaker_only",
+  "repo": "crestalnetwork/intentkit",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 93,
+  "call_id": "crestalnetwork_intentkit/intentkit/tools/uniswap/add_liquidity.py::135::33",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "crestalnetwork/intentkit",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 94,
+  "call_id": "crestalnetwork_intentkit/intentkit/tools/uniswap/remove_liquidity.py::74::29",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "crestalnetwork/intentkit",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 95,
+  "call_id": "crestalnetwork_intentkit/intentkit/tools/uniswap/utils.py::77::20",
+  "stratum": "uniform",
+  "tier": "weaker_only",
+  "repo": "crestalnetwork/intentkit",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 96,
+  "call_id": "crestalnetwork_intentkit/intentkit/tools/xmtp/transfer.py::100::37",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "crestalnetwork/intentkit",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 97,
+  "call_id": "datamllab_ltsm/multi_agents_pipeline/agents/Planning_Agent.py::32::25",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "datamllab/ltsm",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 98,
+  "call_id": "datamllab_ltsm/multi_agents_pipeline/agents/QA_Agent.py::65::29",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "datamllab/ltsm",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 99,
+  "call_id": "datastax_ragstack-ai/libs/e2e-tests/e2e_tests/langchain/nemo_guardrails.py::100::15",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "datastax/ragstack-ai",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 100,
+  "call_id": "datastax_ragstack-ai/libs/e2e-tests/e2e_tests/langchain/nemo_guardrails.py::90::15",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "datastax/ragstack-ai",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 101,
+  "call_id": "dustland_vibex-py/src/vibex/memory/mem0_backend.py::94::21",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "dustland/vibex-py",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 102,
+  "call_id": "ericjiang18_Agent-Q-Mix/agent_baseline/agent-framework/python/packages/orchestrations/agent_framework_orchestrations/_magentic.py::592::40",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "ericjiang18/Agent-Q-Mix",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 103,
+  "call_id": "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/agbench/benchmarks/GAIA/Templates/ParallelAgents/scenario.py::256::25",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "ericjiang18/Agent-Q-Mix",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 104,
+  "call_id": "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_code_executor_agent.py::648::29",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "ericjiang18/Agent-Q-Mix",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 105,
+  "call_id": "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_society_of_mind_agent.py::235::31",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "ericjiang18/Agent-Q-Mix",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 106,
+  "call_id": "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_chat_agent_container.py::208::22",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "ericjiang18/Agent-Q-Mix",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 107,
+  "call_id": "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_magentic_one/_magentic_one_orchestrator.py::168::25",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "ericjiang18/Agent-Q-Mix",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 108,
+  "call_id": "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_magentic_one/_magentic_one_orchestrator.py::181::25",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "ericjiang18/Agent-Q-Mix",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 109,
+  "call_id": "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_magentic_one/_magentic_one_orchestrator.py::459::25",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "ericjiang18/Agent-Q-Mix",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 110,
+  "call_id": "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_magentic_one/_magentic_one_orchestrator.py::471::25",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "ericjiang18/Agent-Q-Mix",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 111,
+  "call_id": "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/teams/_group_chat/_magentic_one/_magentic_one_orchestrator.py::486::25",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "ericjiang18/Agent-Q-Mix",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 112,
+  "call_id": "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-ext/src/autogen_ext/experimental/task_centric_memory/_prompter.py::74::25",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "ericjiang18/Agent-Q-Mix",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 113,
+  "call_id": "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-ext/src/autogen_ext/experimental/task_centric_memory/utils/apprentice.py::241::40",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "ericjiang18/Agent-Q-Mix",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 114,
+  "call_id": "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-ext/src/autogen_ext/experimental/task_centric_memory/utils/grader.py::97::25",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "ericjiang18/Agent-Q-Mix",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 115,
+  "call_id": "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/samples/agentchat_streamlit/agent.py::21::25",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "ericjiang18/Agent-Q-Mix",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 116,
+  "call_id": "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/samples/core_async_human_in_the_loop/main.py::182::25",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "ericjiang18/Agent-Q-Mix",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 117,
+  "call_id": "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/samples/core_distributed-group-chat/_agents.py::130::27",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "ericjiang18/Agent-Q-Mix",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 118,
+  "call_id": "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/samples/core_distributed-group-chat/_agents.py::53::27",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "ericjiang18/Agent-Q-Mix",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 119,
+  "call_id": "ibm-granite-community_granite-playground-agents/granite_core/granite_core/research/researcher.py::263::29",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "ibm-granite-community/granite-playground-agents",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 120,
+  "call_id": "ibm-granite-community_granite-playground-agents/granite_core/granite_core/research/researcher.py::329::29",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "ibm-granite-community/granite-playground-agents",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 121,
+  "call_id": "ikamensh_kodo/kodo/coach.py::409::21",
+  "stratum": "uniform",
+  "tier": "weaker_only",
+  "repo": "ikamensh/kodo",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 122,
+  "call_id": "itbench-hub_ITBench-CISO-CAA-Agent/src/ciso_agent/agents/kubernetes_kyverno.py::144::17",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "itbench-hub/ITBench-CISO-CAA-Agent",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 123,
+  "call_id": "itbench-hub_ITBench-CISO-CAA-Agent/src/ciso_agent/agents/kubernetes_kyverno_update.py::152::17",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "itbench-hub/ITBench-CISO-CAA-Agent",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 124,
+  "call_id": "julienlucas_agentic-rag-multiagent/backend/retriever/contextual_compression.py::76::23",
+  "stratum": "uniform",
+  "tier": "weaker_only",
+  "repo": "julienlucas/agentic-rag-multiagent",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 125,
+  "call_id": "jupyter-naas_abi/libs/naas-abi-core/naas_abi_core/services/ontology/adaptors/secondary/OntologyService_SecondaryAdaptor_NERPort.py::30::19",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "jupyter-naas/abi",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 126,
+  "call_id": "michaelalbada_BuildingApplicationsWithAIAgents/src/frameworks/langgraph_agents/supply_chain/ray_supply_chain_multi_agent.py::244::15",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "michaelalbada/BuildingApplicationsWithAIAgents",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 127,
+  "call_id": "microsoft_Multi-Agent-Custom-Automation-Engine-Solution-Accelerator/src/backend/patches/magentic_duplicate_fc_id.py::54::36",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "microsoft/Multi-Agent-Custom-Automation-Engine-Solution-Accelerator",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 128,
+  "call_id": "microsoft_semanticworkbench/libraries/python/guided-conversation/guided_conversation/functions/conversation_plan.py::242::19",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "microsoft/semanticworkbench",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 129,
+  "call_id": "microsoft_semanticworkbench/libraries/python/guided-conversation/guided_conversation/functions/execution.py::80::19",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "microsoft/semanticworkbench",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 130,
+  "call_id": "microsoft_semanticworkbench/libraries/python/guided-conversation/guided_conversation/functions/final_update_plan.py::100::19",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "microsoft/semanticworkbench",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 131,
+  "call_id": "mindroom-ai_mindroom/src/mindroom/routing.py::109::25",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "mindroom-ai/mindroom",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 132,
+  "call_id": "neul-labs_fast-langgraph/scripts/benchmark_rust_channels.py::134::17",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "neul-labs/fast-langgraph",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 133,
+  "call_id": "neul-labs_fast-langgraph/scripts/benchmark_rust_channels.py::68::17",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "neul-labs/fast-langgraph",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 134,
+  "call_id": "ob-labs_agentseek-api/examples/run_sample_graphs.py::29::19",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "ob-labs/agentseek-api",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 135,
+  "call_id": "ob-labs_agentseek-api/examples/run_sample_graphs.py::39::19",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "ob-labs/agentseek-api",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 136,
+  "call_id": "ob-labs_agentseek-api/examples/run_sample_graphs.py::48::19",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "ob-labs/agentseek-api",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 137,
+  "call_id": "ob-labs_agentseek-api/examples/run_sample_graphs.py::57::19",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "ob-labs/agentseek-api",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 138,
+  "call_id": "opea-project_GenAIComps/comps/guardrails/src/guardrails/integrations/llamaguard.py::142::23",
+  "stratum": "uniform",
+  "tier": "weaker_only",
+  "repo": "opea-project/GenAIComps",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 139,
+  "call_id": "opea-project_GenAIComps/comps/guardrails/src/guardrails/integrations/wildguard.py::109::23",
+  "stratum": "uniform",
+  "tier": "weaker_only",
+  "repo": "opea-project/GenAIComps",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 140,
+  "call_id": "oracle-devrel_technology-engineering/ai/gen-ai-agents/expense-validator/files/backend.py::66::19",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "oracle-devrel/technology-engineering",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 141,
+  "call_id": "oracle_agent-spec/docs/pyagentspec/source/code_examples/adapter_agent_framework_quickstart.py::59::23",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "oracle/agent-spec",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 142,
+  "call_id": "oracle_agent-spec/pyagentspec/src/pyagentspec/adapters/crewai/_node_execution.py::212::28",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "oracle/agent-spec",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 143,
+  "call_id": "robertwhiffin_ai-slide-generator/src/api/services/session_naming.py::40::19",
+  "stratum": "uniform",
+  "tier": "weaker_only",
+  "repo": "robertwhiffin/ai-slide-generator",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 144,
+  "call_id": "rocketride-org_rocketride-server/packages/ai/src/ai/common/context.py::47::21",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "rocketride-org/rocketride-server",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 145,
+  "call_id": "sambanova_agents/backend/src/agents/components/datagen/node.py::52::31",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "sambanova/agents",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 146,
+  "call_id": "seanchatmangpt_dslmodel/redteam_reports/src/dslmodel/dspy_modules/fsm_trigger_module.py::46::21",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "seanchatmangpt/dslmodel",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 147,
+  "call_id": "seanchatmangpt_dslmodel/redteam_reports/src/dslmodel/dspy_modules/tool_trigger_module.py::45::18",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "seanchatmangpt/dslmodel",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 148,
+  "call_id": "seanchatmangpt_dslmodel/src/dslmodel/dspy_modules/fsm_trigger_module.py::46::21",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "seanchatmangpt/dslmodel",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 149,
+  "call_id": "seanchatmangpt_dslmodel/src/dslmodel/dspy_modules/tool_trigger_module.py::45::18",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "seanchatmangpt/dslmodel",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 150,
+  "call_id": "seanchatmangpt_dspygen/src/dspygen/modules/fsm_trigger_module.py::42::21",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "seanchatmangpt/dspygen",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 151,
+  "call_id": "skygazer42_Weaver/agent/workflows/viz_planner.py::216::23",
+  "stratum": "uniform",
+  "tier": "weaker_only",
+  "repo": "skygazer42/Weaver",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 152,
+  "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_image_edit_tool.py::217::21",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "skygazer42/Weaver",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 153,
+  "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_image_edit_tool.py::345::21",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "skygazer42/Weaver",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 154,
+  "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_image_edit_tool.py::466::21",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "skygazer42/Weaver",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 155,
+  "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_image_edit_tool.py::573::21",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "skygazer42/Weaver",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 156,
+  "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_image_edit_tool.py::735::21",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "skygazer42/Weaver",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 157,
+  "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_image_edit_tool.py::861::21",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "skygazer42/Weaver",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 158,
+  "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_image_edit_tool.py::957::21",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "skygazer42/Weaver",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 159,
+  "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_presentation_outline_tool.py::396::21",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "skygazer42/Weaver",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 160,
+  "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_presentation_tool.py::204::21",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "skygazer42/Weaver",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 161,
+  "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_presentation_tool.py::320::21",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "skygazer42/Weaver",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 162,
+  "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_presentation_tool.py::425::21",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "skygazer42/Weaver",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 163,
+  "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_presentation_tool.py::534::21",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "skygazer42/Weaver",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 164,
+  "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_presentation_tool.py::661::21",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "skygazer42/Weaver",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 165,
+  "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_presentation_tool.py::825::21",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "skygazer42/Weaver",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 166,
+  "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_presentation_tool.py::897::21",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "skygazer42/Weaver",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 167,
+  "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_presentation_tool_v2.py::395::21",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "skygazer42/Weaver",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 168,
+  "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_presentation_tool_v2.py::508::21",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "skygazer42/Weaver",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 169,
+  "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_presentation_tool_v2.py::606::21",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "skygazer42/Weaver",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 170,
+  "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_presentation_tool_v2.py::701::21",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "skygazer42/Weaver",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 171,
+  "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_presentation_tool_v2.py::817::21",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "skygazer42/Weaver",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 172,
+  "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_sheets_tool.py::200::25",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "skygazer42/Weaver",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 173,
+  "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_sheets_tool.py::308::25",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "skygazer42/Weaver",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 174,
+  "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_sheets_tool.py::431::21",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "skygazer42/Weaver",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 175,
+  "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_sheets_tool.py::548::21",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "skygazer42/Weaver",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 176,
+  "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_sheets_tool.py::627::21",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "skygazer42/Weaver",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 177,
+  "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_sheets_tool.py::821::21",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "skygazer42/Weaver",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 178,
+  "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_vision_tool.py::113::37",
+  "stratum": "uniform",
+  "tier": "weaker_only",
+  "repo": "skygazer42/Weaver",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 179,
+  "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_vision_tool.py::187::21",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "skygazer42/Weaver",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 180,
+  "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_vision_tool.py::286::21",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "skygazer42/Weaver",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 181,
+  "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_vision_tool.py::408::21",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "skygazer42/Weaver",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 182,
+  "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_vision_tool.py::527::21",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "skygazer42/Weaver",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 183,
+  "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_vision_tool.py::631::21",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "skygazer42/Weaver",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 184,
+  "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_vision_tool.py::716::21",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "skygazer42/Weaver",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 185,
+  "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_vision_tool.py::836::21",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "skygazer42/Weaver",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 186,
+  "call_id": "sourangshupal_Agentic-RAG-project/src/services/agents/nodes/rewrite_query_node.py::89::43",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "sourangshupal/Agentic-RAG-project",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 187,
+  "call_id": "splunk_splunk-sdk-python/splunklib/ai/engines/langchain.py::1508::23",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "splunk/splunk-sdk-python",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 188,
+  "call_id": "splx-ai_agentic-radar/examples/openai-agents/agent_patterns/deterministic/deterministic.py::54::39",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "splx-ai/agentic-radar",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 189,
+  "call_id": "swarm-ai-research_swarm/swarm/analysis/autoresearch.py::203::18",
+  "stratum": "uniform",
+  "tier": "weaker_only",
+  "repo": "swarm-ai-research/swarm",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 190,
+  "call_id": "swarm-ai-research_swarm/swarm/research/swarm_papers/track_a.py::1785::26",
+  "stratum": "uniform",
+  "tier": "weaker_only",
+  "repo": "swarm-ai-research/swarm",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 191,
+  "call_id": "temporalio_samples-python/openai_agents/agent_patterns/workflows/deterministic_workflow.py::63::43",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "temporalio/samples-python",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 192,
+  "call_id": "tigergraph_graphrag/graphrag/app/routers/ui.py::4004::31",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "tigergraph/graphrag",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 193,
+  "call_id": "tigergraph_graphrag/graphrag/app/routers/ui.py::4030::27",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "tigergraph/graphrag",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 194,
+  "call_id": "tigergraph_graphrag/graphrag/app/routers/ui.py::4047::27",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "tigergraph/graphrag",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 195,
+  "call_id": "tigergraph_graphrag/graphrag/app/routers/ui.py::4117::27",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "tigergraph/graphrag",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 196,
+  "call_id": "timbal-ai_timbal/benchmarks/langchain/bench_long_conversation.py::440::19",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "timbal-ai/timbal",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 197,
+  "call_id": "wsargent_groundedllm/hayhooks/pipelines/analyze_trace/pipeline_wrapper.py::66::17",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "wsargent/groundedllm",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 198,
+  "call_id": "wsargent_groundedllm/hayhooks/pipelines/excerpt/pipeline_wrapper.py::167::21",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "wsargent/groundedllm",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 199,
+  "call_id": "wsargent_groundedllm/hayhooks/pipelines/search/pipeline_wrapper.py::190::17",
+  "stratum": "uniform",
+  "tier": "explicit_not_slice_supported",
+  "repo": "wsargent/groundedllm",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 200,
+  "call_id": "wsargent_groundedllm/hayhooks/pipelines/search_stackoverflow/pipeline_wrapper.py::70::17",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "wsargent/groundedllm",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 201,
+  "call_id": "xunharry4-source_AnimoCerebro/src/zentex/tasks/decomposition/pydantic_ai_decomposer.py::179::27",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "xunharry4-source/AnimoCerebro",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 202,
+  "call_id": "xunharry4-source_AnimoCerebro/src/zentex/tasks/decomposition/pydantic_ai_decomposer.py::285::23",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "xunharry4-source/AnimoCerebro",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 203,
+  "call_id": "zjunlp_LightMem/src/lightmem/memory_toolkits/memories/layers/baselines/mem0/vector_stores/opensearch.py::223::23",
+  "stratum": "uniform",
+  "tier": "weaker_only",
+  "repo": "zjunlp/LightMem",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 204,
+  "call_id": "zyhuang-gif_agent_project/backend/app/utils/factory.py::46::19",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "zyhuang-gif/agent_project",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 205,
+  "call_id": "zyhuang-gif_agent_project/backend/app/utils/factory.py::59::15",
+  "stratum": "uniform",
+  "tier": "explicit_slice_supported",
+  "repo": "zyhuang-gif/agent_project",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 206,
+  "call_id": "GenseeAI_open_deep_research/src/legacy/graph.py::307::28",
+  "stratum": "purposive",
+  "tier": "purposive_only",
+  "repo": "GenseeAI/open_deep_research",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 207,
+  "call_id": "Shubhamsaboo_awesome-llm-apps/advanced_ai_agents/autonomous_game_playing_agent_apps/ai_tic_tac_toe_agent/app.py::222::34",
+  "stratum": "purposive",
+  "tier": "purposive_only",
+  "repo": "Shubhamsaboo/awesome-llm-apps",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 208,
+  "call_id": "Shubhamsaboo_awesome-llm-apps/ai_agent_framework_crash_course/openai_sdk_crash_course/6_guardrails_validation/agent.py::133::27",
+  "stratum": "purposive",
+  "tier": "purposive_only",
+  "repo": "Shubhamsaboo/awesome-llm-apps",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 209,
+  "call_id": "UiPath_uipath-integrations-python/packages/uipath-pydantic-ai/samples/graph-flow/main.py::107::23",
+  "stratum": "purposive",
+  "tier": "purposive_only",
+  "repo": "UiPath/uipath-integrations-python",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 210,
+  "call_id": "ai-forever_giga_agent/backend/giga_agent/modules/deep_research/nodes/compose.py::117::21",
+  "stratum": "purposive",
+  "tier": "purposive_only",
+  "repo": "ai-forever/giga_agent",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 211,
+  "call_id": "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_code_executor_agent.py::808::31",
+  "stratum": "purposive",
+  "tier": "purposive_only",
+  "repo": "ericjiang18/Agent-Q-Mix",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 212,
+  "call_id": "ericjiang18_Agent-Q-Mix/agent_baseline/autogen/python/packages/autogen-agentchat/src/autogen_agentchat/agents/_code_executor_agent.py::821::33",
+  "stratum": "purposive",
+  "tier": "purposive_only",
+  "repo": "ericjiang18/Agent-Q-Mix",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 213,
+  "call_id": "gtesei_agentic_design_patterns/foundational_design_patterns/4_reflection/src/reflection_stateful_loop.py::185::16",
+  "stratum": "purposive",
+  "tier": "purposive_only",
+  "repo": "gtesei/agentic_design_patterns",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 214,
+  "call_id": "kjgpta_tracesage/examples/showcase/23_reflexion_writer/after.py::78::22",
+  "stratum": "purposive",
+  "tier": "purposive_only",
+  "repo": "kjgpta/tracesage",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 215,
+  "call_id": "kjgpta_tracesage/examples/showcase/23_reflexion_writer/before.py::68::22",
+  "stratum": "purposive",
+  "tier": "purposive_only",
+  "repo": "kjgpta/tracesage",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 216,
+  "call_id": "lucebert_langchain-doc-graph/src/self_rag/graph.py::50::17",
+  "stratum": "purposive",
+  "tier": "purposive_only",
+  "repo": "lucebert/langchain-doc-graph",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 217,
+  "call_id": "rhesis-ai_rhesis/agents/visit-prep/src/visit_prep/pipeline.py::190::14",
+  "stratum": "purposive",
+  "tier": "purposive_only",
+  "repo": "rhesis-ai/rhesis",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 218,
+  "call_id": "splx-ai_agentic-radar/examples/openai-agents/agent_patterns/deterministic/deterministic.py::47::31",
+  "stratum": "purposive",
+  "tier": "purposive_only",
+  "repo": "splx-ai/agentic-radar",
+  "hash_matches_nov4": true
+ },
+ {
+  "site_no": 219,
+  "call_id": "temporalio_samples-python/openai_agents/agent_patterns/workflows/deterministic_workflow.py::55::35",
+  "stratum": "purposive",
+  "tier": "purposive_only",
+  "repo": "temporalio/samples-python",
+  "hash_matches_nov4": true
+ }
+]

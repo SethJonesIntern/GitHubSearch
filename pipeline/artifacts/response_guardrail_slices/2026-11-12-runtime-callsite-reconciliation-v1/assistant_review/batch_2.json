@@ -1,0 +1,1812 @@
+[
+ {
+  "site_no": 3,
+  "call_id": "CAI-testbooks_LLM-Course/LLM-Course-Assignments-2025/01-NLP/submissions/rag_system_qwen.py::461::23",
+  "actual_context": "production",
+  "context_flags": [
+   "example_or_tutorial"
+  ],
+  "context_evidence": "Course assignment submission (01-NLP/submissions); QwenRAGSystem._query_rewrite, lines 408-489.",
+  "invocation": "unresolved",
+  "invocation_evidence": "Receiver self.dashscope is the raw Alibaba dashscope SDK module (lines 27, 42, 164); Generation.call is a real LLM call but NOT through an agentic framework; the langchain_community '.call' pattern matched by token. Raw provider SDK, out of framework scope.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "CAI-testbooks_LLM-Course/LLM-Course-Assignments-2025/01-NLP/submissions/rag_system_qwen.py::461::23",
+    "protected_output": "query-rewrite JSON (sub_queries) parsed from response['output']['text']",
+    "checked_property": "presence of 'sub_queries' key (and JSON parseability via json.loads)",
+    "oracle_type": "simple",
+    "evaluator": "if 'sub_queries' not in result: raise ValueError",
+    "verdict_location": "LLM-Course-Assignments-2025/01-NLP/submissions/rag_system_qwen.py:472",
+    "check_location": "LLM-Course-Assignments-2025/01-NLP/submissions/rag_system_qwen.py:472",
+    "enforcement_location": "LLM-Course-Assignments-2025/01-NLP/submissions/rag_system_qwen.py:478",
+    "failure_consequence": "raise caught by except -> fallback to unsplit original query with weight 1.0",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "unresolved",
+    "nonqualifying_reason": "other:invocation_is_raw_dashscope_sdk_not_framework",
+    "joern_support": "partial",
+    "joern_slice_ids": [
+     "80873"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "LLM-Course-Assignments-2025/01-NLP/submissions/rag_system_qwen.py",
+      "line": 461,
+      "line_end": 466,
+      "role": "output"
+     },
+     {
+      "rel_path": "LLM-Course-Assignments-2025/01-NLP/submissions/rag_system_qwen.py",
+      "line": 469,
+      "line_end": 469,
+      "role": "support"
+     },
+     {
+      "rel_path": "LLM-Course-Assignments-2025/01-NLP/submissions/rag_system_qwen.py",
+      "line": 472,
+      "line_end": 473,
+      "role": "check"
+     },
+     {
+      "rel_path": "LLM-Course-Assignments-2025/01-NLP/submissions/rag_system_qwen.py",
+      "line": 477,
+      "line_end": 489,
+      "role": "enforcement"
+     }
+    ]
+   }
+  ],
+  "site_decision": "unresolved",
+  "rationale": "Mechanically this is a simple presence check with fallback before the rewrite result is returned. But the call is a raw dashscope SDK call (not a framework invocation), so the site is out of the framework scope; saved slice 80873 covers 461/468 but not 472."
+ },
+ {
+  "site_no": 14,
+  "call_id": "Insight-Services-APAC_ingenious/ingenious/models/ag_agents.py::129::34",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "RoutedAssistantAgent.handle_my_message_type (lines 74-141), library/app agent code.",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "self._model_client is an autogen_core ChatCompletionClient; line 129 is the second (post-tool) chat completion create().",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "Insight-Services-APAC_ingenious/ingenious/models/ag_agents.py::129::34",
+    "protected_output": "final post-tool reflection completion content",
+    "checked_property": "content is a str (not tool calls)",
+    "oracle_type": "simple",
+    "evaluator": "assert isinstance(create_result.content, str)",
+    "verdict_location": "ingenious/models/ag_agents.py:133",
+    "check_location": "ingenious/models/ag_agents.py:133",
+    "enforcement_location": "ingenious/models/ag_agents.py:133",
+    "failure_consequence": "AssertionError raised before content is wrapped in Response and published",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": true,
+    "evidence_lines": [
+     {
+      "rel_path": "ingenious/models/ag_agents.py",
+      "line": 129,
+      "line_end": 132,
+      "role": "output"
+     },
+     {
+      "rel_path": "ingenious/models/ag_agents.py",
+      "line": 133,
+      "line_end": 133,
+      "role": "check"
+     },
+     {
+      "rel_path": "ingenious/models/ag_agents.py",
+      "line": 136,
+      "line_end": 138,
+      "role": "support"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "A deterministic type assertion on the second create() result raises before the content becomes chat_response and is published. Simple oracle; disabled under python -O. No saved Joern slice."
+ },
+ {
+  "site_no": 74,
+  "call_id": "arm_metis/src/metis/engine/llm_runner.py::176::44",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "JsonPromptRunner._invoke_attempts (122-283), core engine runner used by triage/review nodes.",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "(prompt | chat.with_structured_output(response_model, include_raw=True)).invoke - LangChain chat model from llm_provider.get_chat_model.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "arm_metis/src/metis/engine/llm_runner.py::176::44",
+    "protected_output": "structured response dict (raw/parsed/parsing_error)",
+    "checked_property": "result is a dict",
+    "oracle_type": "simple",
+    "evaluator": "if not isinstance(structured_result, dict): raise TypeError",
+    "verdict_location": "src/metis/engine/llm_runner.py:184",
+    "check_location": "src/metis/engine/llm_runner.py:184",
+    "enforcement_location": "src/metis/engine/llm_runner.py:233",
+    "failure_consequence": "TypeError caught, attempt marked failed, retried up to max_attempts, else returns None (no output accepted)",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "992314"
+    ],
+    "retry_budget_bypass": "no",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "src/metis/engine/llm_runner.py",
+      "line": 176,
+      "line_end": 183,
+      "role": "output"
+     },
+     {
+      "rel_path": "src/metis/engine/llm_runner.py",
+      "line": 184,
+      "line_end": 187,
+      "role": "check"
+     },
+     {
+      "rel_path": "src/metis/engine/llm_runner.py",
+      "line": 233,
+      "line_end": 237,
+      "role": "enforcement"
+     },
+     {
+      "rel_path": "src/metis/engine/llm_runner.py",
+      "line": 247,
+      "line_end": 283,
+      "role": "enforcement"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "arm_metis/src/metis/engine/llm_runner.py::176::44",
+    "protected_output": "parsed structured output",
+    "checked_property": "Pydantic schema validation of response_model (parsing_error) and request.parse deterministic normalizer",
+    "oracle_type": "simple",
+    "evaluator": "parsing_error is not None -> failure; request.parse raising -> failure; parsed None -> retry",
+    "verdict_location": "src/metis/engine/llm_runner.py:191",
+    "check_location": "src/metis/engine/llm_runner.py:191",
+    "enforcement_location": "src/metis/engine/llm_runner.py:225",
+    "failure_consequence": "parsed stays None -> not returned; retry with backoff; after budget returns None with final_keep_message",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "992314"
+    ],
+    "retry_budget_bypass": "no",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "src/metis/engine/llm_runner.py",
+      "line": 190,
+      "line_end": 199,
+      "role": "verdict"
+     },
+     {
+      "rel_path": "src/metis/engine/llm_runner.py",
+      "line": 225,
+      "line_end": 232,
+      "role": "enforcement"
+     },
+     {
+      "rel_path": "src/metis/engine/llm_runner.py",
+      "line": 274,
+      "line_end": 283,
+      "role": "enforcement"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "The structured invoke result is type-checked and schema-validated (Pydantic parsing_error, caller parse functions) before it is returned; failures retry and exhaust to None rather than accepting. Both checks lie in saved slice 992314 with the call."
+ },
+ {
+  "site_no": 97,
+  "call_id": "datamllab_ltsm/multi_agents_pipeline/agents/Planning_Agent.py::32::25",
+  "actual_context": "production",
+  "context_flags": [
+   "demo_or_sample_app"
+  ],
+  "context_evidence": "PlanningAgent.send_message_to_openai (23-39); research multi-agent pipeline driven by main.py with hardcoded sample inputs.",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "self._model_client is autogen_core ChatCompletionClient (loaded from model_config.yaml in main.py:24).",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "datamllab_ltsm/multi_agents_pipeline/agents/Planning_Agent.py::32::25",
+    "protected_output": "planner response content",
+    "checked_property": "content is str",
+    "oracle_type": "simple",
+    "evaluator": "if isinstance(response.content, str): return ... else raise ValueError",
+    "verdict_location": "multi_agents_pipeline/agents/Planning_Agent.py:36",
+    "check_location": "multi_agents_pipeline/agents/Planning_Agent.py:36",
+    "enforcement_location": "multi_agents_pipeline/agents/Planning_Agent.py:39",
+    "failure_consequence": "ValueError raised instead of returning content",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "1408416"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "multi_agents_pipeline/agents/Planning_Agent.py",
+      "line": 32,
+      "line_end": 35,
+      "role": "output"
+     },
+     {
+      "rel_path": "multi_agents_pipeline/agents/Planning_Agent.py",
+      "line": 36,
+      "line_end": 39,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "datamllab_ltsm/multi_agents_pipeline/agents/Planning_Agent.py::32::25",
+    "protected_output": "planner task JSON (TSMessage / TextMessage)",
+    "checked_property": "Pydantic schema validation",
+    "oracle_type": "simple",
+    "evaluator": "TSMessage.model_validate_json / TextMessage.model_validate_json; ValidationError -> ValueError",
+    "verdict_location": "multi_agents_pipeline/agents/Planning_Agent.py:62",
+    "check_location": "multi_agents_pipeline/agents/Planning_Agent.py:62",
+    "enforcement_location": "multi_agents_pipeline/agents/Planning_Agent.py:68",
+    "failure_consequence": "ValueError raised; task not published to TS/QA agents",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "multi_agents_pipeline/agents/Planning_Agent.py",
+      "line": 59,
+      "line_end": 59,
+      "role": "support"
+     },
+     {
+      "rel_path": "multi_agents_pipeline/agents/Planning_Agent.py",
+      "line": 62,
+      "line_end": 62,
+      "role": "check"
+     },
+     {
+      "rel_path": "multi_agents_pipeline/agents/Planning_Agent.py",
+      "line": 67,
+      "line_end": 68,
+      "role": "enforcement"
+     },
+     {
+      "rel_path": "multi_agents_pipeline/agents/Planning_Agent.py",
+      "line": 89,
+      "line_end": 89,
+      "role": "check"
+     },
+     {
+      "rel_path": "multi_agents_pipeline/agents/Planning_Agent.py",
+      "line": 93,
+      "line_end": 94,
+      "role": "enforcement"
+     },
+     {
+      "rel_path": "multi_agents_pipeline/agents/Planning_Agent.py",
+      "line": 105,
+      "line_end": 116,
+      "role": "support"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "Output type is checked with a raise before return, and callers validate the JSON against Pydantic message schemas, raising before the task is published. Both are simple oracles."
+ },
+ {
+  "site_no": 98,
+  "call_id": "datamllab_ltsm/multi_agents_pipeline/agents/QA_Agent.py::65::29",
+  "actual_context": "production",
+  "context_flags": [
+   "demo_or_sample_app"
+  ],
+  "context_evidence": "QAAgent.handle_TS (39-81); research pipeline run from main.py with sample inputs.",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "self._model_client is autogen_core ChatCompletionClient.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "datamllab_ltsm/multi_agents_pipeline/agents/QA_Agent.py::65::29",
+    "protected_output": "QA answer content",
+    "checked_property": "content is str",
+    "oracle_type": "simple",
+    "evaluator": "assert isinstance(llm_response.content, str)",
+    "verdict_location": "multi_agents_pipeline/agents/QA_Agent.py:70",
+    "check_location": "multi_agents_pipeline/agents/QA_Agent.py:70",
+    "enforcement_location": "multi_agents_pipeline/agents/QA_Agent.py:70",
+    "failure_consequence": "AssertionError before storing, adding to context and publishing",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "1408433"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": true,
+    "evidence_lines": [
+     {
+      "rel_path": "multi_agents_pipeline/agents/QA_Agent.py",
+      "line": 65,
+      "line_end": 68,
+      "role": "output"
+     },
+     {
+      "rel_path": "multi_agents_pipeline/agents/QA_Agent.py",
+      "line": 70,
+      "line_end": 70,
+      "role": "check"
+     },
+     {
+      "rel_path": "multi_agents_pipeline/agents/QA_Agent.py",
+      "line": 72,
+      "line_end": 81,
+      "role": "support"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "datamllab_ltsm/multi_agents_pipeline/agents/QA_Agent.py::65::29",
+    "protected_output": "published QA answer",
+    "checked_property": "whether answer correctly reflects data and fulfils task (score 0-1)",
+    "oracle_type": "complex",
+    "evaluator": "RewardAgent LLM judge (same autogen ChatCompletionClient) scores QA answer; regex extract_score; score<=0.5 -> redo",
+    "verdict_location": "multi_agents_pipeline/agents/Reward_Agent.py:104",
+    "check_location": "multi_agents_pipeline/agents/Reward_Agent.py:109",
+    "enforcement_location": "multi_agents_pipeline/agents/Reward_Agent.py:114",
+    "failure_consequence": "Redo-TS/Redo-QA publish triggers regeneration, up to retry_limit 2",
+    "before_acceptance": "unresolved",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "other:verdict_overridden_by_force_bad_score_in_only_entrypoint_and_judged_after_publish",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "yes",
+    "fail_open": "no",
+    "configuration_dependent": "yes",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "multi_agents_pipeline/agents/Reward_Agent.py",
+      "line": 93,
+      "line_end": 107,
+      "role": "verdict"
+     },
+     {
+      "rel_path": "multi_agents_pipeline/agents/Reward_Agent.py",
+      "line": 105,
+      "line_end": 106,
+      "role": "support"
+     },
+     {
+      "rel_path": "multi_agents_pipeline/agents/Reward_Agent.py",
+      "line": 109,
+      "line_end": 116,
+      "role": "check"
+     },
+     {
+      "rel_path": "multi_agents_pipeline/agents/Reward_Agent.py",
+      "line": 153,
+      "line_end": 165,
+      "role": "enforcement"
+     },
+     {
+      "rel_path": "multi_agents_pipeline/main.py",
+      "line": 55,
+      "line_end": 55,
+      "role": "support"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "A deterministic isinstance assert precedes storage and publication of the QA answer (simple, -O sensitive). The RewardAgent LLM judge redo loop is recorded but not counted: main.py constructs it with force_bad_score=True so the score is overwritten (verdict does not control), the answer was already published/stored, and the retry limit then accepts."
+ },
+ {
+  "site_no": 127,
+  "call_id": "microsoft_Multi-Agent-Custom-Automation-Engine-Solution-Accelerator/src/backend/patches/magentic_duplicate_fc_id.py::54::36",
+  "actual_context": "production",
+  "context_flags": [
+   "vendored_framework_copy"
+  ],
+  "context_evidence": "Monkey-patch replacement for agent_framework StandardMagenticManager._complete (docstring lines 47-53: identical to original except session=None).",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "self._agent.run(messages) runs the Magentic manager's agent_framework chat agent.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "microsoft_Multi-Agent-Custom-Automation-Engine-Solution-Accelerator/src/backend/patches/magentic_duplicate_fc_id.py::54::36",
+    "protected_output": "manager agent response message",
+    "checked_property": "response.messages non-empty",
+    "oracle_type": "simple",
+    "evaluator": "if not response.messages: raise RuntimeError",
+    "verdict_location": "src/backend/patches/magentic_duplicate_fc_id.py:55",
+    "check_location": "src/backend/patches/magentic_duplicate_fc_id.py:55",
+    "enforcement_location": "src/backend/patches/magentic_duplicate_fc_id.py:56",
+    "failure_consequence": "RuntimeError instead of returning a message",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "2113536"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "src/backend/patches/magentic_duplicate_fc_id.py",
+      "line": 54,
+      "line_end": 54,
+      "role": "output"
+     },
+     {
+      "rel_path": "src/backend/patches/magentic_duplicate_fc_id.py",
+      "line": 55,
+      "line_end": 56,
+      "role": "check"
+     },
+     {
+      "rel_path": "src/backend/patches/magentic_duplicate_fc_id.py",
+      "line": 57,
+      "line_end": 59,
+      "role": "support"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "Simple presence check raises before the response message is returned to the orchestrator. Note the function is an app-side copy of framework internals (patched), so the check mirrors framework code."
+ },
+ {
+  "site_no": 151,
+  "call_id": "skygazer42_Weaver/agent/workflows/viz_planner.py::216::23",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "VizPlanner.analyze_for_charts (163-244), research-report visualization workflow.",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "self.llm (langchain BaseChatModel).with_structured_output(ChartDataResponse).invoke.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "skygazer42_Weaver/agent/workflows/viz_planner.py::216::23",
+    "protected_output": "chart data response",
+    "checked_property": "has_chartable_data flag",
+    "oracle_type": "simple",
+    "evaluator": "if not response.has_chartable_data: return []",
+    "verdict_location": "agent/workflows/viz_planner.py:221",
+    "check_location": "agent/workflows/viz_planner.py:221",
+    "enforcement_location": "agent/workflows/viz_planner.py:222",
+    "failure_consequence": "return [] (no charts)",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "workflow_branch_not_acceptability",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "2596109"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "agent/workflows/viz_planner.py",
+      "line": 216,
+      "line_end": 219,
+      "role": "output"
+     },
+     {
+      "rel_path": "agent/workflows/viz_planner.py",
+      "line": 221,
+      "line_end": 222,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "skygazer42_Weaver/agent/workflows/viz_planner.py::216::23",
+    "protected_output": "each LLM-proposed chart spec",
+    "checked_property": "chart_type membership in ChartType enum (and dict shape via .get)",
+    "oracle_type": "simple",
+    "evaluator": "ChartType(chart_data.get('chart_type','bar')) raises ValueError for unsupported type",
+    "verdict_location": "agent/workflows/viz_planner.py:227",
+    "check_location": "agent/workflows/viz_planner.py:227",
+    "enforcement_location": "agent/workflows/viz_planner.py:236",
+    "failure_consequence": "invalid chart spec suppressed (skipped, logged at debug) before appending to chart_specs",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "partial",
+    "joern_slice_ids": [
+     "2596109"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "agent/workflows/viz_planner.py",
+      "line": 225,
+      "line_end": 225,
+      "role": "support"
+     },
+     {
+      "rel_path": "agent/workflows/viz_planner.py",
+      "line": 227,
+      "line_end": 227,
+      "role": "check"
+     },
+     {
+      "rel_path": "agent/workflows/viz_planner.py",
+      "line": 236,
+      "line_end": 237,
+      "role": "enforcement"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "skygazer42_Weaver/agent/workflows/viz_planner.py::216::23",
+    "protected_output": "structured output",
+    "checked_property": "ChartDataResponse Pydantic schema via with_structured_output",
+    "oracle_type": "simple",
+    "evaluator": "framework structured-output parsing; exception caught",
+    "verdict_location": "agent/workflows/viz_planner.py:216",
+    "check_location": "agent/workflows/viz_planner.py:216",
+    "enforcement_location": "agent/workflows/viz_planner.py:242",
+    "failure_consequence": "return [] fallback",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "unresolved",
+    "nonqualifying_reason": "other:validation_inside_framework_behaviour_provider_dependent",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "agent/workflows/viz_planner.py",
+      "line": 215,
+      "line_end": 219,
+      "role": "check"
+     },
+     {
+      "rel_path": "agent/workflows/viz_planner.py",
+      "line": 242,
+      "line_end": 244,
+      "role": "enforcement"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "has_chartable_data is a workflow branch, not an acceptability check. The per-chart ChartType enum construction rejects unsupported chart types and suppresses that spec before it is accepted (simple membership). Saved slice 2596109 reaches the loop (225) but not line 227."
+ },
+ {
+  "site_no": 152,
+  "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_image_edit_tool.py::217::21",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "ApplyFilterTool._run in tools/sandbox/sandbox_image_edit_tool.py (LangChain BaseTool wrapper around E2B sandbox).",
+  "invocation": "false_positive_non_llm",
+  "invocation_evidence": "sandbox.commands.run(f\"python3 -c ...\") executes templated Python in the E2B sandbox (self._get_sandbox: 'Get the E2B sandbox instance'); not an LLM call.",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "skygazer42_Weaver/tools/sandbox/sandbox_image_edit_tool.py::217::21",
+    "protected_output": "sandbox command stdout",
+    "checked_property": "'error' in json.loads(stdout) -> raise",
+    "oracle_type": "simple",
+    "evaluator": "'error' in json.loads(stdout) -> raise",
+    "verdict_location": "tools/sandbox/sandbox_image_edit_tool.py:221",
+    "check_location": "tools/sandbox/sandbox_image_edit_tool.py:221",
+    "enforcement_location": "tools/sandbox/sandbox_image_edit_tool.py:221",
+    "failure_consequence": "RuntimeError",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "false_positive_invocation",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "tools/sandbox/sandbox_image_edit_tool.py",
+      "line": 217,
+      "line_end": 217,
+      "role": "output"
+     },
+     {
+      "rel_path": "tools/sandbox/sandbox_image_edit_tool.py",
+      "line": 221,
+      "line_end": 222,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "The matched '.run' is an E2B sandbox shell command execution, not an LLM invocation. The stdout check is a tool-execution error check, not a guard on LLM output."
+ },
+ {
+  "site_no": 153,
+  "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_image_edit_tool.py::345::21",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "ApplyEffectTool._run in tools/sandbox/sandbox_image_edit_tool.py (LangChain BaseTool wrapper around E2B sandbox).",
+  "invocation": "false_positive_non_llm",
+  "invocation_evidence": "sandbox.commands.run(f\"python3 -c ...\") executes templated Python in the E2B sandbox (self._get_sandbox: 'Get the E2B sandbox instance'); not an LLM call.",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "skygazer42_Weaver/tools/sandbox/sandbox_image_edit_tool.py::345::21",
+    "protected_output": "sandbox command stdout",
+    "checked_property": "'error' in json.loads(stdout) -> raise",
+    "oracle_type": "simple",
+    "evaluator": "'error' in json.loads(stdout) -> raise",
+    "verdict_location": "tools/sandbox/sandbox_image_edit_tool.py:349",
+    "check_location": "tools/sandbox/sandbox_image_edit_tool.py:349",
+    "enforcement_location": "tools/sandbox/sandbox_image_edit_tool.py:349",
+    "failure_consequence": "RuntimeError",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "false_positive_invocation",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "tools/sandbox/sandbox_image_edit_tool.py",
+      "line": 345,
+      "line_end": 345,
+      "role": "output"
+     },
+     {
+      "rel_path": "tools/sandbox/sandbox_image_edit_tool.py",
+      "line": 349,
+      "line_end": 350,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "The matched '.run' is an E2B sandbox shell command execution, not an LLM invocation. The stdout check is a tool-execution error check, not a guard on LLM output."
+ },
+ {
+  "site_no": 154,
+  "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_image_edit_tool.py::466::21",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "AdjustImageTool._run in tools/sandbox/sandbox_image_edit_tool.py (LangChain BaseTool wrapper around E2B sandbox).",
+  "invocation": "false_positive_non_llm",
+  "invocation_evidence": "sandbox.commands.run(f\"python3 -c ...\") executes templated Python in the E2B sandbox (self._get_sandbox: 'Get the E2B sandbox instance'); not an LLM call.",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "skygazer42_Weaver/tools/sandbox/sandbox_image_edit_tool.py::466::21",
+    "protected_output": "sandbox command stdout",
+    "checked_property": "'error' in json.loads(stdout) -> raise",
+    "oracle_type": "simple",
+    "evaluator": "'error' in json.loads(stdout) -> raise",
+    "verdict_location": "tools/sandbox/sandbox_image_edit_tool.py:470",
+    "check_location": "tools/sandbox/sandbox_image_edit_tool.py:470",
+    "enforcement_location": "tools/sandbox/sandbox_image_edit_tool.py:470",
+    "failure_consequence": "RuntimeError",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "false_positive_invocation",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "tools/sandbox/sandbox_image_edit_tool.py",
+      "line": 466,
+      "line_end": 466,
+      "role": "output"
+     },
+     {
+      "rel_path": "tools/sandbox/sandbox_image_edit_tool.py",
+      "line": 470,
+      "line_end": 471,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "The matched '.run' is an E2B sandbox shell command execution, not an LLM invocation. The stdout check is a tool-execution error check, not a guard on LLM output."
+ },
+ {
+  "site_no": 155,
+  "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_image_edit_tool.py::573::21",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "RotateFlipTool._run in tools/sandbox/sandbox_image_edit_tool.py (LangChain BaseTool wrapper around E2B sandbox).",
+  "invocation": "false_positive_non_llm",
+  "invocation_evidence": "sandbox.commands.run(f\"python3 -c ...\") executes templated Python in the E2B sandbox (self._get_sandbox: 'Get the E2B sandbox instance'); not an LLM call.",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "skygazer42_Weaver/tools/sandbox/sandbox_image_edit_tool.py::573::21",
+    "protected_output": "sandbox command stdout",
+    "checked_property": "'error' in json.loads(stdout) -> raise",
+    "oracle_type": "simple",
+    "evaluator": "'error' in json.loads(stdout) -> raise",
+    "verdict_location": "tools/sandbox/sandbox_image_edit_tool.py:577",
+    "check_location": "tools/sandbox/sandbox_image_edit_tool.py:577",
+    "enforcement_location": "tools/sandbox/sandbox_image_edit_tool.py:577",
+    "failure_consequence": "RuntimeError",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "false_positive_invocation",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "tools/sandbox/sandbox_image_edit_tool.py",
+      "line": 573,
+      "line_end": 573,
+      "role": "output"
+     },
+     {
+      "rel_path": "tools/sandbox/sandbox_image_edit_tool.py",
+      "line": 577,
+      "line_end": 578,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "The matched '.run' is an E2B sandbox shell command execution, not an LLM invocation. The stdout check is a tool-execution error check, not a guard on LLM output."
+ },
+ {
+  "site_no": 156,
+  "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_image_edit_tool.py::735::21",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "AddWatermarkTool._run in tools/sandbox/sandbox_image_edit_tool.py (LangChain BaseTool wrapper around E2B sandbox).",
+  "invocation": "false_positive_non_llm",
+  "invocation_evidence": "sandbox.commands.run(f\"python3 -c ...\") executes templated Python in the E2B sandbox (self._get_sandbox: 'Get the E2B sandbox instance'); not an LLM call.",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "skygazer42_Weaver/tools/sandbox/sandbox_image_edit_tool.py::735::21",
+    "protected_output": "sandbox command stdout",
+    "checked_property": "'error' in json.loads(stdout) -> raise",
+    "oracle_type": "simple",
+    "evaluator": "'error' in json.loads(stdout) -> raise",
+    "verdict_location": "tools/sandbox/sandbox_image_edit_tool.py:739",
+    "check_location": "tools/sandbox/sandbox_image_edit_tool.py:739",
+    "enforcement_location": "tools/sandbox/sandbox_image_edit_tool.py:739",
+    "failure_consequence": "RuntimeError",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "false_positive_invocation",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "tools/sandbox/sandbox_image_edit_tool.py",
+      "line": 735,
+      "line_end": 735,
+      "role": "output"
+     },
+     {
+      "rel_path": "tools/sandbox/sandbox_image_edit_tool.py",
+      "line": 739,
+      "line_end": 740,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "The matched '.run' is an E2B sandbox shell command execution, not an LLM invocation. The stdout check is a tool-execution error check, not a guard on LLM output."
+ },
+ {
+  "site_no": 157,
+  "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_image_edit_tool.py::861::21",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "OverlayImagesTool._run in tools/sandbox/sandbox_image_edit_tool.py (LangChain BaseTool wrapper around E2B sandbox).",
+  "invocation": "false_positive_non_llm",
+  "invocation_evidence": "sandbox.commands.run(f\"python3 -c ...\") executes templated Python in the E2B sandbox (self._get_sandbox: 'Get the E2B sandbox instance'); not an LLM call.",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "skygazer42_Weaver/tools/sandbox/sandbox_image_edit_tool.py::861::21",
+    "protected_output": "sandbox command stdout",
+    "checked_property": "'error' in json.loads(stdout) -> raise",
+    "oracle_type": "simple",
+    "evaluator": "'error' in json.loads(stdout) -> raise",
+    "verdict_location": "tools/sandbox/sandbox_image_edit_tool.py:865",
+    "check_location": "tools/sandbox/sandbox_image_edit_tool.py:865",
+    "enforcement_location": "tools/sandbox/sandbox_image_edit_tool.py:865",
+    "failure_consequence": "RuntimeError",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "false_positive_invocation",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "tools/sandbox/sandbox_image_edit_tool.py",
+      "line": 861,
+      "line_end": 861,
+      "role": "output"
+     },
+     {
+      "rel_path": "tools/sandbox/sandbox_image_edit_tool.py",
+      "line": 865,
+      "line_end": 866,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "The matched '.run' is an E2B sandbox shell command execution, not an LLM invocation. The stdout check is a tool-execution error check, not a guard on LLM output."
+ },
+ {
+  "site_no": 158,
+  "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_image_edit_tool.py::957::21",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "CreateThumbnailTool._run in tools/sandbox/sandbox_image_edit_tool.py (LangChain BaseTool wrapper around E2B sandbox).",
+  "invocation": "false_positive_non_llm",
+  "invocation_evidence": "sandbox.commands.run(f\"python3 -c ...\") executes templated Python in the E2B sandbox (self._get_sandbox: 'Get the E2B sandbox instance'); not an LLM call.",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "skygazer42_Weaver/tools/sandbox/sandbox_image_edit_tool.py::957::21",
+    "protected_output": "sandbox command stdout",
+    "checked_property": "'error' in json.loads(stdout) -> raise",
+    "oracle_type": "simple",
+    "evaluator": "'error' in json.loads(stdout) -> raise",
+    "verdict_location": "tools/sandbox/sandbox_image_edit_tool.py:961",
+    "check_location": "tools/sandbox/sandbox_image_edit_tool.py:961",
+    "enforcement_location": "tools/sandbox/sandbox_image_edit_tool.py:961",
+    "failure_consequence": "RuntimeError",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "false_positive_invocation",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "2597343"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "tools/sandbox/sandbox_image_edit_tool.py",
+      "line": 957,
+      "line_end": 957,
+      "role": "output"
+     },
+     {
+      "rel_path": "tools/sandbox/sandbox_image_edit_tool.py",
+      "line": 961,
+      "line_end": 962,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "The matched '.run' is an E2B sandbox shell command execution, not an LLM invocation. The stdout check is a tool-execution error check, not a guard on LLM output."
+ },
+ {
+  "site_no": 159,
+  "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_presentation_outline_tool.py::396::21",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "OutlineToSlidesTool._run in tools/sandbox/sandbox_presentation_outline_tool.py (LangChain BaseTool wrapper around E2B sandbox).",
+  "invocation": "false_positive_non_llm",
+  "invocation_evidence": "sandbox.commands.run(f\"python3 -c ...\") executes templated Python in the E2B sandbox (self._get_sandbox: 'Get the E2B sandbox instance'); not an LLM call.",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "skygazer42_Weaver/tools/sandbox/sandbox_presentation_outline_tool.py::396::21",
+    "protected_output": "sandbox command stdout",
+    "checked_property": "'SUCCESS' not in result.stdout -> raise",
+    "oracle_type": "simple",
+    "evaluator": "'SUCCESS' not in result.stdout -> raise",
+    "verdict_location": "tools/sandbox/sandbox_presentation_outline_tool.py:398",
+    "check_location": "tools/sandbox/sandbox_presentation_outline_tool.py:398",
+    "enforcement_location": "tools/sandbox/sandbox_presentation_outline_tool.py:398",
+    "failure_consequence": "RuntimeError",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "false_positive_invocation",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "tools/sandbox/sandbox_presentation_outline_tool.py",
+      "line": 396,
+      "line_end": 396,
+      "role": "output"
+     },
+     {
+      "rel_path": "tools/sandbox/sandbox_presentation_outline_tool.py",
+      "line": 398,
+      "line_end": 399,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "The matched '.run' is an E2B sandbox shell command execution, not an LLM invocation. The stdout check is a tool-execution error check, not a guard on LLM output."
+ },
+ {
+  "site_no": 160,
+  "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_presentation_tool.py::204::21",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "SandboxCreatePresentationTool._run in tools/sandbox/sandbox_presentation_tool.py (LangChain BaseTool wrapper around E2B sandbox).",
+  "invocation": "false_positive_non_llm",
+  "invocation_evidence": "sandbox.commands.run(f\"python3 -c ...\") executes templated Python in the E2B sandbox (self._get_sandbox: 'Get the E2B sandbox instance'); not an LLM call.",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "skygazer42_Weaver/tools/sandbox/sandbox_presentation_tool.py::204::21",
+    "protected_output": "sandbox command stdout",
+    "checked_property": "'SUCCESS' not in result.stdout -> raise",
+    "oracle_type": "simple",
+    "evaluator": "'SUCCESS' not in result.stdout -> raise",
+    "verdict_location": "tools/sandbox/sandbox_presentation_tool.py:205",
+    "check_location": "tools/sandbox/sandbox_presentation_tool.py:205",
+    "enforcement_location": "tools/sandbox/sandbox_presentation_tool.py:205",
+    "failure_consequence": "RuntimeError",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "false_positive_invocation",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "tools/sandbox/sandbox_presentation_tool.py",
+      "line": 204,
+      "line_end": 204,
+      "role": "output"
+     },
+     {
+      "rel_path": "tools/sandbox/sandbox_presentation_tool.py",
+      "line": 205,
+      "line_end": 206,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "The matched '.run' is an E2B sandbox shell command execution, not an LLM invocation. The stdout check is a tool-execution error check, not a guard on LLM output."
+ },
+ {
+  "site_no": 161,
+  "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_presentation_tool.py::320::21",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "SandboxAddSlideTool._run in tools/sandbox/sandbox_presentation_tool.py (LangChain BaseTool wrapper around E2B sandbox).",
+  "invocation": "false_positive_non_llm",
+  "invocation_evidence": "sandbox.commands.run(f\"python3 -c ...\") executes templated Python in the E2B sandbox (self._get_sandbox: 'Get the E2B sandbox instance'); not an LLM call.",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "skygazer42_Weaver/tools/sandbox/sandbox_presentation_tool.py::320::21",
+    "protected_output": "sandbox command stdout",
+    "checked_property": "'SUCCESS' not in result.stdout -> raise",
+    "oracle_type": "simple",
+    "evaluator": "'SUCCESS' not in result.stdout -> raise",
+    "verdict_location": "tools/sandbox/sandbox_presentation_tool.py:321",
+    "check_location": "tools/sandbox/sandbox_presentation_tool.py:321",
+    "enforcement_location": "tools/sandbox/sandbox_presentation_tool.py:321",
+    "failure_consequence": "RuntimeError",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "false_positive_invocation",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "tools/sandbox/sandbox_presentation_tool.py",
+      "line": 320,
+      "line_end": 320,
+      "role": "output"
+     },
+     {
+      "rel_path": "tools/sandbox/sandbox_presentation_tool.py",
+      "line": 321,
+      "line_end": 322,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "The matched '.run' is an E2B sandbox shell command execution, not an LLM invocation. The stdout check is a tool-execution error check, not a guard on LLM output."
+ },
+ {
+  "site_no": 162,
+  "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_presentation_tool.py::425::21",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "SandboxAddImageToSlideTool._run in tools/sandbox/sandbox_presentation_tool.py (LangChain BaseTool wrapper around E2B sandbox).",
+  "invocation": "false_positive_non_llm",
+  "invocation_evidence": "sandbox.commands.run(f\"python3 -c ...\") executes templated Python in the E2B sandbox (self._get_sandbox: 'Get the E2B sandbox instance'); not an LLM call.",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "skygazer42_Weaver/tools/sandbox/sandbox_presentation_tool.py::425::21",
+    "protected_output": "sandbox command stdout",
+    "checked_property": "'SUCCESS' not in result.stdout -> raise",
+    "oracle_type": "simple",
+    "evaluator": "'SUCCESS' not in result.stdout -> raise",
+    "verdict_location": "tools/sandbox/sandbox_presentation_tool.py:426",
+    "check_location": "tools/sandbox/sandbox_presentation_tool.py:426",
+    "enforcement_location": "tools/sandbox/sandbox_presentation_tool.py:426",
+    "failure_consequence": "RuntimeError",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "false_positive_invocation",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "tools/sandbox/sandbox_presentation_tool.py",
+      "line": 425,
+      "line_end": 425,
+      "role": "output"
+     },
+     {
+      "rel_path": "tools/sandbox/sandbox_presentation_tool.py",
+      "line": 426,
+      "line_end": 427,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "The matched '.run' is an E2B sandbox shell command execution, not an LLM invocation. The stdout check is a tool-execution error check, not a guard on LLM output."
+ },
+ {
+  "site_no": 163,
+  "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_presentation_tool.py::534::21",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "SandboxAddTableToSlideTool._run in tools/sandbox/sandbox_presentation_tool.py (LangChain BaseTool wrapper around E2B sandbox).",
+  "invocation": "false_positive_non_llm",
+  "invocation_evidence": "sandbox.commands.run(f\"python3 -c ...\") executes templated Python in the E2B sandbox (self._get_sandbox: 'Get the E2B sandbox instance'); not an LLM call.",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "skygazer42_Weaver/tools/sandbox/sandbox_presentation_tool.py::534::21",
+    "protected_output": "sandbox command stdout",
+    "checked_property": "'SUCCESS' not in result.stdout -> raise",
+    "oracle_type": "simple",
+    "evaluator": "'SUCCESS' not in result.stdout -> raise",
+    "verdict_location": "tools/sandbox/sandbox_presentation_tool.py:535",
+    "check_location": "tools/sandbox/sandbox_presentation_tool.py:535",
+    "enforcement_location": "tools/sandbox/sandbox_presentation_tool.py:535",
+    "failure_consequence": "RuntimeError",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "false_positive_invocation",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "tools/sandbox/sandbox_presentation_tool.py",
+      "line": 534,
+      "line_end": 534,
+      "role": "output"
+     },
+     {
+      "rel_path": "tools/sandbox/sandbox_presentation_tool.py",
+      "line": 535,
+      "line_end": 536,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "The matched '.run' is an E2B sandbox shell command execution, not an LLM invocation. The stdout check is a tool-execution error check, not a guard on LLM output."
+ },
+ {
+  "site_no": 164,
+  "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_presentation_tool.py::661::21",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "SandboxAddShapeToSlideTool._run in tools/sandbox/sandbox_presentation_tool.py (LangChain BaseTool wrapper around E2B sandbox).",
+  "invocation": "false_positive_non_llm",
+  "invocation_evidence": "sandbox.commands.run(f\"python3 -c ...\") executes templated Python in the E2B sandbox (self._get_sandbox: 'Get the E2B sandbox instance'); not an LLM call.",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "skygazer42_Weaver/tools/sandbox/sandbox_presentation_tool.py::661::21",
+    "protected_output": "sandbox command stdout",
+    "checked_property": "'SUCCESS' not in result.stdout -> raise",
+    "oracle_type": "simple",
+    "evaluator": "'SUCCESS' not in result.stdout -> raise",
+    "verdict_location": "tools/sandbox/sandbox_presentation_tool.py:662",
+    "check_location": "tools/sandbox/sandbox_presentation_tool.py:662",
+    "enforcement_location": "tools/sandbox/sandbox_presentation_tool.py:662",
+    "failure_consequence": "RuntimeError",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "false_positive_invocation",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "tools/sandbox/sandbox_presentation_tool.py",
+      "line": 661,
+      "line_end": 661,
+      "role": "output"
+     },
+     {
+      "rel_path": "tools/sandbox/sandbox_presentation_tool.py",
+      "line": 662,
+      "line_end": 663,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "The matched '.run' is an E2B sandbox shell command execution, not an LLM invocation. The stdout check is a tool-execution error check, not a guard on LLM output."
+ },
+ {
+  "site_no": 165,
+  "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_presentation_tool.py::825::21",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "SandboxUpdateSlideTool._run in tools/sandbox/sandbox_presentation_tool.py (LangChain BaseTool wrapper around E2B sandbox).",
+  "invocation": "false_positive_non_llm",
+  "invocation_evidence": "sandbox.commands.run(f\"python3 -c ...\") executes templated Python in the E2B sandbox (self._get_sandbox: 'Get the E2B sandbox instance'); not an LLM call.",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "skygazer42_Weaver/tools/sandbox/sandbox_presentation_tool.py::825::21",
+    "protected_output": "sandbox command stdout",
+    "checked_property": "'SUCCESS' not in result.stdout -> raise",
+    "oracle_type": "simple",
+    "evaluator": "'SUCCESS' not in result.stdout -> raise",
+    "verdict_location": "tools/sandbox/sandbox_presentation_tool.py:826",
+    "check_location": "tools/sandbox/sandbox_presentation_tool.py:826",
+    "enforcement_location": "tools/sandbox/sandbox_presentation_tool.py:826",
+    "failure_consequence": "RuntimeError",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "false_positive_invocation",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "tools/sandbox/sandbox_presentation_tool.py",
+      "line": 825,
+      "line_end": 825,
+      "role": "output"
+     },
+     {
+      "rel_path": "tools/sandbox/sandbox_presentation_tool.py",
+      "line": 826,
+      "line_end": 827,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "The matched '.run' is an E2B sandbox shell command execution, not an LLM invocation. The stdout check is a tool-execution error check, not a guard on LLM output."
+ },
+ {
+  "site_no": 166,
+  "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_presentation_tool.py::897::21",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "SandboxDeleteSlideTool._run in tools/sandbox/sandbox_presentation_tool.py (LangChain BaseTool wrapper around E2B sandbox).",
+  "invocation": "false_positive_non_llm",
+  "invocation_evidence": "sandbox.commands.run(f\"python3 -c ...\") executes templated Python in the E2B sandbox (self._get_sandbox: 'Get the E2B sandbox instance'); not an LLM call.",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "skygazer42_Weaver/tools/sandbox/sandbox_presentation_tool.py::897::21",
+    "protected_output": "sandbox command stdout",
+    "checked_property": "'SUCCESS' not in result.stdout -> raise",
+    "oracle_type": "simple",
+    "evaluator": "'SUCCESS' not in result.stdout -> raise",
+    "verdict_location": "tools/sandbox/sandbox_presentation_tool.py:898",
+    "check_location": "tools/sandbox/sandbox_presentation_tool.py:898",
+    "enforcement_location": "tools/sandbox/sandbox_presentation_tool.py:898",
+    "failure_consequence": "RuntimeError",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "false_positive_invocation",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "2597362"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "tools/sandbox/sandbox_presentation_tool.py",
+      "line": 897,
+      "line_end": 897,
+      "role": "output"
+     },
+     {
+      "rel_path": "tools/sandbox/sandbox_presentation_tool.py",
+      "line": 898,
+      "line_end": 899,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "The matched '.run' is an E2B sandbox shell command execution, not an LLM invocation. The stdout check is a tool-execution error check, not a guard on LLM output."
+ },
+ {
+  "site_no": 167,
+  "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_presentation_tool_v2.py::395::21",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "ApplyThemeTool._run in tools/sandbox/sandbox_presentation_tool_v2.py (LangChain BaseTool wrapper around E2B sandbox).",
+  "invocation": "false_positive_non_llm",
+  "invocation_evidence": "sandbox.commands.run(f\"python3 -c ...\") executes templated Python in the E2B sandbox (self._get_sandbox: 'Get the E2B sandbox instance'); not an LLM call.",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "skygazer42_Weaver/tools/sandbox/sandbox_presentation_tool_v2.py::395::21",
+    "protected_output": "sandbox command stdout",
+    "checked_property": "'SUCCESS' not in result.stdout -> raise",
+    "oracle_type": "simple",
+    "evaluator": "'SUCCESS' not in result.stdout -> raise",
+    "verdict_location": "tools/sandbox/sandbox_presentation_tool_v2.py:397",
+    "check_location": "tools/sandbox/sandbox_presentation_tool_v2.py:397",
+    "enforcement_location": "tools/sandbox/sandbox_presentation_tool_v2.py:397",
+    "failure_consequence": "RuntimeError",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "false_positive_invocation",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "tools/sandbox/sandbox_presentation_tool_v2.py",
+      "line": 395,
+      "line_end": 395,
+      "role": "output"
+     },
+     {
+      "rel_path": "tools/sandbox/sandbox_presentation_tool_v2.py",
+      "line": 397,
+      "line_end": 398,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "The matched '.run' is an E2B sandbox shell command execution, not an LLM invocation. The stdout check is a tool-execution error check, not a guard on LLM output."
+ },
+ {
+  "site_no": 168,
+  "call_id": "skygazer42_Weaver/tools/sandbox/sandbox_presentation_tool_v2.py::508::21",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "SetBackgroundTool._run in tools/sandbox/sandbox_presentation_tool_v2.py (LangChain BaseTool wrapper around E2B sandbox).",
+  "invocation": "false_positive_non_llm",
+  "invocation_evidence": "sandbox.commands.run(f\"python3 -c ...\") executes templated Python in the E2B sandbox (self._get_sandbox: 'Get the E2B sandbox instance'); not an LLM call.",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "skygazer42_Weaver/tools/sandbox/sandbox_presentation_tool_v2.py::508::21",
+    "protected_output": "sandbox command stdout",
+    "checked_property": "'SUCCESS' not in result.stdout -> raise",
+    "oracle_type": "simple",
+    "evaluator": "'SUCCESS' not in result.stdout -> raise",
+    "verdict_location": "tools/sandbox/sandbox_presentation_tool_v2.py:510",
+    "check_location": "tools/sandbox/sandbox_presentation_tool_v2.py:510",
+    "enforcement_location": "tools/sandbox/sandbox_presentation_tool_v2.py:510",
+    "failure_consequence": "RuntimeError",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "false_positive_invocation",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "tools/sandbox/sandbox_presentation_tool_v2.py",
+      "line": 508,
+      "line_end": 508,
+      "role": "output"
+     },
+     {
+      "rel_path": "tools/sandbox/sandbox_presentation_tool_v2.py",
+      "line": 510,
+      "line_end": 511,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "The matched '.run' is an E2B sandbox shell command execution, not an LLM invocation. The stdout check is a tool-execution error check, not a guard on LLM output."
+ },
+ {
+  "site_no": 187,
+  "call_id": "splunk_splunk-sdk-python/splunklib/ai/engines/langchain.py::1508::23",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "_agent_as_tool.invoke_agent (1502-1517) in the SDK's AI agent engine; library production code.",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "agent.invoke on a splunklib BaseAgent whose LangChain backend (langchain.py:683) runs the subagent LLM loop.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "splunk_splunk-sdk-python/splunklib/ai/engines/langchain.py::1508::23",
+    "protected_output": "subagent structured output returned as tool result",
+    "checked_property": "structured_output present (not None) when output_schema set",
+    "oracle_type": "simple",
+    "evaluator": "assert result.structured_output is not None",
+    "verdict_location": "splunklib/ai/engines/langchain.py:1511",
+    "check_location": "splunklib/ai/engines/langchain.py:1511",
+    "enforcement_location": "splunklib/ai/engines/langchain.py:1511",
+    "failure_consequence": "AssertionError before structured output is returned to the calling agent",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "2633260",
+     "2633258"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "yes",
+    "assert_optimization_sensitive": true,
+    "evidence_lines": [
+     {
+      "rel_path": "splunklib/ai/engines/langchain.py",
+      "line": 1508,
+      "line_end": 1508,
+      "role": "output"
+     },
+     {
+      "rel_path": "splunklib/ai/engines/langchain.py",
+      "line": 1510,
+      "line_end": 1510,
+      "role": "support"
+     },
+     {
+      "rel_path": "splunklib/ai/engines/langchain.py",
+      "line": 1511,
+      "line_end": 1511,
+      "role": "check"
+     },
+     {
+      "rel_path": "splunklib/ai/engines/langchain.py",
+      "line": 1512,
+      "line_end": 1514,
+      "role": "support"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "Presence assertion on the subagent's structured output fires before it is returned as a tool result; only active when the agent has an output_schema, and disabled under -O. Stronger type validation exists in the backend (langchain.py:756-760) but is separate code."
+ },
+ {
+  "site_no": 188,
+  "call_id": "splx-ai_agentic-radar/examples/openai-agents/agent_patterns/deterministic/deterministic.py::54::39",
+  "actual_context": "production",
+  "context_flags": [
+   "example_or_tutorial",
+   "duplicate_copy_of_other_file"
+  ],
+  "context_evidence": "examples/openai-agents/agent_patterns copy of the openai-agents SDK 'deterministic' example (main 41-76).",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "Runner.run(outline_checker_agent, ...) runs an openai-agents Agent.",
+  "site_role": "judge_evaluator",
+  "guards": [
+   {
+    "protected_producer_call_id": "splx-ai_agentic-radar/examples/openai-agents/agent_patterns/deterministic/deterministic.py::54::39",
+    "protected_output": "judge verdict object",
+    "checked_property": "final_output is OutlineCheckerOutput",
+    "oracle_type": "simple",
+    "evaluator": "assert isinstance(...)",
+    "verdict_location": "examples/openai-agents/agent_patterns/deterministic/deterministic.py:60",
+    "check_location": "examples/openai-agents/agent_patterns/deterministic/deterministic.py:60",
+    "enforcement_location": "examples/openai-agents/agent_patterns/deterministic/deterministic.py:60",
+    "failure_consequence": "AssertionError",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": true,
+    "qualifies": "no",
+    "nonqualifying_reason": "auxiliary_judge_plumbing",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "2633382"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": true,
+    "evidence_lines": [
+     {
+      "rel_path": "examples/openai-agents/agent_patterns/deterministic/deterministic.py",
+      "line": 54,
+      "line_end": 57,
+      "role": "output"
+     },
+     {
+      "rel_path": "examples/openai-agents/agent_patterns/deterministic/deterministic.py",
+      "line": 60,
+      "line_end": 60,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "splx-ai_agentic-radar/examples/openai-agents/agent_patterns/deterministic/deterministic.py::47::31",
+    "protected_output": "story outline (outline_result.final_output)",
+    "checked_property": "outline quality and sci-fi genre",
+    "oracle_type": "complex",
+    "evaluator": "outline_checker_agent (openai-agents Agent, default model) returns OutlineCheckerOutput{good_quality,is_scifi}",
+    "verdict_location": "examples/openai-agents/agent_patterns/deterministic/deterministic.py:54",
+    "check_location": "examples/openai-agents/agent_patterns/deterministic/deterministic.py:61",
+    "enforcement_location": "examples/openai-agents/agent_patterns/deterministic/deterministic.py:63",
+    "failure_consequence": "exit(0): workflow stops before the outline is fed to story_agent",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "partial",
+    "joern_slice_ids": [
+     "2633383",
+     "2633382"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "examples/openai-agents/agent_patterns/deterministic/deterministic.py",
+      "line": 47,
+      "line_end": 50,
+      "role": "output"
+     },
+     {
+      "rel_path": "examples/openai-agents/agent_patterns/deterministic/deterministic.py",
+      "line": 54,
+      "line_end": 57,
+      "role": "verdict"
+     },
+     {
+      "rel_path": "examples/openai-agents/agent_patterns/deterministic/deterministic.py",
+      "line": 61,
+      "line_end": 67,
+      "role": "check"
+     },
+     {
+      "rel_path": "examples/openai-agents/agent_patterns/deterministic/deterministic.py",
+      "line": 72,
+      "line_end": 75,
+      "role": "support"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guard_attributed_to_other_producer_only",
+  "rationale": "This call is the LLM judge of the outline; its isinstance assert only checks the verdict object (auxiliary). The verdict-driven stop guards the outline generation at line 47, not this call."
+ },
+ {
+  "site_no": 217,
+  "call_id": "rhesis-ai_rhesis/agents/visit-prep/src/visit_prep/pipeline.py::190::14",
+  "actual_context": "production",
+  "context_flags": [
+   "demo_or_sample_app"
+  ],
+  "context_evidence": "_finish (178-200) in agents/visit-prep, a sample Haystack agent in the rhesis repo; production path via HealthConcernHandler.run line 124.",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "summary_writer.run is SummaryWriter, a haystack @component wrapping GoogleGenAIChatGenerator.run (summary.py:39).",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "rhesis-ai_rhesis/agents/visit-prep/src/visit_prep/pipeline.py::190::14",
+    "protected_output": "visit-prep summary draft",
+    "checked_property": "safety: no diagnosis, ranking, treatment, unsupported facts, emergency-as-routine",
+    "oracle_type": "complex",
+    "evaluator": "SafetyCritic: Gemini (GoogleGenAIChatGenerator via haystack) returns JSON {approved, feedback} validated as CriticVerdict",
+    "verdict_location": "agents/visit-prep/src/visit_prep/pipeline.py:191",
+    "check_location": "agents/visit-prep/src/visit_prep/pipeline.py:192",
+    "enforcement_location": "agents/visit-prep/src/visit_prep/pipeline.py:193",
+    "failure_consequence": "one rewrite with critic feedback, re-reviewed; if still rejected, replaced with deterministic _fallback_summary",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "2503452"
+    ],
+    "retry_budget_bypass": "no",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "agents/visit-prep/src/visit_prep/pipeline.py",
+      "line": 190,
+      "line_end": 190,
+      "role": "output"
+     },
+     {
+      "rel_path": "agents/visit-prep/src/visit_prep/pipeline.py",
+      "line": 191,
+      "line_end": 191,
+      "role": "verdict"
+     },
+     {
+      "rel_path": "agents/visit-prep/src/visit_prep/pipeline.py",
+      "line": 192,
+      "line_end": 196,
+      "role": "check"
+     },
+     {
+      "rel_path": "agents/visit-prep/src/visit_prep/agents/critic.py",
+      "line": 42,
+      "line_end": 45,
+      "role": "verdict"
+     },
+     {
+      "rel_path": "agents/visit-prep/src/visit_prep/pipeline.py",
+      "line": 199,
+      "line_end": 200,
+      "role": "support"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "rhesis-ai_rhesis/agents/visit-prep/src/visit_prep/agents/critic.py::42::17",
+    "protected_output": "critic verdict JSON",
+    "checked_property": "CriticVerdict schema",
+    "oracle_type": "simple",
+    "evaluator": "CriticVerdict.model_validate(payload)",
+    "verdict_location": "agents/visit-prep/src/visit_prep/agents/critic.py:44",
+    "check_location": "agents/visit-prep/src/visit_prep/agents/critic.py:44",
+    "enforcement_location": "agents/visit-prep/src/visit_prep/agents/critic.py:44",
+    "failure_consequence": "ValidationError propagates (fail-closed crash, summary not shipped)",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": true,
+    "qualifies": "no",
+    "nonqualifying_reason": "auxiliary_judge_plumbing",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "agents/visit-prep/src/visit_prep/agents/critic.py",
+      "line": 43,
+      "line_end": 45,
+      "role": "support"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "An LLM safety critic judges the first summary draft; rejection triggers a rewrite and re-review, and a second rejection replaces it with a deterministic recap, all before the summary enters history/reply. Call, verdict and branches are all in saved slice 2503452."
+ },
+ {
+  "site_no": 218,
+  "call_id": "splx-ai_agentic-radar/examples/openai-agents/agent_patterns/deterministic/deterministic.py::47::31",
+  "actual_context": "production",
+  "context_flags": [
+   "example_or_tutorial",
+   "duplicate_copy_of_other_file"
+  ],
+  "context_evidence": "Same example file as site 188; main 41-76.",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "Runner.run(story_outline_agent, input_prompt) runs an openai-agents Agent.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "splx-ai_agentic-radar/examples/openai-agents/agent_patterns/deterministic/deterministic.py::47::31",
+    "protected_output": "story outline (outline_result.final_output)",
+    "checked_property": "outline quality and sci-fi genre",
+    "oracle_type": "complex",
+    "evaluator": "outline_checker_agent (openai-agents Agent, default model) returns OutlineCheckerOutput{good_quality,is_scifi}",
+    "verdict_location": "examples/openai-agents/agent_patterns/deterministic/deterministic.py:54",
+    "check_location": "examples/openai-agents/agent_patterns/deterministic/deterministic.py:61",
+    "enforcement_location": "examples/openai-agents/agent_patterns/deterministic/deterministic.py:63",
+    "failure_consequence": "exit(0): workflow stops before the outline is fed to story_agent",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "partial",
+    "joern_slice_ids": [
+     "2633383",
+     "2633382"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "examples/openai-agents/agent_patterns/deterministic/deterministic.py",
+      "line": 47,
+      "line_end": 50,
+      "role": "output"
+     },
+     {
+      "rel_path": "examples/openai-agents/agent_patterns/deterministic/deterministic.py",
+      "line": 54,
+      "line_end": 57,
+      "role": "verdict"
+     },
+     {
+      "rel_path": "examples/openai-agents/agent_patterns/deterministic/deterministic.py",
+      "line": 61,
+      "line_end": 67,
+      "role": "check"
+     },
+     {
+      "rel_path": "examples/openai-agents/agent_patterns/deterministic/deterministic.py",
+      "line": 72,
+      "line_end": 75,
+      "role": "support"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "The outline is judged by outline_checker_agent (LLM) and the workflow exits before the outline reaches story_agent if it is low quality or not sci-fi. Complex guard; context is a copied SDK example, so flagged."
+ }
+]

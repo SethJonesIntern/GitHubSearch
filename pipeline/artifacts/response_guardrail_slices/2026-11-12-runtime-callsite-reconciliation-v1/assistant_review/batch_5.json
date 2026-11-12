@@ -1,0 +1,1904 @@
+[
+ {
+  "site_no": 8,
+  "call_id": "FudanSELab_TripSphere/trip-itinerary-planner/src/itinerary_planner/agent/nodes.py::153::31",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "LangGraph planner node research_and_plan (nodes.py:42-256) in the itinerary-planner service.",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "structured_llm = chat_model.with_structured_output(CompleteItineraryPlan) (l.138); .ainvoke(prompt) at l.153 calls the chat model.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "FudanSELab_TripSphere/trip-itinerary-planner/src/itinerary_planner/agent/nodes.py::153::31",
+    "protected_output": "structured itinerary plan from LLM",
+    "checked_property": "conforms to CompleteItineraryPlan Pydantic schema (destination_info, day_plans, highlights, total_estimated_cost)",
+    "oracle_type": "simple",
+    "evaluator": "CompleteItineraryPlan.model_validate(itinerary_plan)",
+    "verdict_location": "trip-itinerary-planner/src/itinerary_planner/agent/nodes.py:154",
+    "check_location": "trip-itinerary-planner/src/itinerary_planner/agent/nodes.py:154",
+    "enforcement_location": "trip-itinerary-planner/src/itinerary_planner/agent/nodes.py:215-225",
+    "failure_consequence": "ValidationError (or structured-output parse error) caught by except Exception -> logged and replaced with a fallback CompleteItineraryPlan with empty day_plans",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "234237"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "trip-itinerary-planner/src/itinerary_planner/agent/nodes.py",
+      "line": 153,
+      "line_end": 153,
+      "role": "output"
+     },
+     {
+      "rel_path": "trip-itinerary-planner/src/itinerary_planner/agent/nodes.py",
+      "line": 154,
+      "line_end": 154,
+      "role": "check"
+     },
+     {
+      "rel_path": "trip-itinerary-planner/src/itinerary_planner/agent/nodes.py",
+      "line": 215,
+      "line_end": 225,
+      "role": "enforcement"
+     },
+     {
+      "rel_path": "trip-itinerary-planner/src/itinerary_planner/agent/nodes.py",
+      "line": 248,
+      "line_end": 256,
+      "role": "support"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "The LLM's structured itinerary is schema-validated at l.154 before it is converted into daily_schedule/returned; on any validation failure the except branch discards it and substitutes a fallback plan. Simple schema guard with fallback intervention."
+ },
+ {
+  "site_no": 15,
+  "call_id": "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/agents/critic_agent.py::118::30",
+  "actual_context": "production",
+  "context_flags": [
+   "vendored_framework_copy"
+  ],
+  "context_evidence": "Path internagent/mas/agents/dr_agents/camel/ is a vendored copy of the CAMEL framework's own source tree (agents/, datagen/, verifiers/, toolkits/ ...); no InternAgent code outside the camel/ dir references these classes. CriticAgent.get_option (l.104-149).",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "self.step / agent.step is CAMEL ChatAgent.step, which calls the configured model backend. The critic picks one of several candidate options.",
+  "site_role": "judge_evaluator",
+  "guards": [
+   {
+    "protected_producer_call_id": "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/agents/critic_agent.py::118::30",
+    "protected_output": "critic's choice message (judge verdict)",
+    "checked_property": "non-empty msgs / not terminated",
+    "oracle_type": "simple",
+    "evaluator": "if critic_response.msgs is None or len(...)==0: raise; if critic_response.terminated: raise",
+    "verdict_location": "internagent/mas/agents/dr_agents/camel/agents/critic_agent.py:120",
+    "check_location": "internagent/mas/agents/dr_agents/camel/agents/critic_agent.py:120-123",
+    "enforcement_location": "internagent/mas/agents/dr_agents/camel/agents/critic_agent.py:121,123",
+    "failure_consequence": "RuntimeError",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": true,
+    "qualifies": "no",
+    "nonqualifying_reason": "auxiliary_judge_plumbing",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "287443"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "internagent/mas/agents/dr_agents/camel/agents/critic_agent.py",
+      "line": 118,
+      "line_end": 118,
+      "role": "output"
+     },
+     {
+      "rel_path": "internagent/mas/agents/dr_agents/camel/agents/critic_agent.py",
+      "line": 120,
+      "line_end": 123,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/agents/critic_agent.py::118::30",
+    "protected_output": "critic's parsed choice (judge verdict)",
+    "checked_property": "choice is a key of options_dict",
+    "oracle_type": "simple",
+    "evaluator": "choice in self.options_dict",
+    "verdict_location": "internagent/mas/agents/dr_agents/camel/agents/critic_agent.py:133",
+    "check_location": "internagent/mas/agents/dr_agents/camel/agents/critic_agent.py:133",
+    "enforcement_location": "internagent/mas/agents/dr_agents/camel/agents/critic_agent.py:136-143",
+    "failure_consequence": "re-prompt with 'Invalid choice. Please choose again'; after retry_attempts returns a random option",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": true,
+    "qualifies": "no",
+    "nonqualifying_reason": "auxiliary_judge_plumbing",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "287443",
+     "287445"
+    ],
+    "retry_budget_bypass": "yes",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "internagent/mas/agents/dr_agents/camel/agents/critic_agent.py",
+      "line": 131,
+      "line_end": 143,
+      "role": "check"
+     },
+     {
+      "rel_path": "internagent/mas/agents/dr_agents/camel/agents/critic_agent.py",
+      "line": 144,
+      "line_end": 149,
+      "role": "enforcement"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "CriticAgent is itself an evaluator/selector over candidate messages produced elsewhere; the empty/terminated and membership checks only validate the critic's own verdict (auxiliary plumbing). Its selection picks among candidates rather than rejecting an unacceptable generation, and the code is a vendored framework copy not used by the app. Unsure whether the selection should count as a complex guard on the candidates' producers."
+ },
+ {
+  "site_no": 16,
+  "call_id": "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/agents/deductive_reasoner_agent.py::250::19",
+  "actual_context": "production",
+  "context_flags": [
+   "vendored_framework_copy"
+  ],
+  "context_evidence": "Path internagent/mas/agents/dr_agents/camel/ is a vendored copy of the CAMEL framework's own source tree (agents/, datagen/, verifiers/, toolkits/ ...); no InternAgent code outside the camel/ dir references these classes. DeductiveReasonerAgent.deduce_conditions_and_quality.",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "self.step / agent.step is CAMEL ChatAgent.step, which calls the configured model backend.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/agents/deductive_reasoner_agent.py::250::19",
+    "protected_output": "deduction response",
+    "checked_property": "response not terminated (generation did not fail)",
+    "oracle_type": "simple",
+    "evaluator": "if response.terminated: raise RuntimeError",
+    "verdict_location": "internagent/mas/agents/dr_agents/camel/agents/deductive_reasoner_agent.py:254",
+    "check_location": "internagent/mas/agents/dr_agents/camel/agents/deductive_reasoner_agent.py:254",
+    "enforcement_location": "internagent/mas/agents/dr_agents/camel/agents/deductive_reasoner_agent.py:255-257",
+    "failure_consequence": "RuntimeError before msg is parsed/returned",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "287465"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "internagent/mas/agents/dr_agents/camel/agents/deductive_reasoner_agent.py",
+      "line": 250,
+      "line_end": 252,
+      "role": "output"
+     },
+     {
+      "rel_path": "internagent/mas/agents/dr_agents/camel/agents/deductive_reasoner_agent.py",
+      "line": 254,
+      "line_end": 257,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/agents/deductive_reasoner_agent.py::250::19",
+    "protected_output": "deduction text",
+    "checked_property": "regex extraction of labels [0] / quality next()",
+    "oracle_type": "simple",
+    "evaluator": "implicit IndexError/StopIteration in parsing",
+    "verdict_location": "internagent/mas/agents/dr_agents/camel/agents/deductive_reasoner_agent.py:275-293",
+    "check_location": "internagent/mas/agents/dr_agents/camel/agents/deductive_reasoner_agent.py:275-293",
+    "enforcement_location": "internagent/mas/agents/dr_agents/camel/agents/deductive_reasoner_agent.py:275-293",
+    "failure_consequence": "uncaught exception (implicit)",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "parse_only",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "internagent/mas/agents/dr_agents/camel/agents/deductive_reasoner_agent.py",
+      "line": 262,
+      "line_end": 293,
+      "role": "support"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "The terminated-flag check rejects a failed generation by raising before the content is parsed and returned. It is a thin simple status guard; the regex parsing that can fail implicitly is parse-only. Code is a vendored CAMEL copy."
+ },
+ {
+  "site_no": 17,
+  "call_id": "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/agents/embodied_agent.py::147::19",
+  "actual_context": "production",
+  "context_flags": [
+   "vendored_framework_copy"
+  ],
+  "context_evidence": "Path internagent/mas/agents/dr_agents/camel/ is a vendored copy of the CAMEL framework's own source tree (agents/, datagen/, verifiers/, toolkits/ ...); no InternAgent code outside the camel/ dir references these classes. EmbodiedAgent.step.",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "super().step is CAMEL ChatAgent.step (model backend call).",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/agents/embodied_agent.py::147::19",
+    "protected_output": "generated message containing code to execute",
+    "checked_property": "msgs non-empty; response not terminated",
+    "oracle_type": "simple",
+    "evaluator": "msgs is None or len==0 -> raise; terminated -> raise",
+    "verdict_location": "internagent/mas/agents/dr_agents/camel/agents/embodied_agent.py:149-152",
+    "check_location": "internagent/mas/agents/dr_agents/camel/agents/embodied_agent.py:149-152",
+    "enforcement_location": "internagent/mas/agents/dr_agents/camel/agents/embodied_agent.py:150,152",
+    "failure_consequence": "RuntimeError before code blocks are extracted and executed by code_interpreter.run",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "287490"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "internagent/mas/agents/dr_agents/camel/agents/embodied_agent.py",
+      "line": 147,
+      "line_end": 147,
+      "role": "output"
+     },
+     {
+      "rel_path": "internagent/mas/agents/dr_agents/camel/agents/embodied_agent.py",
+      "line": 149,
+      "line_end": 152,
+      "role": "check"
+     },
+     {
+      "rel_path": "internagent/mas/agents/dr_agents/camel/agents/embodied_agent.py",
+      "line": 171,
+      "line_end": 182,
+      "role": "support"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "Presence/terminated checks raise before the LLM-produced code is executed at l.175. Simple guard; only rejects empty/failed responses, not code content. Vendored framework copy."
+ },
+ {
+  "site_no": 18,
+  "call_id": "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/agents/role_assignment_agent.py::105::19",
+  "actual_context": "production",
+  "context_flags": [
+   "vendored_framework_copy"
+  ],
+  "context_evidence": "Path internagent/mas/agents/dr_agents/camel/ is a vendored copy of the CAMEL framework's own source tree (agents/, datagen/, verifiers/, toolkits/ ...); no InternAgent code outside the camel/ dir references these classes. RoleAssignmentAgent.run.",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "self.step / agent.step is CAMEL ChatAgent.step, which calls the configured model backend.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/agents/role_assignment_agent.py::105::19",
+    "protected_output": "role names/descriptions parsed from response",
+    "checked_property": "exactly num_roles role names and descriptions extracted",
+    "oracle_type": "simple",
+    "evaluator": "len(role_names)!=num_roles or len(role_descriptions)!=num_roles -> raise",
+    "verdict_location": "internagent/mas/agents/dr_agents/camel/agents/role_assignment_agent.py:129",
+    "check_location": "internagent/mas/agents/dr_agents/camel/agents/role_assignment_agent.py:129",
+    "enforcement_location": "internagent/mas/agents/dr_agents/camel/agents/role_assignment_agent.py:130-132",
+    "failure_consequence": "RuntimeError before dict is returned",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "partial",
+    "joern_slice_ids": [
+     "287599"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "internagent/mas/agents/dr_agents/camel/agents/role_assignment_agent.py",
+      "line": 105,
+      "line_end": 108,
+      "role": "output"
+     },
+     {
+      "rel_path": "internagent/mas/agents/dr_agents/camel/agents/role_assignment_agent.py",
+      "line": 111,
+      "line_end": 127,
+      "role": "support"
+     },
+     {
+      "rel_path": "internagent/mas/agents/dr_agents/camel/agents/role_assignment_agent.py",
+      "line": 129,
+      "line_end": 132,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/agents/role_assignment_agent.py::105::19",
+    "protected_output": "role assignment response",
+    "checked_property": "response not terminated",
+    "oracle_type": "simple",
+    "evaluator": "if terminated: raise",
+    "verdict_location": "internagent/mas/agents/dr_agents/camel/agents/role_assignment_agent.py:108",
+    "check_location": "internagent/mas/agents/dr_agents/camel/agents/role_assignment_agent.py:133",
+    "enforcement_location": "internagent/mas/agents/dr_agents/camel/agents/role_assignment_agent.py:134",
+    "failure_consequence": "RuntimeError before dict is returned",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "partial",
+    "joern_slice_ids": [
+     "287599"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "internagent/mas/agents/dr_agents/camel/agents/role_assignment_agent.py",
+      "line": 108,
+      "line_end": 108,
+      "role": "verdict"
+     },
+     {
+      "rel_path": "internagent/mas/agents/dr_agents/camel/agents/role_assignment_agent.py",
+      "line": 133,
+      "line_end": 134,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "Both a count/format check on the parsed roles and a terminated-status check raise before the role dictionary is returned. Saved slice 287599 reaches l.108 but not the check lines. Vendored framework copy."
+ },
+ {
+  "site_no": 19,
+  "call_id": "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/agents/search_agent.py::130::19",
+  "actual_context": "production",
+  "context_flags": [
+   "vendored_framework_copy"
+  ],
+  "context_evidence": "Path internagent/mas/agents/dr_agents/camel/ is a vendored copy of the CAMEL framework's own source tree (agents/, datagen/, verifiers/, toolkits/ ...); no InternAgent code outside the camel/ dir references these classes. SearchAgent.continue_search has no caller anywhere in the repo.",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "self.step / agent.step is CAMEL ChatAgent.step, which calls the configured model backend.",
+  "site_role": "judge_evaluator",
+  "guards": [
+   {
+    "protected_producer_call_id": "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/agents/search_agent.py::130::19",
+    "protected_output": "yes/no judgment whether ANSWER answers QUERY",
+    "checked_property": "'yes' substring in verdict",
+    "oracle_type": "simple",
+    "evaluator": "'yes' in str(response).lower() -> return False",
+    "verdict_location": "internagent/mas/agents/dr_agents/camel/agents/search_agent.py:131",
+    "check_location": "internagent/mas/agents/dr_agents/camel/agents/search_agent.py:131",
+    "enforcement_location": "internagent/mas/agents/dr_agents/camel/agents/search_agent.py:132",
+    "failure_consequence": "returns a bool; no caller in repo consumes it",
+    "before_acceptance": "unresolved",
+    "auxiliary_judge_plumbing": true,
+    "qualifies": "no",
+    "nonqualifying_reason": "no_consequence",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "287626"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "internagent/mas/agents/dr_agents/camel/agents/search_agent.py",
+      "line": 130,
+      "line_end": 133,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "The call is an LLM judge of an answer; the substring check just converts its verdict into a bool. continue_search is never called, so no intervention on any generation can be established."
+ },
+ {
+  "site_no": 20,
+  "call_id": "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/agents/task_agent.py::118::29",
+  "actual_context": "production",
+  "context_flags": [
+   "vendored_framework_copy"
+  ],
+  "context_evidence": "Path internagent/mas/agents/dr_agents/camel/ is a vendored copy of the CAMEL framework's own source tree (agents/, datagen/, verifiers/, toolkits/ ...); no InternAgent code outside the camel/ dir references these classes. TaskSpecifyAgent.run.",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "self.step / agent.step is CAMEL ChatAgent.step, which calls the configured model backend.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/agents/task_agent.py::118::29",
+    "protected_output": "task agent response",
+    "checked_property": "response not terminated",
+    "oracle_type": "simple",
+    "evaluator": "if response.terminated: raise RuntimeError",
+    "verdict_location": "internagent/mas/agents/dr_agents/camel/agents/task_agent.py:120",
+    "check_location": "internagent/mas/agents/dr_agents/camel/agents/task_agent.py:120",
+    "enforcement_location": "internagent/mas/agents/dr_agents/camel/agents/task_agent.py:121",
+    "failure_consequence": "RuntimeError before TextPrompt returned",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "internagent/mas/agents/dr_agents/camel/agents/task_agent.py",
+      "line": 118,
+      "line_end": 118,
+      "role": "output"
+     },
+     {
+      "rel_path": "internagent/mas/agents/dr_agents/camel/agents/task_agent.py",
+      "line": 120,
+      "line_end": 121,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/agents/task_agent.py::118::29",
+    "protected_output": "task agent response",
+    "checked_property": "msgs non-empty",
+    "oracle_type": "simple",
+    "evaluator": "if len(response.msgs)==0: raise RuntimeError",
+    "verdict_location": "internagent/mas/agents/dr_agents/camel/agents/task_agent.py:122",
+    "check_location": "internagent/mas/agents/dr_agents/camel/agents/task_agent.py:122",
+    "enforcement_location": "internagent/mas/agents/dr_agents/camel/agents/task_agent.py:123",
+    "failure_consequence": "RuntimeError before TextPrompt returned",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "internagent/mas/agents/dr_agents/camel/agents/task_agent.py",
+      "line": 122,
+      "line_end": 123,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "Terminated and empty-message checks raise before the agent's text is wrapped and returned. Simple presence/status guards only, no content check. Vendored CAMEL copy."
+ },
+ {
+  "site_no": 21,
+  "call_id": "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/agents/task_agent.py::189::24",
+  "actual_context": "production",
+  "context_flags": [
+   "vendored_framework_copy"
+  ],
+  "context_evidence": "Path internagent/mas/agents/dr_agents/camel/ is a vendored copy of the CAMEL framework's own source tree (agents/, datagen/, verifiers/, toolkits/ ...); no InternAgent code outside the camel/ dir references these classes. TaskPlannerAgent.run.",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "self.step / agent.step is CAMEL ChatAgent.step, which calls the configured model backend.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/agents/task_agent.py::189::24",
+    "protected_output": "task agent response",
+    "checked_property": "response not terminated",
+    "oracle_type": "simple",
+    "evaluator": "if response.terminated: raise RuntimeError",
+    "verdict_location": "internagent/mas/agents/dr_agents/camel/agents/task_agent.py:191",
+    "check_location": "internagent/mas/agents/dr_agents/camel/agents/task_agent.py:191",
+    "enforcement_location": "internagent/mas/agents/dr_agents/camel/agents/task_agent.py:192",
+    "failure_consequence": "RuntimeError before TextPrompt returned",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "internagent/mas/agents/dr_agents/camel/agents/task_agent.py",
+      "line": 189,
+      "line_end": 189,
+      "role": "output"
+     },
+     {
+      "rel_path": "internagent/mas/agents/dr_agents/camel/agents/task_agent.py",
+      "line": 191,
+      "line_end": 192,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/agents/task_agent.py::189::24",
+    "protected_output": "task agent response",
+    "checked_property": "msgs non-empty",
+    "oracle_type": "simple",
+    "evaluator": "if len(response.msgs)==0: raise RuntimeError",
+    "verdict_location": "internagent/mas/agents/dr_agents/camel/agents/task_agent.py:193",
+    "check_location": "internagent/mas/agents/dr_agents/camel/agents/task_agent.py:193",
+    "enforcement_location": "internagent/mas/agents/dr_agents/camel/agents/task_agent.py:194",
+    "failure_consequence": "RuntimeError before TextPrompt returned",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "internagent/mas/agents/dr_agents/camel/agents/task_agent.py",
+      "line": 193,
+      "line_end": 194,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "Terminated and empty-message checks raise before the agent's text is wrapped and returned. Simple presence/status guards only, no content check. Vendored CAMEL copy."
+ },
+ {
+  "site_no": 22,
+  "call_id": "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/agents/task_agent.py::304::24",
+  "actual_context": "production",
+  "context_flags": [
+   "vendored_framework_copy"
+  ],
+  "context_evidence": "Path internagent/mas/agents/dr_agents/camel/ is a vendored copy of the CAMEL framework's own source tree (agents/, datagen/, verifiers/, toolkits/ ...); no InternAgent code outside the camel/ dir references these classes. TaskCreationAgent.run.",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "self.step / agent.step is CAMEL ChatAgent.step, which calls the configured model backend.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/agents/task_agent.py::304::24",
+    "protected_output": "task agent response",
+    "checked_property": "response not terminated",
+    "oracle_type": "simple",
+    "evaluator": "if response.terminated: raise RuntimeError",
+    "verdict_location": "internagent/mas/agents/dr_agents/camel/agents/task_agent.py:306",
+    "check_location": "internagent/mas/agents/dr_agents/camel/agents/task_agent.py:306",
+    "enforcement_location": "internagent/mas/agents/dr_agents/camel/agents/task_agent.py:307",
+    "failure_consequence": "RuntimeError before get_task_list result returned",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "internagent/mas/agents/dr_agents/camel/agents/task_agent.py",
+      "line": 304,
+      "line_end": 304,
+      "role": "output"
+     },
+     {
+      "rel_path": "internagent/mas/agents/dr_agents/camel/agents/task_agent.py",
+      "line": 306,
+      "line_end": 307,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/agents/task_agent.py::304::24",
+    "protected_output": "task agent response",
+    "checked_property": "msgs non-empty",
+    "oracle_type": "simple",
+    "evaluator": "if len(response.msgs)==0: raise RuntimeError",
+    "verdict_location": "internagent/mas/agents/dr_agents/camel/agents/task_agent.py:308",
+    "check_location": "internagent/mas/agents/dr_agents/camel/agents/task_agent.py:308",
+    "enforcement_location": "internagent/mas/agents/dr_agents/camel/agents/task_agent.py:309",
+    "failure_consequence": "RuntimeError before get_task_list result returned",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "internagent/mas/agents/dr_agents/camel/agents/task_agent.py",
+      "line": 308,
+      "line_end": 309,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "Terminated and empty-message checks raise before the agent's text is wrapped and returned. Simple presence/status guards only, no content check. Vendored CAMEL copy."
+ },
+ {
+  "site_no": 23,
+  "call_id": "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/agents/task_agent.py::402::24",
+  "actual_context": "production",
+  "context_flags": [
+   "vendored_framework_copy"
+  ],
+  "context_evidence": "Path internagent/mas/agents/dr_agents/camel/ is a vendored copy of the CAMEL framework's own source tree (agents/, datagen/, verifiers/, toolkits/ ...); no InternAgent code outside the camel/ dir references these classes. TaskPrioritizationAgent.run.",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "self.step / agent.step is CAMEL ChatAgent.step, which calls the configured model backend.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/agents/task_agent.py::402::24",
+    "protected_output": "task agent response",
+    "checked_property": "response not terminated",
+    "oracle_type": "simple",
+    "evaluator": "if response.terminated: raise RuntimeError",
+    "verdict_location": "internagent/mas/agents/dr_agents/camel/agents/task_agent.py:404",
+    "check_location": "internagent/mas/agents/dr_agents/camel/agents/task_agent.py:404",
+    "enforcement_location": "internagent/mas/agents/dr_agents/camel/agents/task_agent.py:405",
+    "failure_consequence": "RuntimeError before get_task_list result returned",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "287638"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "internagent/mas/agents/dr_agents/camel/agents/task_agent.py",
+      "line": 402,
+      "line_end": 402,
+      "role": "output"
+     },
+     {
+      "rel_path": "internagent/mas/agents/dr_agents/camel/agents/task_agent.py",
+      "line": 404,
+      "line_end": 405,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/agents/task_agent.py::402::24",
+    "protected_output": "task agent response",
+    "checked_property": "msgs non-empty",
+    "oracle_type": "simple",
+    "evaluator": "if len(response.msgs)==0: raise RuntimeError",
+    "verdict_location": "internagent/mas/agents/dr_agents/camel/agents/task_agent.py:406",
+    "check_location": "internagent/mas/agents/dr_agents/camel/agents/task_agent.py:406",
+    "enforcement_location": "internagent/mas/agents/dr_agents/camel/agents/task_agent.py:407",
+    "failure_consequence": "RuntimeError before get_task_list result returned",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "287638"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "internagent/mas/agents/dr_agents/camel/agents/task_agent.py",
+      "line": 406,
+      "line_end": 407,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "Terminated and empty-message checks raise before the agent's text is wrapped and returned. Simple presence/status guards only, no content check. Vendored CAMEL copy."
+ },
+ {
+  "site_no": 24,
+  "call_id": "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/datagen/self_improving_cot.py::483::23",
+  "actual_context": "production",
+  "context_flags": [
+   "vendored_framework_copy"
+  ],
+  "context_evidence": "Path internagent/mas/agents/dr_agents/camel/ is a vendored copy of the CAMEL framework's own source tree (agents/, datagen/, verifiers/, toolkits/ ...); no InternAgent code outside the camel/ dir references these classes. SelfImprovingCoTPipeline.evaluate_trace; pipeline not referenced outside camel/.",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "self.evaluate_agent.step(prompt, response_format=AgentTraceEvaluation) is a CAMEL ChatAgent call.",
+  "site_role": "judge_evaluator",
+  "guards": [
+   {
+    "protected_producer_call_id": "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/datagen/self_improving_cot.py::483::23",
+    "protected_output": "judge's structured evaluation",
+    "checked_property": "parsed evaluation present",
+    "oracle_type": "simple",
+    "evaluator": "if response.msg.parsed is None: raise AttributeError",
+    "verdict_location": "internagent/mas/agents/dr_agents/camel/datagen/self_improving_cot.py:486",
+    "check_location": "internagent/mas/agents/dr_agents/camel/datagen/self_improving_cot.py:486",
+    "enforcement_location": "internagent/mas/agents/dr_agents/camel/datagen/self_improving_cot.py:487",
+    "failure_consequence": "AttributeError",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": true,
+    "qualifies": "no",
+    "nonqualifying_reason": "auxiliary_judge_plumbing",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "288206"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "internagent/mas/agents/dr_agents/camel/datagen/self_improving_cot.py",
+      "line": 483,
+      "line_end": 487,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/datagen/self_improving_cot.py::424::19",
+    "protected_output": "reasoning trace from generate_reasoning_trace",
+    "checked_property": "LLM-judged correctness/clarity/completeness scores >= score_threshold",
+    "oracle_type": "complex",
+    "evaluator": "evaluate_agent (CAMEL ChatAgent LLM judge, or a reward model when self.evaluator is set) scores the trace; _check_score_threshold compares to threshold",
+    "verdict_location": "internagent/mas/agents/dr_agents/camel/datagen/self_improving_cot.py:483-494",
+    "check_location": "internagent/mas/agents/dr_agents/camel/datagen/self_improving_cot.py:734",
+    "enforcement_location": "internagent/mas/agents/dr_agents/camel/datagen/self_improving_cot.py:737-748",
+    "failure_consequence": "regenerate via improve_trace with judge feedback; loop up to max_iterations",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "yes",
+    "fail_open": "no",
+    "configuration_dependent": "yes",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "internagent/mas/agents/dr_agents/camel/datagen/self_improving_cot.py",
+      "line": 424,
+      "line_end": 424,
+      "role": "output"
+     },
+     {
+      "rel_path": "internagent/mas/agents/dr_agents/camel/datagen/self_improving_cot.py",
+      "line": 699,
+      "line_end": 704,
+      "role": "support"
+     },
+     {
+      "rel_path": "internagent/mas/agents/dr_agents/camel/datagen/self_improving_cot.py",
+      "line": 734,
+      "line_end": 735,
+      "role": "check"
+     },
+     {
+      "rel_path": "internagent/mas/agents/dr_agents/camel/datagen/self_improving_cot.py",
+      "line": 737,
+      "line_end": 748,
+      "role": "enforcement"
+     },
+     {
+      "rel_path": "internagent/mas/agents/dr_agents/camel/datagen/self_improving_cot.py",
+      "line": 791,
+      "line_end": 799,
+      "role": "support"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/datagen/self_improving_cot.py::589::19",
+    "protected_output": "improved reasoning trace from improve_trace",
+    "checked_property": "LLM-judged scores >= score_threshold",
+    "oracle_type": "complex",
+    "evaluator": "same evaluate_trace LLM judge on the improved trace",
+    "verdict_location": "internagent/mas/agents/dr_agents/camel/datagen/self_improving_cot.py:483-494",
+    "check_location": "internagent/mas/agents/dr_agents/camel/datagen/self_improving_cot.py:734",
+    "enforcement_location": "internagent/mas/agents/dr_agents/camel/datagen/self_improving_cot.py:737-748",
+    "failure_consequence": "another improve_trace round; after max_iterations the last trace is accepted anyway",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "yes",
+    "fail_open": "no",
+    "configuration_dependent": "yes",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "internagent/mas/agents/dr_agents/camel/datagen/self_improving_cot.py",
+      "line": 589,
+      "line_end": 589,
+      "role": "output"
+     },
+     {
+      "rel_path": "internagent/mas/agents/dr_agents/camel/datagen/self_improving_cot.py",
+      "line": 752,
+      "line_end": 768,
+      "role": "support"
+     },
+     {
+      "rel_path": "internagent/mas/agents/dr_agents/camel/datagen/self_improving_cot.py",
+      "line": 734,
+      "line_end": 735,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/datagen/self_improving_cot.py::522::24",
+    "protected_output": "n candidate traces from rejection sampling",
+    "checked_property": "LLM-judged scores meet threshold, highest average",
+    "oracle_type": "complex",
+    "evaluator": "evaluate_trace LLM judge per candidate",
+    "verdict_location": "internagent/mas/agents/dr_agents/camel/datagen/self_improving_cot.py:539",
+    "check_location": "internagent/mas/agents/dr_agents/camel/datagen/self_improving_cot.py:549-553",
+    "enforcement_location": "internagent/mas/agents/dr_agents/camel/datagen/self_improving_cot.py:554-559",
+    "failure_consequence": "best qualifying candidate selected; if none qualify, highest-scoring candidate returned anyway",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "yes",
+    "fail_open": "no",
+    "configuration_dependent": "yes",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "internagent/mas/agents/dr_agents/camel/datagen/self_improving_cot.py",
+      "line": 522,
+      "line_end": 524,
+      "role": "output"
+     },
+     {
+      "rel_path": "internagent/mas/agents/dr_agents/camel/datagen/self_improving_cot.py",
+      "line": 538,
+      "line_end": 559,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guard_attributed_to_other_producer_only",
+  "rationale": "This call is an LLM judge; its parsed-None raise is auxiliary plumbing. Its verdict drives threshold-gated regeneration (improve_trace) and rejection-sampling selection for the reasoning-trace producers at l.424/589/522, which are complex guards with retry-budget bypass and dependence on evaluate_agent/max_iterations/rejection_sampling_n config. Vendored framework code unused by the app."
+ },
+ {
+  "site_no": 25,
+  "call_id": "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/datasets/few_shot_generator.py::195::24",
+  "actual_context": "production",
+  "context_flags": [
+   "vendored_framework_copy"
+  ],
+  "context_evidence": "Path internagent/mas/agents/dr_agents/camel/ is a vendored copy of the CAMEL framework's own source tree (agents/, datagen/, verifiers/, toolkits/ ...); no InternAgent code outside the camel/ dir references these classes. FewShotGenerator.generate_new.",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "self.agent.step(prompt, response_format=DataPointSimplified) is a CAMEL ChatAgent call.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/datasets/few_shot_generator.py::195::24",
+    "protected_output": "generated datapoint (question/answer/rationale)",
+    "checked_property": "parsed output is a DataPointSimplified",
+    "oracle_type": "simple",
+    "evaluator": "assert isinstance(agent_output, DataPointSimplified)",
+    "verdict_location": "internagent/mas/agents/dr_agents/camel/datasets/few_shot_generator.py:202",
+    "check_location": "internagent/mas/agents/dr_agents/camel/datasets/few_shot_generator.py:202",
+    "enforcement_location": "internagent/mas/agents/dr_agents/camel/datasets/few_shot_generator.py:267-272",
+    "failure_consequence": "AssertionError caught by outer except Exception -> retries += 1, regenerate; RuntimeError after max_retries if n not reached",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "no",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": true,
+    "evidence_lines": [
+     {
+      "rel_path": "internagent/mas/agents/dr_agents/camel/datasets/few_shot_generator.py",
+      "line": 194,
+      "line_end": 200,
+      "role": "output"
+     },
+     {
+      "rel_path": "internagent/mas/agents/dr_agents/camel/datasets/few_shot_generator.py",
+      "line": 202,
+      "line_end": 202,
+      "role": "check"
+     },
+     {
+      "rel_path": "internagent/mas/agents/dr_agents/camel/datasets/few_shot_generator.py",
+      "line": 267,
+      "line_end": 278,
+      "role": "enforcement"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/datasets/few_shot_generator.py::195::24",
+    "protected_output": "generated rationale",
+    "checked_property": "rationale is a str",
+    "oracle_type": "simple",
+    "evaluator": "if not isinstance(rationale,str): raise TypeError",
+    "verdict_location": "internagent/mas/agents/dr_agents/camel/datasets/few_shot_generator.py:216",
+    "check_location": "internagent/mas/agents/dr_agents/camel/datasets/few_shot_generator.py:216",
+    "enforcement_location": "internagent/mas/agents/dr_agents/camel/datasets/few_shot_generator.py:267-272",
+    "failure_consequence": "TypeError -> outer except -> retry",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "no",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "internagent/mas/agents/dr_agents/camel/datasets/few_shot_generator.py",
+      "line": 214,
+      "line_end": 217,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/datasets/few_shot_generator.py::195::24",
+    "protected_output": "generated rationale",
+    "checked_property": "verifier executes/verifies rationale and returns a result within 180s",
+    "oracle_type": "unknown",
+    "evaluator": "self.verifier.verify(solution=rationale) (injected BaseVerifier; camel ships python/math verifiers)",
+    "verdict_location": "internagent/mas/agents/dr_agents/camel/datasets/few_shot_generator.py:227",
+    "check_location": "internagent/mas/agents/dr_agents/camel/datasets/few_shot_generator.py:227",
+    "enforcement_location": "internagent/mas/agents/dr_agents/camel/datasets/few_shot_generator.py:228-243",
+    "failure_consequence": "ValueError/timeout -> retry; datapoint not appended",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "unresolved",
+    "nonqualifying_reason": "other:verifier backend injected, not established",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "no",
+    "fail_open": "no",
+    "configuration_dependent": "yes",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "internagent/mas/agents/dr_agents/camel/datasets/few_shot_generator.py",
+      "line": 219,
+      "line_end": 243,
+      "role": "check"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/datasets/few_shot_generator.py::195::24",
+    "protected_output": "new DataPoint",
+    "checked_property": "DataPoint Pydantic validation",
+    "oracle_type": "simple",
+    "evaluator": "DataPoint(...) constructor; except ValidationError",
+    "verdict_location": "internagent/mas/agents/dr_agents/camel/datasets/few_shot_generator.py:246",
+    "check_location": "internagent/mas/agents/dr_agents/camel/datasets/few_shot_generator.py:246",
+    "enforcement_location": "internagent/mas/agents/dr_agents/camel/datasets/few_shot_generator.py:257-263",
+    "failure_consequence": "retry; not appended",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "no",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "internagent/mas/agents/dr_agents/camel/datasets/few_shot_generator.py",
+      "line": 245,
+      "line_end": 263,
+      "role": "check"
+     },
+     {
+      "rel_path": "internagent/mas/agents/dr_agents/camel/datasets/few_shot_generator.py",
+      "line": 265,
+      "line_end": 265,
+      "role": "support"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "The generated datapoint passes a type assert, a type check and Pydantic validation (plus a verifier) before it is appended; failures trigger regeneration and the loop raises rather than accepting after the budget. The assert is -O sensitive (but a None parse would still fail later at attribute access). Vendored framework code."
+ },
+ {
+  "site_no": 28,
+  "call_id": "OpenDCAI_OpenResearchFlow/backend/src/modules/exp_gen_v2/workflow.py::2548::21",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "WorkflowWrapper.invoke inside build_workflow (workflow.py:2542-2549), the ExpGen v2 production workflow.",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "self.graph is a compiled LangGraph StateGraph whose nodes run plan_agent/milestone runners (agentic workflow); the LLM calls are nested inside nodes.",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "OpenDCAI_OpenResearchFlow/backend/src/modules/exp_gen_v2/workflow.py::2548::21",
+    "protected_output": "final LangGraph state",
+    "checked_property": "state coercible to ExpGenV2WorkflowState",
+    "oracle_type": "simple",
+    "evaluator": "isinstance(result, ExpGenV2WorkflowState) else model_validate(result)",
+    "verdict_location": "backend/src/modules/exp_gen_v2/workflow.py:2549",
+    "check_location": "backend/src/modules/exp_gen_v2/workflow.py:2549",
+    "enforcement_location": "backend/src/modules/exp_gen_v2/workflow.py:2549",
+    "failure_consequence": "ValidationError propagates (no handler)",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "parse_only",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "442079"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "backend/src/modules/exp_gen_v2/workflow.py",
+      "line": 2548,
+      "line_end": 2549,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "model_validate converts LangGraph's dict state back into the Pydantic state type; it is type coercion of workflow state, not an acceptability check on LLM output, and has no handling consequence beyond a propagating error."
+ },
+ {
+  "site_no": 77,
+  "call_id": "codemie-ai_codemie/src/codemie/chains/kb_sources_selector_chain.py::38::17",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "KBSourcesSelectorChain.generate (l.37-48); kb.py instantiates the chain but routes via a separate structured-output chain.",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "_chain() = prompt | llm | StrOutputParser; .invoke calls the LLM.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "codemie-ai_codemie/src/codemie/chains/kb_sources_selector_chain.py::38::17",
+    "protected_output": "comma-separated KB source list",
+    "checked_property": "output equals 'None' sentinel",
+    "oracle_type": "simple",
+    "evaluator": "result == NONE_RESPONSE",
+    "verdict_location": "src/codemie/chains/kb_sources_selector_chain.py:45",
+    "check_location": "src/codemie/chains/kb_sources_selector_chain.py:45",
+    "enforcement_location": "src/codemie/chains/kb_sources_selector_chain.py:46",
+    "failure_consequence": "return [] (model said no sources)",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "workflow_branch_not_acceptability",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "1295573"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "src/codemie/chains/kb_sources_selector_chain.py",
+      "line": 38,
+      "line_end": 48,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "The branch interprets the model's explicit 'None' answer as an empty selection; this is the intended answer format, not a rejection of an invalid output. No validation of selected sources against the provided list."
+ },
+ {
+  "site_no": 78,
+  "call_id": "codemie-ai_codemie/src/codemie_tools/data_management/code_executor/session_factory.py::213::21",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "SessionFactory._health_check_session (l.201-231).",
+  "invocation": "false_positive_non_llm",
+  "invocation_evidence": "session is a SandboxSession; session.run(\"print('health_check_ok')\") executes code in a sandbox pod, no LLM.",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "codemie-ai_codemie/src/codemie_tools/data_management/code_executor/session_factory.py::213::21",
+    "protected_output": "sandbox execution result",
+    "checked_property": "exit_code==0 and 'health_check_ok' in stdout",
+    "oracle_type": "simple",
+    "evaluator": "exit_code / stdout substring checks",
+    "verdict_location": "src/codemie_tools/data_management/code_executor/session_factory.py:215,218",
+    "check_location": "src/codemie_tools/data_management/code_executor/session_factory.py:215-219",
+    "enforcement_location": "src/codemie_tools/data_management/code_executor/session_factory.py:216,219",
+    "failure_consequence": "ToolException",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "false_positive_invocation",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "1295757"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "src/codemie_tools/data_management/code_executor/session_factory.py",
+      "line": 213,
+      "line_end": 219,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "The matched .run is a sandbox code execution used as a pod health probe; the checks are connectivity/health checks, not checks on LLM output."
+ },
+ {
+  "site_no": 79,
+  "call_id": "codemie-ai_codemie/src/codemie_tools/data_management/workspace/execute_workspace_script_tool.py::174::17",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "WorkspaceScriptRunner._get_sandbox_file_snapshot (l.157-184).",
+  "invocation": "false_positive_non_llm",
+  "invocation_evidence": "session.run(snapshot_code) runs a fixed hashing script in a sandbox session; no LLM.",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "codemie-ai_codemie/src/codemie_tools/data_management/workspace/execute_workspace_script_tool.py::174::17",
+    "protected_output": "sandbox execution result",
+    "checked_property": "exit_code==0",
+    "oracle_type": "simple",
+    "evaluator": "if result.exit_code != 0: raise ToolException",
+    "verdict_location": "src/codemie_tools/data_management/workspace/execute_workspace_script_tool.py:175",
+    "check_location": "src/codemie_tools/data_management/workspace/execute_workspace_script_tool.py:175",
+    "enforcement_location": "src/codemie_tools/data_management/workspace/execute_workspace_script_tool.py:176",
+    "failure_consequence": "ToolException",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "false_positive_invocation",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "1295770"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "src/codemie_tools/data_management/workspace/execute_workspace_script_tool.py",
+      "line": 174,
+      "line_end": 176,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "The receiver is a code sandbox session running a fixed script; the exit-code check concerns sandbox execution, not LLM output."
+ },
+ {
+  "site_no": 99,
+  "call_id": "datastax_ragstack-ai/libs/e2e-tests/e2e_tests/langchain/nemo_guardrails.py::100::15",
+  "actual_context": "test_support",
+  "context_flags": [
+   "benchmark_or_eval_harness"
+  ],
+  "context_evidence": "File lives in libs/e2e-tests/e2e_tests; run_nemo_guardrails is only called from e2e_tests/langchain/test_compatibility_rag.py:362. _try_runnable_rails is an e2e test helper.",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "rails = LLMRails(config); rails.generate calls the configured LLM through NeMo Guardrails.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "datastax_ragstack-ai/libs/e2e-tests/e2e_tests/langchain/nemo_guardrails.py::100::15",
+    "protected_output": "rails chat response",
+    "checked_property": "expected substring present",
+    "oracle_type": "simple",
+    "evaluator": "assert '2020' in response['content']",
+    "verdict_location": "libs/e2e-tests/e2e_tests/langchain/nemo_guardrails.py:108",
+    "check_location": "libs/e2e-tests/e2e_tests/langchain/nemo_guardrails.py:108",
+    "enforcement_location": "libs/e2e-tests/e2e_tests/langchain/nemo_guardrails.py:108",
+    "failure_consequence": "AssertionError fails the e2e test",
+    "before_acceptance": "no",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "test_or_test_support_context",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "1409710"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": true,
+    "evidence_lines": [
+     {
+      "rel_path": "libs/e2e-tests/e2e_tests/langchain/nemo_guardrails.py",
+      "line": 100,
+      "line_end": 107,
+      "role": "output"
+     },
+     {
+      "rel_path": "libs/e2e-tests/e2e_tests/langchain/nemo_guardrails.py",
+      "line": 108,
+      "line_end": 108,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "Despite the production label, this is an end-to-end test helper invoked only from a pytest test; the assert is a test oracle, not a runtime guardrail."
+ },
+ {
+  "site_no": 100,
+  "call_id": "datastax_ragstack-ai/libs/e2e-tests/e2e_tests/langchain/nemo_guardrails.py::90::15",
+  "actual_context": "test_support",
+  "context_flags": [
+   "benchmark_or_eval_harness"
+  ],
+  "context_evidence": "File lives in libs/e2e-tests/e2e_tests; run_nemo_guardrails is only called from e2e_tests/langchain/test_compatibility_rag.py:362. _try_runnable_rails is an e2e test helper.",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "rails = LLMRails(config); rails.generate calls the configured LLM through NeMo Guardrails.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "datastax_ragstack-ai/libs/e2e-tests/e2e_tests/langchain/nemo_guardrails.py::90::15",
+    "protected_output": "rails chat response",
+    "checked_property": "expected substring present",
+    "oracle_type": "simple",
+    "evaluator": "assert 'Hello! I hope to answer all your questions' in response['content']",
+    "verdict_location": "libs/e2e-tests/e2e_tests/langchain/nemo_guardrails.py:98",
+    "check_location": "libs/e2e-tests/e2e_tests/langchain/nemo_guardrails.py:98",
+    "enforcement_location": "libs/e2e-tests/e2e_tests/langchain/nemo_guardrails.py:98",
+    "failure_consequence": "AssertionError fails the e2e test",
+    "before_acceptance": "no",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "test_or_test_support_context",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "1409710"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": true,
+    "evidence_lines": [
+     {
+      "rel_path": "libs/e2e-tests/e2e_tests/langchain/nemo_guardrails.py",
+      "line": 90,
+      "line_end": 97,
+      "role": "output"
+     },
+     {
+      "rel_path": "libs/e2e-tests/e2e_tests/langchain/nemo_guardrails.py",
+      "line": 98,
+      "line_end": 98,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "Despite the production label, this is an end-to-end test helper invoked only from a pytest test; the assert is a test oracle, not a runtime guardrail."
+ },
+ {
+  "site_no": 101,
+  "call_id": "dustland_vibex-py/src/vibex/memory/mem0_backend.py::94::21",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "Mem0Backend.add (l.72-110), production memory backend.",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "self._mem0_client is mem0 Memory.from_config with an llm config; Memory.add runs LLM fact extraction and stores memories.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "dustland_vibex-py/src/vibex/memory/mem0_backend.py::94::21",
+    "protected_output": "mem0 add result (memory ids)",
+    "checked_property": "non-empty result with an id",
+    "oracle_type": "simple",
+    "evaluator": "if result and len(result)>0 ... else raise ValueError",
+    "verdict_location": "src/vibex/memory/mem0_backend.py:101",
+    "check_location": "src/vibex/memory/mem0_backend.py:101",
+    "enforcement_location": "src/vibex/memory/mem0_backend.py:106",
+    "failure_consequence": "ValueError re-raised; but mem0 has already stored the memories inside add()",
+    "before_acceptance": "no",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "after_acceptance",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "1480913"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "src/vibex/memory/mem0_backend.py",
+      "line": 94,
+      "line_end": 98,
+      "role": "output"
+     },
+     {
+      "rel_path": "src/vibex/memory/mem0_backend.py",
+      "line": 101,
+      "line_end": 110,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "The check only verifies a memory id was returned after mem0 has already extracted and persisted memories; it neither inspects nor prevents storage of the LLM-extracted content."
+ },
+ {
+  "site_no": 143,
+  "call_id": "robertwhiffin_ai-slide-generator/src/api/services/session_naming.py::40::19",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "generate_session_title (l.26-61) called from src/api/services/chat_service.py:1082, whose result renames the session when truthy.",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "model is a ChatDatabricks chat model; model.invoke([...]) is an LLM call.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "robertwhiffin_ai-slide-generator/src/api/services/session_naming.py::40::19",
+    "protected_output": "generated session title",
+    "checked_property": "title non-empty after stripping",
+    "oracle_type": "simple",
+    "evaluator": "if not title: return None",
+    "verdict_location": "src/api/services/session_naming.py:47",
+    "check_location": "src/api/services/session_naming.py:47",
+    "enforcement_location": "src/api/services/session_naming.py:48",
+    "failure_consequence": "returns None; caller (chat_service.py:1083) skips rename_session, keeping the existing title",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "partial",
+    "joern_slice_ids": [
+     "2504242"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "src/api/services/session_naming.py",
+      "line": 40,
+      "line_end": 45,
+      "role": "output"
+     },
+     {
+      "rel_path": "src/api/services/session_naming.py",
+      "line": 47,
+      "line_end": 48,
+      "role": "check"
+     },
+     {
+      "rel_path": "src/api/services/chat_service.py",
+      "line": 1082,
+      "line_end": 1084,
+      "role": "enforcement"
+     }
+    ]
+   },
+   {
+    "protected_producer_call_id": "robertwhiffin_ai-slide-generator/src/api/services/session_naming.py::40::19",
+    "protected_output": "generated session title",
+    "checked_property": "length <= MAX_TITLE_LENGTH (100)",
+    "oracle_type": "simple",
+    "evaluator": "if len(title) > MAX_TITLE_LENGTH: title = title[:MAX_TITLE_LENGTH]",
+    "verdict_location": "src/api/services/session_naming.py:50",
+    "check_location": "src/api/services/session_naming.py:50",
+    "enforcement_location": "src/api/services/session_naming.py:51",
+    "failure_consequence": "rewrite (truncate) before return/storage",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "none",
+    "joern_slice_ids": [],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "src/api/services/session_naming.py",
+      "line": 50,
+      "line_end": 51,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "An empty title is suppressed (None, so the caller does not rename the session) and an over-long title is truncated before it is stored. Both are simple presence/range guards on this call's output."
+ },
+ {
+  "site_no": 146,
+  "call_id": "seanchatmangpt_dslmodel/redteam_reports/src/dslmodel/dspy_modules/fsm_trigger_module.py::46::21",
+  "actual_context": "production",
+  "context_flags": [
+   "duplicate_copy_of_other_file"
+  ],
+  "context_evidence": "fsm_trigger_call; redteam_reports/src/... is byte-identical (diff) to src/dslmodel/dspy_modules/.",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "forward() of a dspy.Module subclass builds a prompt and calls dspygen json_call (dspy LM) returning the model-chosen trigger name.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "seanchatmangpt_dslmodel/redteam_reports/src/dslmodel/dspy_modules/fsm_trigger_module.py::46::21",
+    "protected_output": "LLM-proposed action name (chosen_trigger) to be executed via getattr",
+    "checked_property": "name non-empty and an attribute of fsm",
+    "oracle_type": "simple",
+    "evaluator": "if chosen_trigger and hasattr(fsm, chosen_trigger)",
+    "verdict_location": "redteam_reports/src/dslmodel/dspy_modules/fsm_trigger_module.py:47",
+    "check_location": "redteam_reports/src/dslmodel/dspy_modules/fsm_trigger_module.py:47",
+    "enforcement_location": "redteam_reports/src/dslmodel/dspy_modules/fsm_trigger_module.py:51",
+    "failure_consequence": "ValueError raised instead of executing the action",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "2516966",
+     "2516969"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "redteam_reports/src/dslmodel/dspy_modules/fsm_trigger_module.py",
+      "line": 46,
+      "line_end": 46,
+      "role": "output"
+     },
+     {
+      "rel_path": "redteam_reports/src/dslmodel/dspy_modules/fsm_trigger_module.py",
+      "line": 47,
+      "line_end": 49,
+      "role": "check"
+     },
+     {
+      "rel_path": "redteam_reports/src/dslmodel/dspy_modules/fsm_trigger_module.py",
+      "line": 50,
+      "line_end": 51,
+      "role": "enforcement"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "The model-chosen action name is checked for presence and existence on the target object before getattr(...)(**kwargs) executes it; otherwise a ValueError is raised. It is a weak simple check (hasattr, not membership in possible_triggers()) but it intervenes before execution. This file is a duplicate copy under redteam_reports/."
+ },
+ {
+  "site_no": 147,
+  "call_id": "seanchatmangpt_dslmodel/redteam_reports/src/dslmodel/dspy_modules/tool_trigger_module.py::45::18",
+  "actual_context": "production",
+  "context_flags": [
+   "duplicate_copy_of_other_file"
+  ],
+  "context_evidence": "tool_trigger_call; redteam_reports/src/... is byte-identical (diff) to src/dslmodel/dspy_modules/.",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "forward() of a dspy.Module subclass builds a prompt and calls dspygen json_call (dspy LM) returning the model-chosen tool name.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "seanchatmangpt_dslmodel/redteam_reports/src/dslmodel/dspy_modules/tool_trigger_module.py::45::18",
+    "protected_output": "LLM-proposed action name (chosen_tool) to be executed via getattr",
+    "checked_property": "name non-empty and an attribute of tool_mixin",
+    "oracle_type": "simple",
+    "evaluator": "if chosen_tool and hasattr(tool_mixin, chosen_tool)",
+    "verdict_location": "redteam_reports/src/dslmodel/dspy_modules/tool_trigger_module.py:46",
+    "check_location": "redteam_reports/src/dslmodel/dspy_modules/tool_trigger_module.py:46",
+    "enforcement_location": "redteam_reports/src/dslmodel/dspy_modules/tool_trigger_module.py:50",
+    "failure_consequence": "ValueError raised instead of executing the action",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "2517003",
+     "2517005"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "redteam_reports/src/dslmodel/dspy_modules/tool_trigger_module.py",
+      "line": 45,
+      "line_end": 45,
+      "role": "output"
+     },
+     {
+      "rel_path": "redteam_reports/src/dslmodel/dspy_modules/tool_trigger_module.py",
+      "line": 46,
+      "line_end": 48,
+      "role": "check"
+     },
+     {
+      "rel_path": "redteam_reports/src/dslmodel/dspy_modules/tool_trigger_module.py",
+      "line": 49,
+      "line_end": 50,
+      "role": "enforcement"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "The model-chosen action name is checked for presence and existence on the target object before getattr(...)(**kwargs) executes it; otherwise a ValueError is raised. It is a weak simple check (hasattr, not membership in possible_tools()) but it intervenes before execution. This file is a duplicate copy under redteam_reports/."
+ },
+ {
+  "site_no": 148,
+  "call_id": "seanchatmangpt_dslmodel/src/dslmodel/dspy_modules/fsm_trigger_module.py::46::21",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "fsm_trigger_call in the package's dspy_modules.",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "forward() of a dspy.Module subclass builds a prompt and calls dspygen json_call (dspy LM) returning the model-chosen trigger name.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "seanchatmangpt_dslmodel/src/dslmodel/dspy_modules/fsm_trigger_module.py::46::21",
+    "protected_output": "LLM-proposed action name (chosen_trigger) to be executed via getattr",
+    "checked_property": "name non-empty and an attribute of fsm",
+    "oracle_type": "simple",
+    "evaluator": "if chosen_trigger and hasattr(fsm, chosen_trigger)",
+    "verdict_location": "src/dslmodel/dspy_modules/fsm_trigger_module.py:47",
+    "check_location": "src/dslmodel/dspy_modules/fsm_trigger_module.py:47",
+    "enforcement_location": "src/dslmodel/dspy_modules/fsm_trigger_module.py:51",
+    "failure_consequence": "ValueError raised instead of executing the action",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "2528295",
+     "2528298"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "src/dslmodel/dspy_modules/fsm_trigger_module.py",
+      "line": 46,
+      "line_end": 46,
+      "role": "output"
+     },
+     {
+      "rel_path": "src/dslmodel/dspy_modules/fsm_trigger_module.py",
+      "line": 47,
+      "line_end": 49,
+      "role": "check"
+     },
+     {
+      "rel_path": "src/dslmodel/dspy_modules/fsm_trigger_module.py",
+      "line": 50,
+      "line_end": 51,
+      "role": "enforcement"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "The model-chosen action name is checked for presence and existence on the target object before getattr(...)(**kwargs) executes it; otherwise a ValueError is raised. It is a weak simple check (hasattr, not membership in possible_triggers()) but it intervenes before execution."
+ },
+ {
+  "site_no": 149,
+  "call_id": "seanchatmangpt_dslmodel/src/dslmodel/dspy_modules/tool_trigger_module.py::45::18",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "tool_trigger_call in the package's dspy_modules.",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "forward() of a dspy.Module subclass builds a prompt and calls dspygen json_call (dspy LM) returning the model-chosen tool name.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "seanchatmangpt_dslmodel/src/dslmodel/dspy_modules/tool_trigger_module.py::45::18",
+    "protected_output": "LLM-proposed action name (chosen_tool) to be executed via getattr",
+    "checked_property": "name non-empty and an attribute of tool_mixin",
+    "oracle_type": "simple",
+    "evaluator": "if chosen_tool and hasattr(tool_mixin, chosen_tool)",
+    "verdict_location": "src/dslmodel/dspy_modules/tool_trigger_module.py:46",
+    "check_location": "src/dslmodel/dspy_modules/tool_trigger_module.py:46",
+    "enforcement_location": "src/dslmodel/dspy_modules/tool_trigger_module.py:50",
+    "failure_consequence": "ValueError raised instead of executing the action",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "2528332",
+     "2528334"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "src/dslmodel/dspy_modules/tool_trigger_module.py",
+      "line": 45,
+      "line_end": 45,
+      "role": "output"
+     },
+     {
+      "rel_path": "src/dslmodel/dspy_modules/tool_trigger_module.py",
+      "line": 46,
+      "line_end": 48,
+      "role": "check"
+     },
+     {
+      "rel_path": "src/dslmodel/dspy_modules/tool_trigger_module.py",
+      "line": 49,
+      "line_end": 50,
+      "role": "enforcement"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "The model-chosen action name is checked for presence and existence on the target object before getattr(...)(**kwargs) executes it; otherwise a ValueError is raised. It is a weak simple check (hasattr, not membership in possible_tools()) but it intervenes before execution."
+ },
+ {
+  "site_no": 189,
+  "call_id": "swarm-ai-research_swarm/swarm/analysis/autoresearch.py::203::18",
+  "actual_context": "production",
+  "context_flags": [
+   "benchmark_or_eval_harness"
+  ],
+  "context_evidence": "evaluate_candidate (l.175-213) in an autoresearch scenario-evaluation script.",
+  "invocation": "false_positive_non_llm",
+  "invocation_evidence": "orchestrator comes from swarm.scenarios.loader.build_orchestrator: the repo's own multi-agent simulation Orchestrator (package name 'swarm' collides with the OpenAI swarm framework); .run() runs simulation epochs, not a framework LLM call.",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "swarm-ai-research_swarm/swarm/analysis/autoresearch.py::203::18",
+    "protected_output": "simulation epoch history",
+    "checked_property": "history non-empty",
+    "oracle_type": "simple",
+    "evaluator": "if not history: continue",
+    "verdict_location": "swarm/analysis/autoresearch.py:204",
+    "check_location": "swarm/analysis/autoresearch.py:204",
+    "enforcement_location": "swarm/analysis/autoresearch.py:205",
+    "failure_consequence": "skip seed from metric accumulation",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "false_positive_invocation",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "2649069"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "swarm/analysis/autoresearch.py",
+      "line": 203,
+      "line_end": 206,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "The receiver is the repo's own simulation orchestrator, not an agentic-framework LLM call; skipping empty histories is a workflow branch on simulation metrics."
+ },
+ {
+  "site_no": 190,
+  "call_id": "swarm-ai-research_swarm/swarm/research/swarm_papers/track_a.py::1785::26",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "TrackARunner._write_paper (l.1740-1798).",
+  "invocation": "false_positive_non_llm",
+  "invocation_evidence": "gate = QualityGates.review_gate() (swarm/research/quality.py:122) is a rule-based QualityGate; gate.run(review) evaluates lambdas over a deterministic self-review (_generate_peer_review l.1691). Paper is built from templates (PaperBuilder); no LLM.",
+  "site_role": "other",
+  "guards": [
+   {
+    "protected_producer_call_id": "swarm-ai-research_swarm/swarm/research/swarm_papers/track_a.py::1785::26",
+    "protected_output": "rule-based peer-review gate result over templated paper",
+    "checked_property": "gate passed",
+    "oracle_type": "simple",
+    "evaluator": "if not gate_result.passed: return",
+    "verdict_location": "swarm/research/swarm_papers/track_a.py:1787",
+    "check_location": "swarm/research/swarm_papers/track_a.py:1787",
+    "enforcement_location": "swarm/research/swarm_papers/track_a.py:1788",
+    "failure_consequence": "skip PDF export/submission",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "no",
+    "nonqualifying_reason": "false_positive_invocation",
+    "joern_support": "call_and_check_in_same_saved_slice_original_lines",
+    "joern_slice_ids": [
+     "2649407"
+    ],
+    "retry_budget_bypass": "n/a",
+    "fail_open": "no",
+    "configuration_dependent": "yes",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "swarm/research/swarm_papers/track_a.py",
+      "line": 1779,
+      "line_end": 1788,
+      "role": "check"
+     }
+    ]
+   }
+  ],
+  "site_decision": "nonqualifying",
+  "rationale": "The matched .run is a deterministic quality gate, not an LLM invocation, and the paper is template-built, so there is no LLM output to protect here."
+ },
+ {
+  "site_no": 206,
+  "call_id": "GenseeAI_open_deep_research/src/legacy/graph.py::307::28",
+  "actual_context": "production",
+  "context_flags": [],
+  "context_evidence": "write_section LangGraph node (l.268-354); src/legacy is packaged in pyproject.toml (packages include 'legacy').",
+  "invocation": "genuine_in_scope_llm",
+  "invocation_evidence": "writer_model = init_chat_model(...) (l.305); .ainvoke at l.307 generates the section text.",
+  "site_role": "generation",
+  "guards": [
+   {
+    "protected_producer_call_id": "GenseeAI_open_deep_research/src/legacy/graph.py::307::28",
+    "protected_output": "generated report section content",
+    "checked_property": "section grade == 'pass' per LLM grader",
+    "oracle_type": "complex",
+    "evaluator": "reflection_model = init_chat_model(planner_model).with_structured_output(Feedback) (l.330-339) grades section.content; Feedback.grade",
+    "verdict_location": "src/legacy/graph.py:338-339",
+    "check_location": "src/legacy/graph.py:342",
+    "enforcement_location": "src/legacy/graph.py:344-354",
+    "failure_consequence": "fail -> Command(goto='search_web') with follow-up queries, section is re-researched and rewritten; only 'pass' publishes to completed_sections",
+    "before_acceptance": "yes",
+    "auxiliary_judge_plumbing": false,
+    "qualifies": "yes",
+    "nonqualifying_reason": "",
+    "joern_support": "partial",
+    "joern_slice_ids": [
+     "235170"
+    ],
+    "retry_budget_bypass": "yes",
+    "fail_open": "no",
+    "configuration_dependent": "no",
+    "assert_optimization_sensitive": false,
+    "evidence_lines": [
+     {
+      "rel_path": "src/legacy/graph.py",
+      "line": 307,
+      "line_end": 311,
+      "role": "output"
+     },
+     {
+      "rel_path": "src/legacy/graph.py",
+      "line": 318,
+      "line_end": 339,
+      "role": "verdict"
+     },
+     {
+      "rel_path": "src/legacy/graph.py",
+      "line": 342,
+      "line_end": 347,
+      "role": "check"
+     },
+     {
+      "rel_path": "src/legacy/graph.py",
+      "line": 350,
+      "line_end": 354,
+      "role": "enforcement"
+     }
+    ]
+   }
+  ],
+  "site_decision": "guardrail_protects_this_site",
+  "rationale": "An LLM grader judges the generated section and its verdict controls whether the section is published to completed_sections or sent back for more research and rewriting. This is a complex guard; the max_search_depth condition accepts the section after the budget regardless of grade (retry-budget bypass). The saved slice for l.307 reaches l.311 but not the verdict check."
+ }
+]

@@ -1,0 +1,49 @@
+{
+  "adjudicator": "assistant (Claude, primary session), 2026-11-12; not independent human validation",
+  "method": "Blind reviews compared with 2026-11-12 runtime annotations by protected producer call ID; every disagreement where both reviews covered the producer, plus reviewer-flagged borderline cases, re-read in original source.",
+  "site_overrides": {
+    "50": {
+      "site_decision": "nonqualifying",
+      "guard_patches": {"1": {"qualifies": "no", "nonqualifying_reason": "parse_only"}},
+      "adjudication_note": "Label parsing with substring acceptance ('INTENT' in output accepts nearly any text); the 'fail-safe' is the parser's default branch for unrecognised text, not a separate acceptability predicate. Parsing alone does not qualify. Agrees with the 2026-11-12 label; listed as borderline."
+    },
+    "51": {
+      "site_decision": "nonqualifying",
+      "guard_patches": {"1": {"qualifies": "no", "nonqualifying_reason": "parse_only"}},
+      "adjudication_note": "Same pattern as site 50 (YES/NO substring parse with default). Parse-only; borderline."
+    },
+    "13": {
+      "site_decision": "unresolved",
+      "invocation": "unresolved",
+      "guard_patches": {"0": {"qualifies": "unresolved", "nonqualifying_reason": "other:image_generation_model_not_text_llm"}},
+      "adjudication_note": "Matched call is DallEAPIWrapper image generation through langchain_community. The presence check on the URL is a real simple check, but whether an image-generation model is an in-scope LLM invocation is a scope question the study has not settled. Held as unresolved, not counted."
+    },
+    "3": {
+      "site_decision": "nonqualifying",
+      "invocation": "false_positive_non_llm",
+      "guard_patches": {"0": {"qualifies": "no", "nonqualifying_reason": "false_positive_invocation"}},
+      "adjudication_note": "Raw dashscope SDK call matched a langchain_community '.call' pattern by token. Raw provider SDKs are out of scope (CLAUDE.md scope rule 2), consistent with sites 87, 204 and 205. Recorded as an out-of-scope invocation false positive."
+    }
+  },
+  "site_flags": {
+    "113": ["tautological_type_assert"],
+    "212": ["tautological_type_assert"],
+    "124": ["borderline_relevance_filter_vs_length_acceptability"],
+    "50": ["borderline_parse_only"],
+    "51": ["borderline_parse_only"]
+  },
+  "site_notes": {
+    "124": "Blind review (nonqualifying: relevance filter) retained over 2026-11-12 label (simple guardrail). Source comment at contextual_compression.py:46 defines min_relevance_length as the minimum length to consider a passage relevant; 'AUCUN' is the model's own relevance verdict requested by the prompt. Borderline.",
+    "26": "Blind review retained: assert isinstance(content, str) at planning_html_orchestrator.py:230 precedes return; 2026-11-12 review had examined only the stream-handle None check.",
+    "73": "Confidence threshold reroute accepted as a simple range check with fallback on a model-reported field.",
+    "201": "Both: independent simple schema/atomicity checks and a complex alignment judge (call at site 202) protect the same generated subtasks."
+  },
+  "external_producer_identity": {
+    "seanchatmangpt_dspygen/src/dspygen/modules/json_module.py::101::17": {"actual_context": "production", "invocation": "genuine_in_scope_llm", "context_flags": [], "evidence": "json_module.py:101 JsonModule().forward (dspy LM module) output validated by model.model_validate at 102."},
+    "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/datagen/self_improving_cot.py::424::19": {"actual_context": "production", "invocation": "genuine_in_scope_llm", "context_flags": ["vendored_framework_copy"], "evidence": "reason_agent.step(prompt) generates a reasoning trace (CAMEL ChatAgent) inside a vendored CAMEL copy."},
+    "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/datagen/self_improving_cot.py::522::24": {"actual_context": "production", "invocation": "genuine_in_scope_llm", "context_flags": ["vendored_framework_copy"], "evidence": "reason_agent.step(prompt) with n candidates (rejection sampling), vendored CAMEL copy."},
+    "InternScience_InternAgent/internagent/mas/agents/dr_agents/camel/datagen/self_improving_cot.py::589::19": {"actual_context": "production", "invocation": "genuine_in_scope_llm", "context_flags": ["vendored_framework_copy"], "evidence": "reason_agent.step(prompt) improves a trace, vendored CAMEL copy."},
+    "ikamensh_kodo/kodo/coach.py::302::21": {"actual_context": "production", "invocation": "genuine_in_scope_llm", "context_flags": [], "evidence": "pydantic_ai agent.run_sync produces coach feedback; filtered by an LLM filter (site 121), fail-open on filter error."},
+    "FusionBrainLab_gigaevo-core/gigaevo/llm/agents/base.py::105::33": {"actual_context": "production", "invocation": "genuine_in_scope_llm", "context_flags": [], "evidence": "self.llm.ainvoke(state['messages']) (langchain_core) in the shared LangGraph agent base; result type enforced by parse_response."}
+  }
+}
